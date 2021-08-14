@@ -1,0 +1,17 @@
+{% extends 'customer/customer_template_basic.html' %}
+
+{% block basic_template_content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                {% block main_content %}{% endblock %}
+            </div>
+
+            <div class="col-4">
+                <div class="p-3" style="border-left: 3px solid #FF0000">
+                    快速咨询 | Contact Us
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

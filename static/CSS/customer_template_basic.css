@@ -1,0 +1,196 @@
+@font-face {
+    font-family: "Noto Sans CJK SC";
+    src: url("../FONT/Noto Sans CJK - Chinese/NotoSansCJKsc-Regular.otf") format('opentype');
+}
+
+.language-choice {
+    font-family: Noto Sans CJK SC, serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 0.8rem;
+    color: black !important;
+}
+
+.star-nav-link {
+    font-family: Noto Sans CJK SC, serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.bg-star {
+    background-color: #0A1A38 !important;
+}
+
+.btn-star {
+    color: #fff;
+    background-color: #0A1A38;
+    border-color: #0A1A38;
+}
+.btn-star:hover {
+    color: #fff;
+    background-color: #0F2753;
+    border-color: #091834;
+}
+.btn-check:focus + .btn-star, .btn-star:focus {
+    color: #fff;
+    background-color: #0F2753;
+    border-color: #091834;
+    box-shadow: 0 0 0 0.25rem rgba(10, 26, 56, 0.2);
+}
+.btn-check:checked + .btn-star, .btn-check:active + .btn-star, .btn-star:active, .btn-star.active, .show > .btn-star.dropdown-toggle {
+    color: #fff;
+    background-color: #0F2753;
+    border-color: #091834;
+}
+.btn-check:checked + .btn-star:focus, .btn-check:active + .btn-star:focus, .btn-star:active:focus, .btn-star.active:focus, .show > .btn-star.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.25rem rgba(10, 26, 56, 0.2);
+}
+.btn-star:disabled, .btn-star.disabled {
+    color: #fff;
+    background-color: #0A1A38;
+    border-color: #0A1A38;
+}
+
+.star-nav {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+    list-style: none;
+    padding-left: 7rem;
+    padding-right: 7rem;
+    background-color: #0A1A38;
+}
+
+.star-nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #0d6efd;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+@media (prefers-reduced-motion: reduce) {
+    .star-nav-link {
+        transition: none;
+    }
+}
+.star-nav-link:hover, .star-nav-link:focus {
+    color: #0a58ca;
+}
+.star-nav-link.disabled {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: default;
+}
+
+.star-nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+}
+.star-nav-tabs .star-nav-link {
+    margin-bottom: -1px;
+    background: none;
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+.star-nav-tabs .star-nav-link:hover, .star-nav-tabs .star-nav-link:focus {
+    border-color: #e9ecef #e9ecef #dee2e6;
+    isolation: isolate;
+}
+.star-nav-tabs .star-nav-link.disabled {
+    color: #6c757d;
+    background-color: transparent;
+    border-color: transparent;
+}
+.star-nav-tabs .star-nav-link.active,
+.star-nav-tabs .star-nav-item.show .star-nav-link {
+    color: #495057;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+.star-nav-tabs .dropdown-menu {
+    margin-top: -1px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.star-nav-pills .star-nav-link {
+    background: none;
+    border: 0;
+    border-radius: 0.25rem;
+}
+.star-nav-pills .star-nav-link.active,
+.star-nav-pills .show > .star-nav-link {
+    color: #fff;
+    background-color: #0d6efd;
+}
+
+.star-nav-fill > .star-nav-link,
+.star-nav-fill .star-nav-item {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.star-nav-justified > .star-nav-link,
+.star-nav-justified .star-nav-item {
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.star-nav-fill .star-nav-item .star-nav-link,
+.nav-justified .star-nav-item .star-nav-link {
+    width: 100%;
+}
+
+.star-footer-title {
+    font-family: Noto Sans CJK SC, serif !important;
+    font-weight: 700 !important;
+    text-decoration: underline !important;
+    color: #ffffff !important;
+    line-height: 18px !important;
+}
+
+.star-footer-item {
+    font-family: Noto Sans CJK SC, serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    color: white !important;
+    line-height: 18px !important;
+    margin-top: 1.5rem;
+}
+
+.text-black {
+    color: black !important;
+}
+
+.star-footer-list {
+    display: flex;
+    margin-right: 10rem;
+    margin-left: 10rem;
+}
+
+.star-footer-list-item {
+    margin-left: 3rem !important;
+    margin-right: 3rem !important;
+    list-style: none;
+}
+
+.star-footer-list-item > .link {
+    text-decoration: none;
+    color: #001F45;
+}
+
+.qr-code-title {
+    font-family: Noto Sans CJK SC, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 35px;
+    color: #FFFDFD !important;
+}
+
+.bg-star-grey {
+    background-color: #EDF0F3 !important;
+}
