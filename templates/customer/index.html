@@ -1,0 +1,29 @@
+{% extends 'customer/customer_template.html' %}
+
+{% block main_content %}
+    <div class="mt-5">
+
+    </div>
+
+    {% for indexItem in indexList %}
+        <dl class="row mt-5">
+            <dt class="col-md-3 text-center align-self-start pt-2">
+                {{ indexItem.name }}
+            </dt>
+            <dd class="col-md-9">
+                <div class="row g-1">
+                    {% for item in indexItem.items %}
+                        <div class="col-md-4">
+                            <div class="card p-2 bg-star-grey">
+                                <a href="{{ item.linkName }}"
+                                   class="text-decoration-none text-black">
+                                    {{ item.name }}
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </dd>
+        </dl>
+    {% endfor %}
+{% endblock %}
