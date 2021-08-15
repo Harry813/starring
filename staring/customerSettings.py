@@ -2,7 +2,7 @@ from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 
-navItems = [
+NavItems = [
     {"name": _("移民"), "link": "#"},
     {"name": _("留学"), "link": "#"},
     {"name": _("旅游"), "link": "#"},
@@ -63,3 +63,13 @@ IndexListItems = [
          {"name": _("加拿大衣食住行"), "linkName": "#"},
      ]},
 ]
+
+Intentions = (
+    ("IMMI", _("加拿大移民")),
+    ("STUD", _("加拿大留学")),
+    ("WORK", _("加拿大工作")),
+    ("FAMR", _("家庭团聚")),
+    ("HOME", _("安家置业")),
+    ("APPL", _("案件上诉")),
+    ("OTHR", _("其他，请详细说明")),
+)

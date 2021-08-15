@@ -3,6 +3,6 @@ from staring.customerSettings import *
 
 def getPanelInfo():
     dic = {
-        "navItems": navItems,
+        "navItems": NavItems,
     }
     return dic
