@@ -57,6 +57,13 @@ class User(AbstractUser):
         max_length=4
     )
 
+    vip_lv = models.IntegerField(
+        _("用户等级"),
+        choices=VipLevel,
+        default=1
+    )
+
+    # hidden, can only accessed by admins
     is_staff = models.BooleanField(
         _('员工权限'),
         default=False,
