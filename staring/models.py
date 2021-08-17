@@ -1,6 +1,7 @@
+import datetime
 import uuid
 
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinLengthValidator, MinValueValidator, MaxValueValidator
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
@@ -9,42 +10,64 @@ from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 
 from staring.customerSettings import *
+from staring.phoneCode import *
 
-phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
-                             message=_("电话格式错误，请使用格式 +NNxxxxxxxxxx"))
+phone_regex = RegexValidator(regex=r'[0-9]{0,14}$',
+                             message=_("电话格式错误"),
+                             code="InvalidPhone")
 
 
 class User(AbstractUser):
-    # UID 用户ID，全局唯一
     uid = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
         editable=False,
     )
 
-    # username 用户名，全局唯一
     username_validator = UnicodeUsernameValidator()
     username = models.CharField(
         _('用户名'),
         max_length=150,
-        min_length=8,
         unique=True,
         help_text=_('必填，至多150字符（仅可包含大小写字母、数字以及@/./+/-/_）'),
-        validators=[username_validator],
+        validators=[username_validator, MinLengthValidator(8)],
         error_messages={
             'unique': _("用户名已存在"),
             'invalid': _("无效的用户名"),
             'max_length': _("用户名长度不得超过150字符"),
-            'min_length': _("用户名长度不得超过150字符"),
+            'min_length': _("用户名长度不得少于8字符"),
         },
     )
 
     first_name = None
     last_name = None
     name = models.CharField(_('真实姓名'), max_length=150, blank=True)
+    dob = models.DateField(
+        _('生日'),
+        validators=[MinValueValidator(datetime.date(1900, 1, 1)),
+                    MaxValueValidator(datetime.date.today())]
+    )
+
+    def get_age(self):
+        age = datetime.date.today().year - self.dob.year
+        return age
 
     email = models.EmailField(_('邮箱地址'), blank=True)
-    tele = models.CharField
+
+    countryCode = models.CharField(
+        _("冠码"),
+        max_length=10,
+        choices=phone_codes,  # sorted by country name
+        # choices=sorted_phone_codes,  # sorted by country code
+    )
+    tele = models.CharField(
+        _("电话号码"),
+        validators=[phone_regex]
+    )
+
+    def get_phone(self):
+        phone = "+{}-{}".format(self.countryCode, self.tele)
+        return phone
 
     nationality = CountryField(
         _("国籍"),
@@ -78,3 +101,7 @@ class User(AbstractUser):
         ),
     )
     date_joined = models.DateTimeField(_('注册日期'), default=timezone.now)
+    last_change = models.DateTimeField(
+        _("最后修改"),
+        auto_now=True
+    )
