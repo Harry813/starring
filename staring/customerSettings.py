@@ -79,3 +79,8 @@ VipLevel = (
     (2, _("IS会员")),
     (3, _("IS-VIP")),
 )
+
+ContactTypes = (
+    ("WHATSAPP", _("WhatsApp")),
+    ("WECHAT", _("微信"))
+)

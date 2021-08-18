@@ -59,6 +59,7 @@ class User(AbstractUser):
         max_length=10,
         choices=phone_codes,  # sorted by country name
         # choices=sorted_phone_codes,  # sorted by country code
+        default='1'
     )
     tele = models.CharField(
         _("电话号码"),
@@ -68,6 +69,20 @@ class User(AbstractUser):
     def get_phone(self):
         phone = "+{}-{}".format(self.countryCode, self.tele)
         return phone
+
+    contact_type = models.CharField(
+        _("联系方式"),
+        max_length=20,
+        choices=ContactTypes,
+        default=ContactTypes[0][0]
+    )
+
+    contact_detail = models.CharField(
+        _("联系号码"),
+        max_length=150,
+        blank=True,
+        null=True
+    )
 
     nationality = CountryField(
         _("国籍"),
