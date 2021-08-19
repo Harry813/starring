@@ -63,6 +63,7 @@ class User(AbstractUser):
     )
     tele = models.CharField(
         _("电话号码"),
+        max_length=15,
         validators=[phone_regex]
     )
 
@@ -85,8 +86,7 @@ class User(AbstractUser):
     )
 
     nationality = CountryField(
-        _("国籍"),
-        required=True
+        _("国籍")
     )
 
     intention = models.CharField(
