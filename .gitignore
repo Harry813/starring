@@ -11,3 +11,6 @@
 /.idea/staring.iml
 /.idea/vcs.xml
 /.idea/webServers.xml
+/staring/migrations/
+/admin/migrations/
+/customer/migrations/
