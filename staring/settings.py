@@ -85,14 +85,12 @@ WSGI_APPLICATION = 'staring.wsgi.application'
 
 DATABASES = {
     'default': {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'star',
-            'USER': 'root',
-            'PASSWORD': 'xinghuan',
-            'HOST': '192.248.163.9',
-            'PORT': '3306',
-        }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'star',
+        'USER': 'root',
+        'PASSWORD': 'xinghuan',
+        'HOST': '192.248.163.9',
+        'PORT': '3306',
     }
 }
 
