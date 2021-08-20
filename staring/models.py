@@ -7,7 +7,9 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
 from django_countries.fields import CountryField
+from ckeditor.fields import RichTextField
 
 from staring.customerSettings import *
 from staring.phoneCode import *
@@ -117,6 +119,48 @@ class User(AbstractUser):
     )
     date_joined = models.DateTimeField(_('注册日期'), default=timezone.now)
     last_change = models.DateTimeField(
+        _("最后修改"),
+        auto_now=True
+    )
+
+
+class Article(models.Model):
+    author = models.CharField(
+        _("作者"),
+        max_length=150,
+    )
+
+    status = models.CharField(
+        _("文章状态"),
+        max_length=10
+    )
+
+    description = models.CharField(
+        _("META标签-描述"),
+        max_length=150,
+        help_text=_(
+            "本标签将不在页面中显示。上限150字符"
+        )
+    )
+
+    keywords = models.CharField(
+        _("META标签-关键词"),
+        max_length=150,
+        help_text=_(
+            "本标签将不在页面中显示，关键字之间请使用逗号分割。上限150字符"
+        )
+    )
+
+    content = RichTextField(
+        _("文章主体")
+    )
+
+    create_date = models.DateTimeField(
+        _("创建时间"),
+        default=timezone.now
+    )
+
+    last_update = models.DateTimeField(
         _("最后修改"),
         auto_now=True
     )
