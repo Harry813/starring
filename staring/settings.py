@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_countries',
     'ckeditor',
+    'ckeditor_uploader',
     'staring',
     'customer',
     'admin',
@@ -146,3 +147,6 @@ STATIC_ROOT = '/static'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CKEditor Setting
+CKEDITOR_UPLOAD_PATH = "media/CK"
