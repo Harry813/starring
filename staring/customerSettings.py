@@ -84,3 +84,12 @@ ContactTypes = (
     ("WHATSAPP", _("WhatsApp")),
     ("WECHAT", _("微信"))
 )
+
+ArticleStatus = (
+    ("PUBLISH", _("已发布")),
+    ("PENDING", _("待审核")),
+    ("REJECT", _("审核失败")),
+    ("REVISED", _("需要修订")),
+    ("DRAFT", _("正在编辑")),
+    ("DELETE", _("已删除"))
+)
