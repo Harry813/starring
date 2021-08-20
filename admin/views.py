@@ -7,4 +7,4 @@ def index(request):
     param = {
         "page_title": "test"
     }
-    return render(request, "customer/customer_template_basic.html", param)
+    return render(request, "admin/admin_login.html", param)
