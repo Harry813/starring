@@ -122,7 +122,7 @@ LANGUAGES = (
     ('en-us', 'English')
 )
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'UTC'
 
