@@ -46,7 +46,7 @@ user_countryCode_text = _("冠码")
 # Translators: 用户模组{活跃状态}
 user_active_text = _('活跃状态')
 
-# Translators: 用户模组{活跃状态}@帮助文本
+# Translators: 用户模组{活跃状态}-帮助文本
 user_active_help_text = _('指定是否应将此用户视为活动用户，请取消选择此项代替删除帐户。')
 
 # Translators: 用户模组{注册日期}
