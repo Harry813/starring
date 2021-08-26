@@ -13,9 +13,10 @@ from ckeditor.fields import RichTextField
 
 from staring.customerSettings import *
 from staring.phoneCode import *
+from staring.text import *
 
 phone_regex = RegexValidator(regex=r'[0-9]{0,14}$',
-                             message=_("电话格式错误"),
+                             message=user_tele_err_invalid,
                              code="InvalidPhone")
 
 
@@ -28,28 +29,28 @@ class User(AbstractUser):
 
     username_validator = UnicodeUsernameValidator()
     username = models.CharField(
-        verbose_name=_('用户名'),
+        verbose_name=user_username_text,
         max_length=150,
         unique=True,
-        help_text=_('必填，至多150字符（仅可包含大小写字母、数字以及@/./+/-/_）'),
+        help_text=user_username_help_text,
         validators=[username_validator, MinLengthValidator(8)],
         error_messages={
-            'unique': _("用户名已存在"),
-            'invalid': _("无效的用户名"),
-            'max_length': _("用户名长度不得超过150字符"),
-            'min_length': _("用户名长度不得少于8字符"),
+            'unique': user_username_err_unique,
+            'invalid': user_username_err_invalid,
+            'max_length': user_username_err_max,
+            'min_length': user_username_err_min,
         },
     )
 
     first_name = None
     last_name = None
     name = models.CharField(
-        verbose_name=_('真实姓名'),
+        verbose_name=user_name_text,
         max_length=150,
         blank=True
     )
     dob = models.DateField(
-        verbose_name=_('生日'),
+        verbose_name=user_dob_text,
         validators=[MinValueValidator(datetime.date(1900, 1, 1)),
                     MaxValueValidator(datetime.date.today())]
     )
@@ -58,17 +59,20 @@ class User(AbstractUser):
         age = datetime.date.today().year - self.dob.year
         return age
 
-    email = models.EmailField(_('邮箱地址'), blank=True)
+    email = models.EmailField(
+        verbose_name=user_email_text,
+        blank=True
+    )
 
     countryCode = models.CharField(
-        verbose_name=_("冠码"),
+        verbose_name=user_countryCode_text,
         max_length=10,
         choices=phone_codes,  # sorted by country name
         # choices=sorted_phone_codes,  # sorted by country code
         default='1'
     )
     tele = models.CharField(
-        verbose_name=_("电话号码"),
+        verbose_name=user_tele_text,
         max_length=15,
         validators=[phone_regex]
     )
@@ -78,66 +82,67 @@ class User(AbstractUser):
         return phone
 
     # hidden, can only accessed by admins
-    is_staff = None
     is_active = models.BooleanField(
-        verbose_name=_('活跃状态'),
+        verbose_name=user_active_text,
         default=True,
-        help_text=_(
-            '指定是否应将此用户视为活动用户，'
-            '请取消选择此项代替删除帐户。'
-        ),
+        help_text=user_active_help_text,
     )
-    date_joined = models.DateTimeField(_('注册日期'), default=timezone.now)
+    date_joined = models.DateTimeField(
+        verbose_name=user_date_join_text,
+        default=timezone.now
+    )
+
     last_change = models.DateTimeField(
-        _("最后修改"),
+        verbose_name=user_last_change_text,
         auto_now=True
     )
 
 
 class Article(models.Model):
     # todo: 添加cover
-    author = models.CharField(
-        verbose_name=_("作者"),
-        max_length=150,
-    )
-
     status = models.CharField(
-        verbose_name=_("文章状态"),
+        verbose_name=article_status_text,
         max_length=10
     )
 
+    title = models.CharField(
+        verbose_name=article_title_text,
+        max_length=150,
+    )
+
+    author = models.CharField(
+        verbose_name=article_author_text,
+        max_length=150,
+    )
+
     lv_require = models.IntegerField(
-        verbose_name=_("需求用户等级"),
+        verbose_name=article_lv_require_text,
         choices=VipLevel,
         default=1
     )
 
     description = models.CharField(
-        verbose_name=_("META标签-描述"),
+        verbose_name=article_meta_description_text,
         max_length=300,
-        help_text=_(
-            "本标签将不在页面中显示。上限300字符"
-        )
+        help_text=article_meta_description_help_text
     )
 
     keywords = models.CharField(
-        verbose_name=_("META标签-关键词"),
+        verbose_name=article_meta_keyword_text,
         max_length=150,
-        help_text=_(
-            "本标签将不在页面中显示，关键字之间请使用逗号分割。上限150字符"
-        )
+        help_text=article_meta_keyword_help_text
     )
 
     content = RichTextField(
-        verbose_name=_("文章主体")
+        verbose_name=article_meta_content_text
     )
 
     create_date = models.DateTimeField(
-        verbose_name=_("创建时间"),
+        verbose_name=article_create_date_text,
         default=timezone.now
     )
 
     last_update = models.DateTimeField(
-        verbose_name=_("最后修改"),
+        verbose_name=article_last_change_text,
         auto_now=True
     )
