@@ -28,7 +28,7 @@ class User(AbstractUser):
 
     username_validator = UnicodeUsernameValidator()
     username = models.CharField(
-        _('用户名'),
+        verbose_name=_('用户名'),
         max_length=150,
         unique=True,
         help_text=_('必填，至多150字符（仅可包含大小写字母、数字以及@/./+/-/_）'),
@@ -43,9 +43,13 @@ class User(AbstractUser):
 
     first_name = None
     last_name = None
-    name = models.CharField(_('真实姓名'), max_length=150, blank=True)
+    name = models.CharField(
+        verbose_name=_('真实姓名'),
+        max_length=150,
+        blank=True
+    )
     dob = models.DateField(
-        _('生日'),
+        verbose_name=_('生日'),
         validators=[MinValueValidator(datetime.date(1900, 1, 1)),
                     MaxValueValidator(datetime.date.today())]
     )
@@ -57,14 +61,14 @@ class User(AbstractUser):
     email = models.EmailField(_('邮箱地址'), blank=True)
 
     countryCode = models.CharField(
-        _("冠码"),
+        verbose_name=_("冠码"),
         max_length=10,
         choices=phone_codes,  # sorted by country name
         # choices=sorted_phone_codes,  # sorted by country code
         default='1'
     )
     tele = models.CharField(
-        _("电话号码"),
+        verbose_name=_("电话号码"),
         max_length=15,
         validators=[phone_regex]
     )
@@ -73,44 +77,10 @@ class User(AbstractUser):
         phone = "+{}-{}".format(self.countryCode, self.tele)
         return phone
 
-    contact_type = models.CharField(
-        _("联系方式"),
-        max_length=20,
-        choices=ContactTypes,
-        default=ContactTypes[0][0]
-    )
-
-    contact_detail = models.CharField(
-        _("联系号码"),
-        max_length=150,
-        blank=True,
-        null=True
-    )
-
-    nationality = CountryField(
-        _("国籍")
-    )
-
-    intention = models.CharField(
-        _("意向项目"),
-        choices=Intentions,
-        max_length=4
-    )
-
-    vip_lv = models.IntegerField(
-        _("用户等级"),
-        choices=VipLevel,
-        default=1
-    )
-
     # hidden, can only accessed by admins
-    is_staff = models.BooleanField(
-        _('员工权限'),
-        default=False,
-        help_text=_('指定用户是否可以登录到此管理站点'),
-    )
+    is_staff = None
     is_active = models.BooleanField(
-        _('活跃状态'),
+        verbose_name=_('活跃状态'),
         default=True,
         help_text=_(
             '指定是否应将此用户视为活动用户，'
@@ -125,26 +95,33 @@ class User(AbstractUser):
 
 
 class Article(models.Model):
+    # todo: 添加cover
     author = models.CharField(
-        _("作者"),
+        verbose_name=_("作者"),
         max_length=150,
     )
 
     status = models.CharField(
-        _("文章状态"),
+        verbose_name=_("文章状态"),
         max_length=10
     )
 
+    lv_require = models.IntegerField(
+        verbose_name=_("需求用户等级"),
+        choices=VipLevel,
+        default=1
+    )
+
     description = models.CharField(
-        _("META标签-描述"),
-        max_length=150,
+        verbose_name=_("META标签-描述"),
+        max_length=300,
         help_text=_(
-            "本标签将不在页面中显示。上限150字符"
+            "本标签将不在页面中显示。上限300字符"
         )
     )
 
     keywords = models.CharField(
-        _("META标签-关键词"),
+        verbose_name=_("META标签-关键词"),
         max_length=150,
         help_text=_(
             "本标签将不在页面中显示，关键字之间请使用逗号分割。上限150字符"
@@ -152,15 +129,15 @@ class Article(models.Model):
     )
 
     content = RichTextField(
-        _("文章主体")
+        verbose_name=_("文章主体")
     )
 
     create_date = models.DateTimeField(
-        _("创建时间"),
+        verbose_name=_("创建时间"),
         default=timezone.now
     )
 
     last_update = models.DateTimeField(
-        _("最后修改"),
+        verbose_name=_("最后修改"),
         auto_now=True
     )
