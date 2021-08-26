@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'staring',
     'customer',
     'admin',
+    'guardian'
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'staring.urls'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+]
 
 TEMPLATES = [
     {
