@@ -2,6 +2,18 @@ from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 
+Languages = [
+    {"CODE": "zh-hans", "NAME": "简体中文", "FLAG": "IMG/FLAGS/CHN.gif"},
+    {"CODE": "en-us", "NAME": "English", "FLAG": "IMG/FLAGS/USA.gif"}
+]
+
+Roles = [
+    ("STAFF", _("职员")),
+    ("LEADER", _("组长")),
+    ("MANAGER", _("经理")),
+    ("DIRECTOR", _("总监"))
+]
+
 NavItems = [
     {"name": _("移民"), "link": "#"},
     {"name": _("留学"), "link": "#"},
@@ -75,6 +87,7 @@ Intentions = (
 )
 
 VipLevel = (
+    (0, _("普通访客")),
     (1, _("IS访客")),
     (2, _("IS会员")),
     (3, _("IS-VIP")),
