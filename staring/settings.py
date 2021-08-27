@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_countries',
     'ckeditor',
     'ckeditor_uploader',
+    'widget_tweaks',
     'staring',
     'customer',
     'admin',
