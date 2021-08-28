@@ -42,6 +42,17 @@ class User(AbstractUser):
         },
     )
 
+    password = models.CharField(
+        verbose_name=_('password'),
+        max_length=128,
+        help_text=user_password_help_text,
+        error_messages={
+            "invalid": user_password_err_invalid,
+            "max_length": user_password_err_max_length,
+            "min_length": user_password_err_min_length
+        }
+    )
+
     first_name = None
     last_name = None
     name = models.CharField(
@@ -51,8 +62,11 @@ class User(AbstractUser):
     )
     dob = models.DateField(
         verbose_name=user_dob_text,
-        validators=[MinValueValidator(datetime.date(1900, 1, 1)),
-                    MaxValueValidator(datetime.date.today())]
+        validators=[
+            MinValueValidator(datetime.date(1900, 1, 1)),
+            MaxValueValidator(datetime.date.today())
+        ],
+        default=datetime.date(1900, 1, 1)
     )
 
     def get_age(self):

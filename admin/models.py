@@ -15,18 +15,20 @@ class Department (models.Model):
     )
 
     dep_name = models.CharField(
-        verbose_name=_("部门名称")
+        verbose_name=_("部门名称"),
+        max_length=40
     )
 
 
-class Staff(AbstractUser):
+class Staff(models.Model):
     staff_id = models.CharField(
         verbose_name=_("员工ID"),
         primary_key=True,
+        max_length=50
     )
 
     user = models.OneToOneField(
-        User,
+        to=User,
         on_delete=models.CASCADE
     )
 

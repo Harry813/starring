@@ -11,7 +11,7 @@ from django.utils.translation import ngettext as _n
 user_username_text = _('用户名')
 
 # Translators: 用户模组{用户名}-帮助文本
-user_username_help_text = _('必填，至多150字符（仅可包含大小写字母、数字以及@/./+/-/_）')
+user_username_help_text = _('8-150字符，仅可包含大小写字母、数字以及@/./+/-/_')
 
 # Translators: 用户模组{用户名}-错误文本@唯一性
 user_username_err_unique = _("用户名已存在")
@@ -24,6 +24,21 @@ user_username_err_max = _("用户名长度不得超过150字符")
 
 # Translators: 用户模组{用户名}-错误文本@过短
 user_username_err_min = _("用户名长度不得少于8字符")
+
+# Translators: 用户模组{密码}
+user_password_text = _('密码')
+
+# Translators: 用户模组{密码}-帮助文本
+user_password_help_text = _('8-128个字符，至少包含1个数字、1个字母')
+
+# Translators: 用户模组{密码}-错误文本@无效
+user_password_err_invalid = _("密码格式错误，请包含8-128个字符，至少包含1个数字、1个字母")
+
+# Translators: 用户模组{密码}-错误文本@过长
+user_password_err_max_length = _("密码格式错误，至多包含128个字符")
+
+# Translators: 用户模组{密码}-错误文本@过短
+user_password_err_min_length = _("密码格式错误，至少包含8个字符")
 
 # Translators: 用户模组{联系电话}
 user_tele_text = _("电话号码")
@@ -92,3 +107,23 @@ article_create_date_text = _("创建时间")
 
 # Translators: 文章模组{最后修改}
 article_last_change_text = _("最后修改")
+
+
+###################################################################################################
+# admin.forms.AdminLoginForm  后台登录表单
+###################################################################################################
+
+# Translators: 后台登录表单{用户名}
+_("用户名")
+
+
+###################################################################################################
+# Validation Errors  验证错误
+###################################################################################################
+
+# Translators: 验证错误{用户相关}@无后台权限/非员工
+UserNoPermit_text = _("用户没有相关权限")
+
+# Translators: 验证错误{用户相关}@用户不存在/用户名错误
+UserNotExist_text = _("用户不存在")
+
