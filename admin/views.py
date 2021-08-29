@@ -55,7 +55,7 @@ def admin_index_view(request):
         "languages": Languages
     }
 
-    return render(request, "admin/admin_index.html")
+    return render(request, "admin/admin_index.html", param)
 
 
 @login_required(login_url="ADMLogin")
