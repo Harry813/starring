@@ -6,16 +6,9 @@ from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 
-from admin.forms import AdminLoginForm
+from admin.forms import *
 from staring.customerSettings import Languages
 from staring.text import *
-
-
-def index(request):
-    param = {
-        "page_title": _("test")
-    }
-    return render(request, "admin/admin_login.html", param)
 
 
 def admin_login_view(request):
@@ -25,8 +18,6 @@ def admin_login_view(request):
 
     if request.method == "POST":
         form = AdminLoginForm(request.POST)
-        param["form"] = form
-
         if form.is_valid():
             username = form.cleaned_data.get("username")
             paswd = form.cleaned_data.get("password")
@@ -39,15 +30,17 @@ def admin_login_view(request):
             if user is not None:
                 if user.is_staff:
                     login(request, user)
-                    response = redirect("ADMIndex")
                     return HttpResponse("<h1>登陆成功</h1>")
                 else:
                     form.add_error(None, ValidationError(UserNoPermit_text, code="UserNoPermit"))
-                    return render(request, "admin/admin_login.html", param)
             else:
                 form.add_error(None, ValidationError(UserNotExist_text, code="UserNotExist"))
-                return render(request, "admin/admin_login.html", param)
+
+            param["form"] = form
+            return render(request, "admin/admin_login.html", param)
+
         else:
+            param["form"] = form
             return render(request, "admin/admin_login.html", param)
     else:
         param["form"] = AdminLoginForm()
