@@ -22,7 +22,7 @@ from staring import settings
 
 urlpatterns = i18n_patterns(
     path('sitemap.xml', sitemap, name='sitemap-xml'),
-    # path('dadmin/', dadmin.site.urls),
+    # path('django-admin/', dadmin.site.urls),
     path('', include("customer.urls")),
     path('admin/', include("admin.urls"))
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\
