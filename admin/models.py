@@ -41,5 +41,6 @@ class Staff(models.Model):
 
     role = models.CharField(
         verbose_name=_("职位"),
-        max_length=50
+        max_length=20,
+        choices=Roles
     )
