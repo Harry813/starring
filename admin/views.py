@@ -52,7 +52,8 @@ def admin_login_view(request):
 def admin_index_view(request):
     param = {
         "page_title": _("星环-后台"),
-        "languages": Languages
+        "languages": Languages,
+        "user": request.user
     }
 
     return render(request, "admin/admin_index.html", param)

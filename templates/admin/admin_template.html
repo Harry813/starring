@@ -14,7 +14,7 @@
                         <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
                             <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
                                 <div class="simplebar-content" style="padding: 0px;">
-                                    <a class="sidebar-brand" href="index.html">
+                                    <a class="sidebar-brand" href="{% url 'ADMIndex' %}">
                                         星环
                                     </a>
 
@@ -27,7 +27,7 @@
                                             <div class="flex-grow-1 ps-2">
                                                 <a class="sidebar-user-title dropdown-toggle" href="#"
                                                    data-bs-toggle="dropdown">
-                                                    用户名
+                                                    {{ user }}
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-start">
                                                     <a class="dropdown-item" href="pages-profile.html">
@@ -74,7 +74,7 @@
                                                         </svg>
                                                         Help Center</a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#">Log out</a>
+                                                    <a class="dropdown-item" href="#">{% translate "登出" %}</a>
                                                 </div>
 
                                                 <div class="sidebar-user-subtitle">Designer</div>
