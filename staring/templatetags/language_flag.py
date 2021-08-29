@@ -5,6 +5,7 @@ from staring.customerSettings import Languages
 register = template.Library()
 
 
+@register.simple_tag
 def get_flag_by_code(code):
     for lang in Languages:
         if lang["CODE"] == code:
