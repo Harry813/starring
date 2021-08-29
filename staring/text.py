@@ -49,6 +49,11 @@ user_tele_err_invalid = _("电话格式错误")
 # Translators: 用户模组{真实姓名}
 user_name_text = _('真实姓名')
 
+# Translators: 用户模组{头像}
+user_avatar_text = _('头像')
+
+user_avatar_help_text = _('')
+
 # Translators: 用户模组{生日}
 user_dob_text = _('生日')
 

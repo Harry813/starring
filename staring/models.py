@@ -92,6 +92,16 @@ class User(AbstractUser):
         # choices=sorted_phone_codes,  # sorted by country code
         default='1'
     )
+
+    avatar = models.ImageField(
+        verbose_name=user_avatar_text,
+        default="",
+        upload_to="avatar"
+    )
+
+    def get_avatar_url(self):
+        return + str(self.avatar)
+
     tele = models.CharField(
         verbose_name=user_tele_text,
         max_length=15,
