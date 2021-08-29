@@ -29,7 +29,8 @@ class Staff(models.Model):
 
     user = models.OneToOneField(
         to=User,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        limit_choices_to={"is_staff": True}
     )
 
     department = models.ForeignKey(
@@ -40,6 +41,5 @@ class Staff(models.Model):
 
     role = models.CharField(
         verbose_name=_("职位"),
-        max_length=20,
-        choices=Roles
+        max_length=50
     )
