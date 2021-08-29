@@ -40,14 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # installed apps
     'django_countries',
     'ckeditor',
     'ckeditor_uploader',
     'widget_tweaks',
+    'guardian',
+
+    # customer apps
     'staring',
     'customer',
-    'admin',
-    'guardian'
+    'admin'
 ]
 
 MIDDLEWARE = [
