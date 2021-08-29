@@ -25,6 +25,7 @@ urlpatterns = i18n_patterns(
     # path('dadmin/', dadmin.site.urls),
     path('', include("customer.urls")),
     path('admin/', include("admin.urls"))
-) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\
+              + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
