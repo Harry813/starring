@@ -22,8 +22,9 @@
                                     <div class="sidebar-user">
                                         <div class="d-flex justify-content-center">
                                             <div class="flex-shrink-0">
-                                                <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1"
-                                                     alt="头像预留空间">
+                                                <img src="{% if user.avatar %}{{ user.avatar.image }}{% else %}{% static 'IMG/default_avatar.jpg' %}{% endif %}"
+                                                     class="avatar img-fluid rounded me-1"
+                                                     alt="{{ user.get_display_name }}">
                                             </div>
                                             <div class="flex-grow-1 ps-2">
                                                 <a class="sidebar-user-title dropdown-toggle" href="#"
@@ -428,8 +429,10 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
                                 {% for lang in languages %}
-                                    <a class="dropdown-item" href="{% change_lang lang.CODE %}" hreflang="{{ lang.CODE }}">
-                                        <img src="{% static lang.FLAG %}" alt="{{ lang.NAME }}" width="20" class="align-middle me-1">
+                                    <a class="dropdown-item" href="{% change_lang lang.CODE %}"
+                                       hreflang="{{ lang.CODE }}">
+                                        <img src="{% static lang.FLAG %}" alt="{{ lang.NAME }}" width="20"
+                                             class="align-middle me-1">
                                         <span class="align-middle">{{ lang.NAME }}</span>
                                     </a>
                                 {% endfor %}
@@ -448,7 +451,9 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-icon pe-md-0 dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                                <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded" alt="{{ user.get_display_name }}">
+                                <img src="
+                                        {% if user.avatar %}{{ user.avatar.image }}{% else %}{% static 'IMG/default_avatar.jpg' %}{% endif %}"
+                                     class="avatar img-fluid rounded" alt="{{ user.get_display_name }}">
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="pages-profile.html">

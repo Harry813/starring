@@ -96,11 +96,9 @@ class User(AbstractUser):
     avatar = models.ImageField(
         verbose_name=user_avatar_text,
         default="",
-        upload_to="avatar"
+        upload_to="avatar",
+        blank=True
     )
-
-    def get_avatar_url(self):
-        return + str(self.avatar)
 
     tele = models.CharField(
         verbose_name=user_tele_text,
