@@ -20,6 +20,7 @@ class AdminLoginForm(forms.Form):
             "invalid": user_username_err_invalid,
             "max_length": user_username_err_max,
             "min_length": user_username_err_min,
+            "UserNotExist": UserNotExist_text,
         },
     )
 
