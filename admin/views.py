@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -30,7 +31,7 @@ def admin_login_view(request):
             if user is not None:
                 if user.is_staff:
                     login(request, user)
-                    return HttpResponse("<h1>登陆成功</h1>")
+                    return redirect("ADMIndex")
                 else:
                     form.add_error(None, ValidationError(UserNoPermit_text, code="UserNoPermit"))
             else:
@@ -47,9 +48,26 @@ def admin_login_view(request):
         return render(request, "admin/admin_login.html", param)
 
 
+@login_required(login_url="ADMLogin")
+def admin_index_view(request):
+    param = {
+        "page_title": _("星环-后台"),
+        "languages": Languages
+    }
+
+    return render(request, "admin/admin_index.html")
+
+
+@login_required(login_url="ADMLogin")
 def admin_article_create_view(request):
     param = {
         "page_title": _("编辑"),
         "languages": Languages
     }
+
+    if request.method == "POST":
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            pass
+
     return render(request, "admin/admin_template.html", param)
