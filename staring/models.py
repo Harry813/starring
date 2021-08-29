@@ -60,6 +60,13 @@ class User(AbstractUser):
         max_length=150,
         blank=True
     )
+
+    def get_display_name(self):
+        if self.name:
+            return self.name
+        elif self.username:
+            return self.username
+
     dob = models.DateField(
         verbose_name=user_dob_text,
         validators=[
