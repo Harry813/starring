@@ -34,8 +34,9 @@
                                                 {% if form.username.help_text %}
                                                     <p class="small">{{ form.username.help_text }}</p>
                                                 {% elif form.username.errors %}
-                                                    <p class="small"
-                                                       style="color: red;">{{ form.username.errors.0 }}</p>
+                                                    <p class="small" style="color: red;">
+                                                        {{ form.username.errors.0 }}
+                                                    </p>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -57,7 +58,7 @@
                                             </div>
                                         </div>
 
-                                        <div>
+                                        <div class="mb-3">
                                             {% if form.non_field_errors %}
                                                 <span class="text-danger">{{ form.non_field_errors.0 }}</span>
                                             {% else %}
