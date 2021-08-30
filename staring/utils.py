@@ -1,4 +1,5 @@
 from .customerSettings import Languages
+from .text import *
 
 
 def get_language_codes():
@@ -6,3 +7,10 @@ def get_language_codes():
     for lang in Languages:
         langs.append((lang["CODE"], lang["NAME"]))
     return tuple(langs)
+
+
+def get_basic_info():
+    param = {
+        "brandname": brandname
+    }
+    return param
