@@ -25,7 +25,7 @@
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMArticleIndex' %}active{% endif %}">
-                        <a class="sidebar-link" href="{% url 'ADMArticleIndex' %}">
+                        <a class="sidebar-link" href="{% url 'ADMArticleIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第一部分@文章管理 #}
                             <i class="align-middle" data-feather="book"></i> <span class="align-middle">{% translate '文章管理' %}</span>
                         </a>
