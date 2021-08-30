@@ -11,6 +11,6 @@ def get_language_codes():
 
 def get_basic_info():
     param = {
-        "brandname": brandname
+        "brandname": brand_name
     }
     return param
