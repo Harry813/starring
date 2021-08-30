@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext as _
@@ -73,6 +74,25 @@ def admin_index_view(request):
 
 
 @login_required(login_url="ADMLogin")
+def admin_article_index_view(request, page):
+    param = {
+        "page_title": _("星环-文章管理"),
+        "languages": Languages,
+        "active_page": "ADMArticleIndex",
+        "info": {**get_basic_info(), **get_admin_info()},
+    }
+
+    p = Paginator(Article.objects.all(), 10)
+    article_list = p.get_page(page)
+    param["paginator"] = p
+    param["article_list"] = article_list
+    param["current_page"] = page
+    param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
+
+    return render(request, "admin/admin_article_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
 def admin_article_create_view(request):
     param = {
         "page_title": _("编辑"),
@@ -85,5 +105,6 @@ def admin_article_create_view(request):
         form = ArticleForm(request.POST)
         if form.is_valid():
             pass
-
-    return render(request, "admin/admin_template.html", param)
+        else:
+            param["form"] = AdminLoginForm()
+            return render(request, "admin/admin_login.html", param)
