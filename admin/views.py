@@ -9,8 +9,10 @@ from django.utils.translation import ngettext as _n
 
 from admin.forms import *
 from admin.models import *
+from admin.utils import get_admin_info
 from staring.customerSettings import Languages
 from staring.text import *
+from staring.utils import get_basic_info
 
 
 def admin_login_view(request):
@@ -56,13 +58,15 @@ def admin_index_view(request):
         "page_title": _("星环-后台"),
         "languages": Languages,
         "user": request.user,
+        "active_page": "ADMIndex",
+        "info": {**get_basic_info(), **get_admin_info()}
     }
 
     try:
         staff_profile = Staff.objects.get(user=request.user)
         param["role"] = staff_profile.role
         param["department"] = staff_profile.department
-    except Staff.DoesNotExist as e:
+    except Staff.DoesNotExist:
         pass
 
     return render(request, "admin/admin_index.html", param)
@@ -73,6 +77,8 @@ def admin_article_create_view(request):
     param = {
         "page_title": _("编辑"),
         "languages": Languages,
+        "active_page": "ADMArticleCreate",
+        "info": {**get_basic_info(), **get_admin_info()}
     }
 
     if request.method == "POST":
