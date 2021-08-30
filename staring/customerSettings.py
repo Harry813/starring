@@ -106,3 +106,11 @@ ArticleStatus = (
     ("DRAFT", _("正在编辑")),
     ("DELETE", _("已删除"))
 )
+
+ADMMegaMenu = (
+    {"name": _("Test1"),
+     "items": [
+         {"name": _("Test1-1"), "linkName": "#"},
+         {"name": _("Test1-2"), "linkName": "#"},
+     ]},
+)

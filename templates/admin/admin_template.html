@@ -42,37 +42,16 @@
 
                         <div class="dropdown-menu dropdown-menu-start dropdown-mega" aria-labelledby="servicesDropdown">
                             <div class="d-md-flex align-items-start justify-content-start">
-                                <div class="dropdown-mega-list">
-                                    <div class="dropdown-header">UI Elements</div>
-                                    <a class="dropdown-item" href="#">Alerts</a>
-                                    <a class="dropdown-item" href="#">Buttons</a>
-                                    <a class="dropdown-item" href="#">Cards</a>
-                                    <a class="dropdown-item" href="#">Carousel</a>
-                                    <a class="dropdown-item" href="#">General</a>
-                                    <a class="dropdown-item" href="#">Grid</a>
-                                    <a class="dropdown-item" href="#">Modals</a>
-                                    <a class="dropdown-item" href="#">Tabs</a>
-                                    <a class="dropdown-item" href="#">Typography</a>
-                                </div>
-                                <div class="dropdown-mega-list">
-                                    <div class="dropdown-header">Forms</div>
-                                    <a class="dropdown-item" href="#">Layouts</a>
-                                    <a class="dropdown-item" href="#">Basic Inputs</a>
-                                    <a class="dropdown-item" href="#">Input Groups</a>
-                                    <a class="dropdown-item" href="#">Advanced Inputs</a>
-                                    <a class="dropdown-item" href="#">Editors</a>
-                                    <a class="dropdown-item" href="#">Validation</a>
-                                    <a class="dropdown-item" href="#">Wizard</a>
-                                </div>
-                                <div class="dropdown-mega-list">
-                                    <div class="dropdown-header">Tables</div>
-                                    <a class="dropdown-item" href="#">Basic Tables</a>
-                                    <a class="dropdown-item" href="#">Responsive Table</a>
-                                    <a class="dropdown-item" href="#">Table with Buttons</a>
-                                    <a class="dropdown-item" href="#">Column Search</a>
-                                    <a class="dropdown-item" href="#">Muulti Selection</a>
-                                    <a class="dropdown-item" href="#">Ajax Sourced Data</a>
-                                </div>
+                                {% for li in info.mega_menu %}
+                                    <div class="dropdown-mega-list">
+                                        <div class="dropdown-header">{{ li.name }}</div>
+                                        {% for item in li.items %}
+                                            {% with url_name=li.linkName %}
+                                                <a class="dropdown-item" href="{% if url_name == "" or "#" %}#{% else %}{% url url_name %}{% endif %}">{{ item.name }}</a>
+                                            {% endwith %}
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </li>
