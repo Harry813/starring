@@ -148,7 +148,7 @@ class Article(models.Model):
     lv_require = models.IntegerField(
         verbose_name=article_lv_require_text,
         choices=VipLevel,
-        default=1
+        default=0
     )
 
     description = models.CharField(
