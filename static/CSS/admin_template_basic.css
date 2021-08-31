@@ -3,9 +3,14 @@
     color: #939ba2 !important;
 }
 
-.action-button:hover {
+.edit-button:hover {
     text-decoration: none !important;
     color: #555555 !important;
+}
+
+.trash-button:hover {
+    text-decoration: none !important;
+    color: #aa0000 !important;
 }
 
 .card > table > thead > tr > th:first-child{

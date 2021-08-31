@@ -50,6 +50,7 @@
                                     <i class="align-middle" data-feather="plus"></i> {% translate '创建文章' %}
                                 </a>
                             </div>
+                            删除功能暂未上线
                         </div>
                     </div>
 
@@ -60,7 +61,7 @@
                             <th style="width:30%;">{% translate '文章标题' %}</th>
                             <th style="width:25%">{% translate '文章标题' %}</th>
                             <th class="d-none d-md-table-cell" style="width:25%">{% translate '文章状态' %}</th>
-                            <th>Actions</th>
+                            <th>{% translate '操作' %}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -71,10 +72,11 @@
                                 <td>{{ article.title }}</td>
                                 <td class="d-none d-md-table-cell">{{ article.status }}</td>
                                 <td class="table-action">
-                                    <a href="#" class="action-button">
+                                    <a href="{% url 'ADMArticleEdit' article.id %}" class="action-button edit-button">
                                         <i class="align-middle" data-feather="edit-2"></i>
                                     </a>
-                                    <a href="#" class="action-button">
+
+                                    <a class="action-button trash-button">
                                         <i class="align-middle" data-feather="trash-2"></i>
                                     </a>
                                 </td>
@@ -118,11 +120,13 @@
                                         </a>
                                     {% endfor %}
 
-                                    <a href="{% if article_list.has_next %}{% url 'ADMArticleIndex' article_list.next_page_number %}{% endif %}"
+                                    <a href="
+                                            {% if article_list.has_next %}{% url 'ADMArticleIndex' article_list.next_page_number %}{% endif %}"
                                        class="btn btn-outline-primary {% if not article_list.has_next %}disabled{% endif %}">
                                         <i class="align-middle" data-feather="chevron-right"></i>
                                     </a>
-                                    <a href="{% if current_page != paginator.num_pages %}{% url 'ADMArticleIndex' paginator.num_pages %}{% endif %}"
+                                    <a href="
+                                            {% if current_page != paginator.num_pages %}{% url 'ADMArticleIndex' paginator.num_pages %}{% endif %}"
                                        class="btn btn-outline-primary {% if current_page == paginator.num_pages %}disabled{% endif %}">
                                         <i class="align-middle" data-feather="chevrons-right"></i>
                                     </a>
