@@ -131,7 +131,8 @@ class Article(models.Model):
     # todo: 添加cover
     status = models.CharField(
         verbose_name=article_status_text,
-        max_length=10
+        max_length=10,
+        choices=ArticleStatus,
     )
 
     title = models.CharField(
@@ -147,19 +148,21 @@ class Article(models.Model):
     lv_require = models.IntegerField(
         verbose_name=article_lv_require_text,
         choices=VipLevel,
-        default=1
+        default=0
     )
 
     description = models.CharField(
         verbose_name=article_meta_description_text,
         max_length=300,
-        help_text=article_meta_description_help_text
+        help_text=article_meta_description_help_text,
+        blank=True
     )
 
     keywords = models.CharField(
         verbose_name=article_meta_keyword_text,
         max_length=150,
-        help_text=article_meta_keyword_help_text
+        help_text=article_meta_keyword_help_text,
+        blank=True
     )
 
     content = RichTextField(

@@ -1,3 +1,4 @@
+from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.contrib.auth import authenticate
 from django.core.exceptions import PermissionDenied, ValidationError
@@ -49,3 +50,6 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         exclude = ["last_update", "create_date"]
+        widgets = {
+            "content": CKEditorWidget()
+        }

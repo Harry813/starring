@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
@@ -73,17 +74,69 @@ def admin_index_view(request):
 
 
 @login_required(login_url="ADMLogin")
+def admin_article_index_view(request, page):
+    param = {
+        "page_title": _("星环-文章管理"),
+        "languages": Languages,
+        "active_page": "ADMArticleIndex",
+        "info": {**get_basic_info(), **get_admin_info()},
+    }
+
+    requirement = ["PUBLISH", "PENDING", "REJECT", "REVISED", "DRAFT"]
+
+    p = Paginator(Article.objects.filter(status__in=requirement), 10)
+    article_list = p.get_page(page)
+    param["paginator"] = p
+    param["article_list"] = article_list
+    param["current_page"] = page
+    param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
+
+    return render(request, "admin/admin_article_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
 def admin_article_create_view(request):
     param = {
         "page_title": _("编辑"),
         "languages": Languages,
-        "active_page": "ADMArticleCreate",
+        "active_page": "ADMArticleIndex",
         "info": {**get_basic_info(), **get_admin_info()}
     }
 
     if request.method == "POST":
         form = ArticleForm(request.POST)
         if form.is_valid():
-            pass
+            form.save()
+            # Todo: add a permission check
+            return redirect("ADMArticleIndex", 1)
+        else:
+            param["form"] = ArticleForm()
+            return render(request, "admin/admin_article_create.html", param)
+    else:
+        param["form"] = ArticleForm()
+        return render(request, "admin/admin_article_create.html", param)
 
-    return render(request, "admin/admin_template.html", param)
+
+@login_required(login_url="ADMLogin")
+def admin_article_edit_view(request, article_id):
+    param = {
+        "page_title": _("编辑"),
+        "languages": Languages,
+        "active_page": "ADMArticleIndex",
+        "info": {**get_basic_info(), **get_admin_info()}
+    }
+
+    article = get_object_or_404(Article, id=article_id)
+
+    if request.method == "POST":
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            # Todo: add a permission check
+            return redirect("ADMArticleIndex", 1)
+        else:
+            param["form"] = ArticleForm(instance=article)
+            return render(request, "admin/admin_article_create.html", param)
+    else:
+        param["form"] = ArticleForm(instance=article)
+        return render(request, "admin/admin_article_create.html", param)

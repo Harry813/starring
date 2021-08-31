@@ -18,6 +18,7 @@
 
     <link href="{% static 'adminkit/dist/css/app.css' %}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    {% block css %}{% endblock %}
 </head>
 
 <body>
@@ -25,7 +26,7 @@
 {% block basic_content %}{% endblock %}
 
 <script src="{% static 'adminkit/dist/js/app.js' %}"></script>
-
+{% block js %}{% endblock %}
 </body>
 
 </html>

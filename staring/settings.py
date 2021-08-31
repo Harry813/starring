@@ -165,3 +165,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CKEditor Setting
 CKEDITOR_UPLOAD_PATH = "media/CK"
 CKEDITOR_JQUERY_URL = "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'tabSpaces': 4,
+        'width': '100%',
+    },
+}

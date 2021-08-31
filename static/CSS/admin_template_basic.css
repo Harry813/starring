@@ -1,0 +1,30 @@
+.action-button {
+    text-decoration: none !important;
+    color: #939ba2 !important;
+}
+
+.edit-button:hover {
+    text-decoration: none !important;
+    color: #555555 !important;
+}
+
+.trash-button:hover {
+    text-decoration: none !important;
+    color: #aa0000 !important;
+}
+
+.card > table > thead > tr > th:first-child{
+    padding-left: 1.25rem;
+}
+
+.card > table > thead > tr > th:last-child{
+    padding-right: 1.25rem;
+}
+
+.card > table > tbody > tr > td:first-child{
+    padding-left: 1.25rem;
+}
+
+.card > table > tbody > tr > td:last-child{
+    padding-right: 1.25rem;
+}
