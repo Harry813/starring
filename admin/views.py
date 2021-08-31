@@ -1,8 +1,8 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
@@ -22,6 +22,14 @@ def admin_login_view(request):
         "languages": Languages,
     }
 
+    try:
+        next_url = request.POST.get("next")
+    except IndexError:
+        next_url = None
+
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(next_url)
+
     if request.method == "POST":
         form = AdminLoginForm(request.POST)
         if form.is_valid():
@@ -36,7 +44,10 @@ def admin_login_view(request):
             if user is not None:
                 if user.is_staff:
                     login(request, user)
-                    return redirect("ADMIndex")
+                    if next_url:
+                        return HttpResponseRedirect(next_url)
+                    else:
+                        return redirect("ADMIndex")
                 else:
                     form.add_error(None, ValidationError(UserNoPermit_text, code="UserNoPermit"))
             else:
@@ -51,6 +62,11 @@ def admin_login_view(request):
     else:
         param["form"] = AdminLoginForm()
         return render(request, "admin/admin_login.html", param)
+
+
+def admin_logout_view(request):
+    logout(request)
+    return redirect("ADMLogin")
 
 
 @login_required(login_url="ADMLogin")
