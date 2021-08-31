@@ -38,7 +38,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col mt-0">
-                                <h5 class="card-title">{% translate '文章总数' %}</h5>
+                                <h5 class="card-title">{% translate '文章操作' %}</h5>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-3">
-                                <a href="#" class="btn btn-primary w-100">
+                                <a href="{% url 'ADMArticleCreate' %}" class="btn btn-primary w-100">
                                     <i class="align-middle" data-feather="plus"></i> {% translate '创建文章' %}
                                 </a>
                             </div>

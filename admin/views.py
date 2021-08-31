@@ -97,14 +97,19 @@ def admin_article_create_view(request):
     param = {
         "page_title": _("编辑"),
         "languages": Languages,
-        "active_page": "ADMArticleCreate",
+        "active_page": "ADMArticleIndex",
         "info": {**get_basic_info(), **get_admin_info()}
     }
 
     if request.method == "POST":
         form = ArticleForm(request.POST)
         if form.is_valid():
-            pass
+            form.save()
+            # Todo: add a permission check
+            return redirect("ADMArticleIndex", 1)
         else:
-            param["form"] = AdminLoginForm()
-            return render(request, "admin/admin_login.html", param)
+            param["form"] = ArticleForm()
+            return render(request, "admin/admin_article_create.html", param)
+    else:
+        param["form"] = ArticleForm()
+        return render(request, "admin/admin_article_create.html", param)
