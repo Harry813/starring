@@ -1,15 +1,17 @@
 from django.shortcuts import render
+from django.utils.translation import gettext as _
+from django.utils.translation import pgettext as _p
+from django.utils.translation import ngettext as _n
 
 # Create your views here.
-from .api import *
+from customer.utils import get_customer_info
 
 
 def index(request):
     param = {
-        "page_title": "test",
-        "indexList": IndexListItems
+        "page_title": _("星环首页"),
+        **get_customer_info(),
     }
-    param.update(getPanelInfo())
     return render(request, "customer/index.html", param)
 
 
