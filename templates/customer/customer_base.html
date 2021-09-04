@@ -93,9 +93,11 @@
     </li>
 </ul>
 
-<div>
-    <img src="{% static 'IMG/flag.png' %}" alt="Canadian flag" class="w-100">
-</div>
+{% if title_image %}
+    <div>
+        <img src="{% static 'IMG/flag.png' %}" alt="Canadian flag" class="w-100">
+    </div>
+{% endif %}
 
 {# 内容 #}
 {% block basic_template_content %}{% endblock %}
