@@ -76,7 +76,8 @@ def admin_index_view(request):
         "languages": Languages,
         "user": request.user,
         "active_page": "ADMIndex",
-        "info": {**get_basic_info(), **get_admin_info()}
+        **get_basic_info(),
+        **get_admin_info()
     }
 
     try:
@@ -95,7 +96,8 @@ def admin_article_index_view(request, page):
         "page_title": _("星环-文章管理"),
         "languages": Languages,
         "active_page": "ADMArticleIndex",
-        "info": {**get_basic_info(), **get_admin_info()},
+        **get_basic_info(),
+        **get_admin_info(),
     }
 
     requirement = ["PUBLISH", "PENDING", "REJECT", "REVISED", "DRAFT"]
@@ -116,7 +118,8 @@ def admin_article_create_view(request):
         "page_title": _("编辑"),
         "languages": Languages,
         "active_page": "ADMArticleIndex",
-        "info": {**get_basic_info(), **get_admin_info()}
+        **get_basic_info(),
+        **get_admin_info()
     }
 
     if request.method == "POST":
@@ -139,7 +142,8 @@ def admin_article_edit_view(request, article_id):
         "page_title": _("编辑"),
         "languages": Languages,
         "active_page": "ADMArticleIndex",
-        "info": {**get_basic_info(), **get_admin_info()}
+        **get_basic_info(),
+        **get_admin_info()
     }
 
     article = get_object_or_404(Article, id=article_id)
