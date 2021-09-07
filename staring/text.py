@@ -103,13 +103,13 @@ article_lv_require_text = _("需求用户等级")
 # Translators: 文章模组{Meta描述}
 article_meta_description_text = _("META标签-描述")
 
-# Translators: 文章模组{Meta描述}@帮助文本
+# Translators: 文章模组{Meta描述}-帮助文本
 article_meta_description_help_text = _("本标签将不在页面中显示。上限300字符")
 
 # Translators: 文章模组{Meta关键词}
 article_meta_keyword_text = _("META标签-关键词")
 
-# Translators: 文章模组{Meta关键词}@帮助文本
+# Translators: 文章模组{Meta关键词}-帮助文本
 article_meta_keyword_help_text = _("本标签将不在页面中显示，关键字之间请使用逗号分割。上限150字符")
 
 # Translators: 文章模组{文章主体}
