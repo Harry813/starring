@@ -60,6 +60,7 @@ user_name_text = _('真实姓名')
 # Translators: 用户模组{头像}
 user_avatar_text = _('头像')
 
+# Translators: 用户模组{头像}-帮助文本
 user_avatar_help_text = _('')
 
 # Translators: 用户模组{生日}
@@ -123,11 +124,29 @@ article_last_change_text = _("最后修改")
 
 
 ###################################################################################################
-# admin.forms.AdminLoginForm  后台登录表单
+# customer.forms.ContactForm  咨询表单翻译
 ###################################################################################################
 
-# Translators: 后台登录表单{用户名}
-# _("用户名")
+# Translators: 咨询表单{姓名}
+ContactForm_name_text = _("姓名 | Name")
+
+# Translators: 咨询表单{姓名}-占位符
+ContactForm_name_placeholder = _("您的全名")
+
+# Translators: 咨询表单{姓名}-错误文本@required
+ContactForm_name_err_required = _("请填写您的姓名")
+
+# Translators: 咨询表单{邮箱}
+ContactForm_email_text = _("电子邮箱 | Email")
+
+# Translators: 咨询表单{邮箱}-占位符
+ContactForm_email_placeholder = _("您的电子邮箱")
+
+# Translators: 咨询表单{联系方式}
+ContactForm_contact_text = _("联系方式 | Contact Details")
+
+# Translators: 咨询表单{联系方式}-占位符
+ContactForm_contact_placeholder = _("您的联系方式")
 
 
 ###################################################################################################
