@@ -148,6 +148,12 @@ ContactForm_contact_text = _("联系方式 | Contact Details")
 # Translators: 咨询表单{联系方式}-占位符
 ContactForm_contact_placeholder = _("您的联系方式")
 
+# Translators: 咨询表单{问题}
+ContactForm_query_text = _("简述问题 | Brief your questions")
+
+# Translators: 咨询表单{问题}-占位符
+ContactForm_query_placeholder = _("请留下你的问题，我们将尽快联系你")
+
 
 ###################################################################################################
 # Validation Errors  验证错误
