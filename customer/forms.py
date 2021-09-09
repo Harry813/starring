@@ -4,7 +4,6 @@ from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 
 from staring.text import *
-from staring.utils import wechat_icon
 
 
 class ContactForm(forms.Form):
