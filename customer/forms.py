@@ -22,15 +22,16 @@ class ContactForm(forms.Form):
         widget=forms.EmailInput(attrs={"placeholder": ContactForm_email_placeholder})
     )
 
-    contact_method = forms.ChoiceField(
-        label="",
-        choices=(
-            ('TELE', '<i class="bi bi-telephone-fill"></i>'),
-            ('WECT', wechat_icon)
+    contact_detail = forms.CharField(
+        label=ContactForm_contact_text,
+        widget=forms.EmailInput(
+            attrs={"placeholder": ContactForm_contact_placeholder}
         )
     )
 
-    contact_detail = forms.CharField(
-        label=ContactForm_contact_text,
-        widget=forms.EmailInput(attrs={"placeholder": ContactForm_contact_placeholder})
+    query = forms.CharField(
+        label=ContactForm_query_text,
+        widget=forms.Textarea(
+            attrs={"placeholder": ContactForm_query_placeholder}
+        )
     )
