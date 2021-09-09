@@ -23,7 +23,7 @@ class ContactForm(forms.Form):
 
     contact_detail = forms.CharField(
         label=ContactForm_contact_text,
-        widget=forms.EmailInput(
+        widget=forms.TextInput(
             attrs={"placeholder": ContactForm_contact_placeholder}
         )
     )
