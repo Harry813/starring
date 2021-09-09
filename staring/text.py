@@ -60,6 +60,7 @@ user_name_text = _('真实姓名')
 # Translators: 用户模组{头像}
 user_avatar_text = _('头像')
 
+# Translators: 用户模组{头像}-帮助文本
 user_avatar_help_text = _('')
 
 # Translators: 用户模组{生日}
@@ -103,13 +104,13 @@ article_lv_require_text = _("需求用户等级")
 # Translators: 文章模组{Meta描述}
 article_meta_description_text = _("META标签-描述")
 
-# Translators: 文章模组{Meta描述}@帮助文本
+# Translators: 文章模组{Meta描述}-帮助文本
 article_meta_description_help_text = _("本标签将不在页面中显示。上限300字符")
 
 # Translators: 文章模组{Meta关键词}
 article_meta_keyword_text = _("META标签-关键词")
 
-# Translators: 文章模组{Meta关键词}@帮助文本
+# Translators: 文章模组{Meta关键词}-帮助文本
 article_meta_keyword_help_text = _("本标签将不在页面中显示，关键字之间请使用逗号分割。上限150字符")
 
 # Translators: 文章模组{文章主体}
@@ -123,11 +124,35 @@ article_last_change_text = _("最后修改")
 
 
 ###################################################################################################
-# admin.forms.AdminLoginForm  后台登录表单
+# customer.forms.ContactForm  咨询表单翻译
 ###################################################################################################
 
-# Translators: 后台登录表单{用户名}
-# _("用户名")
+# Translators: 咨询表单{姓名}
+ContactForm_name_text = _("姓名 | Name")
+
+# Translators: 咨询表单{姓名}-占位符
+ContactForm_name_placeholder = _("您的全名")
+
+# Translators: 咨询表单{姓名}-错误文本@required
+ContactForm_name_err_required = _("请填写您的姓名")
+
+# Translators: 咨询表单{邮箱}
+ContactForm_email_text = _("电子邮箱 | Email")
+
+# Translators: 咨询表单{邮箱}-占位符
+ContactForm_email_placeholder = _("您的电子邮箱")
+
+# Translators: 咨询表单{联系方式}
+ContactForm_contact_text = _("联系方式 | Contact Details")
+
+# Translators: 咨询表单{联系方式}-占位符
+ContactForm_contact_placeholder = _("您的联系方式")
+
+# Translators: 咨询表单{问题}
+ContactForm_query_text = _("简述问题 | Brief your questions")
+
+# Translators: 咨询表单{问题}-占位符
+ContactForm_query_placeholder = _("请留下你的问题，我们将尽快联系你")
 
 
 ###################################################################################################

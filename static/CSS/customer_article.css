@@ -1,0 +1,40 @@
+.star-article .h1, h1 {
+    font-family: Noto Sans CJK SC, serif;
+    font-weight: 700;
+    margin-block-end: 2rem;
+    margin-block-start: 0.2rem;
+    margin-inline-end: 0;
+    margin-inline-start: 0;
+    color: #0A1A38;
+}
+
+.star-article .h2, h2 {
+    font-family: Noto Sans CJK SC, serif;
+    font-weight: 600;
+    margin-block-end: 0.75rem;
+    margin-block-start: 3rem;
+    margin-inline-end: 0;
+    margin-inline-start: 0;
+    font-size: 1.25rem;
+    color: #0A1A38;
+}
+
+.star-article p {
+    font-family: Noto Sans CJK SC, serif;
+    font-weight: 500;
+    margin-block-end: 1.5rem;
+    margin-block-start: 0;
+    margin-inline-end: 0;
+    margin-inline-start: 0;
+    line-height: 130%;
+}
+
+.star-article li {
+    font-family: Noto Sans CJK SC, serif;
+    font-weight: 500;
+    margin-block-end: 1.5rem;
+    margin-block-start: .75rem;
+    margin-inline-end: 0;
+    margin-inline-start: 0;
+    line-height: 130%;
+}

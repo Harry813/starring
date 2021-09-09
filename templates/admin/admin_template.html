@@ -8,7 +8,7 @@
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="{% url 'ADMIndex' %}">
-                    <span class="align-middle">{{ info.brandname }}</span>
+                    <span class="align-middle">{{ brandname }}</span>
                 </a>
 
                 <ul class="sidebar-nav">
@@ -49,7 +49,7 @@
 
                         <div class="dropdown-menu dropdown-menu-start dropdown-mega" aria-labelledby="servicesDropdown">
                             <div class="d-md-flex align-items-start justify-content-start">
-                                {% for li in info.mega_menu %}
+                                {% for li in mega_menu %}
                                     <div class="dropdown-mega-list">
                                         <div class="dropdown-header">{{ li.name }}</div>
                                         {% for item in li.items %}
