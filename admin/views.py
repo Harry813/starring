@@ -27,7 +27,7 @@ def admin_login_view(request):
     except IndexError:
         next_url = None
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return HttpResponseRedirect(next_url)
 
     if request.method == "POST":
