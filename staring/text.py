@@ -124,35 +124,65 @@ article_last_change_text = _("最后修改")
 
 
 ###################################################################################################
-# customer.forms.ContactForm  咨询表单翻译
+# customer.models.Consult  咨询表单翻译
 ###################################################################################################
 
 # Translators: 咨询表单{姓名}
-ContactForm_name_text = _("姓名 | Name")
+consult_name_text = _("姓名 | Name")
 
 # Translators: 咨询表单{姓名}-占位符
-ContactForm_name_placeholder = _("您的全名")
+consult_name_placeholder = _("您的全名")
 
 # Translators: 咨询表单{姓名}-错误文本@required
-ContactForm_name_err_required = _("请填写您的姓名")
+consult_name_err_required = _("请填写您的姓名")
+
+# Translators: 咨询表单{姓名}-错误文本@min_length
+consult_name_err_min_length = _("至少2字符")
+
+# Translators: 咨询表单{姓名}-错误文本@max_length
+consult_name_err_max_length = _("至多150字符")
 
 # Translators: 咨询表单{邮箱}
-ContactForm_email_text = _("电子邮箱 | Email")
+consult_email_text = _("电子邮箱 | Email")
 
 # Translators: 咨询表单{邮箱}-占位符
-ContactForm_email_placeholder = _("您的电子邮箱")
+consult_email_placeholder = _("您的电子邮箱")
+
+# Translators: 咨询表单{邮箱}-错误文本@required
+consult_email_err_required = _("您的电子邮箱")
+
+# Translators: 咨询表单{邮箱}-错误文本@invalid
+consult_email_err_invalid = _("邮箱格式有误")
+
+# Translators: 咨询表单{邮箱}-错误文本@required
+consult_email_err_max_length = _("至多254字符")
 
 # Translators: 咨询表单{联系方式}
-ContactForm_contact_text = _("联系方式 | Contact Details")
+consult_contact_text = _("联系方式 | Contact Details")
 
 # Translators: 咨询表单{联系方式}-占位符
-ContactForm_contact_placeholder = _("您的联系方式")
+consult_contact_placeholder = _("您的联系方式")
+
+# Translators: 咨询表单{联系方式}-错误文本@required
+consult_contact_err_required = _("请填写您的联系方式")
+
+# Translators: 咨询表单{联系方式}-错误文本@max_length
+consult_contact_err_max_length = _("请填写您的联系方式")
 
 # Translators: 咨询表单{问题}
-ContactForm_query_text = _("简述问题 | Brief your questions")
+consult_query_text = _("简述问题 | Brief your questions")
 
 # Translators: 咨询表单{问题}-占位符
-ContactForm_query_placeholder = _("请留下你的问题，我们将尽快联系你")
+consult_query_placeholder = _("请留下你的问题，我们将尽快联系你")
+
+# Translators: 咨询表单{问题}-错误文本@required
+consult_query_err_required = _("请留下你的问题")
+
+# Translators: 咨询表单{咨询状态}
+consult_status_text = _("咨询状态")
+
+# Translators: 咨询表单{创建时间}
+consult_create_date_text = _("创建时间")
 
 
 ###################################################################################################
