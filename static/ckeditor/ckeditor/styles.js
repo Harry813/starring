@@ -47,7 +47,7 @@ CKEDITOR.stylesSet.add( 'default', [
 
 	/* Inline styles */
 
-	// These are core styles available as toolbar buttons. You may opt enabling
+	// These are staring styles available as toolbar buttons. You may opt enabling
 	// some of them in the Styles drop-down list, removing them from the toolbar.
 	// (This requires the "stylescombo" plugin.)
 	/*
