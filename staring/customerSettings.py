@@ -2,6 +2,8 @@ from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 
+from django.urls import reverse
+
 Languages = [
     {"CODE": "zh-hans", "NAME": "简体中文", "FLAG": "IMG/FLAGS/CHN.gif"},
     {"CODE": "en-us", "NAME": "English", "FLAG": "IMG/FLAGS/USA.gif"}
@@ -25,6 +27,10 @@ NavItems = [
 
 # 首页项目清单
 IndexListItems = [
+    {"name": _("测试页面"),
+     "items": [
+         {"name": _("文章阅读"), "linkName": reverse("article", args=[1])},
+     ]},
     {"name": _("我要移民"),
      "items": [
          {"name": _("投资与企业家移民"), "linkName": "#"},
@@ -114,3 +120,5 @@ ADMMegaMenu = (
          {"name": _("Test1-2"), "linkName": "#"},
      ]},
 )
+
+
