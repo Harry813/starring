@@ -9,7 +9,6 @@ from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 
 from admin.forms import *
-from admin.models import *
 from admin.utils import get_admin_info
 from staring.customerSettings import Languages
 from staring.text import *
@@ -160,3 +159,7 @@ def admin_article_edit_view(request, article_id):
     else:
         param["form"] = ArticleForm(instance=article)
         return render(request, "admin/admin_article_create.html", param)
+
+
+# @login_required(login_url="ADMLogin")
+# def

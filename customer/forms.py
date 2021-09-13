@@ -3,8 +3,8 @@ from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 
+from .models import Consult
 from staring.text import *
-from staring.models import *
 
 
 class ContactForm(forms.ModelForm):
