@@ -1,15 +1,16 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 
-# Create your views here.
 from customer.forms import ContactForm
 from customer.utils import get_customer_info
 from staring.models import Article
 
 
+# Create your views here.
 def index(request):
     param = {
         "page_title": _("星环首页"),
@@ -20,8 +21,8 @@ def index(request):
         contactForm = ContactForm(request.POST)
         if "contact" in request.POST:
             if contactForm.is_valid():
-                # contact form success
-                pass
+                contactForm.save()
+                messages.add_message(request, messages.SUCCESS, _("提交成功"))
         param["ContactForm"] = ContactForm()
     else:
         param["ContactForm"] = ContactForm()
@@ -39,8 +40,8 @@ def customer_articles(request, article_id):
         contactForm = ContactForm(request.POST)
         if "contact" in request.POST:
             if contactForm.is_valid():
-                # contact form success
-                return HttpResponse("<h1>Success</h1>")
+                contactForm.save()
+                messages.add_message(request, messages.SUCCESS, _("提交成功"))
         param["ContactForm"] = ContactForm()
     else:
         param["ContactForm"] = ContactForm()
