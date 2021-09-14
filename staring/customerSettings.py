@@ -27,10 +27,6 @@ NavItems = [
 
 # 首页项目清单
 IndexListItems = [
-    {"name": _("测试页面"),
-     "items": [
-         {"name": _("文章阅读"), "linkName": reverse("article", args=[1])},
-     ]},
     {"name": _("我要移民"),
      "items": [
          {"name": _("投资与企业家移民"), "linkName": "#"},
