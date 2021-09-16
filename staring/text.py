@@ -15,6 +15,9 @@ brand_name = _('星环')
 # staring.models.User  用户模组
 ###################################################################################################
 
+# Translators: 用户模组{用户ID}
+user_uid_text = _('用户ID')
+
 # Translators: 用户模组{用户名}
 user_username_text = _('用户名')
 
