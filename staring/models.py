@@ -22,6 +22,7 @@ phone_regex = RegexValidator(regex=r'[0-9]{0,14}$',
 
 class User(AbstractUser):
     uid = models.UUIDField(
+        verbose_name=user_uid_text,
         primary_key=True,
         default=uuid.uuid4,
         editable=False,
