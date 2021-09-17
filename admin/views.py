@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
@@ -9,7 +10,9 @@ from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 
 from admin.forms import *
+from admin.models import Staff
 from admin.utils import get_admin_info
+from customer.models import Customer
 from staring.customerSettings import Languages
 from staring.text import *
 from staring.utils import get_basic_info
@@ -114,7 +117,7 @@ def admin_article_index_view(request, page):
 @login_required(login_url="ADMLogin")
 def admin_article_create_view(request):
     param = {
-        "page_title": _("编辑"),
+        "page_title": _("文章创建"),
         "languages": Languages,
         "active_page": "ADMArticleIndex",
         **get_basic_info(),
@@ -138,7 +141,7 @@ def admin_article_create_view(request):
 @login_required(login_url="ADMLogin")
 def admin_article_edit_view(request, article_id):
     param = {
-        "page_title": _("编辑"),
+        "page_title": _("文章编辑"),
         "languages": Languages,
         "active_page": "ADMArticleIndex",
         **get_basic_info(),
@@ -161,5 +164,59 @@ def admin_article_edit_view(request, article_id):
         return render(request, "admin/admin_article_create.html", param)
 
 
-# @login_required(login_url="ADMLogin")
-# def
+@login_required(login_url="ADMLogin")
+def admin_customer_index_view(request, page=1):
+    param = {
+        "page_title": _("用户管理"),
+        "languages": Languages,
+        "active_page": "ADMCustomerIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    user_query = User.objects.filter(is_active=True, is_staff=False, is_superuser=False)\
+        .exclude(username="AnonymousUser")
+    p = Paginator(user_query, 10)
+    customer_list = p.get_page(page)
+    param["paginator"] = p
+    param["customer_list"] = customer_list
+    param["current_page"] = page
+    param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
+    return render(request, "admin/admin_customer_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_customer_edit_view(request, customer_id):
+    param = {
+        "page_title": _("用户管理"),
+        "languages": Languages,
+        "active_page": "ADMCustomerIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    basic_profile = get_object_or_404(User, uid=customer_id)
+    customer_profile = get_object_or_404(Customer, user=basic_profile)
+
+    if request.method == "POST":
+
+        basic_form = UserForm(request.POST, instance=basic_profile)
+        customer_form = CustomerForm(request.POST, instance=customer_profile)
+
+        if "basic_profile" in request.POST:
+            if basic_form.is_valid():
+                basic_form.save()
+                messages.add_message(request, messages.SUCCESS, _("成功"))
+                return redirect("ADMCustomerEdit", customer_id)
+
+        if "customer_profile" in request.POST:
+            if customer_form.is_valid():
+                customer_form.save()
+                return redirect("ADMCustomerEdit", customer_id)
+
+        param["basic_form"] = UserForm(request.POST)
+        param["customer_form"] = CustomerForm(request.POST)
+        return render(request, "admin/admin_customer_edit.html", param)
+
+    else:
+        param["basic_form"] = UserForm(request.POST, instance=basic_profile)
+        param["customer_form"] = CustomerForm(request.POST, instance=customer_profile)
+        return render(request, "admin/admin_customer_edit.html", param)
