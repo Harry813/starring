@@ -6,6 +6,7 @@ from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 
+from customer.models import Customer
 from staring.models import *
 
 
@@ -53,3 +54,15 @@ class ArticleForm(forms.ModelForm):
         widgets = {
             "content": CKEditorWidget()
         }
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        exclude = ["uid", "password"]
+
+
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        exclude = ["user"]
