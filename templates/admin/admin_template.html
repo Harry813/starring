@@ -30,6 +30,13 @@
                             <i class="align-middle" data-feather="book"></i> <span class="align-middle">{% translate '文章管理' %}</span>
                         </a>
                     </li>
+
+                    <li class="sidebar-item {% if active_page == 'ADMCustomerIndex' %}active{% endif %}">
+                        <a class="sidebar-link" href="{% url 'ADMCustomerIndex' 1 %}">
+                            {# Translators: 后台模板{侧边栏}-第二部分@用户管理 #}
+                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">{% translate '用户管理' %}</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
