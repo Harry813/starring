@@ -59,10 +59,9 @@
                                 <td>{{ customer.email }}</td>
                                 <td>{{ customer.vip_lv }}</td>
                                 <td class="table-action">
-                                    <a href="{% url 'ADMCustomerEdit' customer.uid %}" class="action-button edit-button">
+                                    <a href="{% url 'ADMCustomerEdit' customer.get_uid_as_string %}" class="action-button edit-button">
                                         <i class="align-middle" data-feather="edit-2"></i>
                                     </a>
-
                                     <a class="action-button trash-button">
                                         <i class="align-middle" data-feather="trash-2"></i>
                                     </a>
