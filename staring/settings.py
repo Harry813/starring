@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'widget_tweaks',
     'guardian',
+    'modeltranslation'
 
     # customer apps
     'staring',
@@ -133,6 +134,8 @@ LANGUAGES = (
     ('zh-hans', '简体中文'),
     ('en-us', 'English')
 )
+
+MODELTRANSLATION_LANGUAGES = ('zh-hans', 'en-us')
 
 LANGUAGE_CODE = 'zh-hans'
 
