@@ -193,8 +193,11 @@ def admin_customer_edit_view(request, customer_id):
         **get_basic_info(),
         **get_admin_info()
     }
-    basic_profile = get_object_or_404(User, uid=customer_id)
-    customer_profile = get_object_or_404(Customer, user=basic_profile)
+
+    user_query = User.objects.filter(is_active=True, is_staff=False, is_superuser=False) \
+        .exclude(username="AnonymousUser")
+    basic_profile = get_object_or_404(user_query, uid=customer_id)
+    customer_profile = Customer.objects.get_or_create(user=basic_profile)
 
     if request.method == "POST":
 
