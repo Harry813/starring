@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'widget_tweaks',
     'guardian',
-    'modeltranslation'
+    'modeltranslation',
 
     # customer apps
     'staring',
