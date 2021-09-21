@@ -200,7 +200,6 @@ def admin_customer_edit_view(request, customer_id):
     customer_profile = Customer.objects.get_or_create(user=basic_profile)
 
     if request.method == "POST":
-
         basic_form = UserForm(request.POST, instance=basic_profile)
         customer_form = CustomerForm(request.POST, instance=customer_profile)
 
