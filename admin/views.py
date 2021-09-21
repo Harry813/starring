@@ -201,22 +201,22 @@ def admin_customer_edit_view(request, customer_id):
         basic_form = UserForm(request.POST, instance=basic_profile)
         customer_form = CustomerForm(request.POST, instance=customer_profile)
 
-        if "basic_profile" in request.POST:
+        if "CustomerBasic" in request.POST:
             if basic_form.is_valid():
                 basic_form.save()
                 messages.add_message(request, messages.SUCCESS, _("成功"))
                 return redirect("ADMCustomerEdit", customer_id)
 
-        if "customer_profile" in request.POST:
+        if "CustomerProfile" in request.POST:
             if customer_form.is_valid():
                 customer_form.save()
                 return redirect("ADMCustomerEdit", customer_id)
 
-        param["basic_form"] = UserForm(request.POST)
-        param["customer_form"] = CustomerForm(request.POST)
+        param["basic_form"] = UserForm(instance=basic_profile)
+        param["customer_form"] = CustomerForm(instance=customer_profile)
         return render(request, "admin/admin_customer_edit.html", param)
 
     else:
-        param["basic_form"] = UserForm(request.POST, instance=basic_profile)
-        param["customer_form"] = CustomerForm(request.POST, instance=customer_profile)
+        param["basic_form"] = UserForm(instance=basic_profile)
+        param["customer_form"] = CustomerForm(instance=customer_profile)
         return render(request, "admin/admin_customer_edit.html", param)
