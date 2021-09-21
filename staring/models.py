@@ -28,6 +28,9 @@ class User(AbstractUser):
         editable=False,
     )
 
+    def get_uid_as_string(self):
+        return str(self.uid).replace('-', '')
+
     username_validator = UnicodeUsernameValidator()
     username = models.CharField(
         verbose_name=user_username_text,
@@ -126,6 +129,9 @@ class User(AbstractUser):
         verbose_name=user_last_change_text,
         auto_now=True
     )
+
+    def __str__(self):
+        return self.get_display_name()
 
 
 class Article(models.Model):
