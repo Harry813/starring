@@ -21,7 +21,7 @@
 
                             <div class="col-auto">
                                 <div class="stat text-primary">
-                                    <i class="align-middle" data-feather="book-open"></i>
+                                    <i class="align-middle" data-feather="users"></i>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                             <tr>
                                 <td>{{ customer.get_display_name }}</td>
                                 <td>{{ customer.email }}</td>
-                                <td>{{ customer.vip_lv }}</td>
+                                <td>{{ customer.customer.vip_lv }}</td>
                                 <td class="table-action">
                                     <a href="{% url 'ADMCustomerEdit' customer.get_uid_as_string %}" class="action-button edit-button">
                                         <i class="align-middle" data-feather="edit-2"></i>
