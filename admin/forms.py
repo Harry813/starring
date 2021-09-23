@@ -5,6 +5,7 @@ from django.core.exceptions import PermissionDenied, ValidationError
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
+from modeltranslation.forms import TranslationModelForm
 
 from customer.models import Customer
 from staring.models import *
@@ -47,7 +48,7 @@ class AdminLoginForm(forms.Form):
             raise ValidationError(UserNotExist_text, code="UserNotExist")
 
 
-class ArticleForm(forms.ModelForm):
+class ArticleForm(TranslationModelForm):
     class Meta:
         model = Article
         exclude = ["last_update", "create_date"]
