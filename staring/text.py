@@ -127,6 +127,29 @@ article_last_change_text = _("最后修改")
 
 
 ###################################################################################################
+# customer.models.Customer  用户信息翻译
+###################################################################################################
+
+# Translators: 用户信息{联系方式}
+customer_contact_type_text = _("联系方式")
+
+# Translators: 用户信息{联系号码}
+customer_contact_detail_text = _("联系号码")
+
+# Translators: 用户信息{国籍}
+customer_nationality_text = _("国籍")
+
+# Translators: 用户信息{意向项目}
+customer_intention_text = _("意向项目")
+
+# Translators: 用户信息{附加内容}
+customer_extra_text = _("附加内容")
+
+# Translators: 用户信息{用户等级}
+customer_vip_lv_text = _("用户等级")
+
+
+###################################################################################################
 # customer.models.Consult  咨询表单翻译
 ###################################################################################################
 
@@ -197,4 +220,3 @@ UserNoPermit_text = _("用户没有相关权限")
 
 # Translators: 验证错误{用户相关}-用户不存在/用户名错误
 UserNotExist_text = _("用户不存在")
-

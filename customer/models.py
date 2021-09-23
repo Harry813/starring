@@ -18,34 +18,43 @@ class Customer(models.Model):
     )
 
     contact_type = models.CharField(
-        verbose_name=_("联系方式"),
+        verbose_name=customer_contact_type_text,
         max_length=20,
         choices=ContactTypes,
-        default=ContactTypes[0][0]
+        blank=True
     )
 
     contact_detail = models.CharField(
-        verbose_name=_("联系号码"),
+        verbose_name=customer_contact_detail_text,
         max_length=150,
         blank=True,
         null=True
     )
 
     nationality = CountryField(
-        verbose_name=_("国籍")
+        verbose_name=customer_nationality_text
     )
 
     intention = models.CharField(
-        verbose_name=_("意向项目"),
+        verbose_name=customer_intention_text,
         choices=Intentions,
         max_length=4
     )
 
-    vip_lv = models.IntegerField(
-        verbose_name=_("用户等级"),
-        choices=VipLevel,
-        default=1
+    extra = models.TextField(
+        verbose_name=customer_extra_text,
+        blank=True
     )
+
+    vip_lv = models.IntegerField(
+        verbose_name=customer_vip_lv_text,
+        choices=VipLevel,
+        default=0
+    )
+
+    def clean_extra(self):
+        if self.intention == "OTHR":
+            self.extra.required = True
 
 
 class Consult(models.Model):
