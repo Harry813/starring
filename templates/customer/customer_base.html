@@ -1,3 +1,4 @@
+{% load language_flag %}
 {% load static %}
 {% load i18n %}
 
@@ -35,13 +36,10 @@
 
     <div class="p-2" style="width: 30rem">
         <div class="mt-1">
-            {% get_current_language as LANGUAGE_CODE %}
-            {% get_available_languages as LANGUAGES %}
-            {% get_language_info_list for LANGUAGES as languages %}
-            {% for language in languages %}
+            {% for lang in languages %}
                 <a class="me-2 text-decoration-none language-choice " style="color: black"
-                   onclick="$('#lang_type').val('{{ language.code }}'); $('#lang_form').submit();">
-                    {{ language.name_local }}
+                   href="{% change_lang lang.CODE %}" hreflang="{{ lang.CODE }}">
+                    <span class="align-middle">{{ lang.NAME }}</span>
                 </a>
             {% endfor %}
         </div>

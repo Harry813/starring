@@ -7,6 +7,7 @@ from django.utils.translation import ngettext as _n
 
 from customer.forms import ContactForm
 from customer.utils import get_customer_info
+from staring.customerSettings import Languages
 from staring.models import Article
 
 
@@ -14,6 +15,7 @@ from staring.models import Article
 def index(request):
     param = {
         "page_title": _("星环首页"),
+        "languages": Languages,
         "title_img": True,
         **get_customer_info(),
     }
@@ -33,6 +35,7 @@ def index(request):
 def customer_articles(request, article_id):
     param = {
         "page_title": _("星环"),
+        "languages": Languages,
         **get_customer_info(),
     }
 
