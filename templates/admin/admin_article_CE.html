@@ -100,6 +100,25 @@
                                 {% endif %}
                             </div>
                         </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="form-check form-switch">
+                                <label class="form-label" for="{{ form.copyable.id_for_label }}">
+                                    {{ form.copyable.label }}
+                                    {% if form.copyable.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.copyable class="form-check-input" %}
+                                <div>
+                                    {% if form.copyable.help_text %}
+                                        <p class="small">{{ form.copyable.help_text }}</p>
+                                    {% elif form.copyable.errors %}
+                                        <p class="small" style="color: red;">{{ form.copyable.errors.0 }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

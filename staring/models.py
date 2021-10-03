@@ -135,7 +135,6 @@ class User(AbstractUser):
 
 
 class Article(models.Model):
-    # todo: 添加cover
     status = models.CharField(
         verbose_name=article_status_text,
         max_length=10,
@@ -156,6 +155,12 @@ class Article(models.Model):
         verbose_name=article_lv_require_text,
         choices=VipLevel,
         default=0
+    )
+
+    copyable = models.BooleanField(
+        verbose_name=article_copyable_text,
+        default=False,
+        help_text=article_copyable_help_text
     )
 
     description = models.CharField(

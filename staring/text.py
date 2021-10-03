@@ -104,6 +104,12 @@ article_author_text = _("作者")
 # Translators: 文章模组{用户等级}
 article_lv_require_text = _("需求用户等级")
 
+# Translators: 文章模组{文章可复制}
+article_copyable_text = _("文章可复制")
+
+# Translators: 文章模组{文章可复制}-帮助文本
+article_copyable_help_text = _("勾选后，用户可选择、复制文章内容")
+
 # Translators: 文章模组{Meta描述}
 article_meta_description_text = _("META标签-描述")
 
