@@ -97,17 +97,17 @@ class User(AbstractUser):
         default='1'
     )
 
+    tele = models.CharField(
+        verbose_name=user_tele_text,
+        max_length=15,
+        validators=[phone_regex]
+    )
+
     avatar = models.ImageField(
         verbose_name=user_avatar_text,
         default="",
         upload_to="avatar",
         blank=True
-    )
-
-    tele = models.CharField(
-        verbose_name=user_tele_text,
-        max_length=15,
-        validators=[phone_regex]
     )
 
     def get_phone(self):
@@ -190,3 +190,7 @@ class Article(models.Model):
         verbose_name=article_last_change_text,
         auto_now=True
     )
+
+
+# class MeetingReservation(models.Model):
+#     pass
