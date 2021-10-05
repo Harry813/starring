@@ -192,5 +192,34 @@ class Article(models.Model):
     )
 
 
+class CarouselArticles(models.Model):
+    carousel = models.CharField(
+        verbose_name=carouselArticle_carousel_text,
+        max_length=5,
+        choices=IndexCarousel
+    )
+
+    article = models.ForeignKey(
+        verbose_name=carouselArticle_article_text,
+        on_delete=models.CASCADE,
+        to=Article
+    )
+
+    image = models.ImageField(
+        verbose_name=carouselArticle_article_text,
+        upload_to="carousel"
+    )
+
+    title = models.CharField(
+        verbose_name=carouselArticle_article_text,
+        max_length=30,
+    )
+
+    intro = models.CharField(
+        verbose_name=carouselArticle_intro_text,
+        max_length=60,
+    )
+
+
 # class MeetingReservation(models.Model):
 #     pass
