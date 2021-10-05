@@ -1,12 +1,23 @@
 {% extends 'customer/customer_template.html' %}
 
 {% block main_content %}
-    <div class="mt-5">
-
-    </div>
+    <form class="mb-5 justify-content-evenly">
+        <div style="display: inline-block">
+            <strong>快速查找移民留学项目</strong>
+        </div>
+        <div class="col-4" style="display: inline-block">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username"
+                       aria-describedby="button-addon2">
+                <button class="btn btn-star" type="submit" id="button-addon2" name="quickSearch">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
 
     {% for indexItem in indexList %}
-        <dl class="row mt-5">
+        <dl class="row">
             <dt class="col-md-3 text-center align-self-start pt-2">
                 {{ indexItem.name }}
             </dt>
