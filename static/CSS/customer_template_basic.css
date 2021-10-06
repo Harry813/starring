@@ -64,6 +64,36 @@ html {
     border-color: #0A1A38;
 }
 
+.btn-outline-star {
+    border-color: #0A1A38;
+    color: #0A1A38
+}
+
+.btn-outline-star:hover {
+    background-color: #0A1A38;
+    border-color: #0a1a38;
+    color: #fff
+}
+
+.btn-check:focus + .btn-outline-star, .btn-outline-star:focus {
+    box-shadow: 0 0 0 .2rem rgba(10, 26, 56, .5)
+}
+
+.btn-check:active + .btn-outline-star, .btn-check:checked + .btn-outline-star, .btn-outline-star.active, .btn-outline-star.dropdown-toggle.show, .btn-outline-star:active {
+    background-color: #0A1A38;
+    border-color: #0A1A38;
+    color: #fff
+}
+
+.btn-check:active + .btn-outline-star:focus, .btn-check:checked + .btn-outline-star:focus, .btn-outline-star.active:focus, .btn-outline-star.dropdown-toggle.show:focus, .btn-outline-star:active:focus {
+    box-shadow: 0 0 0 .2rem rgba(10, 26, 56, .5)
+}
+
+.btn-outline-star.disabled, .btn-outline-star:disabled {
+    background-color: initial;
+    color: #0A1A38
+}
+
 .star-nav {
     display: flex;
     flex-wrap: wrap;
