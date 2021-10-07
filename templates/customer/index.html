@@ -1,5 +1,21 @@
 {% extends 'customer/customer_template.html' %}
 
+{% block css %}
+    <style>
+        .accordion-header{
+            border-bottom: 1px solid #001F45;
+        }
+
+        .accordion-title{
+            font-family: Noto Sans CJK SC, serif;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 20px;
+            line-height:20px
+        }
+    </style>
+{% endblock %}
+
 {% block main_content %}
     <form class="mb-5 justify-content-evenly">
         <div style="display: inline-block">
@@ -37,4 +53,36 @@
             </dd>
         </dl>
     {% endfor %}
+
+    <div class="row g-3 mt-5">
+        {% for a in accordion %}
+            <div class="col-md-6 col-sm-12">
+                <div class="w-100 accordion-header">
+                    <p class="accordion-title">{{ a.title }}</p>
+                </div>
+                <div class="accordion py-3" id="accordionExample">
+                    {% for article in a.articles %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#{{ article.title }}" aria-expanded="true"
+                                        aria-controls="collapseOne">
+                                    {{ article.title }}
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    {{ article.intro }}
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>暂无内容</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}

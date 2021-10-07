@@ -1,0 +1,147 @@
+{% extends 'customer/customer_base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block css %}
+    <style>
+        .border-left {
+            border-left: 1px solid #000 !important;
+        }
+
+        .section-title {
+            margin-top: 5rem;
+            border-bottom: 1px solid #000;
+        }
+
+        .section-title > div {
+            background-color: #0A1A38;
+            color: #fff;
+        }
+    </style>
+{% endblock %}
+
+{% block basic_template_content %}
+    <div class="container-md px-7 py-5">
+        <div class="row pb-3 mt-3 border-bottom">
+            <div class="mt-3 d-flex align-items-center">
+                <div class="px-3 float-start">
+                    <h1>我的账户</h1>
+                </div>
+
+                <div class="px-4 py-2 float-start align-bottom border-left">
+                    VIPLv
+                </div>
+
+                <div class="px-4 py-2 float-start align-bottom border-left">
+                    <strong><i class="bi bi-person"></i></strong> Harry0813
+                </div>
+
+                <div class="px-4 py-2 float-start align-bottom border-left">
+                    <strong><i class="bi bi-hash"></i></strong> 62afc18d
+                </div>
+
+                <div class="ms-auto">
+                    <a href="{% url 'CUSTLogout' %}" class="btn btn-outline-star px-3 py-2">登出</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-7">
+            <div class="section-title">
+                <div class="ml-3 mr-5 px-2 py-1 w-25">
+                    个人档案
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mt-3">
+                电话: {{ user.get_phone }}
+            </div>
+            <div class="col-md-6 mt-3">
+                邮箱: {{ user.email }}
+            </div>
+            <div class="col-md-6 mt-3">
+                生日：{{ user.dob }}
+            </div>
+        </div>
+
+        <div class="row mt-7">
+            <div class="section-title">
+                <div class="ml-3 mr-5 px-2 py-1 w-25">
+                    免费评估
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mt-3">
+                暂无评估结果
+            </div>
+        </div>
+
+        <div class="row mt-7">
+            <div class="section-title">
+                <div class="ml-3 mr-5 px-2 py-1 w-25">
+                    预约咨询
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mt-3">
+                您暂无安排任何预约，前往预约
+            </div>
+
+            <div class="col-12 mt-3">
+                您暂无任何咨询记录
+            </div>
+
+            <div class="col-12 mt-3">
+                专案咨询费用: $100 /小时
+            </div>
+        </div>
+
+        <div class="row mt-7">
+            <div class="section-title">
+                <div class="ml-3 mr-5 px-2 py-1 w-25">
+                    智库内刊
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
+                加拿大咨询
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
+                加拿大留学
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
+                工作及就业机会
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
+                加拿大福利
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
+                加拿大移民
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
+                加拿大旅游
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
+                加拿大安家
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
+                资源与工具
+            </div>
+        </div>
+    </div>
+{% endblock %}

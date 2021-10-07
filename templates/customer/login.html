@@ -1,0 +1,37 @@
+{% extends 'customer/customer_base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block basic_template_content %}
+    <div class="container px-7 py-5">
+        <div class="row mb-5">
+            <h2>登陆中心</h2>
+        </div>
+
+        <form action="#">
+            <div class="row">
+                <div class="col-lg-5 col-md-8 col-sm-12 mt-3">
+                    <label for="username">用户名</label>
+                    <input class="form-control" type="text" id="username">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-5 col-md-8 col-sm-12 mt-3">
+                    <label for="username">密码</label>
+                    <input class="form-control" type="password" id="username">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-4 mt-3">
+                    <button class="btn btn-star w-100" type="submit">登录</button>
+                </div>
+
+                <div class="col-lg-2 offset-lg-1 col-md-3 offset-md-2 col-sm-4 offset-sm-4 mt-3">
+                    <a href="{% url 'CUSTRegister' %}" class="btn btn-outline-star w-100">前往注册</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

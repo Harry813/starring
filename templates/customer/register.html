@@ -1,0 +1,59 @@
+{% extends 'customer/customer_base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block basic_template_content %}
+    <div class="container px-7 py-5">
+        <div class="row mb-5">
+            <h2>注册中心</h2>
+        </div>
+
+        <form action="#">
+            <div class="row">
+                <div class="col-md-8 col-sm-12 mt-3">
+                    <label for="name">真实姓名</label>
+                    <input class="form-control" type="text" id="name">
+                </div>
+
+                <div class="col-md-8 col-sm-12 mt-3">
+                    <label for="email">邮箱</label>
+                    <input class="form-control" type="text" id="email">
+                </div>
+
+                <div class="col-md-8 col-sm-12 mt-3">
+                    <label for="tele">电话</label>
+                    <input class="form-control" type="text" id="tele">
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-8 offset col-sm-12 mt-3">
+                    <label for="username">用户名</label>
+                    <input class="form-control" type="text" id="username">
+                </div>
+
+                <div class="offset-md-4"></div>
+
+                <div class="col-md-4 col-sm-12 mt-3">
+                    <label for="paswd">密码</label>
+                    <input class="form-control" type="text" id="paswd">
+                </div>
+
+                <div class="col-md-4 col-sm-12 mt-3">
+                    <label for="paswd">请再次确认密码</label>
+                    <input class="form-control" type="text" id="paswd">
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-8 mt-3">
+                    <button class="btn btn-star w-100" type="submit">注册</button>
+                </div>
+
+                <div class="col-md-8 mt-3 align-items-center">
+                    <small>已有账号？前往 <a href="{% url 'CUSTLogin' %}">登录</a></small>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
