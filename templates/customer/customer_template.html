@@ -10,82 +10,94 @@
             </div>
 
             <div class="col-4">
-                <div class="px-3 sidebar-red-line">
-                    <h5>快速咨询 | Contact Us</h5>
-                </div>
-                <form method="post" class="p-3 mt-3 mx-3" style="background-color: #EDF0F3">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ ContactForm.name.id_for_label }}">
-                            {{ ContactForm.name.label }}
-                            {% if ContactForm.name.field.required %}
-                                <span style="color: red">*</span>
-                            {% endif %}
-                        </label>
-                        {% render_field ContactForm.name class="form-control" %}
-                        <div>
-                            {% if ContactForm.name.help_text %}
-                                <p class="small">{{ ContactForm.name.help_text }}</p>
-                            {% elif ContactForm.name.errors %}
-                                <p class="small" style="color: red;">{{ ContactForm.name.errors.0 }}</p>
-                            {% endif %}
-                        </div>
+                {% if ContactForm %}
+                    <div class="px-3 sidebar-red-line">
+                        <h5>快速咨询 | Contact Us</h5>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ ContactForm.email.id_for_label }}">
-                            {{ ContactForm.email.label }}
-                            {% if ContactForm.email.field.required %}
-                                <span style="color: red">*</span>
-                            {% endif %}
-                        </label>
-                        {% render_field ContactForm.email class="form-control" %}
-                        <div>
-                            {% if ContactForm.email.help_text %}
-                                <p class="small">{{ ContactForm.email.help_text }}</p>
-                            {% elif ContactForm.email.errors %}
-                                <p class="small" style="color: red;">{{ ContactForm.email.errors.0 }}</p>
-                            {% endif %}
+                    <form method="post" class="p-3 mt-3 mx-3" style="background-color: #EDF0F3">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ ContactForm.name.id_for_label }}">
+                                {{ ContactForm.name.label }}
+                                {% if ContactForm.name.field.required %}
+                                    <span style="color: red">*</span>
+                                {% endif %}
+                            </label>
+                            {% render_field ContactForm.name class="form-control" %}
+                            <div>
+                                {% if ContactForm.name.help_text %}
+                                    <p class="small">{{ ContactForm.name.help_text }}</p>
+                                {% elif ContactForm.name.errors %}
+                                    <p class="small" style="color: red;">{{ ContactForm.name.errors.0 }}</p>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ ContactForm.contact_detail.id_for_label }}">
-                            {{ ContactForm.contact_detail.label }}
-                            {% if ContactForm.contact_detail.field.required %}
-                                <span style="color: red">*</span>
-                            {% endif %}
-                        </label>
-                        <div class="input-group">
-                            {% render_field ContactForm.contact_detail class="form-control" %}
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ ContactForm.email.id_for_label }}">
+                                {{ ContactForm.email.label }}
+                                {% if ContactForm.email.field.required %}
+                                    <span style="color: red">*</span>
+                                {% endif %}
+                            </label>
+                            {% render_field ContactForm.email class="form-control" %}
+                            <div>
+                                {% if ContactForm.email.help_text %}
+                                    <p class="small">{{ ContactForm.email.help_text }}</p>
+                                {% elif ContactForm.email.errors %}
+                                    <p class="small" style="color: red;">{{ ContactForm.email.errors.0 }}</p>
+                                {% endif %}
+                            </div>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ ContactForm.contact_detail.id_for_label }}">
+                                {{ ContactForm.contact_detail.label }}
+                                {% if ContactForm.contact_detail.field.required %}
+                                    <span style="color: red">*</span>
+                                {% endif %}
+                            </label>
+                            <div class="input-group">
+                                {% render_field ContactForm.contact_detail class="form-control" %}
+                            </div>
 
-                        <div>
-                            {% if ContactForm.contact_detail.help_text %}
-                                <p class="small">{{ ContactForm.contact_detail.help_text }}</p>
-                            {% elif ContactForm.contact_detail.errors %}
-                                <p class="small" style="color: red;">{{ ContactForm.contact_detail.errors.0 }}</p>
-                            {% endif %}
+                            <div>
+                                {% if ContactForm.contact_detail.help_text %}
+                                    <p class="small">{{ ContactForm.contact_detail.help_text }}</p>
+                                {% elif ContactForm.contact_detail.errors %}
+                                    <p class="small" style="color: red;">{{ ContactForm.contact_detail.errors.0 }}</p>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ ContactForm.query.id_for_label }}">
-                            {{ ContactForm.query.label }}
-                            {% if ContactForm.query.field.required %}
-                                <span style="color: red">*</span>
-                            {% endif %}
-                        </label>
-                        {% render_field ContactForm.query class="form-control" style="height:7rem" %}
-                        <div>
-                            {% if ContactForm.query.help_text %}
-                                <p class="small">{{ ContactForm.query.help_text }}</p>
-                            {% elif ContactForm.query.errors %}
-                                <p class="small" style="color: red;">{{ ContactForm.query.errors.0 }}</p>
-                            {% endif %}
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ ContactForm.query.id_for_label }}">
+                                {{ ContactForm.query.label }}
+                                {% if ContactForm.query.field.required %}
+                                    <span style="color: red">*</span>
+                                {% endif %}
+                            </label>
+                            {% render_field ContactForm.query class="form-control" style="height:7rem" %}
+                            <div>
+                                {% if ContactForm.query.help_text %}
+                                    <p class="small">{{ ContactForm.query.help_text }}</p>
+                                {% elif ContactForm.query.errors %}
+                                    <p class="small" style="color: red;">{{ ContactForm.query.errors.0 }}</p>
+                                {% endif %}
+                            </div>
                         </div>
+                        <div class="mb-3">
+                            <button name="contact" class="btn btn-star">{% translate '提交' %}</button>
+                        </div>
+                    </form>
+                {% endif %}
+
+                <div class="px-3 sidebar-red-line mt-5">
+                    <h5>常见搜索</h5>
+                </div>
+
+                <div class="p-3 mt-3 mx-3">
+                    <div class="accordion">
+                        <div class="accordion-item"></div>
                     </div>
-                    <div class="mb-3">
-                        <button name="contact" class="btn btn-star">{% translate '提交' %}</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
