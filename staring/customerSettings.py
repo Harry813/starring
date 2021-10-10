@@ -117,4 +117,18 @@ ADMMegaMenu = (
      ]},
 )
 
+IndexCarousel = (
+    ("NEWS", _("时事要文")),
+    ("MIGR", _("移民留学")),
+    ("WORK", _("工作生活")),
+    ("EDUC", _("亲子教育")),
+)
 
+customer_tags = (
+    ('VISITOR', _('访客')),
+    ('POTENTIAL', _('意向访客')),
+    ('SIGN', _("签约用户")),
+    ('REFERRER', _('推荐人')),
+    ('AGENT', _('代理商')),
+    ('PARTNER', _('合作伙伴'))
+)
