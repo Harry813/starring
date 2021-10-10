@@ -52,6 +52,13 @@ class Customer(models.Model):
         default=0
     )
 
+    tag = models.CharField(
+        verbose_name=customer_tag_text,
+        max_length=10,
+        blank=True,
+        choices=customer_tags
+    )
+
     def clean_extra(self):
         if self.intention == "OTHR":
             self.extra.required = True
