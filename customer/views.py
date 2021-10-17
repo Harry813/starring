@@ -1,14 +1,21 @@
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
+from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
+from django.views.decorators.clickjacking import xframe_options_exempt, xframe_options_sameorigin
 
-from customer.forms import ContactForm
+from customer.forms import ContactForm, CustomerLoginForm
+from customer.models import Customer
 from customer.utils import get_customer_info
-from staring.customerSettings import Languages
-from staring.models import Article
+from staring.customerSettings import Languages, IndexCarousel
+from staring.models import Article, CarouselArticles, User
+from staring.text import UserNoPermit_text, UserNotExist_text
 
 
 # Create your views here.
