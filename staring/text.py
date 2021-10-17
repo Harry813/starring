@@ -154,6 +154,9 @@ customer_extra_text = _("附加内容")
 # Translators: 用户信息{用户等级}
 customer_vip_lv_text = _("用户等级")
 
+# Translators: 用户信息{用户标签}
+customer_tag_text = _("用户标签")
+
 
 ###################################################################################################
 # customer.models.Consult  咨询表单翻译
