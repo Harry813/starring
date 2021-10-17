@@ -26,15 +26,12 @@ def index(request):
         "title_img": True,
         **get_customer_info(),
     }
-    if request.method == "POST":
-        contactForm = ContactForm(request.POST)
-        if "contact" in request.POST:
-            if contactForm.is_valid():
-                contactForm.save()
-                messages.add_message(request, messages.SUCCESS, _("提交成功"))
-        param["ContactForm"] = ContactForm()
-    else:
-        param["ContactForm"] = ContactForm()
+
+    accordion = {}
+    for key, title in IndexCarousel:
+        accordion[title] = CarouselArticles.objects.filter(carousel=key)
+
+    param["accordion"] = accordion
 
     return render(request, "customer/index.html", param)
 
