@@ -73,7 +73,7 @@ def customer_login_view(request):
                 if next_url:
                     return HttpResponseRedirect(next_url)
                 else:
-                    return redirect("index")
+                    return redirect("CUSTIndex")
             else:
                 form.add_error(None, ValidationError(UserNotExist_text, code="UserNotExist"))
 
