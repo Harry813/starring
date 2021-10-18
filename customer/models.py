@@ -32,13 +32,15 @@ class Customer(models.Model):
     )
 
     nationality = CountryField(
-        verbose_name=customer_nationality_text
+        verbose_name=customer_nationality_text,
+        blank=True
     )
 
     intention = models.CharField(
         verbose_name=customer_intention_text,
         choices=Intentions,
-        max_length=4
+        max_length=4,
+        blank=True
     )
 
     extra = models.TextField(
