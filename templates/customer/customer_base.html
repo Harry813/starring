@@ -79,7 +79,13 @@
         <a class="nav-link text-white star-nav-link" href="#">关于我们</a>
     </li>
     <li class="star-nav-item p-2" style="border-left: 3px solid #323D5B;">
-        <a class="nav-link text-white star-nav-link" href="{% url 'CUSTLogin' %}">用户登录</a>
+        <a class="nav-link text-white star-nav-link" href="{% url "CUSTCenter" %}">
+            {% if request.user.is_authenticated %}
+                {% trans '用户中心' %}
+            {% else %}
+                {% trans '用户登录' %}
+            {% endif %}
+        </a>
     </li>
     <li class="p-2 star-nav-item" style="background-color: #EDF0F3; border-left: 4px solid #FF0404">
         <a class="nav-link star-nav-link" style="color:#000;" href="#">
