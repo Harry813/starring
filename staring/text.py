@@ -51,6 +51,9 @@ user_password_err_max_length = _("密码格式错误，至多包含128个字符"
 # Translators: 用户模组{密码}-错误文本@过短
 user_password_err_min_length = _("密码格式错误，至少包含8个字符")
 
+# Translators: 用户模组{请再次确认密码}
+user_confirm_text = _("请再次确认密码")
+
 # Translators: 用户模组{联系电话}
 user_tele_text = _("电话号码")
 
@@ -256,3 +259,5 @@ UserNoPermit_text = _("用户没有相关权限")
 
 # Translators: 验证错误{用户相关}-用户不存在/用户名错误
 UserNotExist_text = _("用户不存在")
+
+paswd_errmsg_NOT_match = _("两次输入的密码不同")
