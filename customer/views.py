@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -24,6 +25,7 @@ def index(request):
         "page_title": _("星环首页"),
         "languages": Languages,
         "title_img": True,
+        "ContactForm": True,
         **get_customer_info(),
     }
 
@@ -34,6 +36,56 @@ def index(request):
     param["accordion"] = accordion
 
     return render(request, "customer/index.html", param)
+
+
+def customer_login_view(request):
+    param = {
+        "page_title": _("星环-登录"),
+        "languages": Languages,
+        **get_customer_info(),
+    }
+
+    try:
+        next_url = request.POST.get("next")
+    except IndexError:
+        next_url = ""
+
+    if next_url == "None":
+        next_url = ""
+
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(next_url)
+
+    if request.method == "POST":
+        form = CustomerLoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            paswd = form.cleaned_data.get("password")
+
+            user = authenticate(
+                request=request,
+                username=username,
+                password=paswd
+            )
+            if user is not None:
+                login(request, user)
+                messages.add_message(request, messages.SUCCESS, _("登录成功"))
+                if next_url:
+                    return HttpResponseRedirect(next_url)
+                else:
+                    return redirect("index")
+            else:
+                form.add_error(None, ValidationError(UserNotExist_text, code="UserNotExist"))
+
+            param["form"] = form
+            return render(request, "customer/login.html", param)
+
+        else:
+            param["form"] = form
+            return render(request, "customer/login.html", param)
+    else:
+        param["form"] = CustomerLoginForm()
+        return render(request, "customer/login.html", param)
 
 
 def customer_articles(request, article_id):
@@ -58,33 +110,6 @@ def customer_articles(request, article_id):
     return render(request, "customer/customer_articles.html", param)
 
 
-def customer_login(request):
-    param = {
-        "page_title": _("星环-登陆中心"),
-        "languages": Languages,
-        **get_customer_info(),
-    }
-
-    # try:
-    #     next_url = request.POST.get("next")
-    # except IndexError:
-    #     next_url = None
-    #
-    # if request.user.is_authenticated:
-    #     return HttpResponseRedirect(next_url)
-    #
-    # if request.method == "POST":
-    #     contactForm = CustomerLoginForm(request.POST)
-    #     if contactForm.is_valid():
-    #         contactForm.save()
-    #         messages.add_message(request, messages.SUCCESS, _("登录成功"))
-    #     param["ContactForm"] = ContactForm()
-    # else:
-    #     param["ContactForm"] = ContactForm()
-
-    return render(request, "customer/login.html", param)
-
-
 def customer_logout(request):
     logout(request)
     return redirect('CUSTIndex')
@@ -100,6 +125,7 @@ def customer_register(request):
     return render(request, "customer/register.html", param)
 
 
+@login_required(login_url="CUSTLogin")
 def customer_center_view(request):
     param = {
         "page_title": _("星环-我的主页"),
