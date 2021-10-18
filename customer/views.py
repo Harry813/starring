@@ -46,11 +46,8 @@ def customer_login_view(request):
     }
 
     try:
-        next_url = request.POST.get("next")
+        next_url = request.GET.get("next")
     except IndexError:
-        next_url = ""
-
-    if next_url == "None":
         next_url = ""
 
     if request.user.is_authenticated:
@@ -72,8 +69,7 @@ def customer_login_view(request):
                 messages.add_message(request, messages.SUCCESS, _("登录成功"))
                 if next_url:
                     return HttpResponseRedirect(next_url)
-                else:
-                    return redirect("CUSTIndex")
+                return redirect("CUSTIndex")
             else:
                 form.add_error(None, ValidationError(UserNotExist_text, code="UserNotExist"))
 
