@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
@@ -58,4 +59,42 @@ class CustomerLoginForm(forms.Form):
             return username
         else:
             raise ValidationError(UserNotExist_text, code="UserNotExist")
+
+
+class CustomerRegisterForm(forms.ModelForm):
+    password1 = forms.CharField(
+        label=user_password_text,
+        max_length=128,
+        widget=forms.PasswordInput,
+        help_text=user_password_help_text
+    )
+
+    password2 = forms.CharField(
+        label=user_confirm_text,
+        max_length=128,
+        widget=forms.PasswordInput
+    )
+
+    def clean_password1(self):
+        paswd1 = self.cleaned_data.get("password1")
+        if validate_password(paswd1) is None:
+            return paswd1
+
+    def clean_password2(self):
+        paswd1 = self.cleaned_data.get('password1')
+        paswd2 = self.cleaned_data.get('password2')
+        if paswd1 == paswd2:
+            return paswd2
+        else:
+            raise forms.ValidationError(paswd_errmsg_NOT_match, code="paswdNotMatch")
+
+    class Meta:
+        model = User
+        fields = ["name", "email", "countryCode", "tele", "username", "dob"]
+
+    def __init__(self, *args, **kwargs):
+        super(CustomerRegisterForm, self).__init__(*args, **kwargs)
+        self.fields["dob"].help_text = "YYYY/MM/DD"
+        self.fields["name"].required = True
+        self.fields["email"].required = True
 
