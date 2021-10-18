@@ -8,24 +8,51 @@
             <h2>登陆中心</h2>
         </div>
 
-        <form action="#">
+        <form method="post">
+            {% csrf_token %}
             <div class="row">
                 <div class="col-lg-5 col-md-8 col-sm-12 mt-3">
-                    <label for="username">用户名</label>
-                    <input class="form-control" type="text" id="username">
+                    <label class="form-label" for="{{ form.username.id_for_label }}">
+                        {{ form.username.label }} 
+                        {% if form.username.field.required %}
+                            <span style="color: red">*</span>
+                        {% endif %}
+                    </label>
+                    {% render_field form.username class="form-control" %}
+                    <div>
+                        {% if form.username.help_text %}
+                            <p class="small">{{ form.username.help_text }}</p>
+                        {% elif form.username.errors %}
+                            <p class="small" style="color: red;">{{ form.username.errors.0 }}</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-lg-5 col-md-8 col-sm-12 mt-3">
-                    <label for="username">密码</label>
-                    <input class="form-control" type="password" id="username">
+                    <label class="form-label" for="{{ form.password.id_for_label }}">
+                        {{ form.password.label }} 
+                        {% if form.password.field.required %}
+                            <span style="color: red">*</span>
+                        {% endif %}
+                    </label>
+                    {% render_field form.password class="form-control" %}
+                    <div>
+                        {% if form.password.help_text %}
+                            <p class="small">{{ form.password.help_text }}</p>
+                        {% elif form.password.errors %}
+                            <p class="small" style="color: red;">{{ form.password.errors.0 }}</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-lg-2 col-md-3 col-sm-4 mt-3">
-                    <a href="{% url 'CUSTCenter' %}" class="btn btn-star w-100">登录</a>
+                    <button type="submit" class="btn btn-star w-100">
+                        {% trans '登录' %}
+                    </button>
                 </div>
 
                 <div class="col-lg-2 offset-lg-1 col-md-3 offset-md-2 col-sm-4 offset-sm-4 mt-3">
