@@ -11,7 +11,7 @@ from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 from django.views.decorators.clickjacking import xframe_options_exempt, xframe_options_sameorigin
 
-from customer.forms import ContactForm, CustomerLoginForm
+from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm
 from customer.models import Customer
 from customer.utils import get_customer_info
 from staring.customerSettings import Languages, IndexCarousel
@@ -118,7 +118,32 @@ def customer_register(request):
         **get_customer_info(),
     }
 
-    return render(request, "customer/register.html", param)
+    if request.method == "POST":
+        form = CustomerRegisterForm(request.POST)
+        if form.is_valid():
+            u = User.objects.create_user(
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data["password1"]
+            )
+            u.name = form.cleaned_data["name"]
+            u.countryCode = form.cleaned_data["countryCode"]
+            u.tele = form.cleaned_data["tele"]
+            u.save()
+
+            c = Customer(user=u)
+            c.save()
+            
+            login(request, user=u, backend='django.contrib.auth.backends.ModelBackend')
+            
+            messages.add_message(request, messages.SUCCESS, _("恭喜你注册成功"))
+            return redirect("CUSTIndex")
+        else:
+            param["form"] = form
+            return render(request, "customer/register.html", param)
+    else:
+        param["form"] = CustomerRegisterForm()
+        return render(request, "customer/register.html", param)
 
 
 @login_required(login_url="CUSTLogin")
@@ -132,6 +157,28 @@ def customer_center_view(request):
     }
 
     return render(request, "customer/customer_center.html", param)
+
+
+def customer_articles(request, article_id):
+    param = {
+        "page_title": _("星环"),
+        "languages": Languages,
+        **get_customer_info(),
+    }
+
+    if request.method == "POST":
+        contactForm = ContactForm(request.POST)
+        if "contact" in request.POST:
+            if contactForm.is_valid():
+                contactForm.save()
+                messages.add_message(request, messages.SUCCESS, _("提交成功"))
+        param["ContactForm"] = ContactForm()
+    else:
+        param["ContactForm"] = ContactForm()
+
+    article = get_object_or_404(Article, id=article_id)
+    param["article"] = article
+    return render(request, "customer/customer_articles.html", param)
 
 
 def customer_search_view(request, page=1):
