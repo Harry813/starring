@@ -20,10 +20,10 @@
                     </label>
                     {% render_field form.username class="form-control" %}
                     <div>
-                        {% if form.username.help_text %}
-                            <p class="small">{{ form.username.help_text }}</p>
-                        {% elif form.username.errors %}
+                        {% if form.username.errors %}
                             <p class="small" style="color: red;">{{ form.username.errors.0 }}</p>
+                        {% elif form.username.help_text %}
+                            <p class="small">{{ form.username.help_text }}</p>
                         {% endif %}
                     </div>
                 </div>
@@ -39,10 +39,10 @@
                     </label>
                     {% render_field form.password class="form-control" %}
                     <div>
-                        {% if form.password.help_text %}
-                            <p class="small">{{ form.password.help_text }}</p>
-                        {% elif form.password.errors %}
+                        {% if form.password.errors %}
                             <p class="small" style="color: red;">{{ form.password.errors.0 }}</p>
+                        {% elif form.password.help_text %}
+                            <p class="small">{{ form.password.help_text }}</p>
                         {% endif %}
                     </div>
                 </div>
