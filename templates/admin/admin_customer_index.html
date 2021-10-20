@@ -49,6 +49,7 @@
                             <th style="width:30%;">{% translate '用户名' %}</th>
                             <th>{% translate '邮箱' %}</th>
                             <th>{% translate 'VIP等级' %}</th>
+                            <th>{% translate '标签' %}</th>
                             <th>{% translate '操作' %}</th>
                         </tr>
                         </thead>
@@ -57,7 +58,14 @@
                             <tr>
                                 <td>{{ customer.get_display_name }}</td>
                                 <td>{{ customer.email }}</td>
-                                <td>{{ customer.customer.vip_lv }}</td>
+                                <td>{{ customer.customer.get_vip_lv_display }}</td>
+                                <td>
+                                    {% if customer.customer.tags %}
+                                        <span class="badge rounded-pill bg-primary">{{ customer.customer.get_tags_display }}</span>
+                                    {% else %}
+                                        {% trans '暂无' %}
+                                    {% endif %}
+                                </td>
                                 <td class="table-action">
                                     <a href="{% url 'ADMCustomerEdit' customer.get_uid_as_string %}" class="action-button edit-button">
                                         <i class="align-middle" data-feather="edit-2"></i>

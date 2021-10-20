@@ -1,0 +1,77 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{% translate '用户管理' %}</h1>
+        <div class="row">
+            <div class="col-md-3 col-xl-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            {% trans '操作' %}
+                        </h5>
+                    </div>
+
+                    <div class="list-group list-group-flush" role="tablist" id="tablist">
+                        <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#basic"
+                           role="tab" aria-selected="false">
+                            {% trans '基础信息' %}
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#profile"
+                           role="tab" aria-selected="false">
+                            {% trans '客户信息' %}
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#" role="tab" aria-selected="false" style="color:red">
+                            {% trans '删除账户' %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9 col-xl-10">
+                <div class="tab-content">
+                    <div class="tab-pane fade active show" id="basic" role="tabpanel" aria-labelledby="ADMCustomerBasicTab">
+                        <iframe src="{% url 'ADMCustomerBasicEdit' uid %}" scrolling="no" frameborder="0" class="w-100"
+                                onload="this.height=this.contentWindow.document.body.scrollHeight+150"  id="ADMCustomerBasicIframe"></iframe>
+                    </div>
+
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="ADMCustomerProfileTab">
+                        <iframe src="" scrolling="no" frameborder="0" class="w-100"
+                                onload="this.height=this.contentWindow.document.body.scrollHeight" id="ADMCustomerProfileIframe"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+        if (window!==window.top) {
+            window.top.location.href = window.location.href;
+        }
+    </script>
+    <script>
+        $(function () {
+            $('a[data-bs-toggle="list"][href="#basic"]').on('shown.bs.tab', function (e) {
+                $('iframe[id="ADMCustomerBasicIframe"]').attr("src", "{% url 'ADMCustomerBasicEdit' uid %}")
+                $('iframe[id="ADMCustomerProfileIframe"]').attr("src", "")
+            });
+
+            $('a[data-bs-toggle="list"][href="#profile"]').on('shown.bs.tab', function (e) {
+                $('iframe[id="ADMCustomerProfileIframe"]').attr("src", "{% url 'ADMCustomerProfileEdit' uid %}")
+                $('iframe[id="ADMCustomerBasicIframe"]').attr("src", "")
+            });
+        })
+    </script>
+{% endblock %}
