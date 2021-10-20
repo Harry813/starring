@@ -78,7 +78,7 @@ IndexListItems = [
      ]},
 ]
 
-Intentions = (
+Intentions = [
     ("IMMI", _("加拿大移民")),
     ("STUD", _("加拿大留学")),
     ("WORK", _("加拿大工作")),
@@ -86,28 +86,28 @@ Intentions = (
     ("HOME", _("安家置业")),
     ("APPL", _("案件上诉")),
     ("OTHR", _("其他，请详细说明")),
-)
+]
 
-VipLevel = (
+VipLevel = [
     (0, _("普通访客")),
     (1, _("IS访客")),
     (2, _("IS会员")),
     (3, _("IS-VIP")),
-)
+]
 
-ContactTypes = (
+ContactTypes = [
     ("WHATSAPP", _("WhatsApp")),
     ("WECHAT", _("微信"))
-)
+]
 
-ArticleStatus = (
+ArticleStatus = [
     ("PUBLISH", _("已发布")),
     ("PENDING", _("待审核")),
     ("REJECT", _("审核失败")),
     ("REVISED", _("需要修订")),
     ("DRAFT", _("正在编辑")),
     ("DELETE", _("已删除"))
-)
+]
 
 ADMMegaMenu = (
     {"name": _("Test1"),
@@ -117,18 +117,24 @@ ADMMegaMenu = (
      ]},
 )
 
-IndexCarousel = (
+IndexCarousel = [
     ("NEWS", _("时事要文")),
     ("MIGR", _("移民留学")),
     ("WORK", _("工作生活")),
     ("EDUC", _("亲子教育")),
-)
+]
 
-customer_tags = (
+customer_tags = [
     ('VISITOR', _('访客')),
     ('POTENTIAL', _('意向访客')),
     ('SIGN', _("签约用户")),
     ('REFERRER', _('推荐人')),
     ('AGENT', _('代理商')),
     ('PARTNER', _('合作伙伴'))
-)
+]
+
+customer_Search_type = [
+    ('UID', "UID"),
+    ('UNM', _("用户名")),
+    ('RNM', _("姓名"))
+]
