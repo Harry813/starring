@@ -95,6 +95,7 @@ class CustomerRegisterForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CustomerRegisterForm, self).__init__(*args, **kwargs)
         self.fields["dob"].help_text = "YYYY/MM/DD"
+        self.fields["dob"].widget = forms.DateInput(format="%Y-%m-%d")
         self.fields["name"].required = True
         self.fields["email"].required = True
 
