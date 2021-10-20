@@ -132,10 +132,10 @@ def admin_article_create_view(request):
             return redirect("ADMArticleIndex", 1)
         else:
             param["form"] = ArticleForm()
-            return render(request, "admin/admin_article_create.html", param)
+            return render(request, "admin/admin_article_CE.html", param)
     else:
         param["form"] = ArticleForm()
-        return render(request, "admin/admin_article_create.html", param)
+        return render(request, "admin/admin_article_CE.html", param)
 
 
 @login_required(login_url="ADMLogin")
@@ -158,10 +158,10 @@ def admin_article_edit_view(request, article_id):
             return redirect("ADMArticleIndex", 1)
         else:
             param["form"] = ArticleForm(instance=article)
-            return render(request, "admin/admin_article_create.html", param)
+            return render(request, "admin/admin_article_CE.html", param)
     else:
         param["form"] = ArticleForm(instance=article)
-        return render(request, "admin/admin_article_create.html", param)
+        return render(request, "admin/admin_article_CE.html", param)
 
 
 @login_required(login_url="ADMLogin")
@@ -218,6 +218,20 @@ def admin_customer_edit_view(request, customer_id):
         "page_title": _("用户管理"),
         "languages": Languages,
         "active_page": "ADMCustomerIndex",
+        "uid": customer_id,
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    return render(request, "admin/admin_customer_edit.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_customer_basic_edit_view(request, customer_id):
+    param = {
+        "page_title": _("用户管理"),
+        "languages": Languages,
+        "active_page": "ADMCustomerIndex",
         **get_basic_info(),
         **get_admin_info()
     }
@@ -225,28 +239,54 @@ def admin_customer_edit_view(request, customer_id):
     user_query = User.objects.filter(is_active=True, is_staff=False, is_superuser=False) \
         .exclude(username="AnonymousUser")
     basic_profile = get_object_or_404(user_query, uid=customer_id)
-    customer_profile = Customer.objects.get_or_create(user=basic_profile)
+    param["customer_id"] = customer_id
 
     if request.method == "POST":
         basic_form = UserForm(request.POST, instance=basic_profile)
-        customer_form = CustomerForm(request.POST, instance=customer_profile)
-
-        if "CustomerBasic" in request.POST:
-            if basic_form.is_valid():
-                basic_form.save()
-                messages.add_message(request, messages.SUCCESS, _("成功"))
-                return redirect("ADMCustomerEdit", customer_id)
-
-        if "CustomerProfile" in request.POST:
-            if customer_form.is_valid():
-                customer_form.save()
-                return redirect("ADMCustomerEdit", customer_id)
-
-        param["basic_form"] = UserForm(instance=basic_profile)
-        param["customer_form"] = CustomerForm(instance=customer_profile)
-        return render(request, "admin/admin_customer_edit.html", param)
-
+        if basic_form.is_valid():
+            basic_form.update()
+            return render(request, "admin/admin_customer_basic_edit.html", param)
+        else:
+            param["basic_form"] = UserForm(instance=basic_profile)
+            return render(request, "admin/admin_customer_basic_edit.html", param)
     else:
         param["basic_form"] = UserForm(instance=basic_profile)
+        return render(request, "admin/admin_customer_basic_edit.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_customer_profile_edit_view(request, customer_id):
+    param = {
+        "page_title": _("用户管理"),
+        "languages": Languages,
+        "active_page": "ADMCustomerIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    customer_profile = Customer.objects.get(user_id=customer_id)
+
+    if request.method == "POST":
+        customer_form = CustomerForm(request.POST, instance=customer_profile)
+        if customer_form.is_valid():
+            customer_form.save()
+            param["customer_form"] = customer_form
+            return render(request, "admin/admin_customer_profile_edit.html", param)
+        else:
+            param["customer_form"] = CustomerForm(instance=customer_profile)
+            return render(request, "admin/admin_customer_profile_edit.html", param)
+    else:
         param["customer_form"] = CustomerForm(instance=customer_profile)
-        return render(request, "admin/admin_customer_edit.html", param)
+        return render(request, "admin/admin_customer_profile_edit.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_carousel_index(request):
+    param = {
+        "page_title": _("首页轮播管理"),
+        "languages": Languages,
+        "active_page": "ADMCarouselIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    pass
