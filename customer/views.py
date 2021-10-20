@@ -151,7 +151,7 @@ def customer_center_view(request):
     param = {
         "page_title": _("星环-我的主页"),
         "languages": Languages,
-        "user": request.user,
+        "user": User.objects.get(uid=request.user.uid),
         # "profile": Customer.objects.get(user=request.user),
         **get_customer_info(),
     }
