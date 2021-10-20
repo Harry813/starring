@@ -31,6 +31,94 @@
             </div>
         </div>
 
+        <h1 class="h3 mb-3">{% translate '用户搜索' %}</h1>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row align-items-center">
+                                <div class="col-md-3 mt-3">
+                                    <label class="form-label" for="{{ userSearchForm.tag.id_for_label }}">
+                                        {{ userSearchForm.tag.label }}
+                                        {% if userSearchForm.tag.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field userSearchForm.tag class="form-control" %}
+                                    <div>
+                                        {% if userSearchForm.tag.errors %}
+                                            <p class="small" style="color: red;">{{ userSearchForm.tag.errors.0 }}</p>
+                                        {% elif userSearchForm.tag.help_text %}
+                                            <p class="small">{{ userSearchForm.tag.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 mt-3">
+                                    <label class="form-label" for="{{ userSearchForm.vip.id_for_label }}">
+                                        {{ userSearchForm.vip.label }} 
+                                        {% if userSearchForm.vip.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field userSearchForm.vip class="form-control" %}
+                                    <div>
+                                        {% if userSearchForm.vip.errors %}
+                                            <p class="small" style="color: red;">{{ userSearchForm.vip.errors.0 }}</p>
+                                        {% elif userSearchForm.vip.help_text %}
+                                            <p class="small">{{ userSearchForm.vip.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 mt-3">
+                                    <label class="form-label" for="{{ userSearchForm.type.id_for_label }}">
+                                        {{ userSearchForm.type.label }}
+                                        {% if userSearchForm.type.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field userSearchForm.type class="form-control" %}
+                                    <div>
+                                        {% if userSearchForm.type.errors %}
+                                            <p class="small" style="color: red;">{{ userSearchForm.type.errors.0 }}</p>
+                                        {% elif userSearchForm.type.help_text %}
+                                            <p class="small">{{ userSearchForm.type.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5 mt-3">
+                                    <label class="form-label" for="{{ userSearchForm.detail.id_for_label }}">
+                                        {{ userSearchForm.detail.label }}
+                                        {% if userSearchForm.detail.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field userSearchForm.detail class="form-control" %}
+                                    <div>
+                                        {% if userSearchForm.detail.errors %}
+                                            <p class="small" style="color: red;">{{ userSearchForm.detail.errors.0 }}</p>
+                                        {% elif userSearchForm.detail.help_text %}
+                                            <p class="small">{{ userSearchForm.detail.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-3">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="align-middle" data-feather="search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <h1 class="h3 mb-3">{% translate '用户操作' %}</h1>
         <div class="row">
             <div class="col-12">

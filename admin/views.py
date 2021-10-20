@@ -175,6 +175,34 @@ def admin_customer_index_view(request, page=1):
     }
     user_query = User.objects.filter(is_active=True, is_staff=False, is_superuser=False)\
         .exclude(username="AnonymousUser")
+
+    if request.method == "POST":
+        form = CustomerSearch(request.POST)
+        if form.is_valid():
+            tag = form.cleaned_data.get("tag")
+            if tag != "":
+                user_query = user_query.filter(customer__tag=tag)
+
+            vip = form.cleaned_data.get("vip")
+            if vip != "":
+                user_query = user_query.filter(customer__vip_lv=vip)
+
+            search_type = form.cleaned_data.get("type")
+            search_context = form.cleaned_data.get("detail")
+            if search_type != "" and search_context is not None:
+                if search_type == "UID":
+                    user_query = user_query.filter(uid__icontains=search_context)
+                elif search_type == "UNM":
+                    user_query = user_query.filter(username__icontains=search_context)
+                elif search_type == "RNM":
+                    user_query = user_query.filter(name__icontains=search_context)
+
+            param["userSearchForm"] = form
+        else:
+            param["userSearchForm"] = CustomerSearch(request.POST)
+    else:
+        param["userSearchForm"] = CustomerSearch()
+
     p = Paginator(user_query, 10)
     customer_list = p.get_page(page)
     param["paginator"] = p

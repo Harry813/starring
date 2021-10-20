@@ -73,3 +73,35 @@ class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
         exclude = ["user"]
+
+
+class CustomerSearch(forms.Form):
+    tag = forms.ChoiceField(
+        label=user_search_tag_text,
+        choices=[('', '------')] + customer_tags,
+        required=False,
+    )
+
+    vip = forms.ChoiceField(
+        label=user_search_vip_text,
+        choices=[('', '------')] + VipLevel,
+        required=False
+    )
+
+    type = forms.ChoiceField(
+        label=user_search_type_text,
+        choices=[('', '------')] + customer_Search_type,
+        required=False,
+    )
+
+    detail = forms.CharField(
+        label=user_search_detail_text,
+        max_length=150,
+        required=False,
+    )
+
+    def clean(self):
+        if (self.cleaned_data.get("type") == "") ^ (self.cleaned_data.get("detail") == ""):
+            raise ValidationError(message=user_search_errmsg_InsuffCond, code="InsufficientCondition")
+        else:
+            return self.cleaned_data
