@@ -10,5 +10,9 @@ urlpatterns = [
     path('articles/create/', views.admin_article_create_view, name="ADMArticleCreate"),
     path('articles/article-<int:article_id>/', views.admin_article_edit_view, name="ADMArticleEdit"),
     path('customer/page<int:page>/', views.admin_customer_index_view, name="ADMCustomerIndex"),
-    path('customer/profile-<str:customer_id>/', views.admin_customer_edit_view, name="ADMCustomerEdit")
+    path('customer/profile-<str:customer_id>/', views.admin_customer_edit_view, name="ADMCustomerEdit"),
+    path('customer/profile-<str:customer_id>/basic/', views.admin_customer_basic_edit_view,
+         name="ADMCustomerBasicEdit"),
+    path('customer/profile-<str:customer_id>/profile/', views.admin_customer_profile_edit_view,
+         name="ADMCustomerProfileEdit")
 ]
