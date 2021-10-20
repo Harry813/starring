@@ -29,15 +29,15 @@
                 </div>
 
                 <div class="px-4 py-2 float-start align-bottom border-left">
-                    VIPLv
+                    {{ user.customer.get_vip_lv_display }}
                 </div>
 
                 <div class="px-4 py-2 float-start align-bottom border-left">
-                    <strong><i class="bi bi-person"></i></strong> Harry0813
+                    <strong><i class="bi bi-person"></i></strong> {{ user.get_display_name }}
                 </div>
 
                 <div class="px-4 py-2 float-start align-bottom border-left">
-                    <strong><i class="bi bi-hash"></i></strong> 62afc18d
+                    <strong><i class="bi bi-hash"></i></strong> {{ user.get_uid_as_string|slice:"-8:" }}
                 </div>
 
                 <div class="ms-auto">
