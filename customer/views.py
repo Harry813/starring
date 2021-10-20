@@ -84,28 +84,6 @@ def customer_login_view(request):
         return render(request, "customer/login.html", param)
 
 
-def customer_articles(request, article_id):
-    param = {
-        "page_title": _("星环"),
-        "languages": Languages,
-        **get_customer_info(),
-    }
-
-    if request.method == "POST":
-        contactForm = ContactForm(request.POST)
-        if "contact" in request.POST:
-            if contactForm.is_valid():
-                contactForm.save()
-                messages.add_message(request, messages.SUCCESS, _("提交成功"))
-        param["ContactForm"] = ContactForm()
-    else:
-        param["ContactForm"] = ContactForm()
-
-    article = get_object_or_404(Article, id=article_id)
-    param["article"] = article
-    return render(request, "customer/customer_articles.html", param)
-
-
 def customer_logout(request):
     logout(request)
     return redirect('CUSTIndex')
