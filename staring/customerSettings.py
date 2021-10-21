@@ -133,8 +133,19 @@ customer_tags = [
     ('PARTNER', _('合作伙伴'))
 ]
 
-customer_Search_type = [
+user_Search_type = [
     ('UID', "UID"),
     ('UNM', _("用户名")),
     ('RNM', _("姓名"))
+]
+
+staff_tags = [
+    ('ADMIN', _('管理团队')),
+    ('MARKET', _('市场部')),
+    ('SALES', _('销售部')),
+    ('COPYWRITE', _('文案部')),
+    ('TRAVEL', _('旅游部')),
+    ('MANITOBA', _('曼省分公司')),
+    ('NEWFOUND', _('纽省分公司')),
+    ('QUEBEC', _('魁省分公司')),
 ]

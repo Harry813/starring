@@ -24,17 +24,34 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item {% if active_page == 'ADMArticleIndex' %}active{% endif %}">
-                        <a class="sidebar-link" href="{% url 'ADMArticleIndex' 1 %}">
-                            {# Translators: 后台模板{侧边栏}-第一部分@文章管理 #}
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">{% translate '文章管理' %}</span>
+                    <li class="sidebar-header">
+                        {# Translators: 后台模板{侧边栏}-第二部分@标题 #}
+                        {% translate '公司管理' %}
+                    </li>
+
+                    <li class="sidebar-item {% if active_page == 'ADMStaff' %}active{% endif %}">
+                        <a class="sidebar-link" href="{% url 'ADMStaffIndex' 1 %}">
+                            {# Translators: 后台模板{侧边栏}-第二部分@员工管理 #}
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">{% translate '员工管理' %}</span>
                         </a>
+                    </li>
+
+                    <li class="sidebar-header">
+                        {# Translators: 后台模板{侧边栏}-第三部分@标题 #}
+                        {% translate '服务管理' %}
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMCustomerIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMCustomerIndex' 1 %}">
-                            {# Translators: 后台模板{侧边栏}-第二部分@用户管理 #}
+                            {# Translators: 后台模板{侧边栏}-第三部分@用户管理 #}
                             <i class="align-middle" data-feather="users"></i> <span class="align-middle">{% translate '用户管理' %}</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item {% if active_page == 'ADMArticleIndex' %}active{% endif %}">
+                        <a class="sidebar-link" href="{% url 'ADMArticleIndex' 1 %}">
+                            {# Translators: 后台模板{侧边栏}-第三部分@文章管理 #}
+                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">{% translate '文章管理' %}</span>
                         </a>
                     </li>
                 </ul>

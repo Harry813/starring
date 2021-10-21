@@ -245,13 +245,13 @@ def admin_customer_basic_edit_view(request, customer_id):
         basic_form = UserForm(request.POST, instance=basic_profile)
         if basic_form.is_valid():
             basic_form.update()
-            return render(request, "admin/admin_customer_basic_edit.html", param)
+            return render(request, "admin/admin_user_basic_edit.html", param)
         else:
             param["basic_form"] = UserForm(instance=basic_profile)
-            return render(request, "admin/admin_customer_basic_edit.html", param)
+            return render(request, "admin/admin_user_basic_edit.html", param)
     else:
         param["basic_form"] = UserForm(instance=basic_profile)
-        return render(request, "admin/admin_customer_basic_edit.html", param)
+        return render(request, "admin/admin_user_basic_edit.html", param)
 
 
 @login_required(login_url="ADMLogin")
@@ -277,6 +277,118 @@ def admin_customer_profile_edit_view(request, customer_id):
     else:
         param["customer_form"] = CustomerForm(instance=customer_profile)
         return render(request, "admin/admin_customer_profile_edit.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_staff_index_view(request, page=1):
+    param = {
+        "page_title": _("员工管理"),
+        "languages": Languages,
+        "active_page": "ADMStaff",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    user_query = User.objects.filter(is_active=True, is_staff=True, is_superuser=True).\
+        exclude(username="AnonymousUser")
+
+    if request.method == "POST":
+        form = StaffSearch(request.POST)
+        if form.is_valid():
+            tag = form.cleaned_data.get("tag")
+            if tag != "":
+                user_query = user_query.filter(staff__tag=tag)
+
+            search_type = form.cleaned_data.get("type")
+            search_context = form.cleaned_data.get("detail")
+            if search_type != "" and search_context is not None:
+                if search_type == "UID":
+                    user_query = user_query.filter(uid__icontains=search_context)
+                elif search_type == "UNM":
+                    user_query = user_query.filter(username__icontains=search_context)
+                elif search_type == "RNM":
+                    user_query = user_query.filter(name__icontains=search_context)
+
+            param["userSearchForm"] = form
+        else:
+            param["userSearchForm"] = StaffSearch(request.POST)
+    else:
+        param["userSearchForm"] = StaffSearch()
+
+    p = Paginator(user_query, 10)
+    staff_list = p.get_page(page)
+    param["paginator"] = p
+    param["staff_list"] = staff_list
+    param["current_page"] = page
+    param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
+    return render(request, "admin/admin_staff_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_staff_edit_view(request, staff_id):
+    param = {
+        "page_title": _("员工管理"),
+        "languages": Languages,
+        "active_page": "ADMStaff",
+        "uid": staff_id,
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    return render(request, "admin/admin_staff_edit.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_staff_basic_edit_view(request, staff_id):
+    param = {
+        "page_title": _("员工管理"),
+        "languages": Languages,
+        "active_page": "ADMStaff",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    user_query = User.objects.filter(is_active=True, is_staff=True, is_superuser=True) \
+        .exclude(username="AnonymousUser")
+    basic_profile = get_object_or_404(user_query, uid=staff_id)
+    param["user_id"] = staff_id
+
+    if request.method == "POST":
+        basic_form = UserForm(request.POST, instance=basic_profile)
+        if basic_form.is_valid():
+            basic_form.update()
+            return render(request, "admin/admin_user_basic_edit.html", param)
+        else:
+            param["basic_form"] = UserForm(instance=basic_profile)
+            return render(request, "admin/admin_user_basic_edit.html", param)
+    else:
+        param["basic_form"] = UserForm(instance=basic_profile)
+        return render(request, "admin/admin_user_basic_edit.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_staff_profile_edit_view(request, staff_id):
+    param = {
+        "page_title": _("员工管理"),
+        "languages": Languages,
+        "active_page": "ADMStaff",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    staff_profile = Staff.objects.get_or_create(user_id=staff_id, defaults={'user': User.objects.get(uid=staff_id)})
+    if request.method == "POST":
+        staff_form = StaffForm(request.POST, instance=staff_profile)
+        if staff_form.is_valid():
+            staff_form.save()
+            param["staff_form"] = staff_form
+            return render(request, "admin/admin_staff_profile_edit.html", param)
+        else:
+            param["staff_form"] = StaffForm(request.POST, instance=staff_profile)
+            return render(request, "admin/admin_staff_profile_edit.html", param)
+    else:
+        param["staff_form"] = StaffForm()
+        return render(request, "admin/admin_staff_profile_edit.html", param)
 
 
 @login_required(login_url="ADMLogin")

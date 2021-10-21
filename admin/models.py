@@ -4,8 +4,9 @@ from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 
-from staring.customerSettings import Roles
+from staring.customerSettings import Roles, staff_tags
 from staring.models import User
+from staring.text import *
 
 
 # Create your models here.
@@ -15,18 +16,12 @@ class Department (models.Model):
     )
 
     dep_name = models.CharField(
-        verbose_name=_("部门名称"),
+        verbose_name=department_dep_name_text,
         max_length=40
     )
 
 
 class Staff(models.Model):
-    staff_id = models.CharField(
-        verbose_name=_("员工ID"),
-        primary_key=True,
-        max_length=50
-    )
-
     user = models.OneToOneField(
         to=User,
         on_delete=models.CASCADE,
@@ -35,12 +30,22 @@ class Staff(models.Model):
 
     department = models.ForeignKey(
         to=Department,
-        verbose_name=_("部门"),
-        on_delete=models.CASCADE
+        verbose_name=staff_department_text,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
     )
 
     role = models.CharField(
-        verbose_name=_("职位"),
+        verbose_name=staff_role_text,
         max_length=20,
-        choices=Roles
+        choices=[('', '------')] + Roles,
+        blank=True
+    )
+
+    tag = models.CharField(
+        verbose_name=staff_tag_text,
+        max_length=20,
+        choices=[('', '------')] + staff_tags,
+        blank=True
     )

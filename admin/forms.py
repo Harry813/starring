@@ -7,6 +7,7 @@ from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 from modeltranslation.forms import TranslationModelForm
 
+from admin.models import Staff
 from customer.models import Customer
 from staring.models import *
 
@@ -75,6 +76,12 @@ class CustomerForm(forms.ModelForm):
         exclude = ["user"]
 
 
+class StaffForm(forms.ModelForm):
+    class Meta:
+        model = Staff
+        exclude = ["user"]
+
+
 class CustomerSearch(forms.Form):
     tag = forms.ChoiceField(
         label=user_search_tag_text,
@@ -90,7 +97,33 @@ class CustomerSearch(forms.Form):
 
     type = forms.ChoiceField(
         label=user_search_type_text,
-        choices=[('', '------')] + customer_Search_type,
+        choices=[('', '------')] + user_Search_type,
+        required=False,
+    )
+
+    detail = forms.CharField(
+        label=user_search_detail_text,
+        max_length=150,
+        required=False,
+    )
+
+    def clean(self):
+        if (self.cleaned_data.get("type") == "") ^ (self.cleaned_data.get("detail") == ""):
+            raise ValidationError(message=user_search_errmsg_InsuffCond, code="InsufficientCondition")
+        else:
+            return self.cleaned_data
+
+
+class StaffSearch(forms.Form):
+    tag = forms.ChoiceField(
+        label=user_search_tag_text,
+        choices=[('', '------')] + staff_tags,
+        required=False,
+    )
+
+    type = forms.ChoiceField(
+        label=user_search_type_text,
+        choices=[('', '------')] + user_Search_type,
         required=False,
     )
 

@@ -1,0 +1,204 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{% translate '员工管理' %}</h1>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col mt-0">
+                                <h5 class="card-title">{% translate '员工总数' %}</h5>
+                            </div>
+
+                            <div class="col-auto">
+                                <div class="stat text-primary">
+                                    <i class="align-middle" data-feather="user"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <h1 class="mt-1 mb-3">{{ paginator.count }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="h3 mb-3">{% translate '员工搜索' %}</h1>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row align-items-center">
+                                <div class="col-md-3 mt-3">
+                                    <label class="form-label" for="{{ userSearchForm.tag.id_for_label }}">
+                                        {{ userSearchForm.tag.label }}
+                                        {% if userSearchForm.tag.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field userSearchForm.tag class="form-control" %}
+                                    <div>
+                                        {% if userSearchForm.tag.errors %}
+                                            <p class="small" style="color: red;">{{ userSearchForm.tag.errors.0 }}</p>
+                                        {% elif userSearchForm.tag.help_text %}
+                                            <p class="small">{{ userSearchForm.tag.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 mt-3">
+                                    <label class="form-label" for="{{ userSearchForm.type.id_for_label }}">
+                                        {{ userSearchForm.type.label }}
+                                        {% if userSearchForm.type.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field userSearchForm.type class="form-control" %}
+                                    <div>
+                                        {% if userSearchForm.type.errors %}
+                                            <p class="small" style="color: red;">{{ userSearchForm.type.errors.0 }}</p>
+                                        {% elif userSearchForm.type.help_text %}
+                                            <p class="small">{{ userSearchForm.type.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mt-3">
+                                    <label class="form-label" for="{{ userSearchForm.detail.id_for_label }}">
+                                        {{ userSearchForm.detail.label }}
+                                        {% if userSearchForm.detail.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field userSearchForm.detail class="form-control" %}
+                                    <div>
+                                        {% if userSearchForm.detail.errors %}
+                                            <p class="small" style="color: red;">{{ userSearchForm.detail.errors.0 }}</p>
+                                        {% elif userSearchForm.detail.help_text %}
+                                            <p class="small">{{ userSearchForm.detail.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-3">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="align-middle" data-feather="search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="h3 mb-3">{% translate '员工操作' %}</h1>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col mt-0">
+                                <h5 class="card-title">{% translate '员工操作' %}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped table-padding">
+                        <thead>
+                        <tr>
+                            <th style="width:30%;">{% translate '用户名' %}</th>
+                            <th>{% translate '邮箱' %}</th>
+                            <th>{% translate '标签' %}</th>
+                            <th>{% translate '操作' %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for staff in staff_list %}
+                            <tr>
+                                <td>{{ staff.get_display_name }}</td>
+                                <td>{{ staff.email }}</td>
+                                <td>
+                                    {% if staff.staff.tag %}
+                                        <span class="badge rounded-pill bg-primary">{{ staff.staff.get_tag_display }}</span>
+                                    {% else %}
+                                        {% trans '暂无' %}
+                                    {% endif %}
+                                </td>
+                                <td class="table-action">
+                                    <a href="{% url 'ADMStaffEdit' staff.get_uid_as_string %}" class="action-button edit-button">
+                                        <i class="align-middle" data-feather="edit-2"></i>
+                                    </a>
+                                    <a class="action-button trash-button">
+                                        <i class="align-middle" data-feather="trash-2"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td class="text-center" colspan="5">{% translate '暂无用户' %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="dataTables_info">
+                                    {% blocktranslate with start=staff_list.start_index end=staff_list.end_index page_total=paginator.num_pages Customer_total=paginator.count %}
+                                        第 {{ current_page }} 页，共 {{ page_total }} 页
+                                        <p class="small">第 {{ start }} ~ {{ end }} 项，共 {{ Customer_total }} 项</p>
+                                    {% endblocktranslate %}
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="btn-group mb-3 float-end">
+
+                                    <a href="{% if current_page != 1 %}{% url 'ADMStaffIndex' 1 %}{% endif %}"
+                                       class="btn btn-outline-primary {% if current_page == 1 %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevrons-left"></i>
+                                    </a>
+
+                                    <a href="
+                                            {% if staff_list.has_next %}{% url 'ADMStaffIndex' staff_list.previous_page_number %}{% endif %}"
+                                       class="btn btn-outline-primary {% if not staff_list.has_previous %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevron-left"></i>
+                                    </a>
+
+                                    {% for p in page_list %}
+                                        <a href="#"
+                                           class="btn btn-outline-primary {% if p == current_page %}active{% elif p == "..." %}disabled{% endif %}">
+                                            {{ p }}
+                                        </a>
+                                    {% endfor %}
+
+                                    <a href="
+                                            {% if staff_list.has_next %}{% url 'ADMStaffIndex' staff_list.next_page_number %}{% endif %}"
+                                       class="btn btn-outline-primary {% if not staff_list.has_next %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevron-right"></i>
+                                    </a>
+                                    <a href="
+                                            {% if current_page != paginator.num_pages %}{% url 'ADMStaffIndex' paginator.num_pages %}{% endif %}"
+                                       class="btn btn-outline-primary {% if current_page == paginator.num_pages %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevrons-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -14,5 +14,9 @@ urlpatterns = [
     path('customer/profile-<str:customer_id>/basic/', views.admin_customer_basic_edit_view,
          name="ADMCustomerBasicEdit"),
     path('customer/profile-<str:customer_id>/profile/', views.admin_customer_profile_edit_view,
-         name="ADMCustomerProfileEdit")
+         name="ADMCustomerProfileEdit"),
+    path('staff/page<int:page>/', views.admin_staff_index_view, name="ADMStaffIndex"),
+    path('staff/profile-<str:staff_id>/', views.admin_staff_edit_view, name="ADMStaffEdit"),
+    path('staff/profile-<str:staff_id>/basic/', views.admin_staff_basic_edit_view, name="ADMStaffBasicEdit"),
+    path('staff/profile-<str:staff_id>/profile/', views.admin_staff_profile_edit_view, name="ADMStaffProfileEdit"),
 ]
