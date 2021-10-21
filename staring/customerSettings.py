@@ -149,3 +149,11 @@ staff_tags = [
     ('NEWFOUND', _('纽省分公司')),
     ('QUEBEC', _('魁省分公司')),
 ]
+
+meeting_status = [
+    ('APPLY', _("申请已提交")),
+    ('ACCEPT', _("预约成功")),
+    ('REJECT', _("预约失败")),
+    ('FINISH', _("此次会议已结束")),
+    ('TIMEOUT', _("逾时未参与"))
+]

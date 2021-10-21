@@ -293,6 +293,37 @@ carouselArticle_title_text = _("标题")
 # Translators: 首页轮播{简介}
 carouselArticle_intro_text = _("简介")
 
+
+###################################################################################################
+# staring.models.MeetingSlot  预约时间表模组
+###################################################################################################
+
+# Translators: 预约时间表{日期}
+meetingSlot_date_text = _("日期")
+
+# Translators: 预约时间表{时间}
+meetingSlot_time_text = _("时间")
+
+# Translators: 预约时间表{可用次数}
+meetingSlot_availability_text = _("可用次数")
+
+
+###################################################################################################
+# staring.models.MeetingReservation  预约模组
+###################################################################################################
+
+# Translators: 预约{客户}
+meetingReservation_customer_text = _("客户")
+
+# Translators: 预约{咨询师}
+meetingReservation_staff_text = _("咨询师")
+
+# Translators: 预约{预约时间}
+meetingReservation_slot_text = _("预约时间")
+
+# Translators: 预约{预约状态}
+meetingReservation_status_text = _("预约状态")
+
 ###################################################################################################
 # Validation Errors  验证错误
 ###################################################################################################

@@ -221,5 +221,43 @@ class CarouselArticles(models.Model):
     )
 
 
-# class MeetingReservation(models.Model):
-#     pass
+class MeetingSlot(models.Model):
+    date = models.DateField(
+        verbose_name=meetingSlot_date_text
+    )
+
+    time = models.TimeField(
+        verbose_name=meetingSlot_time_text
+    )
+
+    availability = models.PositiveIntegerField(
+        verbose_name=meetingSlot_availability_text,
+        default=1
+    )
+
+
+class MeetingReservation(models.Model):
+    customer = models.ForeignKey(
+        to="customer.Customer",
+        on_delete=models.CASCADE,
+        verbose_name=meetingReservation_customer_text
+    )
+
+    staff = models.ForeignKey(
+        verbose_name=meetingReservation_staff_text,
+        to="admin.Staff",
+        on_delete=models.CASCADE
+    )
+
+    slot = models.ForeignKey(
+        to=MeetingSlot,
+        on_delete=models.CASCADE,
+        verbose_name=meetingReservation_slot_text,
+    )
+
+    status = models.CharField(
+        verbose_name=meetingReservation_status_text,
+        max_length=10,
+        choices=meeting_status,
+        default="APPLY"
+    )
