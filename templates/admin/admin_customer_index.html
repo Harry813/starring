@@ -148,8 +148,8 @@
                                 <td>{{ customer.email }}</td>
                                 <td>{{ customer.customer.get_vip_lv_display }}</td>
                                 <td>
-                                    {% if customer.customer.tags %}
-                                        <span class="badge rounded-pill bg-primary">{{ customer.customer.get_tags_display }}</span>
+                                    {% if customer.customer.tag %}
+                                        <span class="badge rounded-pill bg-primary">{{ customer.customer.get_tag_display }}</span>
                                     {% else %}
                                         {% trans '暂无' %}
                                     {% endif %}
