@@ -392,6 +392,63 @@ def admin_staff_profile_edit_view(request, staff_id):
 
 
 @login_required(login_url="ADMLogin")
+def admin_news_sector_index_view(request):
+    param = {
+        "page_title": _("新闻分区"),
+        "languages": Languages,
+        "active_page": "ADMNewsSectorIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    if request.method == "POST":
+        form = NewsSectorForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            form = NewsSectorForm(request.POST)
+    else:
+        form = NewsSectorForm()
+
+    param["form"] = form
+
+    param["sector_list"] = NewsSector.objects.all()
+    param["count"] = len(NewsSector.objects.all())
+    return render(request, 'admin/admin_sector.html', param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_news_sector_edit_view(request, sid):
+    param = {
+        "page_title": _("新闻分区"),
+        "languages": Languages,
+        "active_page": "ADMNewsSectorIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    sector = NewsSector.objects.get(id=sid)
+
+    if request.method == "POST":
+        form = NewsSectorForm(request.POST, instance=sector)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMNewsSectorIndex")
+        else:
+            form = NewsSectorForm(request.POST, instance=sector)
+    else:
+        form = NewsSectorForm(instance=sector)
+
+    param["form"] = form
+    return render(request, 'admin/admin_sector_edit.html', param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_news_sector_edit_view(request):
+    pass
+
+
+@login_required(login_url="ADMLogin")
 def admin_carousel_index(request):
     param = {
         "page_title": _("首页轮播管理"),

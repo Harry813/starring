@@ -1,0 +1,134 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{% translate '分区管理' %}</h1>
+        <div class="row">
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col mt-0">
+                                <h5 class="card-title">{% translate '分区总数' %}</h5>
+                            </div>
+
+                            <div class="col-auto">
+                                <div class="stat text-primary">
+                                    <i class="align-middle" data-feather="file"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <h1 class="mt-1 mb-3">{{ count }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="h3 mb-3">{% translate '创建分区' %}</h1>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" for="{{ form.name.id_for_label }}">
+                                        {{ form.name.label }}
+                                        {% if form.name.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.name class="form-control" %}
+                                    <div>
+                                        {% if form.name.errors %}
+                                            <p class="small" style="color: red;">{{ form.name.errors.0 }}</p>
+                                        {% elif form.name.help_text %}
+                                            <p class="small">{{ form.name.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 md-3">
+                                    <label class="form-label" for="{{ form.max_news.id_for_label }}">
+                                        {{ form.max_news.label }}
+                                        {% if form.max_news.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.max_news class="form-control" %}
+                                    <div>
+                                        {% if form.max_news.errors %}
+                                            <p class="small" style="color: red;">{{ form.max_news.errors.0 }}</p>
+                                        {% elif form.max_news.help_text %}
+                                            <p class="small">{{ form.max_news.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-12 md-3">
+                                    <button class="w-100 btn btn-primary" type="submit">{% translate '添加' %}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="h3 mb-3">{% translate '分区操作' %}</h1>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col mt-0">
+                                <h5 class="card-title">{% translate '分区操作' %}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped table-padding">
+                        <thead>
+                        <tr>
+                            <th><strong>#</strong></th>
+                            <th style="width:60%;">{% translate '分区名称' %}</th>
+                            <th style="width:30%">{% translate '最大数量' %}</th>
+                            <th>{% translate '操作' %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for sector in sector_list %}
+                            <tr>
+                                <td>{{ sector.id }}</td>
+                                <td>{{ sector.name }}</td>
+                                <td>{{ sector.max_news }}</td>
+                                <td class="table-action">
+                                    <a class="action-button edit-button"  href="{% url 'ADMNewsSectorEdit' sector.id %}">
+                                        <i class="align-middle" data-feather="edit-2"></i>
+                                    </a>
+
+                                    <a class="action-button trash-button">
+                                        <i class="align-middle" data-feather="trash-2"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td class="text-center" colspan="5">{% translate '暂无分区' %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

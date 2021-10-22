@@ -138,3 +138,9 @@ class StaffSearch(forms.Form):
             raise ValidationError(message=user_search_errmsg_InsuffCond, code="InsufficientCondition")
         else:
             return self.cleaned_data
+
+
+class NewsSectorForm(forms.ModelForm):
+    class Meta:
+        model = NewsSector
+        exclude = ["id"]

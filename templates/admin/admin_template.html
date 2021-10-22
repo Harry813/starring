@@ -54,6 +54,25 @@
                             <i class="align-middle" data-feather="book"></i> <span class="align-middle">{% translate '文章管理' %}</span>
                         </a>
                     </li>
+
+                    <li class="sidebar-header">
+                        {# Translators: 后台模板{侧边栏}-第四部分@标题 #}
+                        {% translate '新闻管理' %}
+                    </li>
+
+                    <li class="sidebar-item {% if active_page == 'ADMNewsSectorIndex' %}active{% endif %}">
+                        <a class="sidebar-link" href="{% url 'ADMNewsSectorIndex' %}">
+                            {# Translators: 后台模板{侧边栏}-第四部分@新闻分区 #}
+                            <i class="align-middle" data-feather="file"></i> <span class="align-middle">{% translate '新闻分区' %}</span>
+                        </a>
+                    </li>
+
+{#                    <li class="sidebar-item {% if active_page == 'ADMNewsIndex' %}active{% endif %}">#}
+{#                        <a class="sidebar-link" href="{% url 'ADMNewsIndex' %}">#}
+                            {# Translators: 后台模板{侧边栏}-第四部分@新闻分区 #}
+{#                            <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">{% translate '新闻' %}</span>#}
+{#                        </a>#}
+{#                    </li>#}
                 </ul>
             </div>
         </nav>
