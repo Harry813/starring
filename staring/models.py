@@ -192,32 +192,41 @@ class Article(models.Model):
     )
 
 
-class CarouselArticles(models.Model):
-    carousel = models.CharField(
-        verbose_name=carouselArticle_carousel_text,
-        max_length=5,
-        choices=IndexCarousel
+class NewsSector(models.Model):
+    name = models.CharField(
+        verbose_name=newsSector_name_text,
+        max_length=15,
+    )
+
+    max_news = models.PositiveIntegerField(
+        verbose_name=newsSector_max_news_text,
+        default=8
+    )
+
+
+class News(models.Model):
+    sector = models.ForeignKey(
+        to=NewsSector,
+        on_delete=models.CASCADE,
+        verbose_name=news_sector_text
     )
 
     article = models.ForeignKey(
-        verbose_name=carouselArticle_article_text,
+        to=Article,
         on_delete=models.CASCADE,
-        to=Article
+        verbose_name=news_article_text
     )
 
-    image = models.ImageField(
-        verbose_name=carouselArticle_article_text,
-        upload_to="carousel"
+    introduction = models.CharField(
+        verbose_name=news_introduction_text,
+        max_length=150,
+        help_text=news_introduction_help_text
     )
 
-    title = models.CharField(
-        verbose_name=carouselArticle_article_text,
-        max_length=30,
-    )
-
-    intro = models.CharField(
-        verbose_name=carouselArticle_intro_text,
-        max_length=60,
+    img = models.ImageField(
+        verbose_name=news_img_text,
+        help_text=news_img_help_text,
+        upload_to="news/"
     )
 
 
