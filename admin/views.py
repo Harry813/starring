@@ -444,18 +444,50 @@ def admin_news_sector_edit_view(request, sid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_news_sector_edit_view(request):
-    pass
-
-
-@login_required(login_url="ADMLogin")
-def admin_carousel_index(request):
+def admin_news_index_view(request):
     param = {
         "page_title": _("首页轮播管理"),
         "languages": Languages,
-        "active_page": "ADMCarouselIndex",
+        "active_page": "ADMNewsIndex",
         **get_basic_info(),
         **get_admin_info()
     }
 
-    pass
+    news = News.objects.all()
+
+    if request.method == "POST":
+        form = NewsSearchForm(request.POST)
+        if form.is_valid():
+            sector = form.cleaned_data.get("sector")
+            if sector != "":
+                news = News.objects.filter(sector=sector)
+        else:
+            form = NewsSearchForm(request.POST)
+    else:
+        form = NewsSearchForm()
+
+    param["news"] = news
+    param["form"] = form
+
+    return render(request, "admin/admin_news_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_slot_index_view(request, page):
+    param = {
+        "page_title": _("日程管理"),
+        "languages": Languages,
+        "active_page": "ADMSlotIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    timeslots = MeetingSlot.objects.filter(date__gte=datetime.datetime.today())
+
+    p = Paginator(timeslots, 10)
+    timeslots = p.get_page(page)
+    param["paginator"] = p
+    param["timeslots"] = timeslots
+    param["current_page"] = page
+    param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
+    return render(request, "admin/admin_slots.html", param)

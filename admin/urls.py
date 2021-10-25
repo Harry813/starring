@@ -21,5 +21,7 @@ urlpatterns = [
     path('staff/profile-<str:staff_id>/profile/', views.admin_staff_profile_edit_view, name="ADMStaffProfileEdit"),
     path('sector/', views.admin_news_sector_index_view, name="ADMNewsSectorIndex"),
     path('sector/<int:sid>/', views.admin_news_sector_edit_view, name="ADMNewsSectorEdit"),
-    # path('news/, views.admin_news_index_view', name="admin_news_edit_view")
+    path('news/', views.admin_news_index_view, name="ADMNewsIndex"),
+    # path('news/, views.admin_news_index_view', name="admin_news_edit_view"),
+    path('slots/page<int:page>/', views.admin_slot_index_view, name="ADMSlotIndex"),
 ]

@@ -196,12 +196,16 @@ class NewsSector(models.Model):
     name = models.CharField(
         verbose_name=newsSector_name_text,
         max_length=15,
+        unique=True
     )
 
     max_news = models.PositiveIntegerField(
         verbose_name=newsSector_max_news_text,
         default=8
     )
+
+    def __str__(self):
+        return self.name
 
 
 class News(models.Model):
@@ -243,6 +247,13 @@ class MeetingSlot(models.Model):
         verbose_name=meetingSlot_availability_text,
         default=1
     )
+
+    class Meta:
+        unique_together = ["date", "time"]
+
+    def get_remain_availability(self):
+        cost = len(MeetingReservation.objects.filter(slot=self))
+        return self.availability - cost
 
 
 class MeetingReservation(models.Model):
