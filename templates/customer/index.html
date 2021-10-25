@@ -58,7 +58,7 @@
         {% for a in accordion %}
             <div class="col-md-6 col-sm-12">
                 <div class="w-100 accordion-header">
-                    <p class="accordion-title">{{ a.title }}</p>
+                    <p class="accordion-title">{{ a.name }}</p>
                 </div>
                 <div class="accordion py-3" id="accordionExample">
                     {% for article in a.articles %}
