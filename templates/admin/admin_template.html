@@ -55,6 +55,13 @@
                         </a>
                     </li>
 
+                    <li class="sidebar-item {% if active_page == 'ADMSlotIndex' %}active{% endif %}">
+                        <a class="sidebar-link" href="{% url 'ADMSlotIndex' 1 %}">
+                            {# Translators: 后台模板{侧边栏}-第三部分@日程管理 #}
+                            <i class="align-middle" data-feather="clock"></i> <span class="align-middle">{% translate '日程管理' %}</span>
+                        </a>
+                    </li>
+
                     <li class="sidebar-header">
                         {# Translators: 后台模板{侧边栏}-第四部分@标题 #}
                         {% translate '新闻管理' %}
