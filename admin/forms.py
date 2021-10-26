@@ -85,31 +85,30 @@ class StaffForm(forms.ModelForm):
 class CustomerSearch(forms.Form):
     tag = forms.ChoiceField(
         label=user_search_tag_text,
-        choices=[('', '------')] + customer_tags,
+        choices=[('', '--------')] + customer_tags,
         required=False,
     )
 
     vip = forms.ChoiceField(
         label=user_search_vip_text,
-        choices=[('', '------')] + VipLevel,
+        choices=[('', '--------')] + VipLevel,
         required=False
     )
 
     type = forms.ChoiceField(
         label=user_search_type_text,
-        choices=[('', '------')] + user_Search_type,
+        choices=[('', '--------')] + user_Search_type,
         required=False,
     )
 
     detail = forms.CharField(
         label=user_search_detail_text,
-        max_length=150,
         required=False,
     )
 
     def clean(self):
         if (self.cleaned_data.get("type") == "") ^ (self.cleaned_data.get("detail") == ""):
-            raise ValidationError(message=user_search_errmsg_InsuffCond, code="InsufficientCondition")
+            raise ValidationError(message=search_errmsg_InsuffCond, code="InsufficientCondition")
         else:
             return self.cleaned_data
 
@@ -117,13 +116,13 @@ class CustomerSearch(forms.Form):
 class StaffSearch(forms.Form):
     tag = forms.ChoiceField(
         label=user_search_tag_text,
-        choices=[('', '------')] + staff_tags,
+        choices=[('', '--------')] + staff_tags,
         required=False,
     )
 
     type = forms.ChoiceField(
         label=user_search_type_text,
-        choices=[('', '------')] + user_Search_type,
+        choices=[('', '--------')] + article_Search_type,
         required=False,
     )
 
@@ -135,7 +134,7 @@ class StaffSearch(forms.Form):
 
     def clean(self):
         if (self.cleaned_data.get("type") == "") ^ (self.cleaned_data.get("detail") == ""):
-            raise ValidationError(message=user_search_errmsg_InsuffCond, code="InsufficientCondition")
+            raise ValidationError(message=search_errmsg_InsuffCond, code="InsufficientCondition")
         else:
             return self.cleaned_data
 
@@ -149,7 +148,7 @@ class NewsSectorForm(forms.ModelForm):
 class NewsSearchForm(forms.Form):
     sector = forms.ModelChoiceField(
         queryset=None,
-        label=newsSearch_sector_name,
+        label=newsSearch_sector_text,
         required=False
     )
 
