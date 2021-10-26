@@ -15,7 +15,7 @@ from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm
 from customer.models import Customer
 from customer.utils import get_customer_info
 from staring.customerSettings import Languages, IndexCarousel
-from staring.models import Article, CarouselArticles, User
+from staring.models import Article, User, NewsSector
 from staring.text import UserNoPermit_text, UserNotExist_text
 
 
@@ -29,9 +29,7 @@ def index(request):
         **get_customer_info(),
     }
 
-    accordion = {}
-    for key, title in IndexCarousel:
-        accordion[title] = CarouselArticles.objects.filter(carousel=key)
+    accordion = NewsSector.objects.all()
 
     param["accordion"] = accordion
 
