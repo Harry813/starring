@@ -107,9 +107,6 @@ user_search_type_text = _("搜索模式")
 # Translator:　用户搜索表单{精确搜索}
 user_search_detail_text = _("精确搜索")
 
-# Translator:　用户搜索表单{错误信息}-条件不足
-user_search_errmsg_InsuffCond = _("搜索条件不足，请选择搜索类型或填写搜索内容")
-
 ###################################################################################################
 # staring.models.Article  文章模组
 ###################################################################################################
@@ -133,7 +130,7 @@ article_copyable_text = _("文章可复制")
 article_copyable_help_text = _("勾选后，用户可选择、复制文章内容")
 
 # Translators: 文章模组{Meta描述}
-article_meta_description_text = _("META标签-描述")
+article_meta_description_text = _("META标签-简介")
 
 # Translators: 文章模组{Meta描述}-帮助文本
 article_meta_description_help_text = _("本标签将不在页面中显示。上限300字符")
