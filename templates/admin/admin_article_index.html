@@ -156,7 +156,7 @@
                                 <td>{{ article.id }}</td>
                                 <td>{{ article.title }}</td>
                                 <td>{{ article.title }}</td>
-                                <td class="d-none d-md-table-cell">{{ article.status }}</td>
+                                <td class="d-none d-md-table-cell">{{ article.get_status_display }}</td>
                                 <td class="table-action">
                                     <a href="{% url 'ADMArticleEdit' article.id %}" class="action-button edit-button">
                                         <i class="align-middle" data-feather="edit-2"></i>
