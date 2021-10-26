@@ -158,6 +158,37 @@ class NewsSearchForm(forms.Form):
         self.fields['sector'].queryset = NewsSector.objects.all()
 
 
+class ArticleSearchForm(forms.Form):
+    status = forms.ChoiceField(
+        label=article_status_text,
+        choices=[('', '--------')] + ArticleStatus,
+        required=False
+    )
+
+    lv_require = forms.ChoiceField(
+        label=article_lv_require_text,
+        choices=[(-1, '--------')] + VipLevel,
+        required=False
+    )
+
+    search_type = forms.ChoiceField(
+        label=articleSearch_type_text,
+        choices=[('', '--------')] + article_Search_type,
+        required=False
+    )
+
+    detail = forms.CharField(
+        label=articleSearch_detail_text,
+        required=False,
+    )
+
+    def clean(self):
+        if (self.cleaned_data.get("type") == "") ^ (self.cleaned_data.get("detail") == ""):
+            raise ValidationError(message=search_errmsg_InsuffCond, code="InsufficientCondition")
+        else:
+            return self.cleaned_data
+
+
 class TimeSlotForm(forms.ModelForm):
     class Meta:
         model = MeetingSlot

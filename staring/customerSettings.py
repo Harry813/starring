@@ -109,6 +109,15 @@ ArticleStatus = [
     ("DELETE", _("已删除"))
 ]
 
+article_Search_type = [
+    ("TITLE", _("标题")),
+    ("CONTENT", _("内容")),
+    ("TC", _("标题与内容")),
+    ("AUTHOR", _("作者")),
+    ("KEYWORD", _("META标签-关键词")),
+    ("DESCRIPTION", _("META标签-简介"))
+]
+
 ADMMegaMenu = (
     {"name": _("Test1"),
      "items": [

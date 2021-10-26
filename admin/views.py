@@ -102,14 +102,46 @@ def admin_article_index_view(request, page):
         **get_admin_info(),
     }
 
-    requirement = ["PUBLISH", "PENDING", "REJECT", "REVISED", "DRAFT"]
+    articles = Article.objects.all()
 
-    p = Paginator(Article.objects.filter(status__in=requirement), 10)
+    if request.method == "POST":
+        form = ArticleSearchForm(request.POST)
+        if form.is_valid():
+            status = form.cleaned_data.get("status")
+            if status != "":
+                articles = articles.filter(status=status)
+
+            lv_require = form.cleaned_data.get("lv_require")
+            if lv_require < 0:
+                articles = articles.filter(lv_require__lte=lv_require)
+
+            search_type = form.cleaned_data.get("search_type")
+            detail = form.cleaned_data.get("detail")
+            if search_type != "" and detail != "":
+                if search_type == "TITLE":
+                    articles = articles.filter(title__icontains=detail)
+                elif search_type == "CONTENT":
+                    articles = articles.filter(content__icontains=detail)
+                elif search_type == "TC":
+                    articles = articles.filter(Q(title__icontains=detail) | Q(content__icontains=detail))
+                elif search_type == "AUTHOR":
+                    articles = articles.filter(author__icontains=detail)
+                elif search_type == "KEYWORD":
+                    articles = articles.filter(keywords__icontains=detail)
+                elif search_type == "DESCRIPTION":
+                    articles = articles.filter(description__icontains=articles)
+        else:
+            form = ArticleSearchForm(request.POST)
+    else:
+        form = ArticleSearchForm()
+
+    p = Paginator(articles, 10)
     article_list = p.get_page(page)
     param["paginator"] = p
     param["article_list"] = article_list
     param["current_page"] = page
     param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
+    param["SearchForm"] = form
 
     return render(request, "admin/admin_article_index.html", param)
 
