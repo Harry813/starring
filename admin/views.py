@@ -150,7 +150,7 @@ def admin_article_index_view(request, page):
 @login_required(login_url="ADMLogin")
 def admin_article_create_view(request):
     param = {
-        "page_title": _("文章创建"),
+        "page_title": _("星环-文章创建"),
         "languages": Languages,
         "active_page": "ADMArticleIndex",
         **get_basic_info(),
@@ -174,7 +174,7 @@ def admin_article_create_view(request):
 @login_required(login_url="ADMLogin")
 def admin_article_edit_view(request, article_id):
     param = {
-        "page_title": _("文章编辑"),
+        "page_title": _("星环-文章编辑"),
         "languages": Languages,
         "active_page": "ADMArticleIndex",
         **get_basic_info(),
@@ -200,7 +200,7 @@ def admin_article_edit_view(request, article_id):
 @login_required(login_url="ADMLogin")
 def admin_customer_index_view(request, page=1):
     param = {
-        "page_title": _("用户管理"),
+        "page_title": _("星环-用户管理"),
         "languages": Languages,
         "active_page": "ADMCustomerIndex",
         **get_basic_info(),
@@ -248,7 +248,7 @@ def admin_customer_index_view(request, page=1):
 @login_required(login_url="ADMLogin")
 def admin_customer_edit_view(request, customer_id):
     param = {
-        "page_title": _("用户管理"),
+        "page_title": _("星环-用户管理"),
         "languages": Languages,
         "active_page": "ADMCustomerIndex",
         "uid": customer_id,
@@ -262,7 +262,7 @@ def admin_customer_edit_view(request, customer_id):
 @login_required(login_url="ADMLogin")
 def admin_customer_basic_edit_view(request, customer_id):
     param = {
-        "page_title": _("用户管理"),
+        "page_title": _("星环-用户管理"),
         "languages": Languages,
         "active_page": "ADMCustomerIndex",
         **get_basic_info(),
@@ -290,7 +290,7 @@ def admin_customer_basic_edit_view(request, customer_id):
 @login_required(login_url="ADMLogin")
 def admin_customer_profile_edit_view(request, customer_id):
     param = {
-        "page_title": _("用户管理"),
+        "page_title": _("星环-用户管理"),
         "languages": Languages,
         "active_page": "ADMCustomerIndex",
         **get_basic_info(),
@@ -315,7 +315,7 @@ def admin_customer_profile_edit_view(request, customer_id):
 @login_required(login_url="ADMLogin")
 def admin_staff_index_view(request, page=1):
     param = {
-        "page_title": _("员工管理"),
+        "page_title": _("星环-员工管理"),
         "languages": Languages,
         "active_page": "ADMStaff",
         **get_basic_info(),
@@ -360,7 +360,7 @@ def admin_staff_index_view(request, page=1):
 @login_required(login_url="ADMLogin")
 def admin_staff_edit_view(request, staff_id):
     param = {
-        "page_title": _("员工管理"),
+        "page_title": _("星环-员工管理"),
         "languages": Languages,
         "active_page": "ADMStaff",
         "uid": staff_id,
@@ -374,7 +374,7 @@ def admin_staff_edit_view(request, staff_id):
 @login_required(login_url="ADMLogin")
 def admin_staff_basic_edit_view(request, staff_id):
     param = {
-        "page_title": _("员工管理"),
+        "page_title": _("星环-员工管理"),
         "languages": Languages,
         "active_page": "ADMStaff",
         **get_basic_info(),
@@ -402,7 +402,7 @@ def admin_staff_basic_edit_view(request, staff_id):
 @login_required(login_url="ADMLogin")
 def admin_staff_profile_edit_view(request, staff_id):
     param = {
-        "page_title": _("员工管理"),
+        "page_title": _("星环-员工管理"),
         "languages": Languages,
         "active_page": "ADMStaff",
         **get_basic_info(),
@@ -427,7 +427,7 @@ def admin_staff_profile_edit_view(request, staff_id):
 @login_required(login_url="ADMLogin")
 def admin_news_sector_index_view(request):
     param = {
-        "page_title": _("新闻分区"),
+        "page_title": _("星环-新闻分区"),
         "languages": Languages,
         "active_page": "ADMNewsSectorIndex",
         **get_basic_info(),
@@ -453,7 +453,7 @@ def admin_news_sector_index_view(request):
 @login_required(login_url="ADMLogin")
 def admin_news_sector_edit_view(request, sid):
     param = {
-        "page_title": _("新闻分区"),
+        "page_title": _("星环-新闻分区管理"),
         "languages": Languages,
         "active_page": "ADMNewsSectorIndex",
         **get_basic_info(),
@@ -479,7 +479,7 @@ def admin_news_sector_edit_view(request, sid):
 @login_required(login_url="ADMLogin")
 def admin_news_index_view(request):
     param = {
-        "page_title": _("首页轮播管理"),
+        "page_title": _("星环-新闻管理"),
         "languages": Languages,
         "active_page": "ADMNewsIndex",
         **get_basic_info(),
@@ -506,9 +506,59 @@ def admin_news_index_view(request):
 
 
 @login_required(login_url="ADMLogin")
+def admin_news_create_view(request):
+    param = {
+        "page_title": _("星环-新闻创建"),
+        "languages": Languages,
+        "active_page": "ADMNewsIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    if request.method == "POST":
+        form = NewsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMNewsIndex")
+        else:
+            form = NewsForm(request.POST)
+    else:
+        form = NewsForm()
+
+    param["form"] = form
+    return render(request, "admin/admin_news_CE.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_news_edit_view(request, nid):
+    param = {
+        "page_title": _("星环-新闻编辑"),
+        "languages": Languages,
+        "active_page": "ADMNewsIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    news = News.objects.get(id=nid)
+
+    if request.method == "POST":
+        form = NewsForm(request.POST, instance=news)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMNewsIndex")
+        else:
+            form = NewsForm(request.POST, instance=news)
+    else:
+        form = NewsForm(instance=news)
+
+    param["form"] = form
+    return render(request, "admin/admin_news_CE.html", param)
+
+
+@login_required(login_url="ADMLogin")
 def admin_slot_index_view(request, page):
     param = {
-        "page_title": _("日程管理"),
+        "page_title": _("星环-日程管理"),
         "languages": Languages,
         "active_page": "ADMSlotIndex",
         **get_basic_info(),
