@@ -36,7 +36,7 @@
                                 <button class="btn btn-primary w-100" type="submit">{% trans '搜索' %}</button>
                             </div>
                             <div class="mb-3">
-                                <a href="#" class="btn btn-primary w-100">{% trans '添加新闻' %}</a>
+                                <a href="{% url 'ADMNewsCreate' %}" class="btn btn-primary w-100">{% trans '添加新闻' %}</a>
                             </div>
                         </form>
                     </div>
@@ -71,7 +71,7 @@
                                 <td>{{ n.article.title|slice:":30" }}</td>
                                 <td>{{ n.sector }}</td>
                                 <td class="table-action">
-                                    <a href="#" class="action-button edit-button">
+                                    <a href="{% url 'ADMNewsEdit' n.id %}" class="action-button edit-button">
                                         <i class="align-middle" data-feather="edit-2"></i>
                                     </a>
                                     <a class="action-button trash-button">

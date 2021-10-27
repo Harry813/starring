@@ -157,6 +157,12 @@ class NewsSearchForm(forms.Form):
         self.fields['sector'].queryset = NewsSector.objects.all()
 
 
+class NewsForm(forms.ModelForm):
+    class Meta:
+        model = News
+        fields = "__all__"
+
+
 class ArticleSearchForm(forms.Form):
     status = forms.ChoiceField(
         label=article_status_text,
