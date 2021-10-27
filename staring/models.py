@@ -191,6 +191,12 @@ class Article(models.Model):
         auto_now=True
     )
 
+    def __str__(self):
+        if len(self.title) > 30:
+            return self.title[:30] + "..."
+        else:
+            return self.title
+
 
 class NewsSector(models.Model):
     name = models.CharField(
@@ -224,14 +230,19 @@ class News(models.Model):
     introduction = models.CharField(
         verbose_name=news_introduction_text,
         max_length=150,
-        help_text=news_introduction_help_text
+        help_text=news_introduction_help_text,
+        blank=True
     )
 
     img = models.ImageField(
         verbose_name=news_img_text,
         help_text=news_img_help_text,
-        upload_to="news/"
+        upload_to="news/",
+        blank=True
     )
+    
+    class Meta:
+        unique_together = ("sector", "article")
 
 
 class MeetingSlot(models.Model):
