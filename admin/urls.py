@@ -19,6 +19,7 @@ urlpatterns = [
     path('staff/profile-<str:staff_id>/', views.admin_staff_edit_view, name="ADMStaffEdit"),
     path('staff/profile-<str:staff_id>/basic/', views.admin_staff_basic_edit_view, name="ADMStaffBasicEdit"),
     path('staff/profile-<str:staff_id>/profile/', views.admin_staff_profile_edit_view, name="ADMStaffProfileEdit"),
+    path('staff/create/', views.admin_staff_create_view, name="ADMStaffCreate"),
     path('sector/', views.admin_news_sector_index_view, name="ADMNewsSectorIndex"),
     path('sector/<int:sid>/', views.admin_news_sector_edit_view, name="ADMNewsSectorEdit"),
     path('news/', views.admin_news_index_view, name="ADMNewsIndex"),
