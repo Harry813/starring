@@ -1,6 +1,8 @@
 from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.contrib.auth import authenticate
+from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.validators import ASCIIUsernameValidator
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
@@ -80,6 +82,99 @@ class StaffForm(forms.ModelForm):
     class Meta:
         model = Staff
         exclude = ["user"]
+
+
+class StaffCreateForm(forms.Form):
+    username = forms.CharField(
+        label=user_username_text,
+        max_length=150,
+        min_length=8,
+        help_text=user_username_help_text,
+        validators=[ASCIIUsernameValidator],
+        error_messages={
+            "required": user_username_err_require,
+            "max_length": user_username_err_max,
+            "min_length": user_username_err_min,
+            "invalid": user_username_err_invalid
+        }
+    )
+
+    password1 = forms.CharField(
+        label=user_password_text,
+        min_length=8,
+        max_length=128,
+        help_text=user_password_help_text,
+        widget=forms.PasswordInput(),
+        error_messages={
+            "required": user_password_err_empty,
+            "min_length": user_password_err_min_length,
+            "max_length": user_password_err_max_length,
+        }
+    )
+
+    password2 = forms.CharField(
+        label=user_confirm_text,
+        min_length=8,
+        max_length=128,
+        help_text=user_confirm_help_text,
+        widget=forms.PasswordInput(),
+        error_messages={
+            "required": user_confirm_err_require,
+            "min_length": user_confirm_err_min_length,
+            "max_length": user_confirm_err_max_length,
+        }
+    )
+
+    name = forms.CharField(
+        label=user_name_text,
+    )
+
+    email = forms.EmailField(
+        label=user_email_text,
+    )
+
+    code = forms.ChoiceField(
+        label=user_countryCode_text,
+        choices=sorted_phone_codes
+    )
+
+    tele = forms.CharField(
+        label=user_tele_text,
+        validators=[phone_regex]
+    )
+
+    dob = forms.DateField(
+        label=user_dob_text,
+        required=False,
+        input_formats=['%Y/%m/%d', '%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'],
+        help_text="YYYY/MM/DD"
+    )
+
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        if User.objects.filter(username=username):
+            raise ValidationError(
+                _('用户名已存在'),
+                code="unique"
+            )
+        else:
+            return username
+
+    def clean_password1(self):
+        password1 = self.cleaned_data.get('password1')
+        if validate_password(password1) is None:
+            return password1
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+        if password1 == password2:
+            return password2
+        else:
+            raise forms.ValidationError(paswd_errmsg_NOT_match, code="paswdNotMatch")
+
+    def save(self):
+        pass
 
 
 class CustomerSearch(forms.Form):

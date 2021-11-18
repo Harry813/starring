@@ -1,0 +1,189 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <h1 class="mb-3">{% translate '员工创建' %}</h1>
+        <div class="row">
+            <div class="mb-3">
+                <div class="card">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                {% trans '基础信息' %}
+                            </h5>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.username.id_for_label }}">
+                                        {{ form.username.label }}
+                                        {% if form.username.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.username class="form-control" %}
+                                    <div>
+                                        {% if form.username.errors %}
+                                            <p class="small" style="color: red;">{{ form.username.errors.0 }}</p>
+                                        {% elif form.username.help_text %}
+                                            <p class="small">{{ form.username.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 mb-3">
+                                    <label class="form-label" for="{{ form.password1.id_for_label }}">
+                                        {{ form.password1.label }}
+                                        {% if form.password1.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.password1 class="form-control" %}
+                                    <div>
+                                        {% if form.password1.errors %}
+                                            <p class="small" style="color: red;">{{ form.password1.errors.0 }}</p>
+                                        {% elif form.password1.help_text %}
+                                            <p class="small">{{ form.password1.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 mb-3">
+                                    <label class="form-label" for="{{ form.password2.id_for_label }}">
+                                        {{ form.password2.label }}
+                                        {% if form.password2.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.password2 class="form-control" %}
+                                    <div>
+                                        {% if form.password2.errors %}
+                                            <p class="small" style="color: red;">{{ form.password2.errors.0 }}</p>
+                                        {% elif form.password2.help_text %}
+                                            <p class="small">{{ form.password2.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-0">
+
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                {% trans '员工信息' %}
+                            </h5>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <label class="form-label" for="{{ form.name.id_for_label }}">
+                                        {{ form.name.label }}
+                                        {% if form.name.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.name class="form-control" %}
+                                    <div>
+                                        {% if form.name.errors %}
+                                            <p class="small" style="color: red;">{{ form.name.errors.0 }}</p>
+                                        {% elif form.name.help_text %}
+                                            <p class="small">{{ form.name.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <label class="form-label" for="{{ form.email.id_for_label }}">
+                                        {{ form.email.label }}
+                                        {% if form.email.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.email class="form-control" %}
+                                    <div>
+                                        {% if form.email.errors %}
+                                            <p class="small" style="color: red;">{{ form.email.errors.0 }}</p>
+                                        {% elif form.email.help_text %}
+                                            <p class="small">{{ form.email.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <label class="form-label" for="{{ form.dob.id_for_label }}">
+                                        {{ form.dob.label }}
+                                        {% if form.dob.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.dob class="form-control" %}
+                                    <div>
+                                        {% if form.dob.errors %}
+                                            <p class="small" style="color: red;">{{ form.dob.errors.0 }}</p>
+                                        {% elif form.dob.help_text %}
+                                            <p class="small">{{ form.dob.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <label class="form-label" for="{{ form.code.id_for_label }}">
+                                        {{ form.code.label }}
+                                        {% if form.code.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.code class="form-control" %}
+                                    <div>
+                                        {% if form.code.errors %}
+                                            <p class="small" style="color: red;">{{ form.code.errors.0 }}</p>
+                                        {% elif form.code.help_text %}
+                                            <p class="small">{{ form.code.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-12 mb-3">
+                                    <label class="form-label" for="{{ form.tele.id_for_label }}">
+                                        {{ form.tele.label }}
+                                        {% if form.tele.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.tele class="form-control" %}
+                                    <div>
+                                        {% if form.tele.errors %}
+                                            <p class="small" style="color: red;">{{ form.tele.errors.0 }}</p>
+                                        {% elif form.tele.help_text %}
+                                            <p class="small">{{ form.tele.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if form.non_field_errors %}
+                            <hr class="my-0">
+                            <ul>
+                                {% for e in form.non_field_errors %}
+                                    <li>{{ e }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        <hr class="my-0">
+
+                        <div class="card-body">
+                            <button class="btn btn-primary w-100" type="submit">{% trans "添加员工" %}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
