@@ -24,6 +24,9 @@ user_username_text = _('用户名')
 # Translators: 用户模组{用户名}-帮助文本
 user_username_help_text = _('8-150字符，仅可包含大小写字母、数字以及@/./+/-/_')
 
+# Translators: 用户模组{用户名}-错误文本@空值
+user_username_err_require = _("用户名不得为空")
+
 # Translators: 用户模组{用户名}-错误文本@唯一性
 user_username_err_unique = _("用户名已存在")
 
