@@ -417,7 +417,7 @@ def admin_staff_profile_edit_view(request, staff_id):
             param["staff_form"] = staff_form
             return render(request, "admin/admin_staff_profile_edit.html", param)
         else:
-            param["staff_form"] = StaffForm(request.POST, instance=staff_profile)
+            param["staff_form"] = staff_form
             return render(request, "admin/admin_staff_profile_edit.html", param)
     else:
         param["staff_form"] = StaffForm()
