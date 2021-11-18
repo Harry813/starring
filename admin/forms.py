@@ -102,21 +102,26 @@ class StaffCreateForm(forms.Form):
     password1 = forms.CharField(
         label=user_password_text,
         min_length=8,
+        max_length=128,
         help_text=user_password_help_text,
         widget=forms.PasswordInput(),
         error_messages={
-            "required": None,
-            "min_length": None,
+            "required": user_password_err_empty,
+            "min_length": user_password_err_min_length,
+            "max_length": user_password_err_max_length,
         }
     )
 
     password2 = forms.CharField(
-        label=user_password_confirm_text,
+        label=user_confirm_text,
         min_length=8,
-        help_text=user_password_help_text,
+        max_length=128,
+        help_text=user_confirm_help_text,
+        widget=forms.PasswordInput(),
         error_messages={
-            "required": None,
-            "min_length": None,
+            "required": user_confirm_err_require,
+            "min_length": user_confirm_err_min_length,
+            "max_length": user_confirm_err_max_length,
         }
     )
 
@@ -126,6 +131,23 @@ class StaffCreateForm(forms.Form):
 
     email = forms.EmailField(
         label=user_email_text,
+    )
+
+    code = forms.ChoiceField(
+        label=user_countryCode_text,
+        choices=sorted_phone_codes
+    )
+
+    tele = forms.CharField(
+        label=user_tele_text,
+        validators=[phone_regex]
+    )
+
+    dob = forms.DateField(
+        label=user_dob_text,
+        required=False,
+        input_formats=['%Y/%m/%d', '%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'],
+        help_text="YYYY/MM/DD"
     )
 
     def clean_username(self):
