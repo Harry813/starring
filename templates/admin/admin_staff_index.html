@@ -11,7 +11,7 @@
     <div class="container-fluid p-0">
         <h1 class="h3 mb-3">{% translate '员工管理' %}</h1>
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-6 col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -31,10 +31,11 @@
             </div>
         </div>
 
+
         <h1 class="h3 mb-3">{% translate '员工搜索' %}</h1>
         <div class="row">
-            <div class="col-12">
-                <div class="card mb-3">
+            <div class="mb-3">
+                <div class="card">
                     <div class="card-body">
                         <form method="POST">
                             {% csrf_token %}
@@ -97,6 +98,12 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                    <hr class="my-0">
+                    <div class="card-body">
+                        <a class="btn btn-primary w-100">
+                            <i class="align-middle" data-feather="user-plus"></i> {% translate '前往创建' %}
+                        </a>
                     </div>
                 </div>
             </div>
