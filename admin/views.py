@@ -322,7 +322,7 @@ def admin_staff_index_view(request, page=1):
         **get_admin_info()
     }
 
-    user_query = User.objects.filter(is_active=True, is_staff=True, is_superuser=True).\
+    user_query = User.objects.filter(is_active=True).filter(Q(is_staff=True) | Q(is_superuser=True)).\
         exclude(username="AnonymousUser")
 
     if request.method == "POST":
@@ -381,7 +381,7 @@ def admin_staff_basic_edit_view(request, staff_id):
         **get_admin_info()
     }
 
-    user_query = User.objects.filter(is_active=True, is_staff=True, is_superuser=True) \
+    user_query = User.objects.filter(is_active=True).filter(Q(is_staff=True) | Q(is_superuser=True))\
         .exclude(username="AnonymousUser")
     basic_profile = get_object_or_404(user_query, uid=staff_id)
     param["user_id"] = staff_id
@@ -437,7 +437,22 @@ def admin_staff_create_view(request):
     if request.method == "POST":
         form = StaffCreateForm(request.POST)
         if form.is_valid():
-            pass
+            u = User.objects.create_user(
+                username=form.cleaned_data.get("username"),
+                password=form.cleaned_data.get("password1"),
+                email=form.cleaned_data.get("email")
+            )
+            u.name = form.cleaned_data.get("name")
+            u.dob = form.cleaned_data.get("dob")
+            u.countryCode = form.cleaned_data.get("code")
+            u.tele = form.cleaned_data.get("tele")
+            u.is_staff = True
+            s = Staff.objects.create(
+                user=u
+            )
+            u.save()
+            s.save()
+            return redirect("ADMStaffIndex", 1)
     else:
         form = StaffCreateForm()
     param["form"] = form
