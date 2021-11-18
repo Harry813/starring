@@ -425,6 +425,26 @@ def admin_staff_profile_edit_view(request, staff_id):
 
 
 @login_required(login_url="ADMLogin")
+def admin_staff_create_view(request):
+    param = {
+        "page_title": _("星环-员工管理"),
+        "languages": Languages,
+        "active_page": "ADMStaff",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    if request.method == "POST":
+        form = StaffCreateForm(request.POST)
+        if form.is_valid():
+            pass
+    else:
+        form = StaffCreateForm()
+    param["form"] = form
+    return render(request, "admin/admin_staff_create.html", param)
+
+
+@login_required(login_url="ADMLogin")
 def admin_news_sector_index_view(request):
     param = {
         "page_title": _("星环-新闻分区"),
