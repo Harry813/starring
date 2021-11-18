@@ -42,6 +42,9 @@ user_username_err_min = _("用户名长度不得少于8字符")
 # Translators: 用户模组{密码}
 user_password_text = _('密码')
 
+# Translators: 用户模组{密码确认}
+user_password_confirm_text = _('密码确认')
+
 # Translators: 用户模组{密码}-帮助文本
 user_password_help_text = _('8-128个字符，至少包含1个数字、1个字母')
 
@@ -92,6 +95,8 @@ user_date_join_text = _('注册日期')
 
 # Translators: 用户模组{最后更改}
 user_last_change_text = _("最后修改")
+
+# Translators: 用户模组{最后更改}
 
 
 ###################################################################################################

@@ -23,7 +23,54 @@
 
                         <div class="card-body">
                             <div class="row">
-                                <div class="col"></div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.username.id_for_label }}">
+                                        {{ form.username.label }}
+                                        {% if form.username.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.username class="form-control" %}
+                                    <div>
+                                        {% if form.username.errors %}
+                                            <p class="small" style="color: red;">{{ form.username.errors.0 }}</p>
+                                        {% elif form.username.help_text %}
+                                            <p class="small">{{ form.username.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 mb-3">
+                                    <label class="form-label" for="{{ form.password1.id_for_label }}">
+                                        {{ form.password1.label }}
+                                        {% if form.password1.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.password1 class="form-control" %}
+                                    <div>
+                                        {% if form.password1.errors %}
+                                            <p class="small" style="color: red;">{{ form.password1.errors.0 }}</p>
+                                        {% elif form.password1.help_text %}
+                                            <p class="small">{{ form.password1.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 mb-3">
+                                    <label class="form-label" for="{{ form.password2.id_for_label }}">
+                                        {{ form.password2.label }}
+                                        {% if form.password2.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.password2 class="form-control" %}
+                                    <div>
+                                        {% if form.password2.errors %}
+                                            <p class="small" style="color: red;">{{ form.password2.errors.0 }}</p>
+                                        {% elif form.password2.help_text %}
+                                            <p class="small">{{ form.password2.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

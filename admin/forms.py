@@ -111,7 +111,7 @@ class StaffCreateForm(forms.Form):
     )
 
     password2 = forms.CharField(
-        label=user_password_text,
+        label=user_password_confirm_text,
         min_length=8,
         help_text=user_password_help_text,
         error_messages={
