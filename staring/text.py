@@ -42,23 +42,35 @@ user_username_err_min = _("用户名长度不得少于8字符")
 # Translators: 用户模组{密码}
 user_password_text = _('密码')
 
-# Translators: 用户模组{密码确认}
-user_password_confirm_text = _('密码确认')
-
 # Translators: 用户模组{密码}-帮助文本
 user_password_help_text = _('8-128个字符，至少包含1个数字、1个字母')
 
 # Translators: 用户模组{密码}-错误文本@无效
 user_password_err_invalid = _("密码格式错误，请包含8-128个字符，至少包含1个数字、1个字母")
 
+# Translators: 用户模组{密码}-错误文本@空值
+user_password_err_empty = _("密码不得为空")
+
 # Translators: 用户模组{密码}-错误文本@过长
-user_password_err_max_length = _("密码格式错误，至多包含128个字符")
+user_password_err_max_length = _("密码至多包含128个字符")
 
 # Translators: 用户模组{密码}-错误文本@过短
-user_password_err_min_length = _("密码格式错误，至少包含8个字符")
+user_password_err_min_length = _("密码至少包含8个字符")
 
-# Translators: 用户模组{请再次确认密码}
-user_confirm_text = _("请再次确认密码")
+# Translators: 用户模组{密码确认}
+user_confirm_text = _('密码确认')
+
+# Translators: 用户模组{密码确认}-帮助文本
+user_confirm_help_text = _("请再次输入密码")
+
+# Translators: 用户模组{密码确认}-错误文本@空值
+user_confirm_err_require = _("密码不得为空")
+
+# Translators: 用户模组{密码确认}-错误文本@过短
+user_confirm_err_min_length = _("请确认密码长度，至少包含8个字符")
+
+# Translators: 用户模组{密码确认}-错误文本@过长
+user_confirm_err_max_length = _("请确认密码长度，至多包含128个字符")
 
 # Translators: 用户模组{联系电话}
 user_tele_text = _("电话号码")
