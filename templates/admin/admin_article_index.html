@@ -194,7 +194,7 @@
                                     </a>
 
                                     <a href="
-                                            {% if article_list.has_next %}{% url 'ADMArticleIndex' article_list.previous_page_number %}{% endif %}"
+                                            {% if article_list.has_previous %}{% url 'ADMArticleIndex' article_list.previous_page_number %}{% endif %}"
                                        class="btn btn-outline-primary {% if not article_list.has_previous %}disabled{% endif %}">
                                         <i class="align-middle" data-feather="chevron-left"></i>
                                     </a>
@@ -211,6 +211,7 @@
                                        class="btn btn-outline-primary {% if not article_list.has_next %}disabled{% endif %}">
                                         <i class="align-middle" data-feather="chevron-right"></i>
                                     </a>
+
                                     <a href="
                                             {% if current_page != paginator.num_pages %}{% url 'ADMArticleIndex' paginator.num_pages %}{% endif %}"
                                        class="btn btn-outline-primary {% if current_page == paginator.num_pages %}disabled{% endif %}">
