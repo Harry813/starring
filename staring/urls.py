@@ -18,14 +18,20 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
+from filebrowser.sites import site
+
 from staring import settings
 
 urlpatterns = i18n_patterns(
+    path('grappelli/', include('grappelli.urls')),
+    path('filebrowser/', site.urls),
     path('sitemap.xml', sitemap, name='sitemap-xml'),
     # path('django-admin/', admin.site.urls),
     path('', include("customer.urls")),
-    path('admin/', include("admin.urls"))
-) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\
+    path('admin/', include("admin.urls")),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('tinymce/', include('tinymce.urls')),
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
               + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
