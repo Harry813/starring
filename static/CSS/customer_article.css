@@ -15,14 +15,13 @@
     margin-block-start: 3rem;
     margin-inline-end: 0;
     margin-inline-start: 0;
-    font-size: 1.25rem;
     color: #0A1A38;
 }
 
 .star-article p {
     font-family: Noto Sans CJK SC, serif;
     font-weight: 500;
-    margin-block-end: 1.5rem;
+    margin-block-end: .5rem;
     margin-block-start: 0;
     margin-inline-end: 0;
     margin-inline-start: 0;
