@@ -162,7 +162,7 @@ article_meta_keyword_text = _("META标签-关键词")
 article_meta_keyword_help_text = _("本标签将不在页面中显示，关键字之间请使用逗号分割。上限150字符")
 
 # Translators: 文章模组{文章主体}
-article_meta_content_text = _("文章主体")
+article_content_text = _("文章主体")
 
 # Translators: 文章模组{创建时间}
 article_create_date_text = _("创建时间")
@@ -410,3 +410,15 @@ paswd_errmsg_NOT_match = _("两次输入的密码不同")
 
 # Translator:　搜索表单{错误信息}-条件不足
 search_errmsg_InsuffCond = _("搜索条件不足，请选择搜索类型或填写搜索内容")
+
+# Translator: 文件上传{成功信息}-上传成功
+file_upload_success = _("文件上传成功")
+
+# Translator: 文件上传{错误信息}-格式错误
+file_upload_err_wrong_format = _("文件格式错误")
+
+# Translator: 文件上传{错误信息}-文件已存在
+file_upload_err_already_exists = _("文件已存在")
+
+# Translator: 文件上传{错误信息}-错误请求
+file_upload_err_bad_request = _("错误请求")
