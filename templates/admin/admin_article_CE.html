@@ -12,9 +12,26 @@
     </style>
 {% endblock %}
 
-{% block js %}
-    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% block headJs %}
+    <script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
+{#    <script src="https://cdn.tiny.cloud/1/oft69279r703cz5shx3r5lhbctu9t4frnq9w4auna7yfb5po/tinymce/5/tinymce.min.js"#}
+{#            referrerpolicy="origin"></script>#}
+{#    <script>#}
+{#        tinymce.init({#}
+{#            selector: '#{{ form.content.id_for_label }}',#}
+{#            images_upload_url: '{% url "ADMImageUpload" %}',#}
+{#            plugins: [#}
+{#                'advlist autolink lists link image charmap print preview anchor',#}
+{#                'searchreplace visualblocks code fullscreen',#}
+{#                'insertdatetime media table paste code help wordcount'#}
+{#            ],#}
+{#            toolbar: 'undo redo | formatselect | ' +#}
+{#                'bold italic backcolor | alignleft aligncenter ' +#}
+{#                'alignright alignjustify | bullist numlist outdent indent | ' +#}
+{#                'code image | ' +#}
+{#                'removeformat | help',#}
+{#        });#}
+{#    </script>#}
 {% endblock %}
 
 {% block content %}
