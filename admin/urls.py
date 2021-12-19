@@ -27,4 +27,6 @@ urlpatterns = [
     path('news/<int:nid>/', views.admin_news_edit_view, name="ADMNewsEdit"),
     # path('news/, views.admin_news_index_view', name="admin_news_edit_view"),
     path('slots/page<int:page>/', views.admin_slot_index_view, name="ADMSlotIndex"),
+
+    path('upload/image/article/', views.admin_article_image_upload, name="ADMImageUpload"),
 ]
