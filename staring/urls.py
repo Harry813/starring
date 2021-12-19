@@ -20,7 +20,7 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
 from filebrowser.sites import site
 
-from staring import settings
+from django.conf import settings
 
 urlpatterns = i18n_patterns(
     path('grappelli/', include('grappelli.urls')),
@@ -29,9 +29,12 @@ urlpatterns = i18n_patterns(
     # path('django-admin/', admin.site.urls),
     path('', include("customer.urls")),
     path('admin/', include("admin.urls")),
+)
+
+urlpatterns += [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('tinymce/', include('tinymce.urls')),
-) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
-              + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 
-
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
