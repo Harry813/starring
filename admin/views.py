@@ -1,20 +1,24 @@
+import os
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
+from django.views.decorators.csrf import csrf_exempt
 
 from admin.forms import *
 from admin.models import Staff
 from admin.utils import get_admin_info
 from customer.models import Customer
 from staring.customerSettings import Languages
+from staring.settings import MEDIA_ROOT, MEDIA_URL, DOMAIN_NAME
 from staring.text import *
 from staring.utils import get_basic_info
 
@@ -130,7 +134,7 @@ def admin_article_index_view(request, page):
                 elif search_type == "KEYWORD":
                     articles = articles.filter(keywords__icontains=detail)
                 elif search_type == "DESCRIPTION":
-                    articles = articles.filter(description__icontains=articles)
+                    articles = articles.filter(description__icontains=detail)
         else:
             form = ArticleSearchForm(request.POST)
     else:
@@ -609,3 +613,43 @@ def admin_slot_index_view(request, page):
     param["current_page"] = page
     param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
     return render(request, "admin/admin_slots.html", param)
+
+
+@csrf_exempt
+def admin_article_image_upload(request):
+    if request.method == "POST":
+        upload_time = timezone.now()
+        f = request.FILES["file"]
+
+        file_name_suffix = f.name.split(".")[-1]
+        if file_name_suffix not in ["jpg", "png", "gif", "jpeg"]:
+            return JsonResponse({"message": file_upload_err_wrong_format})
+
+        upload_path = os.path.join(
+            MEDIA_ROOT,
+            "article",
+            str(upload_time.year),
+            str(upload_time.month),
+            str(upload_time.day)
+        )
+
+        if not os.path.exists(upload_path):
+            os.makedirs(upload_path)
+
+        file_path = os.path.join(upload_path, f.name)
+        file_url = f'{MEDIA_URL}article/{upload_time.year}/{upload_time.month}/{upload_time.day}/{f.name}'
+        if os.path.exists(file_path):
+            return JsonResponse({
+                "message": file_upload_err_already_exists,
+                "location": file_url
+            })
+
+        with open(file_path, "wb+") as dest:
+            for chunk in f.chunks():
+                dest.write(chunk)
+
+        return JsonResponse({
+            "location": file_url
+        })
+    else:
+        return HttpResponse()
