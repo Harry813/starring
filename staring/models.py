@@ -9,7 +9,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from django_countries.fields import CountryField
-from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 from staring.customerSettings import *
 from staring.phoneCode import *
@@ -177,8 +177,12 @@ class Article(models.Model):
         blank=True
     )
 
-    content = RichTextField(
-        verbose_name=article_meta_content_text
+    # content = tinymce_models.HTMLField(
+    #     verbose_name=article_content_text
+    # )
+
+    content = RichTextUploadingField(
+        verbose_name=article_content_text
     )
 
     create_date = models.DateTimeField(
