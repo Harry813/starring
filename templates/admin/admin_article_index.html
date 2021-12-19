@@ -198,7 +198,7 @@
                                     </a>
 
                                     {% for p in page_list %}
-                                        <a href="#"
+                                        <a href="{% if p != "..." %}{% url 'ADMArticleIndex' p %}{% else %}#{% endif %}"
                                            class="btn btn-outline-primary {% if p == current_page %}active{% elif p == "..." %}disabled{% endif %}">
                                             {{ p }}
                                         </a>
