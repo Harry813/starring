@@ -30,10 +30,16 @@ ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'staring.User'
 
+DOMAIN_NAME = "https://star.hanxiaofei.tk"
+
+CSRF_TRUSTED_ORIGINS = ["star.hanxiaofei.tk"]
 
 # Application definition
 
 INSTALLED_APPS = [
+    # 'grappelli',
+    # 'filebrowser',
+
     # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +54,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'guardian',
     'modeltranslation',
+    # 'tinymce',
 
     # customer apps
     'staring',
@@ -91,7 +98,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'staring.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -159,7 +165,7 @@ STATICFILES_DIRS = (
 )
 STATIC_ROOT = '/static/'
 
-MEDIA_ROOT = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = 'media/'
 
 # Default primary key field type
@@ -168,12 +174,41 @@ MEDIA_URL = 'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CKEditor Setting
-CKEDITOR_UPLOAD_PATH = "media/CK"
+CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_JQUERY_URL = "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
 CKEDITOR_CONFIGS = {
     'default': {
-        'toolbar': 'full',
+        'toolbar': [
+            {"name": "tools", "items": ["Maximize", "ShowBlocks"]},
+            {"name": "document", "items": ["Source", "-", "Save", "Print"]},
+            {"name": "clipboard", "items": ["Copy", "Cut", "Paste", "PasteText", "PasteFromWord", "Undo", "Redo"]},
+            {"name": "about", "items": ["About"]},
+            "/",
+            {"name": "basicstyles", "items": ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
+                                              'RemoveFormat']},
+            {"name": "styles", "items": ["Styles", "Format", "Font", "FontSize"]},
+            {"name": "colors", "items": ["TextColor", "BGColor"]},
+            {"name": "link", "items": ["Link", "Unlink", "Anchor"]},
+            {"name": "insert",
+             "items": ["Image", "Table", "HorizontalRule", "Smiley", "SpecialChar", "PageBreak", "Iframe"]},
+        ],
         'tabSpaces': 4,
         'width': '100%',
+        'extraPlugins': ','.join([
+            "uploadimage",
+            "div",
+            "autolink",
+            "autoembed",
+            "embedsemantic",
+            "autogrow",
+            "widget",
+            "lineutils",
+            "clipboard",
+            "dialog",
+            "dialogui",
+            "elementspath",
+        ])
     },
 }
+
+TINYMCE_FILEBROWSER = True
