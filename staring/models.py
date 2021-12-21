@@ -1,6 +1,7 @@
 import datetime
 import uuid
 
+from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, MinLengthValidator, MinValueValidator, MaxValueValidator
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
@@ -296,3 +297,56 @@ class MeetingReservation(models.Model):
         choices=meeting_status,
         default="APPLY"
     )
+
+
+class NavigatorSector(models.Model):
+    name = models.CharField(
+        verbose_name=navi_sector_name_text
+    )
+
+    order = models.CharField(
+        verbose_name=navi_sector_order_text
+    )
+
+
+class NavigatorItem(models.Model):
+    sector = models.ForeignKey(
+        verbose_name=navi_item_sector_text,
+        to=NavigatorSector,
+        on_delete=models.CASCADE,
+    )
+
+    order = models.PositiveSmallIntegerField(
+        verbose_name=navi_item_order_text,
+    )
+
+    name = models.CharField(
+        verbose_name=navi_item_name_text,
+    )
+
+    type = models.CharField(
+        verbose_name=navi_item_type_text,
+        choices=navigator_item_type
+    )
+
+    url = models.SlugField(
+        verbose_name=navi_item_url_text,
+        blank=True,
+    )
+
+    article = models.PositiveIntegerField(
+        verbose_name=navi_item_article_text,
+        blank=True,
+        choices=Article.objects.filter(status="PUBLISH")
+    )
+
+    def clean(self):
+        if self.type == "URL" and (self.url == "" or self.url is None):
+            raise ValidationError(navi_item_url_err_empty)
+
+        if self.type == "ARTICLES" and self.article is None:
+            raise ValidationError(navi_item_article_err_empty)
+
+    class Meta:
+        unique_together = [["sector", "order"]]
+        ordering = ["order"]

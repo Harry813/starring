@@ -166,3 +166,8 @@ meeting_status = [
     ('FINISH', _("此次会议已结束")),
     ('TIMEOUT', _("逾时未参与"))
 ]
+
+navigator_item_type = [
+    ("URLS", _("链接")),
+    ("ARTICLES", _("文章"))
+]
