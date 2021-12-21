@@ -615,6 +615,40 @@ def admin_slot_index_view(request, page):
     return render(request, "admin/admin_slots.html", param)
 
 
+@login_required(login_url="ADMLogin")
+def admin_navi_sector_index_view(request):
+    param = {
+        "page_title": _("星环-导航栏管理"),
+        "languages": Languages,
+        "active_page": "ADMNaviIndex",
+        "sectors": NavigatorSector.objects.all(),
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    if request.method == "POST":
+        form = NaviSectorForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            form = NaviSectorForm(request.POST)
+    else:
+        form = NaviSectorForm()
+
+    param["form"] = form
+
+    return render(request, "admin/admin_navi_sector_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_navi_sector_delete(request, secid):
+    try:
+        NavigatorSector.objects.get(pk=secid).delete()
+    except ValidationError:
+        pass
+    return redirect("ADMNaviSectorIndex")
+
+
 @csrf_exempt
 def admin_article_image_upload(request):
     if request.method == "POST":
