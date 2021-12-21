@@ -293,3 +293,9 @@ class TimeSlotForm(forms.ModelForm):
     class Meta:
         model = MeetingSlot
         fields = ["date", "time", "availability"]
+
+
+class NaviSectorForm(forms.ModelForm):
+    class Meta:
+        model = NavigatorSector
+        fields = "__all__"

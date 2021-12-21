@@ -301,11 +301,8 @@ class MeetingReservation(models.Model):
 
 class NavigatorSector(models.Model):
     name = models.CharField(
-        verbose_name=navi_sector_name_text
-    )
-
-    order = models.CharField(
-        verbose_name=navi_sector_order_text
+        verbose_name=navi_sector_name_text,
+        max_length=30,
     )
 
 
@@ -313,7 +310,7 @@ class NavigatorItem(models.Model):
     sector = models.ForeignKey(
         verbose_name=navi_item_sector_text,
         to=NavigatorSector,
-        on_delete=models.CASCADE,
+        on_delete=models.CASCADE
     )
 
     order = models.PositiveSmallIntegerField(
@@ -327,11 +324,13 @@ class NavigatorItem(models.Model):
 
     name = models.CharField(
         verbose_name=navi_item_name_text,
+        max_length=30,
     )
 
     type = models.CharField(
         verbose_name=navi_item_type_text,
-        choices=navigator_item_type
+        choices=navigator_item_type,
+        max_length=10,
     )
 
     url = models.SlugField(
@@ -339,10 +338,12 @@ class NavigatorItem(models.Model):
         blank=True,
     )
 
-    article = models.PositiveIntegerField(
+    article = models.ForeignKey(
         verbose_name=navi_item_article_text,
+        to=Article,
+        on_delete=models.CASCADE,
         blank=True,
-        choices=Article.objects.filter(status="PUBLISH")
+        null=True
     )
 
     def clean(self):

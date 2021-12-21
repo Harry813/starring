@@ -67,6 +67,13 @@
                         {% translate '新闻管理' %}
                     </li>
 
+                    <li class="sidebar-item {% if active_page == 'ADMNaviIndex' %}active{% endif %}">
+                        <a class="sidebar-link" href="{% url 'ADMNaviSectorIndex' %}">
+                            {# Translators: 后台模板{侧边栏}-第四部分@导航栏分区 #}
+                            <i class="align-middle" data-feather="compass"></i> <span class="align-middle">{% translate '首页导航' %}</span>
+                        </a>
+                    </li>
+
                     <li class="sidebar-item {% if active_page == 'ADMNewsSectorIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMNewsSectorIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第四部分@新闻分区 #}
