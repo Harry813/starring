@@ -320,6 +320,11 @@ class NavigatorItem(models.Model):
         verbose_name=navi_item_order_text,
     )
 
+    level = models.IntegerField(
+        verbose_name=navi_item_level_text,
+        choices=navigator_item_level
+    )
+
     name = models.CharField(
         verbose_name=navi_item_name_text,
     )

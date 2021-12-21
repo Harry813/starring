@@ -403,6 +403,9 @@ navi_item_name_text = _("组件名称")
 # Translators: 首页导航栏组件模组{组件顺序}
 navi_item_order_text = _("组件顺序")
 
+# Translators: 首页导航栏组件模组{组件等级}
+navi_item_level_text = _("组件等级")
+
 # Translators: 首页导航栏组件模组{组件类型}
 navi_item_type_text = _("组件类型")
 
