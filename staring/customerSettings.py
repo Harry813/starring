@@ -171,3 +171,8 @@ navigator_item_type = [
     ("URLS", _("链接")),
     ("ARTICLES", _("文章"))
 ]
+
+navigator_item_level = [
+    (0, _("标题")),
+    (1, _("条目"))
+]
