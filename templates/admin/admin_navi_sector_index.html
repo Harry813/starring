@@ -68,7 +68,12 @@
                                         <a href="#" class="action-button edit-button">
                                             <i class="align-middle" data-feather="edit-2"></i>
                                         </a>
-
+                                        {# Todo: 添加删除确认Modal #}
+{#                                        <a href="" class="action-button trash-button"#}
+{#                                           data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-name="{{ sector.name }}"#}
+{#                                           data-bs-url="{% url 'ADMNaviSectorDelete' sector.id %}">#}
+{#                                            <i class="align-middle" data-feather="trash-2"></i>#}
+{#                                        </a>#}
                                         <a href="{% url 'ADMNaviSectorDelete' sector.id %}" class="action-button trash-button">
                                             <i class="align-middle" data-feather="trash-2"></i>
                                         </a>
@@ -86,4 +91,39 @@
             </div>
         </div>
     </div>
+
+{#    <div class="modal fade modal-dialog-centered" id="deleteModal" tabindex="-1"#}
+{#         aria-labelledby="deleteModalLabel" aria-hidden="true">#}
+{#        <div class="modal-dialog">#}
+{#            <div class="modal-content">#}
+{#                <div class="modal-header">#}
+{#                    <h5 class="modal-title" id="deleteModalLabel">{% trans "删除导航栏分区" %}</h5>#}
+{#                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
+{#                </div>#}
+{#                <div class="modal-body">#}
+{#                    <p>{% trans "该操作将连带删除该分区下所有内容" %}</p>#}
+{#                </div>#}
+{#                <div class="modal-footer">#}
+{#                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans '取消' %}</button>#}
+{#                    <a id="confirm-delete" class="btn btn-primary">{% trans '确定' %}</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#    <script>#}
+{#        let deleteModal = document.getElementById('deleteModal')#}
+{#        deleteModal.addEventListener('show.bs.modal', function (event) {#}
+{#            let button = event.relatedTarget#}
+{##}
+{#            let name = button.getAttribute('data-bs-name')#}
+{#            let url = button.getAttribute('data-bs-url')#}
+{##}
+{#            let modalTitle = deleteModal.querySelector('.modal-title')#}
+{#            let confirmButton = deleteModal.querySelector('#confirm-delete')#}
+{##}
+{#            modalTitle.textContent = '{% trans "删除导航栏分区" %} ' + name#}
+{#            confirmButton.href = url#}
+{#        })#}
+{#    </script>#}
 {% endblock %}
