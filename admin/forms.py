@@ -296,6 +296,14 @@ class TimeSlotForm(forms.ModelForm):
 
 
 class NaviSectorForm(forms.ModelForm):
+    def save(self, commit=True):
+        sec = super(NaviSectorForm, self).save(commit=False)
+        sector_list = list(NavigatorSector.objects.all())
+        sec.order = sector_list.index(sec)
+        if commit:
+            sec.save()
+        return sec
+
     class Meta:
         model = NavigatorSector
-        fields = "__all__"
+        fields = ["name"]

@@ -305,6 +305,13 @@ class NavigatorSector(models.Model):
         max_length=30,
     )
 
+    order = models.PositiveSmallIntegerField(
+        verbose_name=navi_sector_order_text,
+    )
+
+    class Meta:
+        ordering = ["order"]
+
 
 class NavigatorItem(models.Model):
     sector = models.ForeignKey(

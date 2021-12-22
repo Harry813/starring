@@ -62,7 +62,7 @@
                             <tbody>
                             {% for sector in sectors %}
                                 <tr>
-                                    <td>{{ sector.id }}</td>
+                                    <td>{{ forloop.counter }}</td>
                                     <td>{{ sector.name }}</td>
                                     <td class="table-action">
                                         <a href="#" class="action-button edit-button">

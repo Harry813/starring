@@ -32,7 +32,7 @@ AUTH_USER_MODEL = 'staring.User'
 
 DOMAIN_NAME = "https://star.hanxiaofei.tk"
 
-CSRF_TRUSTED_ORIGINS = ["star.hanxiaofei.tk"]
+CSRF_TRUSTED_ORIGINS = []
 
 # Application definition
 
@@ -186,6 +186,10 @@ CKEDITOR_CONFIGS = {
             "/",
             {"name": "basicstyles", "items": ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
                                               'RemoveFormat']},
+            {"name": "paragraph",
+             "items": ["NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote", "CreateDiv", "-",
+                       "JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock", "-", "BidiLtr", "BidiRtl",
+                       "Language"]},
             {"name": "styles", "items": ["Styles", "Format", "Font", "FontSize"]},
             {"name": "colors", "items": ["TextColor", "BGColor"]},
             {"name": "link", "items": ["Link", "Unlink", "Anchor"]},
@@ -210,5 +214,3 @@ CKEDITOR_CONFIGS = {
         ])
     },
 }
-
-TINYMCE_FILEBROWSER = True
