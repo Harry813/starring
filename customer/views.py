@@ -15,7 +15,7 @@ from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm
 from customer.models import Customer
 from customer.utils import get_customer_info
 from staring.customerSettings import Languages, IndexCarousel
-from staring.models import Article, User, NewsSector
+from staring.models import Article, User, NewsSector, NavigatorSector
 from staring.text import UserNoPermit_text, UserNotExist_text
 
 
@@ -26,12 +26,9 @@ def index(request):
         "languages": Languages,
         "title_img": True,
         "ContactForm": True,
-        **get_customer_info(),
+        "accordion": NewsSector.objects.all(),
+        **get_customer_info()
     }
-
-    accordion = NewsSector.objects.all()
-
-    param["accordion"] = accordion
 
     return render(request, "customer/index.html", param)
 

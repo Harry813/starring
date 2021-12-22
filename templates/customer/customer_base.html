@@ -58,26 +58,12 @@
     </div>
 </div>
 
-<ul class="star-nav nav justify-content-center star-nav-justified"
-    style="">
-    <li class="star-nav-item p-2" style="border-left: 3px solid #323D5B !important;">
-        <a class="nav-link text-white star-nav-link active" aria-current="page" href="#">移民</a>
-    </li>
-    <li class="star-nav-item p-2" style="border-left: 3px solid #323D5B;">
-        <a class="nav-link text-white star-nav-link" href="#">留学</a>
-    </li>
-    <li class="star-nav-item p-2" style="border-left: 3px solid #323D5B;">
-        <a class="nav-link text-white star-nav-link" href="#">旅游</a>
-    </li>
-    <li class="star-nav-item p-2" style="border-left: 3px solid #323D5B;">
-        <a class="nav-link text-white star-nav-link" href="#">工作</a>
-    </li>
-    <li class="star-nav-item p-2" style="border-left: 3px solid #323D5B;">
-        <a class="nav-link text-white star-nav-link" href="#">加拿大资讯</a>
-    </li>
-    <li class="star-nav-item p-2" style="border-left: 3px solid #323D5B;">
-        <a class="nav-link text-white star-nav-link" href="#">关于我们</a>
-    </li>
+<ul class="star-nav nav justify-content-center star-nav-justified">
+    {% for sector in navigatorSectors %}
+        <li class="star-nav-item p-2" style="border-left: 3px solid #323D5B !important;">
+            <a class="nav-link text-white star-nav-link" aria-current="page" href="#">{{ sector.name }}</a>
+        </li>
+    {% endfor %}
     <li class="star-nav-item p-2" style="border-left: 3px solid #323D5B;">
         <a class="nav-link text-white star-nav-link" href="{% url "CUSTCenter" %}">
             {% if request.user.is_authenticated %}

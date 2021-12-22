@@ -1,11 +1,12 @@
 from staring.customerSettings import IndexListItems, NavItems
-from staring.models import NewsSector, News
+from staring.models import NewsSector, News, NavigatorSector
 
 
 def get_customer_info():
     dic = {
         "indexList": IndexListItems,
         "navItems": NavItems,
+        "navigatorSectors": NavigatorSector.objects.all(),
     }
     return dic
 
