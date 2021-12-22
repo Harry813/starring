@@ -32,7 +32,7 @@ AUTH_USER_MODEL = 'staring.User'
 
 DOMAIN_NAME = "https://star.hanxiaofei.tk"
 
-CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS = ["star.hanxiaofei.tk"]
 
 # Application definition
 
