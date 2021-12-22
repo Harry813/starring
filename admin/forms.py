@@ -298,8 +298,10 @@ class TimeSlotForm(forms.ModelForm):
 class NaviSectorForm(forms.ModelForm):
     def save(self, commit=True):
         sec = super(NaviSectorForm, self).save(commit=False)
-        sector_list = list(NavigatorSector.objects.all())
-        sec.order = sector_list.index(sec)
+        sector_list = NavigatorSector.objects.all()
+        for s in range(len(sector_list)):
+            sector_list[s].order = s
+        sec.order = len(sector_list)
         if commit:
             sec.save()
         return sec
