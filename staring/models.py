@@ -353,13 +353,6 @@ class NavigatorItem(models.Model):
         null=True
     )
 
-    def clean(self):
-        if self.type == "URL" and (self.url == "" or self.url is None):
-            raise ValidationError(navi_item_url_err_empty)
-
-        if self.type == "ARTICLES" and self.article is None:
-            raise ValidationError(navi_item_article_err_empty)
-
     class Meta:
         unique_together = [["sector", "order"]]
-        ordering = ["order"]
+        ordering = ["sector", "order"]

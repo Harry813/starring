@@ -295,9 +295,11 @@ class TimeSlotForm(forms.ModelForm):
         fields = ["date", "time", "availability"]
 
 
-class NaviSectorForm(forms.ModelForm):
+class NaviSectorForm(TranslationModelForm):
     def save(self, commit=True):
         sec = super(NaviSectorForm, self).save(commit=False)
+
+        # Update all the sector orders
         sector_list = NavigatorSector.objects.all()
         for s in range(len(sector_list)):
             sector_list[s].order = s
