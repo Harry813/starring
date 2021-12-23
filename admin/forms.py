@@ -311,3 +311,37 @@ class NaviSectorForm(TranslationModelForm):
     class Meta:
         model = NavigatorSector
         fields = ["name"]
+
+
+class NavigatorItemForm(TranslationModelForm):
+    def clean_url(self):
+        t = self.cleaned_data.get("type")
+        url = self.cleaned_data.get("url")
+        if t == "URL" and url == "":
+            raise ValidationError(navi_item_url_err_empty)
+        else:
+            return url
+
+    def clean_article(self):
+        t = self.cleaned_data.get("type")
+        article = self.cleaned_data.get("article")
+        if t == "URL" and article is None:
+            return ValidationError(navi_item_article_err_empty)
+        else:
+            return article
+
+    def save(self, commit=True):
+        navi_item = super(NavigatorItemForm, self).save(commit=False)
+
+        # Update all the sector orders
+        navi_item_list = NavigatorItem.objects.filter(sector=self.cleaned_data.get("sector"))
+        for s in range(len(navi_item_list)):
+            navi_item_list[s].order = s
+        navi_item.order = len(navi_item_list)
+        if commit:
+            navi_item.save()
+        return navi_item
+
+    class Meta:
+        model = NavigatorItem
+        exclude = ["order"]
