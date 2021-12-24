@@ -299,11 +299,14 @@ class NaviSectorForm(TranslationModelForm):
     def save(self, commit=True):
         sec = super(NaviSectorForm, self).save(commit=False)
 
-        # Update all the sector orders
         sector_list = NavigatorSector.objects.all()
-        for s in range(len(sector_list)):
-            sector_list[s].order = s
-        sec.order = len(sector_list)
+        # Update all the sector orders
+        if self not in sector_list and self.instance is None:
+            for s in range(len(sector_list)):
+                sector = sector_list[s]
+                sector.order = s
+                sector.save()
+            sec.order = len(sector_list)
         if commit:
             sec.save()
         return sec
@@ -333,11 +336,15 @@ class NavigatorItemForm(TranslationModelForm):
     def save(self, commit=True):
         navi_item = super(NavigatorItemForm, self).save(commit=False)
 
-        # Update all the sector orders
         navi_item_list = NavigatorItem.objects.filter(sector=self.cleaned_data.get("sector"))
-        for s in range(len(navi_item_list)):
-            navi_item_list[s].order = s
-        navi_item.order = len(navi_item_list)
+
+        # Update all the sector orders if instance not exists
+        if self not in navi_item_list:
+            for s in range(len(navi_item_list)):
+                item = navi_item_list[s]
+                item.order = s
+                item.save()
+            navi_item.order = len(navi_item_list)
         if commit:
             navi_item.save()
         return navi_item
