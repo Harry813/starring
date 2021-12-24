@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
@@ -643,10 +643,57 @@ def admin_navi_sector_index_view(request):
 @login_required(login_url="ADMLogin")
 def admin_navi_sector_delete(request, secid):
     try:
-        NavigatorSector.objects.get(pk=secid).delete()
+        NavigatorSector.objects.get(id=secid).delete()
     except ValidationError:
         pass
     return redirect("ADMNaviSectorIndex")
+
+
+@login_required(login_url="ADMLogin")
+def admin_navi_item_index_view(request, secid):
+    param = {
+        "page_title": _("星环-导航栏管理"),
+        "languages": Languages,
+        "active_page": "ADMNaviIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    sector = NavigatorSector.objects.get(id=secid)
+
+    if request.method == "POST":
+        form = NaviSectorForm(request.POST, instance=sector)
+        if form.is_valid():
+            form.save()
+        else:
+            form = NaviSectorForm(request.POST, instance=sector)
+    else:
+        form = NaviSectorForm(instance=sector)
+
+    param["form"] = form
+    param["SectorName"] = sector.name
+    param["items"] = NavigatorItem.objects.filter(sector_id=secid)
+
+    return render(request, "admin/admin_navi_item_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_navi_item_create_view(request, secid):
+    param = {
+        "page_title": _("星环-导航栏管理"),
+        "languages": Languages,
+        "active_page": "ADMNaviIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    if request.method == "POST":
+        form = NavigatorItemForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMNaviItemIndex", secid=secid)
+    else:
+        form = NavigatorItemForm
+    param["form"] = form
+    return render(request, "admin/admin_navi_item_create.html", param)
 
 
 @csrf_exempt
