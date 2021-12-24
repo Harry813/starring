@@ -309,6 +309,9 @@ class NavigatorSector(models.Model):
         verbose_name=navi_sector_order_text,
     )
 
+    def __str__(self):
+        return f"{self.order}. {self.name}"
+
     class Meta:
         ordering = ["order"]
 
@@ -340,9 +343,12 @@ class NavigatorItem(models.Model):
         max_length=10,
     )
 
-    url = models.SlugField(
+    url = models.CharField(
         verbose_name=navi_item_url_text,
+        max_length=150,
         blank=True,
+        null=True,
+        help_text=navi_item_url_help_text
     )
 
     article = models.ForeignKey(
@@ -350,8 +356,12 @@ class NavigatorItem(models.Model):
         to=Article,
         on_delete=models.CASCADE,
         blank=True,
-        null=True
+        null=True,
+        help_text=navi_item_article_help_text
     )
+
+    def get_indentation(self):
+        return "····" * self.level
 
     class Meta:
         unique_together = [["sector", "order"]]
