@@ -412,8 +412,14 @@ navi_item_type_text = _("组件类型")
 # Translators: 首页导航栏组件模组{链接}
 navi_item_url_text = _("链接")
 
+# Translators: 首页导航栏组件模组{链接}-帮助文本
+navi_item_url_help_text = _("仅当" + navi_item_type_text + "为链接时，该值有效")
+
 # Translators: 首页导航栏组件模组{文章}
 navi_item_article_text = _("文章")
+
+# Translators: 首页导航栏组件模组{文章}-帮助文本
+navi_item_article_help_text = _("仅当" + navi_item_type_text + "为文章时，该值有效")
 
 # Translators: 首页导航栏组件模组{链接}-错误文本@空值
 navi_item_url_err_empty = _("链接不得为空")
