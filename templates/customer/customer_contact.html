@@ -27,7 +27,7 @@
         {% render_field ContactForm.name class="form-control" %}
         <div>
             {% if ContactForm.name.help_text %}
-                <p class="small">{{ ContactForm.name.help_text }}</p>
+                <p class="small text-muted">{{ ContactForm.name.help_text }}</p>
             {% elif ContactForm.name.errors %}
                 <p class="small" style="color: red;">{{ ContactForm.name.errors.0 }}</p>
             {% endif %}
@@ -43,7 +43,7 @@
         {% render_field ContactForm.email class="form-control" %}
         <div>
             {% if ContactForm.email.help_text %}
-                <p class="small">{{ ContactForm.email.help_text }}</p>
+                <p class="small text-muted">{{ ContactForm.email.help_text }}</p>
             {% elif ContactForm.email.errors %}
                 <p class="small" style="color: red;">{{ ContactForm.email.errors.0 }}</p>
             {% endif %}
@@ -62,7 +62,7 @@
 
         <div>
             {% if ContactForm.contact_detail.help_text %}
-                <p class="small">{{ ContactForm.contact_detail.help_text }}</p>
+                <p class="small text-muted">{{ ContactForm.contact_detail.help_text }}</p>
             {% elif ContactForm.contact_detail.errors %}
                 <p class="small" style="color: red;">{{ ContactForm.contact_detail.errors.0 }}</p>
             {% endif %}
@@ -78,7 +78,7 @@
         {% render_field ContactForm.query class="form-control" style="height:7rem" %}
         <div>
             {% if ContactForm.query.help_text %}
-                <p class="small">{{ ContactForm.query.help_text }}</p>
+                <p class="small text-muted">{{ ContactForm.query.help_text }}</p>
             {% elif ContactForm.query.errors %}
                 <p class="small" style="color: red;">{{ ContactForm.query.errors.0 }}</p>
             {% endif %}
