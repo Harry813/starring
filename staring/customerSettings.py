@@ -16,15 +16,6 @@ Roles = [
     ("DIRECTOR", _("总监"))
 ]
 
-NavItems = [
-    {"name": _("移民"), "link": "#"},
-    {"name": _("留学"), "link": "#"},
-    {"name": _("旅游"), "link": "#"},
-    {"name": _("工作"), "link": "#"},
-    {"name": _("加拿大咨询"), "link": "#"},
-    {"name": _("关于我们"), "link": "#"}
-]
-
 # 首页项目清单
 IndexListItems = [
     {"name": _("我要移民"),
@@ -167,9 +158,11 @@ meeting_status = [
     ('TIMEOUT', _("逾时未参与"))
 ]
 
+navi_item_per_col = 10
+
 navigator_item_type = [
-    ("URLS", _("链接")),
-    ("ARTICLES", _("文章"))
+    ("URL", _("链接")),
+    ("ARTICLE", _("文章"))
 ]
 
 navigator_item_level = [
