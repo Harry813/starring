@@ -361,7 +361,7 @@ class NavigatorItem(models.Model):
     )
 
     def get_indentation(self):
-        return "····" * self.level
+        return "----" * self.level
 
     class Meta:
         unique_together = [["sector", "order"]]
