@@ -251,3 +251,48 @@ html {
     width:0;
     border-left: solid #ff0000 3px;
 }
+
+.navi-dropdown {
+    margin-left: 7rem;
+    margin-right: 7rem;
+    border-radius: 0 !important;
+}
+
+.navi-dropdown-container {
+
+}
+
+.navi-dropdown li {
+    text-decoration: none;
+}
+
+.navi-dropdown-sector {
+    height: 100%;
+}
+
+.navi-dropdown-item {
+    margin-bottom: 1.5rem !important;
+}
+
+.navi-dropdown-link {
+
+}
+
+.navi-dropdown-title a {
+}
+
+.navi-dropdown-entry {
+    padding-left: 1.5rem
+}
+
+.navi-dropdown-col {
+    border-right: 3px solid #323D5B !important;
+}
+
+.navi-dropdown-col:last-child {
+    border-right: none;
+}
+
+.text-navi-title {
+    color: #F6F6F6 !important;
+}
