@@ -655,6 +655,7 @@ def admin_navi_item_index_view(request, secid):
         "page_title": _("星环-导航栏管理"),
         "languages": Languages,
         "active_page": "ADMNaviIndex",
+        "SectorId": secid,
         **get_basic_info(),
         **get_admin_info()
     }
@@ -685,15 +686,45 @@ def admin_navi_item_create_view(request, secid):
         **get_basic_info(),
         **get_admin_info()
     }
+    sector = NavigatorSector.objects.get(id=secid)
+    param["SectorName"] = sector.name
     if request.method == "POST":
-        form = NavigatorItemForm(request.POST)
+        form = NavigatorItemForm(request.POST, initial={"sector": sector})
         if form.is_valid():
             form.save()
             return redirect("ADMNaviItemIndex", secid=secid)
     else:
-        form = NavigatorItemForm
+        form = NavigatorItemForm(initial={"sector": sector})
     param["form"] = form
-    return render(request, "admin/admin_navi_item_create.html", param)
+    return render(request, "admin/admin_navi_item_ce.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_navi_item_edit_view(request, secid, itemid):
+    param = {
+        "page_title": _("星环-导航栏管理"),
+        "languages": Languages,
+        "active_page": "ADMNaviIndex",
+        "SectorName": NavigatorSector.objects.get(id=secid).name,
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    item = NavigatorItem.objects.get(id=itemid)
+    if request.method == "POST":
+        form = NavigatorItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMNaviItemIndex", secid=secid)
+    else:
+        form = NavigatorItemForm(instance=item)
+    param["form"] = form
+    return render(request, "admin/admin_navi_item_ce.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_navi_item_delete(request, secid, itemid):
+    NavigatorItem.objects.get(id=itemid).delete()
+    return redirect("ADMNaviItemIndex", secid=secid)
 
 
 @csrf_exempt

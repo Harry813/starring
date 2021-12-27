@@ -31,6 +31,8 @@ urlpatterns = [
     path('navigator/delete/<int:secid>/', views.admin_navi_sector_delete, name="ADMNaviSectorDelete"),
     path('navigator/item/<int:secid>/', views.admin_navi_item_index_view, name="ADMNaviItemIndex"),
     path('navigator/item/<int:secid>/create/', views.admin_navi_item_create_view, name="ADMNaviItemCreate"),
+    path('navigator/item/<int:secid>/edit/<int:itemid>/', views.admin_navi_item_edit_view, name="ADMNaviItemEdit"),
+    path('navigator/item/<int:secid>/delete/<int:itemid>/', views.admin_navi_item_delete, name="ADMNaviItemDelete"),
 
     path('upload/image/article/', views.admin_article_image_upload, name="ADMImageUpload"),
 ]

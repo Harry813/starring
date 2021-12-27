@@ -301,7 +301,7 @@ class NaviSectorForm(TranslationModelForm):
 
         sector_list = NavigatorSector.objects.all()
         # Update all the sector orders
-        if self not in sector_list and self.instance is None:
+        if self.instance and NavigatorSector.objects.filter(id=self.instance.id).exists():
             for s in range(len(sector_list)):
                 sector = sector_list[s]
                 sector.order = s
@@ -339,7 +339,7 @@ class NavigatorItemForm(TranslationModelForm):
         navi_item_list = NavigatorItem.objects.filter(sector=self.cleaned_data.get("sector"))
 
         # Update all the sector orders if instance not exists
-        if self not in navi_item_list:
+        if self.instane and NavigatorItem.objects.filter(id=self.instance.id).exists():
             for s in range(len(navi_item_list)):
                 item = navi_item_list[s]
                 item.order = s
