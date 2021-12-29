@@ -107,17 +107,20 @@ def admin_article_index_view(request, page):
         **get_admin_info(),
     }
 
-    articles = Article.objects.all()
+    articles = Article.admin_visible.all()
 
     if request.method == "POST":
         form = ArticleSearchForm(request.POST)
         if form.is_valid():
             status = form.cleaned_data.get("status")
             if status != "":
-                articles = articles.filter(status=status)
+                if status == "DELETE":
+                    articles = Article.objects.filter(status="DELETE")
+                else:
+                    articles = articles.filter(status=status)
 
             lv_require = form.cleaned_data.get("lv_require")
-            if lv_require < 0:
+            if lv_require >= 0:
                 articles = articles.filter(lv_require__lte=lv_require)
 
             search_type = form.cleaned_data.get("search_type")
@@ -167,12 +170,10 @@ def admin_article_create_view(request):
             form.save()
             # Todo: add a permission check
             return redirect("ADMArticleIndex", 1)
-        else:
-            param["form"] = ArticleForm()
-            return render(request, "admin/admin_article_CE.html", param)
     else:
-        param["form"] = ArticleForm()
-        return render(request, "admin/admin_article_CE.html", param)
+        form = ArticleForm()
+    param["form"] = form
+    return render(request, "admin/admin_article_CE.html", param)
 
 
 @login_required(login_url="ADMLogin")
@@ -194,11 +195,13 @@ def admin_article_edit_view(request, article_id):
             # Todo: add a permission check
             return redirect("ADMArticleIndex", 1)
         else:
-            param["form"] = ArticleForm(instance=article)
+            form = ArticleForm(request.POST, instance=article)
             return render(request, "admin/admin_article_CE.html", param)
     else:
-        param["form"] = ArticleForm(instance=article)
-        return render(request, "admin/admin_article_CE.html", param)
+        form = ArticleForm(instance=article)
+
+    param["form"] = form
+    return render(request, "admin/admin_article_CE.html", param)
 
 
 @login_required(login_url="ADMLogin")
