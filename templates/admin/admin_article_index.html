@@ -136,7 +136,6 @@
                                     <i class="align-middle" data-feather="plus"></i> {% translate '创建文章' %}
                                 </a>
                             </div>
-                            删除功能暂未上线
                         </div>
                     </div>
 
@@ -144,9 +143,9 @@
                         <thead>
                         <tr>
                             <th style="width:10%;">#</th>
-                            <th>{% translate '文章标题' %}</th>
+                            <th style="width:50%;">{% translate '文章标题' %}</th>
                             <th class="d-none d-md-table-cell" style="width:25%">{% translate '文章状态' %}</th>
-                            <th>{% translate '操作' %}</th>
+                            <th style="width:15%;">{% translate '操作' %}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -160,7 +159,7 @@
                                         <i class="align-middle" data-feather="edit-2"></i>
                                     </a>
 
-                                    <a class="action-button trash-button">
+                                    <a class="action-button trash-button" href="{% url 'ADMArticleDelete' article.id %}">
                                         <i class="align-middle" data-feather="trash-2"></i>
                                     </a>
                                 </td>
