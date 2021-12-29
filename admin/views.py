@@ -205,6 +205,17 @@ def admin_article_edit_view(request, article_id):
 
 
 @login_required(login_url="ADMLogin")
+def admin_article_delete_view(request, article_id):
+    article = Article.objects.get(id=article_id)
+    if article.status != "DELETE":
+        article.status = "DELETE"
+        article.save()
+    else:
+        article.delete()
+    return redirect("ADMArticleIndex", 1)
+
+
+@login_required(login_url="ADMLogin")
 def admin_customer_index_view(request, page=1):
     param = {
         "page_title": _("星环-用户管理"),
