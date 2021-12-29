@@ -149,7 +149,7 @@ def customer_articles(request, article_id):
     else:
         param["ContactForm"] = ContactForm()
 
-    article = get_object_or_404(Article, id=article_id)
+    article = get_object_or_404(Article, id=article_id, status="PUBLISH")
     param["article"] = article
     return render(request, "customer/customer_articles.html", param)
 
