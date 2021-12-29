@@ -135,6 +135,16 @@ class User(AbstractUser):
         return self.get_display_name()
 
 
+class customer_articles(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status="PUBLISH")
+
+
+class admin_articles(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().exclude(status="DELETE")
+
+
 class Article(models.Model):
     status = models.CharField(
         verbose_name=article_status_text,
@@ -195,6 +205,10 @@ class Article(models.Model):
         verbose_name=article_last_change_text,
         auto_now=True
     )
+
+    objects = models.Manager()
+    customer_visible = customer_articles()
+    admin_visible = admin_articles()
 
     def __str__(self):
         if len(self.title) > 30:
