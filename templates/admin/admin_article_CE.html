@@ -52,6 +52,24 @@
         <h1 class="h3 mb-3">{% translate '文章创建' %}</h1>
         <form method="POST" name="ArticleCreate">
             {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            {% translate '错误信息' %}
+                        </h5>
+                    </div>
+
+                    <div class="card-body">
+                        {% for err in form.non_field_errors %}
+                            <ul>
+                                <li class="text-danger">{{ err }}</li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">
@@ -73,10 +91,10 @@
                             </label>
                             {% render_field form.title class="form-control" %}
                             <div>
-                                {% if form.title.help_text %}
-                                    <p class="small text-muted">{{ form.title.help_text }}</p>
-                                {% elif form.title.errors %}
+                                {% if form.title.errors %}
                                     <p class="small" style="color: red;">{{ form.title.errors.0 }}</p>
+                                {% elif form.title.help_text %}
+                                    <p class="small text-muted">{{ form.title.help_text }}</p>
                                 {% endif %}
                             </div>
                         </div>
@@ -93,44 +111,44 @@
                             </label>
                             {% render_field form.author class="form-control" %}
                             <div>
-                                {% if form.author.help_text %}
-                                    <p class="small text-muted">{{ form.author.help_text }}</p>
-                                {% elif form.author.errors %}
+                                {% if form.author.errors %}
                                     <p class="small" style="color: red;">{{ form.author.errors.0 }}</p>
+                                {% elif form.author.help_text %}
+                                    <p class="small text-muted">{{ form.author.help_text }}</p>
                                 {% endif %}
                             </div>
                         </div>
 
                         <div class="col-md-3 mb-3">
                             <label class="form-label" for="{{ form.status.id_for_label }}">
-                                {{ form.status.label }}
+                                {{ form.status.label }} 
                                 {% if form.status.field.required %}
                                     <span style="color: red">*</span>
                                 {% endif %}
                             </label>
                             {% render_field form.status class="form-control" %}
                             <div>
-                                {% if form.status.help_text %}
-                                    <p class="small text-muted">{{ form.status.help_text }}</p>
-                                {% elif form.status.errors %}
+                                {% if form.status.errors %}
                                     <p class="small" style="color: red;">{{ form.status.errors.0 }}</p>
+                                {% elif form.status.help_text %}
+                                    <p class="small text-muted">{{ form.status.help_text }}</p>
                                 {% endif %}
                             </div>
                         </div>
 
                         <div class="col-md-3 mb-3">
                             <label class="form-label" for="{{ form.lv_require.id_for_label }}">
-                                {{ form.lv_require.label }}
+                                {{ form.lv_require.label }} 
                                 {% if form.lv_require.field.required %}
                                     <span style="color: red">*</span>
                                 {% endif %}
                             </label>
                             {% render_field form.lv_require class="form-control" %}
                             <div>
-                                {% if form.lv_require.help_text %}
-                                    <p class="small text-muted">{{ form.lv_require.help_text }}</p>
-                                {% elif form.lv_require.errors %}
+                                {% if form.lv_require.errors %}
                                     <p class="small" style="color: red;">{{ form.lv_require.errors.0 }}</p>
+                                {% elif form.lv_require.help_text %}
+                                    <p class="small text-muted">{{ form.lv_require.help_text }}</p>
                                 {% endif %}
                             </div>
                         </div>
@@ -145,10 +163,10 @@
                                 </label>
                                 {% render_field form.copyable class="form-check-input" %}
                                 <div>
-                                    {% if form.copyable.help_text %}
-                                        <p class="small text-muted">{{ form.copyable.help_text }}</p>
-                                    {% elif form.copyable.errors %}
+                                    {% if form.copyable.errors %}
                                         <p class="small" style="color: red;">{{ form.copyable.errors.0 }}</p>
+                                    {% elif form.copyable.help_text %}
+                                        <p class="small text-muted">{{ form.copyable.help_text }}</p>
                                     {% endif %}
                                 </div>
                             </div>
@@ -171,39 +189,36 @@
                         <div class="mb-3">
                             <label class="form-label" for="{{ form.description.id_for_label }}">
                                 {{ form.description.label }}
-                                {% if form.description.field.required %}
-                                    <span style="color: red">*</span>
-                                {% endif %}
                                 <span class="badge bg-secondary" data-bs-toggle="tooltip" title="{% trans 'Multi-language field' %}">
                                      <i class="bi bi-translate"></i>
                                 </span>
+                                {% if form.description.field.required %}
+                                    <span style="color: red">*</span>
+                                {% endif %}
                             </label>
                             {% render_field form.description class="form-control" %}
                             <div>
-                                {% if form.description.help_text %}
-                                    <p class="small text-muted">{{ form.description.help_text }}</p>
-                                {% elif form.description.errors %}
+                                {% if form.description.errors %}
                                     <p class="small" style="color: red;">{{ form.description.errors.0 }}</p>
+                                {% elif form.description.help_text %}
+                                    <p class="small text-muted">{{ form.description.help_text }}</p>
                                 {% endif %}
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="{{ form.keywords.id_for_label }}">
-                                {{ form.keywords.label }}
-                                <span class="badge bg-secondary" data-bs-toggle="tooltip" title="{% trans 'Multi-language field' %}">
-                                     <i class="bi bi-translate"></i>
-                                </span>
+                                {{ form.keywords.label }} 
                                 {% if form.keywords.field.required %}
                                     <span style="color: red">*</span>
                                 {% endif %}
                             </label>
                             {% render_field form.keywords class="form-control" %}
                             <div>
-                                {% if form.keywords.help_text %}
-                                    <p class="small text-muted">{{ form.keywords.help_text }}</p>
-                                {% elif form.keywords.errors %}
+                                {% if form.keywords.errors %}
                                     <p class="small" style="color: red;">{{ form.keywords.errors.0 }}</p>
+                                {% elif form.keywords.help_text %}
+                                    <p class="small text-muted">{{ form.keywords.help_text }}</p>
                                 {% endif %}
                             </div>
                         </div>
@@ -219,6 +234,7 @@
                                 <span class="badge bg-secondary" data-bs-toggle="tooltip" title="{% trans 'Multi-language field' %}">
                                      <i class="bi bi-translate"></i>
                                 </span>
+                                <span style="color: red">*</span>
                             </h5>
                         </div>
                     </div>
@@ -229,6 +245,11 @@
                         <div class="mb-3">
                             {{ form.content|safe }}
                         </div>
+                        {% if form.content.errors %}
+                            <div class="mb-3">
+                                <p class="small" style="color: red;">{{ form.content.errors.0 }}</p>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
