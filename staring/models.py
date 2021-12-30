@@ -368,6 +368,7 @@ class NavigatorItem(models.Model):
     article = models.ForeignKey(
         verbose_name=navi_item_article_text,
         to=Article,
+        limit_choices_to={'status': 'PUBLISH'},
         on_delete=models.CASCADE,
         blank=True,
         null=True,
