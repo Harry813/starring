@@ -569,12 +569,12 @@ def admin_news_create_view(request):
     }
 
     if request.method == "POST":
-        form = NewsForm(request.POST)
+        form = NewsForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect("ADMNewsIndex")
         else:
-            form = NewsForm(request.POST)
+            form = NewsForm(request.POST, request.FILES)
     else:
         form = NewsForm()
 
@@ -595,12 +595,12 @@ def admin_news_edit_view(request, nid):
     news = News.objects.get(id=nid)
 
     if request.method == "POST":
-        form = NewsForm(request.POST, instance=news)
+        form = NewsForm(request.POST, request.FILES, instance=news)
         if form.is_valid():
             form.save()
             return redirect("ADMNewsIndex")
         else:
-            form = NewsForm(request.POST, instance=news)
+            form = NewsForm(request.POST, request.FILES, instance=news)
     else:
         form = NewsForm(instance=news)
 

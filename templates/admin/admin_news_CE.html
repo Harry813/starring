@@ -6,7 +6,7 @@
 {% block content %}
     <div class="container-fluid p-0">
         <h1 class="h3 mb-3">{% translate '新闻创建' %}</h1>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             <div class="card-group">
                 <div class="card">
                     <div class="card-header">
@@ -66,9 +66,9 @@
                                     {% render_field form.img class="form-control" %}
                                     <div>
                                         {% if form.img.errors %}
-                                            <p class="small" style="color: red;">{{ form.img.errors.0 }}</p>
+                                            <small style="color: red;">{{ form.img.errors.0 }}</small>
                                         {% elif form.img.help_text %}
-                                            <p class="small text-muted">{{ form.img.help_text }}</p>
+                                            <small class="text-muted">{{ form.img.help_text }}</small>
                                         {% endif %}
                                     </div>
                                 </div>
