@@ -296,3 +296,7 @@ html {
 .text-navi-title {
     color: #F6F6F6 !important;
 }
+
+.border-star {
+    border-color: #323D5B;
+}

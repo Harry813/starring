@@ -71,8 +71,7 @@
                 <div class="container navi-dropdown-container px-5 py-3" style="background-color: #2B3550;">
                     <div class="row navi-dropdown-sector">
                         {% for items in navi.itemslist %}
-                            <div class="col w-100 navi-dropdown-col {% if not forloop.last %}border-end{% endif %} border-2"
-                                 style="border-color: #323D5B;">
+                            <div class="col w-100 {% if not forloop.last %} navi-dropdown-col border-2 border-star {% endif %}">
                                 <ul class="multi-column-dropdown list-unstyled">
                                     {% for item in items %}
                                         <li class="text-decoration-none navi-dropdown-item navi-dropdown-title my-2">
