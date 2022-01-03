@@ -366,6 +366,9 @@ news_sector_text = _("新闻分区")
 # Translators: 新闻{新闻分区}
 news_article_text = _("文章链接")
 
+# Translators: 新闻{新闻标题}
+news_title_text = _("新闻标题")
+
 # Translators: 新闻{新闻简介}
 news_introduction_text = _("新闻简介")
 
@@ -377,6 +380,12 @@ news_img_text = _("图片")
 
 # Translators: 新闻{图片}-帮助文本
 news_img_help_text = _("仅每个分区第一条显示")
+
+# Translators: 新闻{图片注释}
+news_alt_text = _("图片注释")
+
+# Translators: 新闻{图片注释}-帮助文本
+news_alt_help_text = _("仅在图片无法显示时展示")
 
 
 ###################################################################################################

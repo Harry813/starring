@@ -243,7 +243,13 @@ class News(models.Model):
     article = models.ForeignKey(
         to=Article,
         on_delete=models.CASCADE,
-        verbose_name=news_article_text
+        limit_choices_to={"status": "PUBLISH"},
+        verbose_name=news_article_text,
+    )
+
+    title = models.CharField(
+        verbose_name=news_title_text,
+        max_length=60,
     )
 
     introduction = models.CharField(
@@ -258,6 +264,14 @@ class News(models.Model):
         help_text=news_img_help_text,
         upload_to="news/",
         blank=True
+    )
+
+    alt = models.CharField(
+        verbose_name=news_alt_text,
+        help_text=news_alt_help_text,
+        max_length=150,
+        blank=True,
+        null=True,
     )
     
     class Meta:

@@ -19,6 +19,23 @@
                         <li class="list-group-item">
                             <div class="row">
                                 {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.title.id_for_label }}">
+                                        {{ form.title.label }}
+                                        {% if form.title.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.title class="form-control" %}
+                                    <div>
+                                        {% if form.title.errors %}
+                                            <p class="small" style="color: red;">{{ form.title.errors.0 }}</p>
+                                        {% elif form.title.help_text %}
+                                            <p class="small text-muted">{{ form.title.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label" for="{{ form.sector.id_for_label }}">
                                         {{ form.sector.label }}
@@ -52,6 +69,24 @@
                                         {% endif %}
                                     </div>
                                 </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.introduction.id_for_label }}">
+                                        {{ form.introduction.label }}
+                                        {% if form.introduction.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.introduction class="form-control" %}
+                                    <div>
+                                        {% if form.introduction.errors %}
+                                            <p class="small" style="color: red;">{{ form.introduction.errors.0 }}</p>
+                                        {% elif form.introduction.help_text %}
+                                            <p class="small text-muted">{{ form.introduction.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
                             </div>
                         </li>
                         <li class="list-group-item">
@@ -73,18 +108,18 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="{{ form.introduction.id_for_label }}">
-                                        {{ form.introduction.label }}
-                                        {% if form.introduction.field.required %}
+                                    <label class="form-label" for="{{ form.alt.id_for_label }}">
+                                        {{ form.alt.label }}
+                                        {% if form.alt.field.required %}
                                             <span style="color: red">*</span>
                                         {% endif %}
                                     </label>
-                                    {% render_field form.introduction class="form-control" %}
+                                    {% render_field form.alt class="form-control" %}
                                     <div>
-                                        {% if form.introduction.errors %}
-                                            <p class="small" style="color: red;">{{ form.introduction.errors.0 }}</p>
-                                        {% elif form.introduction.help_text %}
-                                            <p class="small text-muted">{{ form.introduction.help_text }}</p>
+                                        {% if form.alt.errors %}
+                                            <p class="small" style="color: red;">{{ form.alt.errors.0 }}</p>
+                                        {% elif form.alt.help_text %}
+                                            <p class="small text-muted">{{ form.alt.help_text }}</p>
                                         {% endif %}
                                     </div>
                                 </div>
