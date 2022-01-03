@@ -120,18 +120,24 @@
                     <div class="w-100 news-sector-header">
                     <h1 class="news-sector-title">{{ ns.sector.name }}</h1>
                 </div>
-                <div class="py-1">
+                <div class="py-2">
                     {% with first_news=ns.news.0 %}
-                        <div class="d-flex px-0 news-first" style="height: 6.25rem">
+                        <div class="d-flex px-0 news-first mt-1" style="height: 6.25rem">
                             {% if first_news.img %}
                                 <div class="flex-shrink-0 me-3">
-                                    <img src="{% get_media_prefix %}{{ first_news.img }}" alt="{{ first_news.alt }}"
-                                         class="rounded news-first-img">
+                                    <a href="{% url 'article' first_news.article.id %}" class="text-reset">
+                                        <img src="{% get_media_prefix %}{{ first_news.img }}" alt="{{ first_news.alt }}"
+                                             class="rounded news-first-img">
+                                    </a>
                                 </div>
                             {% endif %}
 
                             <div class="flex-grow-1 news-first-item">
-                                <div class="news-first-head">{{ first_news.title }}</div>
+                                <div class="news-first-head">
+                                    <a href="{% url 'article' first_news.article.id %}" class="text-reset text-decoration-none">
+                                        {{ first_news.title }}
+                                    </a>
+                                </div>
                                 <div class="news-first-description">{{ first_news.introduction }}</div>
                             </div>
                         </div>
