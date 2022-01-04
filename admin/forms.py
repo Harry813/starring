@@ -328,9 +328,10 @@ class NavigatorItemForm(TranslationModelForm):
     def clean_article(self):
         t = self.cleaned_data.get("type")
         article = self.cleaned_data.get("article")
-        if t == "URL" and article is None:
-            return ValidationError(navi_item_article_err_empty)
+        if t == "ARTICLE" and article == "":
+            raise ValidationError(navi_item_article_err_empty)
         else:
+            # a = Article.objects.get(id=article)
             return article
 
     def save(self, commit=True):
@@ -339,7 +340,7 @@ class NavigatorItemForm(TranslationModelForm):
         navi_item_list = NavigatorItem.objects.filter(sector=self.cleaned_data.get("sector"))
 
         # Update all the sector orders if instance not exists
-        if self.instane and NavigatorItem.objects.filter(id=self.instance.id).exists():
+        if not self.instance:
             for s in range(len(navi_item_list)):
                 item = navi_item_list[s]
                 item.order = s
@@ -348,6 +349,10 @@ class NavigatorItemForm(TranslationModelForm):
         if commit:
             navi_item.save()
         return navi_item
+
+    def __init__(self, *args, **kwargs):
+        super(NavigatorItemForm, self).__init__(*args, **kwargs)
+        self.fields["article"].required = False
 
     class Meta:
         model = NavigatorItem
