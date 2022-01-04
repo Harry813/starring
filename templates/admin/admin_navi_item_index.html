@@ -75,7 +75,7 @@
                                 <tr>
                                     <td>{{ item.order }}</td>
                                     <td><span class="text-muted">{{ item.get_indentation|safe }} </span>{{ item.name }}</td>
-                                    <td><span>{{ item.get_type_display }}</span></td>
+                                    <td>{{ item.get_type_display }}</td>
                                     <td>
                                         <a href="{% url 'ADMNaviItemEdit' SectorId item.id %}" class="action-button edit-button">
                                             <i class="align-middle" data-feather="edit-2"></i>
