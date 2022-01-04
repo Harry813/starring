@@ -1,10 +1,9 @@
-from staring.customerSettings import IndexListItems, navi_item_per_col
-from staring.models import NewsSector, News, NavigatorSector, NavigatorItem
+from staring.customerSettings import navi_item_per_col
+from staring.models import NewsSector, News, NavigatorSector, NavigatorItem, IndexListSector, IndexListItem
 
 
 def get_customer_info():
     dic = {
-        "indexList": IndexListItems,
         "navigator": []
     }
 
@@ -18,12 +17,24 @@ def get_customer_info():
 
 
 def get_news():
-    accr = []
+    li = []
     sectors = NewsSector.objects.all()
     for sector in sectors:
         dic = {
             "sector": sector,
             "news": News.objects.filter(sector=sector)[:sector.max_news]
         }
-        accr.append(dic)
-    return accr
+        li.append(dic)
+    return li
+
+
+def get_index_list():
+    li = []
+    sectors = IndexListSector.objects.all()
+    for sec in sectors:
+        dic = {
+            "sector": sec,
+            "items": IndexListItem.objects.filter(sector=sec)
+        }
+        li.append(dic)
+    return li

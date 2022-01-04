@@ -741,6 +741,107 @@ def admin_navi_item_delete(request, secid, itemid):
     return redirect("ADMNaviItemIndex", secid=secid)
 
 
+@login_required(login_url="ADMLogin")
+def admin_index_sector_index(request):
+    param = {
+        "page_title": _("星环-首页清单管理"),
+        "languages": Languages,
+        "active_page": "ADMIndListIndex",
+        "sectors": IndexListSector.objects.all(),
+        "itemCount": IndexListItem.objects.count(),
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    if request.method == "POST":
+        form = IndexListSectorForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            form = IndexListSectorForm(request.POST)
+    else:
+        form = IndexListSectorForm()
+
+    param["form"] = form
+
+    return render(request, "admin/admin_indList_sector_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_index_sector_edit(request, secid):
+    param = {
+        "page_title": _("星环-首页清单管理"),
+        "languages": Languages,
+        "active_page": "ADMIndListIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    sector = IndexListSector.objects.get(id=secid)
+
+    if request.method == "POST":
+        form = IndexListSectorForm(request.POST, instance=sector)
+        if form.is_valid():
+            form.save()
+        else:
+            form = IndexListSectorForm(request.POST, instance=sector)
+    else:
+        form = IndexListSectorForm(instance=sector)
+    param["form"] = form
+    param["items"] = IndexListItem.objects.filter(sector=sector)
+    param["sector"] = sector
+
+    return render(request, "admin/admin_indList_sector_edit.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_index_item_create(request, secid):
+    param = {
+        "page_title": _("星环-首页清单管理"),
+        "languages": Languages,
+        "active_page": "ADMIndListIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    sector = IndexListSector.objects.get(id=secid)
+
+    if request.method == "POST":
+        form = IndexListItemForm(request.POST, initial={"sector": sector})
+        if form.is_valid():
+            form.save()
+            return redirect("ADMIndListSectorEdit", secid=secid)
+        else:
+            form = IndexListItemForm(request.POST, initial={"sector": sector})
+    else:
+        form = IndexListItemForm(initial={"sector": sector})
+
+    param["form"] = form
+    return render(request, "admin/admin_indList_item_CE.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_index_item_edit(request, secid, itemid):
+    param = {
+        "page_title": _("星环-首页清单管理"),
+        "languages": Languages,
+        "active_page": "ADMIndListIndex",
+        "sector": IndexListSector.objects.get(id=secid),
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    item = IndexListItem.objects.get(id=itemid)
+    if request.method == "POST":
+        form = IndexListItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMIndListSectorEdit", secid=secid)
+        else:
+            form = IndexListItemForm(request.POST, instance=item)
+    else:
+        form = IndexListItemForm(instance=item)
+    param["form"] = form
+    return render(request, "admin/admin_indList_item_CE.html", param)
+
+
 @csrf_exempt
 def admin_article_image_upload(request):
     if request.method == "POST":

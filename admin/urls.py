@@ -34,6 +34,9 @@ urlpatterns = [
     path('navigator/item/<int:secid>/create/', views.admin_navi_item_create_view, name="ADMNaviItemCreate"),
     path('navigator/item/<int:secid>/edit/<int:itemid>/', views.admin_navi_item_edit_view, name="ADMNaviItemEdit"),
     path('navigator/item/<int:secid>/delete/<int:itemid>/', views.admin_navi_item_delete, name="ADMNaviItemDelete"),
-
+    path('indexList/sector/', views.admin_index_sector_index, name="ADMIndListSectorIndex"),
+    path('indexList/sector/<int:secid>/', views.admin_index_sector_edit, name="ADMIndListSectorEdit"),
+    path('indexList/sector/<int:secid>/create/', views.admin_index_item_create, name="ADMIndListItemCreate"),
+    path('indexList/sector/<int:secid>/edit/<int:itemid>/', views.admin_index_item_edit, name="ADMIndListItemEdit"),
     path('upload/image/article/', views.admin_article_image_upload, name="ADMImageUpload"),
 ]

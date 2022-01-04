@@ -1,0 +1,123 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">
+            <a class="btn btn-link text-secondary" onclick="history.back()">
+                <i class="bi bi-arrow-left"></i>
+            </a> {% translate '首页清单项目创建' %}
+        </h1>
+        <div class="row">
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" for="{{ form.name.id_for_label }}">
+                                        {{ form.name.label }}
+                                        <span class="badge bg-secondary" data-bs-toggle="tooltip"
+                                              title="{% trans 'Multi-language field' %}">
+                                             <i class="bi bi-translate"></i>
+                                        </span>
+                                        {% if form.name.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.name class="form-control" %}
+                                    <div>
+                                        {% if form.name.errors %}
+                                            <p class="small" style="color: red;">{{ form.name.errors.0 }}</p>
+                                        {% elif form.name.help_text %}
+                                            <p class="small text-muted">{{ form.name.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" for="{{ form.sector.id_for_label }}">
+                                        {{ form.sector.label }} 
+                                        {% if form.sector.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.sector class="form-control" %}
+                                    <div>
+                                        {% if form.sector.errors %}
+                                            <p class="small" style="color: red;">{{ form.sector.errors.0 }}</p>
+                                        {% elif form.sector.help_text %}
+                                            <p class="small text-muted">{{ form.sector.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-2 mb-3">
+                                    <label class="form-label" for="{{ form.type.id_for_label }}">
+                                        {{ form.type.label }} 
+                                        {% if form.type.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.type class="form-control" %}
+                                    <div>
+                                        {% if form.type.errors %}
+                                            <p class="small" style="color: red;">{{ form.type.errors.0 }}</p>
+                                        {% elif form.type.help_text %}
+                                            <p class="small text-muted">{{ form.type.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-5 mb-3">
+                                    <label class="form-label" for="{{ form.url.id_for_label }}">
+                                        {{ form.url.label }} 
+                                        {% if form.url.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.url class="form-control" %}
+                                    <div>
+                                        {% if form.url.errors %}
+                                            <p class="small" style="color: red;">{{ form.url.errors.0 }}</p>
+                                        {% elif form.url.help_text %}
+                                            <p class="small text-muted">{{ form.url.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-5 mb-3">
+                                    <label class="form-label" for="{{ form.article.id_for_label }}">
+                                        {{ form.article.label }} 
+                                        {% if form.article.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.article class="form-control" %}
+                                    <div>
+                                        {% if form.article.errors %}
+                                            <p class="small" style="color: red;">{{ form.article.errors.0 }}</p>
+                                        {% elif form.article.help_text %}
+                                            <p class="small text-muted">{{ form.article.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <button class="w-100 btn btn-primary" type="submit">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

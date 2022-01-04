@@ -74,6 +74,13 @@
                         </a>
                     </li>
 
+                    <li class="sidebar-item {% if active_page == 'ADMIndListIndex' %}active{% endif %}">
+                        <a class="sidebar-link" href="{% url 'ADMIndListSectorIndex' %}">
+                            {# Translators: 后台模板{侧边栏}-第四部分@清单分区 #}
+                            <i class="align-middle" data-feather="grid"></i> <span class="align-middle">{% translate '首页清单' %}</span>
+                        </a>
+                    </li>
+
                     <li class="sidebar-item {% if active_page == 'ADMNewsSectorIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMNewsSectorIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第四部分@新闻分区 #}
@@ -83,7 +90,7 @@
 
                     <li class="sidebar-item {% if active_page == 'ADMNewsIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMNewsIndex' %}">
-                            {# Translators: 后台模板{侧边栏}-第四部分@新闻分区 #}
+                            {# Translators: 后台模板{侧边栏}-第四部分@新闻 #}
                             <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">{% translate '新闻' %}</span>
                         </a>
                     </li>

@@ -13,7 +13,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt, xframe_o
 
 from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm
 from customer.models import Customer
-from customer.utils import get_customer_info, get_news
+from customer.utils import get_customer_info, get_news, get_index_list
 from staring.customerSettings import Languages, IndexCarousel
 from staring.models import Article, User, NewsSector, NavigatorSector
 from staring.text import UserNoPermit_text, UserNotExist_text
@@ -27,6 +27,7 @@ def index(request):
         "title_img": True,
         "ContactForm": True,
         "newsSectors": get_news(),
+        "indexList": get_index_list(),
         **get_customer_info()
     }
 

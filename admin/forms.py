@@ -352,3 +352,38 @@ class NavigatorItemForm(TranslationModelForm):
     class Meta:
         model = NavigatorItem
         exclude = ["order"]
+
+
+class IndexListSectorForm(TranslationModelForm):
+    class Meta:
+        model = IndexListSector
+        fields = "__all__"
+
+
+class IndexListItemForm(TranslationModelForm):
+    def clean_url(self):
+        t = self.cleaned_data.get("type")
+        url = self.cleaned_data.get("url")
+        if t == "URL" and url == "":
+            raise ValidationError(navi_item_url_err_empty)
+        else:
+            return url
+
+    def clean_article(self):
+        t = self.cleaned_data.get("type")
+        article = self.cleaned_data.get("article")
+        if t == "ARTICLE" and article == "":
+            raise ValidationError(navi_item_article_err_empty)
+        else:
+            # a = Article.objects.get(id=article)
+            return article
+
+    def __init__(self, *args, **kwargs):
+        super(IndexListItemForm, self).__init__(*args, **kwargs)
+        self.fields["article"].required = False
+
+    class Meta:
+        model = IndexListItem
+        fields = "__all__"
+
+

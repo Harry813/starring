@@ -415,11 +415,11 @@ navi_item_order_text = _("组件顺序")
 # Translators: 首页导航栏组件模组{组件等级}
 navi_item_level_text = _("组件等级")
 
-# Translators: 首页导航栏组件模组{组件类型}
-navi_item_type_text = _("组件类型")
+# Translators: 首页导航栏组件模组{链接类型}
+navi_item_type_text = _("链接类型")
 
-# Translators: 首页导航栏组件模组{链接}
-navi_item_url_text = _("链接")
+# Translators: 首页导航栏组件模组{URL}
+navi_item_url_text = _("URL")
 
 # Translators: 首页导航栏组件模组{链接}-帮助文本
 navi_item_url_help_text = _("仅当" + navi_item_type_text + "为链接时，该值有效")
@@ -435,6 +435,25 @@ navi_item_url_err_empty = _("链接不得为空")
 
 # Translators: 首页导航栏组件模组{文章}-错误文本@空值
 navi_item_article_err_empty = _("文章不得为空")
+
+
+###################################################################################################
+# staring.models.IndexListSector  首页清单组件分区模组
+###################################################################################################
+
+# Translators: 首页清单组件分区模组{分区名称}
+index_list_sector_name = _("分区名称")
+
+
+###################################################################################################
+# staring.models.IndexListItem  首页清单组件子项模组
+###################################################################################################
+
+# Translators: 首页清单组件子项模组{名称}
+index_list_item_name = _("名称")
+
+# Translators: 首页清单组件子项模组{所属分区}
+index_list_item_sector = _("所属分区")
 
 ###################################################################################################
 # admin.forms.NewsSearchForm  新闻搜索表单

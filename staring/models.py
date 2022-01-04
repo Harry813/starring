@@ -367,7 +367,7 @@ class NavigatorItem(models.Model):
 
     type = models.CharField(
         verbose_name=navi_item_type_text,
-        choices=navigator_item_type,
+        choices=link_type,
         max_length=10,
     )
 
@@ -395,3 +395,60 @@ class NavigatorItem(models.Model):
     class Meta:
         unique_together = [["sector", "order"]]
         ordering = ["sector", "order"]
+
+
+class IndexListSector(models.Model):
+    name = models.CharField(
+        verbose_name=index_list_sector_name,
+        max_length=15,
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class IndexListItem(models.Model):
+    name = models.CharField(
+        verbose_name=index_list_item_name,
+        max_length=15,
+    )
+
+    sector = models.ForeignKey(
+        verbose_name=index_list_item_sector,
+        to=IndexListSector,
+        on_delete=models.CASCADE
+    )
+
+    type = models.CharField(
+        verbose_name=navi_item_type_text,
+        choices=link_type,
+        max_length=10,
+    )
+
+    url = models.CharField(
+        verbose_name=navi_item_url_text,
+        max_length=150,
+        blank=True,
+        null=True,
+        help_text=navi_item_url_help_text,
+        default="#"
+    )
+
+    article = models.ForeignKey(
+        verbose_name=navi_item_article_text,
+        to=Article,
+        limit_choices_to={'status': 'PUBLISH'},
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        help_text=navi_item_article_help_text
+    )
+
+    def link(self):
+        if self.type == "URL":
+            return self.url
+        elif self.type == "ARTICLE":
+            return reverse("article", args=[self.article.id])
+
+    def __str__(self):
+        return self.name

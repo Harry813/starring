@@ -1,0 +1,123 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">
+            <a class="btn btn-link text-secondary" href="{% url 'ADMIndListSectorIndex' %}">
+                <i class="bi bi-arrow-left"></i>
+            </a> {% translate '首页清单管理' %} - {{ sector.name }}
+        </h1>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col mt-0">
+                                <h1 class="h5 card-title">{% translate '项目总数' %}</h1>
+                            </div>
+
+                            <div class="col-auto">
+                                <div class="stat text-primary">
+                                    <i class="align-middle" data-feather="list"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <h1 class="mt-1 mb-3">{{ items|length }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="h5 card-title">{% translate '分区修改' %}</h1>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            <div class="row">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.name.id_for_label }}">
+                                        {{ form.name.label }}
+                                        <span class="badge bg-secondary" data-bs-toggle="tooltip"
+                                              title="{% trans 'Multi-language field' %}">
+                                             <i class="bi bi-translate"></i>
+                                        </span>
+                                        {% if form.name.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.name class="form-control" %}
+                                    <div>
+                                        {% if form.name.errors %}
+                                            <p class="small" style="color: red;">{{ form.name.errors.0 }}</p>
+                                        {% elif form.name.help_text %}
+                                            <p class="small text-muted">{{ form.name.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <button class="w-100 btn btn-primary" type="submit">{% translate '提交修改' %}</button>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <a href="{% url 'ADMIndListItemCreate' sector.id %}" class="btn btn-primary w-100">{% translate '添加项目' %}</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="h5 card-title">{% translate '项目管理' %}</h1>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped table-padding">
+                            <thead>
+                            <tr>
+                                <th style="width:10%;">#</th>
+                                <th>{% trans "项目名称" %}</th>
+                                <th style="width:15%">{% trans "链接类型" %}</th>
+                                <th style="width:10%;">{% translate '操作' %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in items %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.get_type_display }}</td>
+                                    <td class="table-action">
+                                        <a href="{% url 'ADMIndListItemEdit' sector.id item.id %}" class="action-button edit-button">
+                                            <i class="align-middle" data-feather="edit-2"></i>
+                                        </a>
+
+                                        <a class="action-button trash-button" href="#">
+                                            <i class="align-middle" data-feather="trash-2"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td class="text-center" colspan="5">{% translate '暂无更多项目' %}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
