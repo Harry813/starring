@@ -526,53 +526,27 @@ def admin_news_sector_edit_view(request, sid):
         form = NewsSectorForm(instance=sector)
 
     param["form"] = form
+    param["sector"] = sector
+    param["news"] = News.objects.filter(sector=sector)
     return render(request, 'admin/admin_sector_edit.html', param)
 
 
 @login_required(login_url="ADMLogin")
-def admin_news_index_view(request):
-    param = {
-        "page_title": _("星环-新闻管理"),
-        "languages": Languages,
-        "active_page": "ADMNewsIndex",
-        **get_basic_info(),
-        **get_admin_info()
-    }
-
-    news = News.objects.all()
-
-    if request.method == "POST":
-        form = NewsSearchForm(request.POST)
-        if form.is_valid():
-            sector = form.cleaned_data.get("sector")
-            if sector != "":
-                news = News.objects.filter(sector=sector)
-        else:
-            form = NewsSearchForm(request.POST)
-    else:
-        form = NewsSearchForm()
-
-    param["news"] = news
-    param["form"] = form
-
-    return render(request, "admin/admin_news_index.html", param)
-
-
-@login_required(login_url="ADMLogin")
-def admin_news_create_view(request):
+def admin_news_create_view(request, sid):
     param = {
         "page_title": _("星环-新闻创建"),
         "languages": Languages,
-        "active_page": "ADMNewsIndex",
+        "active_page": "ADMNewsSectorIndex",
         **get_basic_info(),
         **get_admin_info()
     }
+    sector = NewsSector.objects.get(id=sid)
 
     if request.method == "POST":
-        form = NewsForm(request.POST, request.FILES)
+        form = NewsForm(request.POST, request.FILES, initial={"sector": sector})
         if form.is_valid():
             form.save()
-            return redirect("ADMNewsIndex")
+            return redirect("ADMNewsSectorEdit", sid=sid)
         else:
             form = NewsForm(request.POST, request.FILES)
     else:
@@ -583,11 +557,11 @@ def admin_news_create_view(request):
 
 
 @login_required(login_url="ADMLogin")
-def admin_news_edit_view(request, nid):
+def admin_news_edit_view(request, sid, nid):
     param = {
         "page_title": _("星环-新闻编辑"),
         "languages": Languages,
-        "active_page": "ADMNewsIndex",
+        "active_page": "ADMNewsSectorIndex",
         **get_basic_info(),
         **get_admin_info()
     }
@@ -598,7 +572,7 @@ def admin_news_edit_view(request, nid):
         form = NewsForm(request.POST, request.FILES, instance=news)
         if form.is_valid():
             form.save()
-            return redirect("ADMNewsIndex")
+            return redirect("ADMNewsSectorEdit", sid=sid)
         else:
             form = NewsForm(request.POST, request.FILES, instance=news)
     else:
