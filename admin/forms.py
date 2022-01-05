@@ -240,18 +240,6 @@ class NewsSectorForm(forms.ModelForm):
         exclude = ["id"]
 
 
-class NewsSearchForm(forms.Form):
-    sector = forms.ModelChoiceField(
-        queryset=None,
-        label=newsSearch_sector_text,
-        required=False
-    )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['sector'].queryset = NewsSector.objects.all()
-
-
 class NewsForm(forms.ModelForm):
     class Meta:
         model = News
