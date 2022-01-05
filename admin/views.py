@@ -500,7 +500,7 @@ def admin_news_sector_index_view(request):
 
     param["sector_list"] = NewsSector.objects.all()
     param["count"] = len(NewsSector.objects.all())
-    return render(request, 'admin/admin_sector.html', param)
+    return render(request, 'admin/admin_sector_index.html', param)
 
 
 @login_required(login_url="ADMLogin")

@@ -11,7 +11,7 @@
     <div class="container-fluid p-0">
         <h1 class="h3 mb-3">{% translate '分区管理' %}</h1>
         <div class="row">
-            <div class="col-3">
+            <div class="col-3 mb-3">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -29,12 +29,14 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <h1 class="h3 mb-3">{% translate '创建分区' %}</h1>
-        <div class="row">
-            <div class="col-12">
+            <div class="mb-3">
                 <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h1 class="h5 card-title">{% translate '创建分区' %}</h1>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <form method="POST">
                             {% csrf_token %}
@@ -81,17 +83,12 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <h1 class="h3 mb-3">{% translate '分区操作' %}</h1>
-        <div class="row">
-            <div class="col-12">
+            <div class="mb-3">
                 <div class="card">
                     <div class="card-header">
-                        <div class="row">
-                            <div class="col mt-0">
-                                <h5 class="card-title">{% translate '分区操作' %}</h5>
-                            </div>
+                        <div class="card-title">
+                            <h1 class="h3 mb-3">{% translate '分区操作' %}</h1>
                         </div>
                     </div>
 
