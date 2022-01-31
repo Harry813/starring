@@ -604,6 +604,29 @@ def admin_slot_index_view(request, page):
 
 
 @login_required(login_url="ADMLogin")
+def admin_slot_multi_create_view(request):
+    param = {
+        "page_title": _("星环-日程管理"),
+        "languages": Languages,
+        "active_page": "ADMSlotIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    if request.method == "POST":
+        form = SlotGeneratorForm(request.POST)
+        if form.is_valid():
+            pass
+        else:
+            form = SlotGeneratorForm(request.POST)
+    else:
+        form = SlotGeneratorForm()
+
+    param["form"] = form
+    return render(request, "admin/admin_slot_multi_create.html", param)
+
+
+@login_required(login_url="ADMLogin")
 def admin_navi_sector_index_view(request):
     param = {
         "page_title": _("星环-导航栏管理"),
@@ -677,12 +700,16 @@ def admin_navi_item_create_view(request, secid):
     sector = NavigatorSector.objects.get(id=secid)
     param["SectorName"] = sector.name
     if request.method == "POST":
-        form = NavigatorItemForm(request.POST, initial={"sector": sector})
+        form = NavigatorItemForm(request.POST, initial={
+            "sector": sector,
+            "order": len(NavigatorItem.objects.filter(sector=sector))
+        })
         if form.is_valid():
             form.save()
             return redirect("ADMNaviItemIndex", secid=secid)
     else:
-        form = NavigatorItemForm(initial={"sector": sector})
+        form = NavigatorItemForm(initial={"sector": sector,
+                                          "order": len(NavigatorItem.objects.filter(sector=sector))})
     param["form"] = form
     return render(request, "admin/admin_navi_item_ce.html", param)
 
