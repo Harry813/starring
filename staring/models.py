@@ -284,8 +284,12 @@ class MeetingSlot(models.Model):
         verbose_name=meetingSlot_date_text
     )
 
-    time = models.TimeField(
-        verbose_name=meetingSlot_time_text
+    start_time = models.TimeField(
+        verbose_name=meetingSlot_start_time_text
+    )
+
+    end_time = models.TimeField(
+        verbose_name=meetingSlot_end_time_text
     )
 
     availability = models.PositiveIntegerField(
@@ -294,14 +298,16 @@ class MeetingSlot(models.Model):
     )
 
     class Meta:
-        unique_together = ["date", "time"]
-
-    def get_remain_availability(self):
-        cost = len(MeetingReservation.objects.filter(slot=self))
-        return self.availability - cost
+        unique_together = ["date", "start_time", "end_time"]
 
 
-class MeetingReservation(models.Model):
+class MeetingAppointment(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+
     customer = models.ForeignKey(
         to="customer.Customer",
         on_delete=models.CASCADE,
@@ -325,6 +331,22 @@ class MeetingReservation(models.Model):
         max_length=10,
         choices=meeting_status,
         default="APPLY"
+    )
+
+    description = models.TextField(
+        verbose_name=meetingReservation_consults_help_text,
+        null=True,
+        blank=True,
+    )
+
+    created_at = models.DateTimeField(
+        verbose_name=meetingReservation_create_text,
+        auto_now_add=True,
+    )
+
+    updated_at = models.DateTimeField(
+        verbose_name=meetingReservation_update_text,
+        auto_now=True,
     )
 
 
