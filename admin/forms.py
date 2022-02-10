@@ -325,26 +325,29 @@ class NavigatorItemForm(TranslationModelForm):
     def save(self, commit=True):
         navi_item = super(NavigatorItemForm, self).save(commit=False)
 
-        navi_item_list = NavigatorItem.objects.filter(sector=self.cleaned_data.get("sector"))
+        navi_item_list = list(NavigatorItem.objects.filter(sector=self.cleaned_data.get("sector")))
 
-        # Update all the sector orders if instance not exists
-        if not self.instance:
-            for s in range(len(navi_item_list)):
-                item = navi_item_list[s]
-                item.order = s
-                item.save()
-            navi_item.order = len(navi_item_list)
-        if commit:
-            navi_item.save()
+        if self.instance is None:
+            navi_item_list.append(navi_item)
+        else:
+            navi_item_list.insert(navi_item.order, navi_item)
+
+        for index, item in enumerate(navi_item_list):
+            item.order = index
+            item.save()
+
+            if item == navi_item and commit:
+                navi_item.save()
         return navi_item
 
     def __init__(self, *args, **kwargs):
         super(NavigatorItemForm, self).__init__(*args, **kwargs)
         self.fields["article"].required = False
+        self.fields["order"].required = False
 
     class Meta:
         model = NavigatorItem
-        exclude = ["order"]
+        fields = "__all__"
 
 
 class IndexListSectorForm(TranslationModelForm):
