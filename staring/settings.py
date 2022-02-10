@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'guardian',
     'modeltranslation',
+    'django_user_agents',
     # 'tinymce',
 
     # customer apps
@@ -71,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware'
 ]
 
 ROOT_URLCONF = 'staring.urls'
