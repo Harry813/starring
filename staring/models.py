@@ -78,7 +78,6 @@ class User(AbstractUser):
             MinValueValidator(datetime.date(1900, 1, 1)),
             MaxValueValidator(datetime.date.today())
         ],
-        default=datetime.date(1900, 1, 1)
     )
 
     def get_age(self):
@@ -101,7 +100,9 @@ class User(AbstractUser):
     tele = models.CharField(
         verbose_name=user_tele_text,
         max_length=15,
-        validators=[phone_regex]
+        validators=[phone_regex],
+        blank=True,
+        null=True
     )
 
     avatar = models.ImageField(
