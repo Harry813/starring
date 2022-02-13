@@ -14,8 +14,11 @@ html {
     font-family: Noto Sans CJK SC, serif;
 }
 
-.language-choice {
+.star-font{
     font-family: Noto Sans CJK SC, serif;
+}
+
+.language-choice {
     font-style: normal;
     font-weight: 300;
     font-size: 12px;
@@ -190,7 +193,6 @@ html {
 .star-footer-title {
     font-family: Noto Sans CJK SC, serif !important;
     font-weight: 700 !important;
-    text-decoration: underline !important;
     color: #ffffff !important;
     line-height: 18px !important;
 }
@@ -226,7 +228,6 @@ html {
 }
 
 .qr-code-title {
-    font-family: Noto Sans CJK SC, serif;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
