@@ -1,0 +1,163 @@
+{% extends 'customer/tele/customer_tele_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block css %}
+    <style>
+        .news-sector-header {
+            border-bottom: 1px solid #001F45;
+        }
+
+        .news-sector-title {
+            font-family: Noto Sans CJK SC, serif;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 20px;
+            line-height: 20px
+        }
+
+        .tri-list {
+            margin: 0.75em 0;
+            padding: 0 1em;
+            list-style: none;
+        }
+
+        .tri-list li {
+            line-height: 25px;
+            text-decoration-line: underline;
+            font-weight: 350;
+        }
+
+        .tri-list li::before {
+            content: "";
+            border-color: transparent #001F45;
+            border-style: solid;
+            border-width: 0.35em 0 0.35em 0.45em;
+            display: block;
+            height: 0;
+            width: 0;
+            left: -1em;
+            top: 1.1em;
+            position: relative;
+        }
+
+        .news-first-item {
+            margin-left: 0;
+        }
+
+        .news-first-img {
+            height: 5.625em;
+            width: 10rem;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .news-first-head {
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 1.3125rem !important;
+        }
+
+        .news-first-description {
+            font-weight: 350;
+            font-size: 10px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+        }
+    </style>
+{% endblock %}
+
+{% block main_content %}
+    <form class="mb-5 w-100">
+        <div class="d-flex">
+            <div class="col-sm-4 col-md-3 align-self-start pt-2">
+                <strong>快速查找移民留学项目</strong>
+            </div>
+            <div class="col-sm-8 col-md-9">
+                <div class="input-group">
+                    {% blocktranslate with name="项目名称" %}
+                        <input type="text" class="form-control" placeholder="{{ name }}" aria-label="{{ name }}"
+                               aria-describedby="button-addon2">
+                    {% endblocktranslate %}
+                    <button class="btn btn-star" type="submit" id="button-addon2" name="quickSearch">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% for s in indexList %}
+        <dl class="row">
+            <dt class="col-md-3 text-center align-self-start pt-2">
+                {{ s.sector.name }}
+            </dt>
+            <dd class="col-md-9">
+                <div class="row g-1">
+                    {% for item in s.items %}
+                        <div class="col-md-4 col-sm-6">
+                            <div class="card p-2 bg-star-grey h-100">
+                                <a href="{{ item.link }}"
+                                   class="text-decoration-none text-black">
+                                    {{ item.name }}
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </dd>
+        </dl>
+    {% endfor %}
+
+    <div class="row g-3 my-5">
+        {% for ns in newsSectors %}
+            <div class="col-lg-6 col-sm-12">
+                <div class="w-100 news-sector-header">
+                    <h1 class="news-sector-title">{{ ns.sector.name }}</h1>
+                </div>
+                <div class="py-2">
+                    {% with first_news=ns.news.0 %}
+                        <div class="d-flex px-0 news-first mt-1" style="height: 6.25rem">
+                            {% if first_news.img %}
+                                <div class="flex-shrink-0 me-3">
+                                    <a href="{% url 'article' first_news.article.id %}" class="text-reset">
+                                        <img src="{% get_media_prefix %}{{ first_news.img }}" alt="{{ first_news.alt }}"
+                                             class="rounded news-first-img">
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                            <div class="flex-grow-1 news-first-item">
+                                <div class="news-first-head">
+                                    <a href="{% url 'article' first_news.article.id %}"
+                                       class="text-reset text-decoration-none">
+                                        {{ first_news.title }}
+                                    </a>
+                                </div>
+                                <div class="news-first-description">{{ first_news.introduction }}</div>
+                            </div>
+                        </div>
+                    {% endwith %}
+                    <ul class="tri-list">
+                        {% for news in ns.news %}
+                            {% if not forloop.first %}
+                                <li class="my-1">
+                                    <a href="{% url 'article' news.article.id %}" class="text-reset">
+                                        {{ news.title }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

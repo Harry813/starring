@@ -30,8 +30,10 @@ def index(request):
         "indexList": get_index_list(),
         **get_customer_info()
     }
-
-    return render(request, "customer/index.html", param)
+    if request.user_agent.is_mobile:
+        return render(request, "customer/tele/tele_index.html", param)
+    else:
+        return render(request, "customer/index.html", param)
 
 
 def customer_login_view(request):
