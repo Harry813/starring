@@ -15,7 +15,7 @@ html {
 }
 
 .star-font{
-    font-family: Noto Sans CJK SC, serif;
+    font-family: Noto Sans CJK SC, serif !important;
 }
 
 .language-choice {
@@ -27,7 +27,6 @@ html {
 }
 
 .star-nav-link {
-    font-family: Noto Sans CJK SC, serif;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -189,14 +188,12 @@ html {
 }
 
 .star-footer-title {
-    font-family: Noto Sans CJK SC, serif !important;
     font-weight: 700 !important;
     color: #ffffff !important;
     line-height: 18px !important;
 }
 
 .star-footer-item {
-    font-family: Noto Sans CJK SC, serif !important;
     font-weight: 400 !important;
     font-style: normal !important;
     color: white !important;

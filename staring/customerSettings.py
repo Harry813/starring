@@ -116,3 +116,8 @@ navigator_item_level = [
     (0, _("标题")),
     (1, _("条目"))
 ]
+
+Slot_interval = +15  # Minute
+Slot_start = 9  # 24h Clock
+Slot_end = 18  # 24h Clock
+Slot_duration = +45  # Minute
