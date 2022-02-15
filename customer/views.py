@@ -31,7 +31,7 @@ def index(request):
         **get_customer_info()
     }
     if request.user_agent.is_mobile:
-        return render(request, "customer/tele/tele_index.html", param)
+        return render(request, "customer/tele/tele_index1.html", param)
     else:
         return render(request, "customer/index.html", param)
 
@@ -154,7 +154,11 @@ def customer_articles(request, article_id):
 
     article = get_object_or_404(Article, id=article_id, status="PUBLISH")
     param["article"] = article
-    return render(request, "customer/customer_articles.html", param)
+
+    if request.user_agent.is_mobile:
+        return render(request, "customer/tele/customer_tele_articles.html", param)
+    else:
+        return render(request, "customer/customer_articles.html", param)
 
 
 def customer_search_view(request, page=1):
