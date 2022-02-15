@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<form method="post" class="p-3" style="background-color: #EDF0F3" id="ContactForm">
+<form method="post" class="p-3 w-100" style="background-color: #EDF0F3" id="ContactForm">
     {% csrf_token %}
     <div class="mb-3">
         <label class="form-label" for="{{ ContactForm.name.id_for_label }}">
