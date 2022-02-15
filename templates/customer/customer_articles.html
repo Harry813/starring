@@ -1,6 +1,10 @@
 {% extends 'customer/customer_template.html' %}
 {% load static %}
 
+{% block meta %}
+
+{% endblock %}
+
 {% block css %}
     <link rel="stylesheet" href="{% static 'CSS/customer_article.css' %}">
     {% if not article.copyable %}
@@ -10,9 +14,6 @@
     {% endif %}
 {% endblock %}
 
-{% block meta %}
-
-{% endblock %}
 
 {% block main_content %}
     <div class="star-article">
