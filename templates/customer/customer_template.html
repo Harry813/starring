@@ -5,17 +5,19 @@
 {% block basic_template_content %}
     <div class="container">
         <div class="row mt-5 gx-5">
-            <div class="col-8">
+            <div class="col-md-8 col-sm-12">
                 {% block main_content %}{% endblock %}
             </div>
 
-            <div class="col-4">
+            <div class="col-md-4 col-sm-12">
                 {% if ContactForm %}
                     <div class="px-3 sidebar-red-line">
                         <h5>快速咨询 | Contact Us</h5>
                     </div>
 
-                    <iframe src="{% url 'CUSTContact' %}" class="mt-3 mx-3" scrolling="no" id="ContactForm"></iframe>
+                    <div class="m-3">
+                        <iframe src="{% url 'CUSTContact' %}" style="width: calc(100% - 1rem)" scrolling="no" id="ContactForm"></iframe>
+                    </div>
 
                     <script>
                         let iframe = document.getElementById("ContactForm")
@@ -31,11 +33,11 @@
                     </script>
                 {% endif %}
 
-                <div class="px-3 mt-3 sidebar-red-line">
+                <div class="px-3 sidebar-red-line">
                     <h5>常见搜索</h5>
                 </div>
 
-                <div class="p-3 mt-3 mx-3">
+                <div class="m-3">
                     <div class="accordion">
                         <div class="accordion-item"></div>
                     </div>
