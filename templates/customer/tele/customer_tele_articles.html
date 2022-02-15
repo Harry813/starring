@@ -1,0 +1,40 @@
+{% extends 'customer/customer_base.html' %}
+{% load static %}
+
+{% block meta %}
+
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'CSS/customer_article.css' %}">
+    {% if not article.copyable %}
+        <style>
+            * { -webkit-user-select: none; }
+        </style>
+    {% endif %}
+{% endblock %}
+
+
+{% block main_content %}
+    <div class="container-fluid mt-5">
+        <div class="star-article">
+            <h1>{{ article.title }}</h1>
+            {% autoescape off %}
+                {{ article.content }}
+            {% endautoescape %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    {% if not article.copyable %}
+        <script>
+            document.oncontextmenu = function(){ return false; };
+            document.onselectstart = function(){ return false; };
+            document.oncopy = function(){ return false; };
+            document.oncut = function(){ return false; };
+            document.onpaste = function(){ return false; };
+        </script>
+    {% endif %}
+{% endblock %}
