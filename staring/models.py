@@ -207,6 +207,11 @@ class Article(models.Model):
         auto_now=True
     )
 
+    view_count = models.PositiveIntegerField(
+        verbose_name=article_view_count_text,
+        default=0
+    )
+
     objects = models.Manager()
     customer_visible = customer_articles()
     admin_visible = admin_articles()

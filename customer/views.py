@@ -153,6 +153,8 @@ def customer_articles(request, article_id):
         param["ContactForm"] = ContactForm()
 
     article = get_object_or_404(Article, id=article_id, status="PUBLISH")
+    article.view_count += 1
+    article.save(update_fields=["view_count"])
     param["article"] = article
 
     if request.user_agent.is_mobile:
