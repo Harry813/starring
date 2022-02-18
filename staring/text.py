@@ -170,6 +170,9 @@ article_create_date_text = _("创建时间")
 # Translators: 文章模组{最后修改}
 article_last_change_text = _("最后修改")
 
+# Translators: 文章模组{浏览总量}
+article_view_count_text = _("浏览总量")
+
 
 ###################################################################################################
 # admin.models.Department  部门模组
