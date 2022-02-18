@@ -48,6 +48,33 @@
 
 {% block content %}
     <div class="container-fluid p-0">
+        {% comment %}{% if view_count %}
+            <h1 class="h3 mb-3">{% translate '基础信息' %}</h1>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col mt-0">
+                                    <h5 class="card-title">
+                                        {% translate '浏览数量' %}
+                                    </h5>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="stat text-primary">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <h1 class="mt-1 mb-3">
+                                {{ view_count }}
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}{% endcomment %}
+
         <h1 class="h3 mb-3">{% translate '文章创建' %}</h1>
         <form method="POST" name="ArticleCreate">
             {% csrf_token %}

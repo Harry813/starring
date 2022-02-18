@@ -187,6 +187,7 @@ def admin_article_edit_view(request, article_id):
     }
 
     article = get_object_or_404(Article, id=article_id)
+    # param["view_count"] = article.view_count
 
     if request.method == "POST":
         form = ArticleForm(request.POST, instance=article)
