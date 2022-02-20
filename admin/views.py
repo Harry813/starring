@@ -144,9 +144,8 @@ def admin_article_index_view(request, page):
         form = ArticleSearchForm()
 
     p = Paginator(articles, 10)
-    article_list = p.get_page(page)
     param["paginator"] = p
-    param["article_list"] = article_list
+    param["article_list"] = p.get_page(page)
     param["current_page"] = page
     param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
     param["SearchForm"] = form
