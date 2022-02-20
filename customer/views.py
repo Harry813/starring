@@ -163,7 +163,7 @@ def customer_articles(request, article_id):
         return render(request, "customer/customer_articles.html", param)
 
 
-def customer_search_view(request, page=1):
+def customer_search_view(request, page):
     param = {
         "page_title": _("星环-我的主页"),
         "languages": Languages,
@@ -171,12 +171,20 @@ def customer_search_view(request, page=1):
         **get_customer_info(),
     }
 
-    q = request.GET.get("search")
+    if request.GET.get("search"):
+        q = request.GET.get("search")
+        request.session["search"] = q
+    elif request.session["search"] and not request.GET.get("search"):
+        q = request.session["search"]
+    else:
+        q = ""
+
     param["search"] = q
 
-    articles = Article.objects.filter(status="PUBLISH").filter(Q(title__icontains=q) | Q(content__icontains=q))
-    p = Paginator(articles, 30)
+    articles = Article.objects.filter(status="PUBLISH").filter(Q(title__icontains=q) | Q(content__icontains=q))\
+        .order_by("-last_update", "-view_count")
 
+    p = Paginator(articles, 10)
     param["paginator"] = p
     param["results"] = p.get_page(page)
     param["current_page"] = page
