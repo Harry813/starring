@@ -10,6 +10,11 @@
                     <a href="{% url 'article' result.id %}" class="d-block fs-5 fw-bold">
                         {{ result.title }}
                     </a>
+                    <small class="text-secondary">
+                        {% blocktranslate with author=result.author date=result.last_update|date view=result.view_count %}
+                            <i class="fa-solid fa-user-pen"></i> {{ author }}&emsp;<i class="fa-regular fa-calendar"></i> {{ date }}&emsp;<i class="fa-solid fa-eye"></i> {{ view }}
+                        {% endblocktranslate %}
+                    </small>
                     <p class="mt-3">{{ result.content|striptags|safe|slice:":150" }}</p>
                 </div>
             {% empty %}
@@ -38,26 +43,23 @@
                         <i class="bi bi-chevron-bar-left"></i>
                     </a>
 
-                    <a href="
-                                            {% if results.has_next %}{% url 'CUSTSearch' results.previous_page_number %}{% endif %}"
+                    <a href="{% if results.has_previous %}{% url 'CUSTSearch' results.previous_page_number %}{% endif %}"
                        class="btn btn-outline-primary {% if not results.has_previous %}disabled{% endif %}">
                         <i class="bi bi-chevron-left"></i>
                     </a>
 
                     {% for p in page_list %}
-                        <a href="#"
+                        <a href="{% if p != "..." %}{% url 'CUSTSearch' p %}{% else %}#{% endif %}"
                            class="btn btn-outline-primary {% if p == current_page %}active{% elif p == "..." %}disabled{% endif %}">
                             {{ p }}
                         </a>
                     {% endfor %}
 
-                    <a href="
-                                            {% if results.has_next %}{% url 'CUSTSearch' results.next_page_number %}{% endif %}"
+                    <a href="{% if results.has_next %}{% url 'CUSTSearch' results.next_page_number %}{% endif %}"
                        class="btn btn-outline-primary {% if not results.has_next %}disabled{% endif %}">
                         <i class="bi bi-chevron-right"></i>
                     </a>
-                    <a href="
-                                            {% if current_page != paginator.num_pages %}{% url 'CUSTSearch' paginator.num_pages %}{% endif %}"
+                    <a href="{% if current_page != paginator.num_pages %}{% url 'CUSTSearch' paginator.num_pages %}{% endif %}"
                        class="btn btn-outline-primary {% if current_page == paginator.num_pages %}disabled{% endif %}">
                         <i class="bi bi-chevron-bar-right"></i>
                     </a>
