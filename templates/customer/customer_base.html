@@ -61,7 +61,8 @@
                     <div class="input-group mb-3 w-100"
                          style="float:right">
                         <input type="text" class="form-control" placeholder="{% translate '搜索内容' %}"
-                               aria-label="index-search-input" aria-describedby="index-search" name="search">
+                               aria-label="index-search-input" aria-describedby="index-search" name="search"
+                               {% if search %}value="{{ search }}"{% endif %}>
                         <button class="btn btn-star" type="submit" id="index-search">
                             <i class="bi bi-search"></i>
                         </button>
@@ -223,7 +224,7 @@
                     </a>
                 </li>
             </ul>
-            <form class="d-flex" method="get" action="/search/1">
+            <form class="d-flex" method="get" action="/search/1/">
                 <input class="form-control me-2" type="search" placeholder="{% translate '搜索内容' %}" required
                        aria-label="index-search-input" aria-describedby="index-search">
                 <button class="btn btn-outline-star" type="submit" id="index-search">
