@@ -1,7 +1,7 @@
 from staring.customerSettings import ADMMegaMenu, Slot_end, Slot_start, Slot_interval, Slot_duration
 from datetime import datetime, date, time, timedelta
 
-from staring.models import NavigatorSector, NavigatorItem
+from staring.models import NavigatorSector, NavigatorItem, IndexListItem
 
 TIMESLOT_TIME_FORMAT = '%I:%M %p'
 TIMESLOT_INTERVAL = timedelta(minutes=+Slot_interval)
@@ -17,22 +17,25 @@ def get_admin_info():
     return param
 
 
-def navigator_item_reorder(sector_id, item=None):
-    """
+def reorder(c, q, item=None, index=-1):
+    if not hasattr(c, "order"):
+        raise AttributeError(f"class {c} do not have attribute \"order\"")
 
-    :param sector_id:
-    :type sector_id: int
-    :param item:
-    :type item: NavigatorItem
-    """
+    items = list(c.objects.filter(q).order_by('order'))
+
     if item:
-        navi_items = NavigatorSector.objects.filter(sector_id=sector_id)
-        navi_items.insert(item.order, item)
-    else:
-        navi_items = NavigatorSector.objects.filter(sector_id=sector_id)
+        if index < 0:
+            items.append(item)
+        else:
+            try:
+                items.pop(items.index(item))
+            except ValueError:
+                pass
+            finally:
+                items.insert(index, item)
 
-    for i in range(len(navi_items)):
-        it = navi_items[i]
+    for i in range(len(items)):
+        it = items[i]
         it.order = i
         it.save()
 

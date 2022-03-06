@@ -73,7 +73,7 @@
                         <tbody>
                             {% for item in items %}
                                 <tr>
-                                    <td>{{ item.order }}</td>
+                                    <td>{{ item.order|add:"1" }}</td>
                                     <td><span class="text-muted">{{ item.get_indentation|safe }} </span>{{ item.name }}</td>
                                     <td>{{ item.get_type_display }}</td>
                                     <td>

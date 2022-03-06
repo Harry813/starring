@@ -42,18 +42,18 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-6 mb-3">
-                                    <label class="form-label" for="{{ form.order.id_for_label }}">
-                                        {{ form.order.label }}
-                                        {% if form.order.field.required %}
+                                    <label class="form-label" for="{{ form.reorder.id_for_label }}">
+                                        {{ form.reorder.label }}
+                                        {% if form.reorder.field.required %}
                                             <span style="color: red">*</span>
                                         {% endif %}
                                     </label>
-                                    {% render_field form.order class="form-control" %}
+                                    {% render_field form.reorder class="form-control" %}
                                     <div>
-                                        {% if form.order.errors %}
-                                            <p class="small" style="color: red;">{{ form.order.errors.0 }}</p>
-                                        {% elif form.order.help_text %}
-                                            <p class="small text-muted">{{ form.order.help_text }}</p>
+                                        {% if form.reorder.errors %}
+                                            <p class="small" style="color: red;">{{ form.reorder.errors.0 }}</p>
+                                        {% elif form.reorder.help_text %}
+                                            <p class="small text-muted">{{ form.reorder.help_text }}</p>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -145,6 +145,16 @@
                                 <div class="mb-3">
                                     <button class="btn btn-primary w-100" type="submit">{% trans "提交" %}</button>
                                 </div>
+
+                                {% if form.non_field_errors %}
+                                    <div class="mb-3">
+                                        <ul>
+                                            {% for err in form.non_field_errors %}
+                                                <li class="text-danger error_message">{{ err }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
                             </div>
                         </form>
                     </div>

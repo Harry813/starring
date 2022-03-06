@@ -15,7 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from admin.forms import *
 from admin.models import Staff
-from admin.utils import get_admin_info
+from admin.utils import get_admin_info, reorder
 from customer.models import Customer
 from staring.customerSettings import Languages
 from staring.settings import MEDIA_ROOT, MEDIA_URL, DOMAIN_NAME
@@ -699,39 +699,46 @@ def admin_navi_item_create_view(request, secid):
     }
     sector = NavigatorSector.objects.get(id=secid)
     param["SectorName"] = sector.name
+    initial = {"sector": sector, "reorder": len(NavigatorItem.objects.filter(sector=sector))+1}
     if request.method == "POST":
-        form = NavigatorItemForm(request.POST, initial={
-            "sector": sector,
-            "order": len(NavigatorItem.objects.filter(sector=sector))
-        })
+        form = NavigatorItemForm(request.POST, initial=initial)
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            order = form.cleaned_data.get("reorder")
+            reorder(NavigatorItem, Q(sector_id=sector), item, order)
             return redirect("ADMNaviItemIndex", secid=secid)
+        else:
+            form = NavigatorItemForm(request.POST, initial=initial)
     else:
-        form = NavigatorItemForm(initial={"sector": sector,
-                                          "order": len(NavigatorItem.objects.filter(sector=sector))})
+        form = NavigatorItemForm(initial=initial)
     param["form"] = form
     return render(request, "admin/admin_navi_item_ce.html", param)
 
 
 @login_required(login_url="ADMLogin")
 def admin_navi_item_edit_view(request, secid, itemid):
+    sector = NavigatorSector.objects.get(id=secid)
+    item = NavigatorItem.objects.get(id=itemid)
+
     param = {
         "page_title": _("星环-导航栏管理"),
         "languages": Languages,
         "active_page": "ADMNaviIndex",
-        "SectorName": NavigatorSector.objects.get(id=secid).name,
+        "SectorName": sector.name,
         **get_basic_info(),
         **get_admin_info()
     }
-    item = NavigatorItem.objects.get(id=itemid)
     if request.method == "POST":
-        form = NavigatorItemForm(request.POST, instance=item)
+        form = NavigatorItemForm(request.POST, instance=item, initial={"reorder": item.order+1})
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            order = form.cleaned_data.get("reorder")
+            reorder(NavigatorItem, Q(sector_id=sector), item, order)
             return redirect("ADMNaviItemIndex", secid=secid)
+        else:
+            form = NavigatorItemForm(request.POST, instance=item, initial={"reorder": item.order+1})
     else:
-        form = NavigatorItemForm(instance=item)
+        form = NavigatorItemForm(instance=item, initial={"reorder": item.order+1})
     param["form"] = form
     return render(request, "admin/admin_navi_item_ce.html", param)
 
@@ -739,6 +746,7 @@ def admin_navi_item_edit_view(request, secid, itemid):
 @login_required(login_url="ADMLogin")
 def admin_navi_item_delete(request, secid, itemid):
     NavigatorItem.objects.get(id=itemid).delete()
+    reorder(NavigatorItem, Q(sector_id=secid))
     return redirect("ADMNaviItemIndex", secid=secid)
 
 

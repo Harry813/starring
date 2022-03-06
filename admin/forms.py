@@ -305,6 +305,19 @@ class NaviSectorForm(TranslationModelForm):
 
 
 class NavigatorItemForm(TranslationModelForm):
+    reorder = forms.IntegerField(
+        initial=0,
+        required=False,
+        label=navi_item_order_text
+    )
+
+    def clean_reorder(self):
+        reorder = self.cleaned_data.get("reorder")
+        if reorder is None or reorder <= 0:
+            return -1
+        else:
+            return reorder - 1
+
     def clean_url(self):
         t = self.cleaned_data.get("type")
         url = self.cleaned_data.get("url")
@@ -322,32 +335,14 @@ class NavigatorItemForm(TranslationModelForm):
             # a = Article.objects.get(id=article)
             return article
 
-    def save(self, commit=True):
-        navi_item = super(NavigatorItemForm, self).save(commit=False)
-
-        navi_item_list = list(NavigatorItem.objects.filter(sector=self.cleaned_data.get("sector")))
-
-        if self.instance is None:
-            navi_item_list.append(navi_item)
-        else:
-            navi_item_list.insert(navi_item.order, navi_item)
-
-        for index, item in enumerate(navi_item_list):
-            item.order = index
-            item.save()
-
-            if item == navi_item and commit:
-                navi_item.save()
-        return navi_item
-
     def __init__(self, *args, **kwargs):
         super(NavigatorItemForm, self).__init__(*args, **kwargs)
         self.fields["article"].required = False
-        self.fields["order"].required = False
+        self.fields["url"].initial = "#"
 
     class Meta:
         model = NavigatorItem
-        fields = "__all__"
+        exclude = ["order"]
 
 
 class IndexListSectorForm(TranslationModelForm):
