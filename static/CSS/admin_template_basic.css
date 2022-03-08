@@ -28,3 +28,16 @@
 .card > table > tbody > tr > td:last-child{
     padding-right: 1.25rem;
 }
+
+.error_message ul {
+    list-style-type: None;
+}
+
+.error_message ul li:before {
+    content: '\f057' !important;
+    font-family: FontAwesome;
+    color: #e03535 !important;
+    margin-right: 10px;
+    margin-left: -14px;
+    font-size: 1.2em !important;
+}
