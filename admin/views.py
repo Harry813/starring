@@ -811,16 +811,19 @@ def admin_index_item_create(request, secid):
         **get_admin_info()
     }
     sector = IndexListSector.objects.get(id=secid)
+    initial = {"sector": sector, "reorder": len(IndexListItem.objects.filter(sector=sector))+1}
 
     if request.method == "POST":
-        form = IndexListItemForm(request.POST, initial={"sector": sector})
+        form = IndexListItemForm(request.POST, initial=initial)
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            order = form.cleaned_data.get("reorder")
+            reorder(IndexListItem, Q(sector_id=sector), item, order)
             return redirect("ADMIndListSectorEdit", secid=secid)
         else:
-            form = IndexListItemForm(request.POST, initial={"sector": sector})
+            form = IndexListItemForm(request.POST, initial=initial)
     else:
-        form = IndexListItemForm(initial={"sector": sector})
+        form = IndexListItemForm(initial=initial)
 
     param["form"] = form
     return render(request, "admin/admin_indList_item_CE.html", param)
@@ -836,19 +839,28 @@ def admin_index_item_edit(request, secid, itemid):
         **get_basic_info(),
         **get_admin_info()
     }
-
+    sector = IndexListSector.objects.get(id=secid)
     item = IndexListItem.objects.get(id=itemid)
     if request.method == "POST":
-        form = IndexListItemForm(request.POST, instance=item)
+        form = IndexListItemForm(request.POST, instance=item, initial={"reorder": item.order+1})
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            order = form.cleaned_data.get("reorder")
+            reorder(IndexListItem, Q(sector_id=sector), item, order)
             return redirect("ADMIndListSectorEdit", secid=secid)
         else:
-            form = IndexListItemForm(request.POST, instance=item)
+            form = IndexListItemForm(request.POST, instance=item, initial={"reorder": item.order+1})
     else:
-        form = IndexListItemForm(instance=item)
+        form = IndexListItemForm(instance=item, initial={"reorder": item.order+1})
     param["form"] = form
     return render(request, "admin/admin_indList_item_CE.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_index_item_delete(request, secid, itemid):
+    IndexListItem.objects.get(id=itemid).delete()
+    reorder(IndexListItem, Q(sector_id=secid))
+    return redirect("ADMIndListSectorEdit", secid=secid)
 
 
 @csrf_exempt

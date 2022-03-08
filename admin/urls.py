@@ -36,5 +36,6 @@ urlpatterns = [
     path('indexList/sector/<int:secid>/', views.admin_index_sector_edit, name="ADMIndListSectorEdit"),
     path('indexList/sector/<int:secid>/create/', views.admin_index_item_create, name="ADMIndListItemCreate"),
     path('indexList/sector/<int:secid>/edit/<int:itemid>/', views.admin_index_item_edit, name="ADMIndListItemEdit"),
+    path('indexList/sector/<int:secid>/delete/<int:itemid>/', views.admin_index_item_delete, name="ADMIndListItemDelete"),
     path('upload/image/article/', views.admin_article_image_upload, name="ADMImageUpload"),
 ]

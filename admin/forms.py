@@ -352,6 +352,19 @@ class IndexListSectorForm(TranslationModelForm):
 
 
 class IndexListItemForm(TranslationModelForm):
+    reorder = forms.IntegerField(
+        label=index_list_item_order_text,
+        min_value=1,
+        required=False
+    )
+
+    def clean_reorder(self):
+        reorder = self.cleaned_data.get("reorder")
+        if reorder is None or reorder <= 0:
+            return -1
+        else:
+            return reorder - 1
+
     def clean_url(self):
         t = self.cleaned_data.get("type")
         url = self.cleaned_data.get("url")
@@ -372,10 +385,11 @@ class IndexListItemForm(TranslationModelForm):
     def __init__(self, *args, **kwargs):
         super(IndexListItemForm, self).__init__(*args, **kwargs)
         self.fields["article"].required = False
+        self.fields["url"].initial = "#"
 
     class Meta:
         model = IndexListItem
-        fields = "__all__"
+        exclude = ["order"]
 
 
 class SlotGeneratorForm(forms.Form):

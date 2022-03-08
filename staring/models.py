@@ -246,6 +246,11 @@ class News(models.Model):
         verbose_name=news_sector_text
     )
 
+    order = models.PositiveSmallIntegerField(
+        blank=True,
+        null=True
+    )
+
     article = models.ForeignKey(
         to=Article,
         on_delete=models.CASCADE,
@@ -421,7 +426,6 @@ class NavigatorItem(models.Model):
         return "----" * self.level
 
     class Meta:
-        unique_together = [["sector", "order"]]
         ordering = ["sector", "order"]
 
 
@@ -437,12 +441,16 @@ class IndexListSector(models.Model):
 
 class IndexListItem(models.Model):
     name = models.CharField(
-        verbose_name=index_list_item_name,
+        verbose_name=index_list_item_name_text,
         max_length=15,
     )
 
+    order = models.PositiveSmallIntegerField(
+        verbose_name=index_list_item_order_text
+    )
+
     sector = models.ForeignKey(
-        verbose_name=index_list_item_sector,
+        verbose_name=index_list_item_sector_text,
         to=IndexListSector,
         on_delete=models.CASCADE
     )
@@ -480,3 +488,6 @@ class IndexListItem(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ["sector", "order"]

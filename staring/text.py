@@ -366,7 +366,10 @@ newsSector_max_news_text = _("最大数量")
 # Translators: 新闻{新闻分区}
 news_sector_text = _("新闻分区")
 
-# Translators: 新闻{新闻分区}
+# Translators: 新闻{新闻排序}
+news_order_text = _("新闻排序")
+
+# Translators: 新闻{文章链接}
 news_article_text = _("文章链接")
 
 # Translators: 新闻{新闻标题}
@@ -453,10 +456,44 @@ index_list_sector_name = _("分区名称")
 ###################################################################################################
 
 # Translators: 首页清单组件子项模组{名称}
-index_list_item_name = _("名称")
+index_list_item_name_text = _("名称")
 
 # Translators: 首页清单组件子项模组{所属分区}
-index_list_item_sector = _("所属分区")
+index_list_item_sector_text = _("所属分区")
+
+# Translators: 首页清单组件子项模组{排序}
+index_list_item_order_text = _("排序")
+
+
+###################################################################################################
+# staring.models.IndexProjectSector  首页清单项目栏分区
+###################################################################################################
+
+# Translators: 首页清单项目栏分区{名称}
+index_project_sector_name_text = _("名称")
+
+
+###################################################################################################
+# staring.models.IndexProjectSector  首页清单项目栏子项
+###################################################################################################
+
+# Translators: 首页清单项目栏子项{分区}
+index_project_item_sector_text = _("分区")
+
+# Translators: 首页清单项目栏子项{名称}
+index_project_item_name_text = _("名称")
+
+# Translators: 首页清单项目栏子项{排序}
+index_project_item_order_text = _("排序")
+
+# Translators: 首页清单项目栏子项{链接类型}
+index_project_item_type_text = _("链接类型")
+
+# Translators: 首页清单项目栏子项{链接}
+index_project_item_url_text = _("链接")
+
+# Translators: 首页清单项目栏子项{文章}
+index_project_item_article_text = _("文章")
 
 ###################################################################################################
 # admin.forms.NewsSearchForm  新闻搜索表单

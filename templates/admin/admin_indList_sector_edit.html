@@ -95,7 +95,7 @@
                             <tbody>
                             {% for item in items %}
                                 <tr>
-                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.order|add:"1" }}</td>
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.get_type_display }}</td>
                                     <td class="table-action">
@@ -103,7 +103,7 @@
                                             <i class="align-middle" data-feather="edit-2"></i>
                                         </a>
 
-                                        <a class="action-button trash-button" href="#">
+                                        <a class="action-button trash-button" href="{% url 'ADMIndListItemDelete' sector.id item.id %}">
                                             <i class="align-middle" data-feather="trash-2"></i>
                                         </a>
                                     </td>
