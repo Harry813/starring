@@ -25,7 +25,6 @@ def change_lang(context, lang=None, *args, **kwargs):
     path = context['request'].path
     url_parts = resolve(path)
 
-    url = path
     cur_language = get_language()
     try:
         activate(lang)
