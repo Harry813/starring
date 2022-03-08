@@ -81,7 +81,7 @@
                     {{ navi.sector.name }}
                 </button>
                 <div class="dropdown-menu dropdown dropdown-menu-start w-100 py-0 border-0 px-sm-0 px-md-3 px-lg-5"
-                     aria-labelledby="dropdown_btn_{{ forloop.counter }}" style="background-color: transparent;">
+                     aria-labelledby="dropdown_btn_{{ forloop.counter }}" style="z-index: 1021;background-color: transparent;">
                     <div class="container navi-dropdown-container px-5 py-3" style="background-color: #2B3550;">
                         <div class="row navi-dropdown-sector">
                             {% for items in navi.itemslist %}
@@ -119,11 +119,16 @@
             </div>
         {% endfor %}
         <div class="py-2 px-sm-0 px-md-3 px-lg-5" style="border-left: 3px solid #323D5B;">
+            <a class="nav-link text-white star-nav-link star-font" href="#">
+                {% trans '关于我们' %}
+            </a>
+        </div>
+        <div class="py-2 px-sm-0 px-md-3 px-lg-5" style="border-left: 3px solid #323D5B;">
             <a class="nav-link text-white star-nav-link star-font" href="{% url "CUSTCenter" %}">
                 {% if request.user.is_authenticated %}
-                    {% trans '用户中心' %}
+                    {% trans '会员中心' %}
                 {% else %}
-                    {% trans '用户登录' %}
+                    {% trans '会员登录' %}
                 {% endif %}
             </a>
         </div>
@@ -195,7 +200,6 @@
                                         {% endif %}
                                         <li>
                                             <a class="dropdown-item" href="
-
                                                     {% if item.type == 'ARTICLE' %}{% url 'article' item.article.id %}{% else %}{{ item.url }}{% endif %}">
                                                 {% if item.level == 0 %}
                                                     <strong>{{ item.name }}</strong>
