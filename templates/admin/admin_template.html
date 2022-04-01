@@ -55,35 +55,48 @@
                         </a>
                     </li>
 
+                    <li class="sidebar-header">
+                        {# Translators: 后台模板{侧边栏}-第4部分@标题 #}
+                        {% translate '预约管理' %}
+                    </li>
+
                     <li class="sidebar-item {% if active_page == 'ADMSlotIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMSlotIndex' 1 %}">
-                            {# Translators: 后台模板{侧边栏}-第三部分@日程管理 #}
+                            {# Translators: 后台模板{侧边栏}-第4部分@日程管理 #}
                             <i class="align-middle" data-feather="clock"></i> <span class="align-middle">{% translate '日程管理' %}</span>
                         </a>
                     </li>
 
+                    <li class="sidebar-item {% if active_page == 'ADMAppointmentIndex' %}active{% endif %}">
+{#                        <a class="sidebar-link" href="{% url 'ADMAppointmentIndex' 1 %}">#}
+                        <a class="sidebar-link" href="#">
+                            {# Translators: 后台模板{侧边栏}-第4部分@预约管理 #}
+                            <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">{% translate '预约管理' %}</span>
+                        </a>
+                    </li>
+
                     <li class="sidebar-header">
-                        {# Translators: 后台模板{侧边栏}-第四部分@标题 #}
+                        {# Translators: 后台模板{侧边栏}-第5部分@标题 #}
                         {% translate '首页管理' %}
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMNaviIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMNaviSectorIndex' %}">
-                            {# Translators: 后台模板{侧边栏}-第四部分@导航栏分区 #}
+                            {# Translators: 后台模板{侧边栏}-第5部分@导航栏分区 #}
                             <i class="align-middle" data-feather="compass"></i> <span class="align-middle">{% translate '首页导航' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMIndListIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMIndListSectorIndex' %}">
-                            {# Translators: 后台模板{侧边栏}-第四部分@清单分区 #}
+                            {# Translators: 后台模板{侧边栏}-第5部分@清单分区 #}
                             <i class="align-middle" data-feather="grid"></i> <span class="align-middle">{% translate '首页清单' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMNewsSectorIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMNewsSectorIndex' %}">
-                            {# Translators: 后台模板{侧边栏}-第四部分@新闻分区 #}
+                            {# Translators: 后台模板{侧边栏}-第5部分@新闻分区 #}
                             <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">{% translate '新闻分区' %}</span>
                         </a>
                     </li>
