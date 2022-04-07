@@ -306,6 +306,14 @@ class MeetingSlot(models.Model):
         default=1
     )
 
+    @property
+    def is_available(self):
+        return self.availability > 0
+
+    @property
+    def appointment(self):
+        return Appointment.objects.filter(slot=self)
+
     class Meta:
         unique_together = ["date", "start_time", "end_time"]
 
