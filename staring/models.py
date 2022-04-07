@@ -74,10 +74,9 @@ class User(AbstractUser):
 
     dob = models.DateField(
         verbose_name=user_dob_text,
-        validators=[
-            MinValueValidator(datetime.date(1900, 1, 1)),
-            MaxValueValidator(datetime.date.today())
-        ],
+        blank=True,
+        null=True,
+        default=datetime.date(1900, 1, 1)
     )
 
     def get_age(self):
