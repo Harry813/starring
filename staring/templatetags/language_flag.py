@@ -16,7 +16,7 @@ def get_flag_by_code(code):
 
 
 @register.simple_tag(takes_context=True)
-def change_lang(context, lang=None, *args, **kwargs):
+def change_lang(context, lang=None):
     """
     Get active page's url by a specified language
     Usage: {% change_lang 'en' %}
