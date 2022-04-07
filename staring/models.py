@@ -310,7 +310,7 @@ class MeetingSlot(models.Model):
         unique_together = ["date", "start_time", "end_time"]
 
 
-class MeetingAppointment(models.Model):
+class Appointment(models.Model):
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
