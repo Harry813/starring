@@ -350,12 +350,6 @@ class Appointment(models.Model):
         default="APPLY"
     )
 
-    description = models.TextField(
-        verbose_name=meetingReservation_consults_help_text,
-        null=True,
-        blank=True,
-    )
-
     created_at = models.DateTimeField(
         verbose_name=meetingReservation_create_text,
         auto_now_add=True,
@@ -365,6 +359,35 @@ class Appointment(models.Model):
         verbose_name=meetingReservation_update_text,
         auto_now=True,
     )
+
+
+class MeetingMessage(models.Model):
+    appointment = models.ForeignKey(
+        to=Appointment,
+        on_delete=models.CASCADE,
+    )
+
+    attachment = models.FileField(
+        upload_to="MeetingRecords",
+        blank=True,
+        null=True
+    )
+
+    message = RichTextUploadingField(
+        blank=True,
+        null=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    last_update = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+        ordering = ["last_update"]
 
 
 class NavigatorSector(models.Model):
