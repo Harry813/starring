@@ -22,8 +22,9 @@
                 <table class="table table-striped table-padding">
                     <thead>
                     <tr>
-                        <th style="width:30%;">{% translate '日期' %}</th>
-                        <th style="width:30%">{% translate '时间' %}(24h)</th>
+                        <th style="width:20%;">{% translate '日期' %}</th>
+                        <th style="width:20%">{% translate '时间' %}(24h)</th>
+                        <th style="width:20%">{% translate '状态' %}</th>
                         <th style="width:30%">{% translate '客户' %}</th>
                         <th>{% translate '操作' %}</th>
                     </tr>
@@ -31,9 +32,10 @@
                     <tbody>
                     {% for appointment in appointments %}
                         <tr>
-                            <td>{{ appointment.date }}</td>
-                            <td>{{ appointment.start_time }}-{{ appointment.end_time }}</td>
-                            <td>{{ appointment.status }}</td>
+                            <td>{{ appointment.slot.date }}</td>
+                            <td>{{ appointment.slot.start_time }}-{{ appointment.slot.end_time }}</td>
+                            <td>{{ appointment.get_status_display }}</td>
+                            <td>{{ appointment.customer }}</td>
                             <td class="table-action">
                                 <a class="action-button edit-button" href="#">
                                     <i class="align-middle" data-feather="edit-2"></i>
