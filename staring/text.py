@@ -347,6 +347,18 @@ appointment_slot_text = _("预约时间")
 # Translators: 预约{预约状态}
 appointment_status_text = _("预约状态")
 
+# Translators: 预约{咨询问题}
+appointment_consults_text = _("咨询问题")
+
+# Translators: 预约{咨询问题}-帮助文本
+appointment_consults_help_text = _("可以提前留下您想咨询的问题，以便我们的咨询师能够更好地为您解答")
+
+# Translators: 预约{创建时间}
+appointment_create_text = _("创建时间")
+
+# Translators: 预约{最后更新}
+appointment_update_text = _("最后更新")
+
 
 ###################################################################################################
 # staring.models.NewsSector  首页新闻分区模组
