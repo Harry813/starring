@@ -887,6 +887,33 @@ def admin_appointment_index_view(request, page):
     return render(request, "admin/admin_appointment_index.html", param)
 
 
+@login_required(login_url="ADMLogin")
+def admin_appointment_edit_view(request, aptid):
+    param = {
+        "page_title": _("星环-预约管理"),
+        "languages": Languages,
+        "active_page": "ADMAppointmentIndex",
+        **get_basic_info(),
+        **get_admin_info(),
+    }
+
+
+@login_required(login_url="ADMLogin")
+def admin_appointment_accept(request, page, aptid):
+    appointment = Appointment.objects.get(id=aptid)
+    appointment.status = "ACCEPT"
+    appointment.save()
+    return redirect("ADMAppointmentIndex", page)
+
+
+@login_required(login_url="ADMLogin")
+def admin_appointment_reject(request, page, aptid):
+    appointment = Appointment.objects.get(id=aptid)
+    appointment.status = "REJECT"
+    appointment.save()
+    return redirect("ADMAppointmentIndex", page)
+
+
 @csrf_exempt
 def admin_article_image_upload(request):
     if request.method == "POST":

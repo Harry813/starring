@@ -11,6 +11,8 @@ urlpatterns = [
     path('articles/edit/<int:article_id>/', views.admin_article_edit_view, name="ADMArticleEdit"),
     path('articles/delete/<int:article_id>/', views.admin_article_delete_view, name="ADMArticleDelete"),
     path('appointment/page/<int:page>/', views.admin_appointment_index_view, name="ADMAppointmentIndex"),
+    path('appointment/accept/<int:page>/<int:aptid>', views.admin_appointment_accept, name="ADMAppointmentAccept"),
+    path('appointment/reject/<int:page>/<int:aptid>', views.admin_appointment_reject, name="ADMAppointmentReject"),
     path('customer/page/<int:page>/', views.admin_customer_index_view, name="ADMCustomerIndex"),
     path('customer/profile-<str:customer_id>/', views.admin_customer_edit_view, name="ADMCustomerEdit"),
     path('customer/profile-<str:customer_id>/basic/', views.admin_customer_basic_edit_view,
