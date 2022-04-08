@@ -25,7 +25,7 @@
                         <th style="width:20%;">{% translate '日期' %}</th>
                         <th style="width:20%">{% translate '时间' %}(24h)</th>
                         <th style="width:20%">{% translate '状态' %}</th>
-                        <th style="width:30%">{% translate '客户' %}</th>
+                        <th style="width:20%">{% translate '客户' %}</th>
                         <th>{% translate '操作' %}</th>
                     </tr>
                     </thead>
@@ -37,6 +37,16 @@
                             <td>{{ appointment.get_status_display }}</td>
                             <td>{{ appointment.customer }}</td>
                             <td class="table-action">
+                                {% if appointment.status == "APPLY" %}
+                                    <a class="action-button check-button" href="{% url 'ADMAppointmentAccept' current_page appointment.id %}">
+                                        <i class="align-middle" data-feather="check"></i>
+                                    </a>
+
+                                    <a class="action-button trash-button" href="{% url 'ADMAppointmentReject' current_page appointment.id %}">
+                                        <i class="align-middle" data-feather="x"></i>
+                                    </a>
+                                {% endif %}
+
                                 <a class="action-button edit-button" href="#">
                                     <i class="align-middle" data-feather="edit-2"></i>
                                 </a>
