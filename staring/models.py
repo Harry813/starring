@@ -328,11 +328,11 @@ class Appointment(models.Model):
     customer = models.ForeignKey(
         to="customer.Customer",
         on_delete=models.CASCADE,
-        verbose_name=meetingReservation_customer_text
+        verbose_name=appointments_customer_text
     )
 
     staff = models.ForeignKey(
-        verbose_name=meetingReservation_staff_text,
+        verbose_name=appointment_staff_text,
         to="admin.Staff",
         on_delete=models.CASCADE
     )
@@ -340,23 +340,23 @@ class Appointment(models.Model):
     slot = models.ForeignKey(
         to=MeetingSlot,
         on_delete=models.CASCADE,
-        verbose_name=meetingReservation_slot_text,
+        verbose_name=appointment_slot_text,
     )
 
     status = models.CharField(
-        verbose_name=meetingReservation_status_text,
+        verbose_name=appointment_status_text,
         max_length=10,
         choices=meeting_status,
         default="APPLY"
     )
 
     created_at = models.DateTimeField(
-        verbose_name=meetingReservation_create_text,
+        verbose_name=appointment_create_text,
         auto_now_add=True,
     )
 
     updated_at = models.DateTimeField(
-        verbose_name=meetingReservation_update_text,
+        verbose_name=appointment_update_text,
         auto_now=True,
     )
 

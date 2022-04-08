@@ -332,20 +332,20 @@ meetingSlot_maximum_text = _("上限")
 
 
 ###################################################################################################
-# staring.models.MeetingReservation  预约模组
+# staring.models.Appointment  预约模组
 ###################################################################################################
 
 # Translators: 预约{客户}
-meetingReservation_customer_text = _("客户")
+appointments_customer_text = _("客户")
 
 # Translators: 预约{咨询师}
-meetingReservation_staff_text = _("咨询师")
+appointment_staff_text = _("咨询师")
 
 # Translators: 预约{预约时间}
-meetingReservation_slot_text = _("预约时间")
+appointment_slot_text = _("预约时间")
 
 # Translators: 预约{预约状态}
-meetingReservation_status_text = _("预约状态")
+appointment_status_text = _("预约状态")
 
 
 ###################################################################################################
