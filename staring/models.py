@@ -319,12 +319,6 @@ class MeetingSlot(models.Model):
 
 
 class Appointment(models.Model):
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
-    )
-
     customer = models.ForeignKey(
         to="customer.Customer",
         on_delete=models.CASCADE,
