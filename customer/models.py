@@ -65,6 +65,9 @@ class Customer(models.Model):
         if self.intention == "OTHR":
             self.extra.required = True
 
+    def __str__(self):
+        return self.user.get_display_name()
+
 
 class Consult(models.Model):
     name = models.CharField(

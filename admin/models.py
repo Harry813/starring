@@ -49,3 +49,6 @@ class Staff(models.Model):
         choices=[('', '------')] + staff_tags,
         blank=True
     )
+
+    def __str__(self):
+        return self.user.get_display_name()
