@@ -863,6 +863,30 @@ def admin_index_item_delete(request, secid, itemid):
     return redirect("ADMIndListSectorEdit", secid=secid)
 
 
+@login_required(login_url="ADMLogin")
+def admin_appointment_index_view(request, page):
+    param = {
+        "page_title": _("星环-预约管理"),
+        "languages": Languages,
+        "active_page": "ADMAppointmentIndex",
+        **get_basic_info(),
+        **get_admin_info(),
+    }
+
+    cond = Q(status__in=["APPLY", "ACCEPT"])
+
+    appointments = Appointment.objects.filter(cond)
+
+    p = Paginator(appointments, 10)
+    appointments = p.get_page(page)
+    param["paginator"] = p
+    param["appointments"] = appointments
+    param["current_page"] = page
+    param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
+
+    return render(request, "admin/admin_appointment_index.html", param)
+
+
 @csrf_exempt
 def admin_article_image_upload(request):
     if request.method == "POST":
