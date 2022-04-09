@@ -558,6 +558,16 @@ html {
 }
 
 @media (min-width: 992px) {
+    .px-lg-45 {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important
+    }
+
+    .px-lg-55 {
+        padding-left: 2.35rem !important;
+        padding-right: 2.35rem !important
+    }
+
     .gap-lg-6 {
         gap: 4.5rem !important
     }
