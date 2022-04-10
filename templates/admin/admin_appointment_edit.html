@@ -137,11 +137,15 @@
                     </div>
                     <div class="card-body">
                         <ul class="timeline mt-2 mb-0">
-                            <li class="timeline-item">
-                                <strong>Signed out</strong>
-                                <span class="float-end text-muted text-sm">30m ago</span>
-                                <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit...</p>
-                            </li>
+                            {% for update in updates %}
+                                <li class="timeline-item">
+                                    <strong>{{ update.title }}</strong>
+                                    <span class="float-end text-muted text-sm">
+                                        {{ update.time_diff }}{% trans "前" %}
+                                    </span>
+                                    <p>{{ update.message }}</p>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
