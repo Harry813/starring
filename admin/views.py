@@ -897,12 +897,30 @@ def admin_appointment_edit_view(request, aptid):
         **get_admin_info(),
     }
 
+    appointment = get_object_or_404(Appointment, id=aptid)
+    param["appointment"] = appointment
+    param["updates"] = MeetingUpdate.objects.filter(appointment=appointment)
+
+    if request.method == "POST":
+        form = AppointmentStatusForm(request.POST, instance=appointment)
+        if form.is_valid():
+            form.save()
+        else:
+            form = AppointmentStatusForm(request.POST, instance=appointment)
+    else:
+        form = AppointmentStatusForm(instance=appointment)
+    param["form"] = form
+
+    return render(request, "admin/admin_appointment_edit.html", param)
+
 
 @login_required(login_url="ADMLogin")
 def admin_appointment_accept(request, page, aptid):
     appointment = Appointment.objects.get(id=aptid)
     appointment.status = "ACCEPT"
     appointment.save()
+    MeetingUpdate.objects.create(appointment=appointment, title=_("预约已接受"),
+                                 message=_("预约状态改变，预约被接受"))
     return redirect("ADMAppointmentIndex", page)
 
 
@@ -911,6 +929,8 @@ def admin_appointment_reject(request, page, aptid):
     appointment = Appointment.objects.get(id=aptid)
     appointment.status = "REJECT"
     appointment.save()
+    MeetingUpdate.objects.create(appointment=appointment, title=_("预约已拒绝"),
+                                 message=_("预约状态改变，预约被拒绝"))
     return redirect("ADMAppointmentIndex", page)
 
 
