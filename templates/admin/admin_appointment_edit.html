@@ -1,0 +1,151 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{% translate '基础信息' %}</h1>
+        <div class="row mb-3">
+            <div class="col-md-3 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">{% translate "时间" %}</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-sm mb-4">
+                            <tbody>
+                            <tr>
+                                <th>{% trans "会议日期" %}</th>
+                                <td>{{ appointment.slot.date }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans "会议时间" %}</th>
+                                <td>{{ appointment.slot.start_time }}-{{ appointment.slot.end_time }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">{% translate "相关人员" %}</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-sm mb-4">
+                            <tbody>
+                            <tr>
+                                <th>{% trans "用户" %}</th>
+                                <td>
+                                    {{ appointment.customer }}
+                                    <div class="float-end">
+                                        <a href="{% url 'ADMCustomerEdit' appointment.customer.user.uid %}"
+                                           class="action-button edit-button">
+                                            <i class="align-middle" data-feather="user"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{% trans "负责人" %}</th>
+                                <td>
+                                    {{ appointment.staff }}
+                                    <div class="float-end">
+                                        <a href="{% url 'ADMStaffEdit' appointment.staff.user.uid %}"
+                                           class="action-button edit-button">
+                                            <i class="align-middle" data-feather="user"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">{% translate "时间戳" %}</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-sm mb-4">
+                            <tr>
+                                <th>{% trans "最后更新" %}</th>
+                                <td>{{ appointment.updated_at }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans "创建时间" %}</th>
+                                <td>{{ appointment.created_at }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mt-0">
+                            {% trans "编辑" %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div>
+                                <label class="form-label" for="{{ form.status.id_for_label }}">
+                                    {{ form.status.label }}
+                                    {% if form.status.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.status class="form-control" %}
+                                <div>
+                                    {% if form.status.errors %}
+                                        <p class="small" style="color: red;">{{ form.status.errors.0 }}</p>
+                                    {% elif form.status.help_text %}
+                                        <p class="small text-muted">{{ form.status.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary w-100">{% trans "提交" %}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-actions float-end">
+                            <div class="dropdown position-relative">
+                                <a href="#" class="action-button">
+                                    <i class="align-middle" data-feather="plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <h5 class="card-title mt-0">
+                            {% trans "动态" %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="timeline mt-2 mb-0">
+                            <li class="timeline-item">
+                                <strong>Signed out</strong>
+                                <span class="float-end text-muted text-sm">30m ago</span>
+                                <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit...</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
