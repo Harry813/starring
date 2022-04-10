@@ -1,4 +1,5 @@
 import datetime
+import time
 import uuid
 
 from django.core.exceptions import ValidationError
@@ -355,10 +356,14 @@ class Appointment(models.Model):
     )
 
 
-class MeetingMessage(models.Model):
+class MeetingUpdate(models.Model):
     appointment = models.ForeignKey(
         to=Appointment,
         on_delete=models.CASCADE,
+    )
+
+    title = models.CharField(
+        max_length=150
     )
 
     attachment = models.FileField(
@@ -379,6 +384,16 @@ class MeetingMessage(models.Model):
     last_update = models.DateTimeField(
         auto_now=True
     )
+
+    def time_diff(self):
+        diff = datetime.datetime.now().replace(tzinfo=None) - self.created_at.replace(tzinfo=None)
+        diff = diff.total_seconds()
+        if diff < 3600:
+            return f"{int(divmod(diff, 60)[0])} " + _("分钟")
+        elif 3600 <= diff < 86400:
+            return f"{int(divmod(diff, 3600)[0])} " + _("小时")
+        else:
+            return f"{int(divmod(diff, 86400)[0])} " + _("天")
 
     class Meta:
         ordering = ["last_update"]
