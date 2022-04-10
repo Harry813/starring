@@ -30,9 +30,9 @@ ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'staring.User'
 
-DOMAIN_NAME = "https://star.hanxiaofei.tk"
+DOMAIN_NAME = "https://star.ourcv.net"
 
-CSRF_TRUSTED_ORIGINS = ["star.hanxiaofei.tk"]
+CSRF_TRUSTED_ORIGINS = ["star.ourcv.net"]
 
 # Application definition
 
