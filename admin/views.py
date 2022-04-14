@@ -920,6 +920,7 @@ def admin_appointment_edit_view(request, aptid):
 
 @login_required(login_url="ADMLogin")
 def admin_appointment_accept(request, page, aptid):
+    """Admin Convenience Function Accept"""
     appointment = Appointment.objects.get(id=aptid)
     appointment.status = "ACCEPT"
     appointment.save()
@@ -930,11 +931,34 @@ def admin_appointment_accept(request, page, aptid):
 
 @login_required(login_url="ADMLogin")
 def admin_appointment_reject(request, page, aptid):
+    """Admin Convenience Function Reject"""
     appointment = Appointment.objects.get(id=aptid)
     appointment.status = "REJECT"
     appointment.save()
     MeetingUpdate.objects.create(appointment=appointment, title=_("预约已拒绝"),
                                  message=_("预约状态改变，预约被拒绝"))
+    return redirect("ADMAppointmentIndex", page)
+
+
+@login_required(login_url="ADMLogin")
+def admin_appointment_success(request, page, aptid):
+    """Admin Convenience Function Finish"""
+    appointment = Appointment.objects.get(id=aptid)
+    appointment.status = "SUCCESS"
+    appointment.save()
+    MeetingUpdate.objects.create(appointment=appointment, title=_("会议已完成"),
+                                 message=_("预约状态改变，会议已完成"))
+    return redirect("ADMAppointmentIndex", page)
+
+
+@login_required(login_url="ADMLogin")
+def admin_appointment_timeout(request, page, aptid):
+    """Admin Convenience Function Timeout"""
+    appointment = Appointment.objects.get(id=aptid)
+    appointment.status = "TIMEOUT"
+    appointment.save()
+    MeetingUpdate.objects.create(appointment=appointment, title=_("会议超时未参加，请重新预约"),
+                                 message=_("预约状态改变，会议超时未参加，请重新预约"))
     return redirect("ADMAppointmentIndex", page)
 
 
