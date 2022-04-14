@@ -898,12 +898,17 @@ def admin_appointment_edit_view(request, aptid):
 
     appointment = get_object_or_404(Appointment, id=aptid)
     param["appointment"] = appointment
-    param["updates"] = MeetingUpdate.objects.filter(appointment=appointment)
+    param["updates"] = MeetingUpdate.objects.filter(appointment=appointment).order_by('-last_update')
+    old_status = appointment.get_status_display()
 
     if request.method == "POST":
         form = AppointmentStatusForm(request.POST, instance=appointment)
         if form.is_valid():
-            form.save()
+            new_app = form.save()
+            new_status = new_app.get_status_display()
+            if old_status != new_status:
+                MeetingUpdate.objects.create(appointment=appointment, title=_("预约状态改变"),
+                                            message=_(f"预约状态改变，由\"{old_status}\"改为\"{new_status}\""))
         else:
             form = AppointmentStatusForm(request.POST, instance=appointment)
     else:
