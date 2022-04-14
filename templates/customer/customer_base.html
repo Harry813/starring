@@ -18,6 +18,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     {# - bootstrap5 图标 #}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    {# - fontawsome 图标 #}
     <script src="https://kit.fontawesome.com/9fee1945cc.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="{% static 'CSS/customer_template_basic.css' %}">
@@ -74,7 +75,7 @@
 
     <nav class="nav navbar-expand-lg star-nav justify-content-center w-100 py-0">
         {% for navi in navigator %}
-            <div class="py-2 px-sm-0 px-md-3 px-lg-5" style="border-left: 3px solid #323D5B !important;">
+            <div class="py-2 px-sm-0 px-md-3 px-lg-45" style="border-left: 3px solid #323D5B !important;">
                 <button class="btn btn-link w-100 nav-link text-white star-nav-link star-font dropdown-toggle shadow-none"
                         id="dropdown_btn_{{ forloop.counter }}" data-bs-toggle="dropdown" aria-expanded="false"
                         data-bs-auto-close="outside" data-bs-reference="parent" data-bs-offset="0,-1">
@@ -118,12 +119,12 @@
                 </div>
             </div>
         {% endfor %}
-        <div class="py-2 px-sm-0 px-md-3 px-lg-5" style="border-left: 3px solid #323D5B;">
+        <div class="py-2 px-sm-0 px-md-3 px-lg-55" style="border-left: 3px solid #323D5B;">
             <a class="nav-link text-white star-nav-link star-font" href="#">
                 {% trans '关于我们' %}
             </a>
         </div>
-        <div class="py-2 px-sm-0 px-md-3 px-lg-5" style="border-left: 3px solid #323D5B;">
+        <div class="py-2 px-sm-0 px-md-3 px-lg-55" style="border-left: 3px solid #323D5B;">
             <a class="nav-link text-white star-nav-link star-font" href="{% url "CUSTCenter" %}">
                 {% if request.user.is_authenticated %}
                     {% trans '会员中心' %}
@@ -132,7 +133,7 @@
                 {% endif %}
             </a>
         </div>
-        <div class="py-2 px-sm-0 px-md-3 px-lg-5" style="background-color: #EDF0F3; border-left: 4px solid #FF0404">
+        <div class="py-2 px-sm-0 px-md-3 px-lg-45" style="background-color: #EDF0F3; border-left: 4px solid #FF0404">
             <a class="nav-link star-nav-link star-font" style="color:#000;" href="#">
                 <img src="{% static 'IMG/Maple_Leaf.png' %}" alt="Maple Leaf" height="19px" width="19px"
                      style="position: relative; top: -3px">
@@ -206,7 +207,7 @@
             <ul class="navbar-nav me-auto my-2 my-lg-0">
                 {% for navi in navigator %}
                     {% if navi.itemslist %}
-                        <li class="nav-item dropdown">
+                        <li class="nav-item width-auto dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_{{ forloop.counter }}"
                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ navi.sector.name }}
@@ -234,7 +235,7 @@
                             </ul>
                         </li>
                     {% else %}
-                        <li class="nav-item">
+                        <li class="nav-item width-auto">
                             <a class="nav-link active" aria-current="page" href="#">{{ navi.sector.name }}</a>
                         </li>
                     {% endif %}
@@ -249,7 +250,8 @@
                     </a>
                 </li>
             </ul>
-            <form class="d-flex" method="get" action="/search/1/">
+            {% get_current_language as LANGUAGE_CODE %}
+            <form class="d-flex" method="get" action="https://star.hanxiaofei.tk/{{ LANGUAGE_CODE }}/search/1/">
                 <input class="form-control me-2" type="search" placeholder="{% translate '搜索内容' %}" required
                        aria-label="index-search-input" aria-describedby="index-search">
                 <button class="btn btn-outline-star" type="submit" id="index-search">
