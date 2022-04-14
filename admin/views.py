@@ -196,7 +196,6 @@ def admin_article_edit_view(request, article_id):
             return redirect("ADMArticleIndex", 1)
         else:
             form = ArticleForm(request.POST, instance=article)
-            return render(request, "admin/admin_article_CE.html", param)
     else:
         form = ArticleForm(instance=article)
 
