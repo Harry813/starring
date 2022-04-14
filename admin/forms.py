@@ -521,3 +521,9 @@ class SlotGeneratorForm(forms.Form):
             raise NotImplementedError(_('Unknown interval rule ' + params['freq']))
 
         return params
+
+
+class AppointmentStatusForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ["status"]
