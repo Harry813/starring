@@ -48,11 +48,11 @@
                                     </a>
                                 {% elif appointment.status == "ACCEPT" %}
                                     <a class="action-button check-button" href="{% url 'ADMAppointmentSuccess' current_page appointment.id %}">
-                                        <i class="fa-solid fa-calendar-check fa-lg"></i>
+                                        <i class="fa-regular fa-calendar-check fa-lg"></i>
                                     </a>
 
                                     <a class="action-button trash-button" href="{% url 'ADMAppointmentTimeout' current_page appointment.id %}">
-                                        <i class="fa-solid fa-calendar-xmark fa-lg"></i>
+                                        <i class="fa-regular fa-calendar-xmark fa-lg"></i>
                                     </a>
                                 {% else %}
                                     N/A
