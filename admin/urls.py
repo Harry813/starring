@@ -11,8 +11,7 @@ urlpatterns = [
     path('articles/edit/<int:article_id>/', views.admin_article_edit_view, name="ADMArticleEdit"),
     path('articles/delete/<int:article_id>/', views.admin_article_delete_view, name="ADMArticleDelete"),
     path('appointment/page/<int:page>/', views.admin_appointment_index_view, name="ADMAppointmentIndex"),
-    path('appointment/accept/<int:page>/<int:aptid>', views.admin_appointment_accept, name="ADMAppointmentAccept"),
-    path('appointment/reject/<int:page>/<int:aptid>', views.admin_appointment_reject, name="ADMAppointmentReject"),
+    path('appointment/edit/<int:aptid>/', views.admin_appointment_edit_view, name="ADMAppointmentEdit"),
     path('customer/page/<int:page>/', views.admin_customer_index_view, name="ADMCustomerIndex"),
     path('customer/profile-<str:customer_id>/', views.admin_customer_edit_view, name="ADMCustomerEdit"),
     path('customer/profile-<str:customer_id>/basic/', views.admin_customer_basic_edit_view,
@@ -41,4 +40,10 @@ urlpatterns = [
     path('indexList/sector/<int:secid>/edit/<int:itemid>/', views.admin_index_item_edit, name="ADMIndListItemEdit"),
     path('indexList/sector/<int:secid>/delete/<int:itemid>/', views.admin_index_item_delete, name="ADMIndListItemDelete"),
     path('upload/image/article/', views.admin_article_image_upload, name="ADMImageUpload"),
+
+    # Appointment Related Convenient Methods
+    path('appointment/accept/<int:page>/<int:aptid>', views.admin_appointment_accept, name="ADMAppointmentAccept"),
+    path('appointment/reject/<int:page>/<int:aptid>', views.admin_appointment_reject, name="ADMAppointmentReject"),
+    path('appointment/success/<int:page>/<int:aptid>', views.admin_appointment_success, name="ADMAppointmentSuccess"),
+    path('appointment/timeout/<int:page>/<int:aptid>', views.admin_appointment_timeout, name="ADMAppointmentTimeout"),
 ]
