@@ -1,4 +1,5 @@
 {% extends 'customer/customer_base.html' %}
+{% load static %}
 {% load i18n %}
 {% load widget_tweaks %}
 
@@ -18,6 +19,7 @@
             color: #fff;
         }
     </style>
+    <link rel="stylesheet" href="{% static 'CSS/customer_template_basic.css' %}">
 {% endblock %}
 
 {% block basic_template_content %}
@@ -46,7 +48,7 @@
             </div>
         </div>
 
-        <div class="row mt-7">
+        <div class="row mt-3">
             <div class="section-title">
                 <div class="ml-3 mr-5 px-2 py-1 w-25">
                     个人档案
@@ -89,16 +91,16 @@
         </div>
 
         <div class="row">
-            <div class="col-12 mt-3">
-                您暂无安排任何预约，前往预约
-            </div>
-
-            <div class="col-12 mt-3">
-                您暂无任何咨询记录
-            </div>
-
-            <div class="col-12 mt-3">
-                专案咨询费用: $100 /小时
+            <div>
+                <p class="mt-3">
+                    您暂无安排任何预约，前往预约
+                </p>
+                <p class="mt-3">
+                    您暂无任何咨询记录
+                </p>
+                <p class="mt-3">
+                    专案咨询费用: $100 /小时
+                </p>
             </div>
         </div>
 
