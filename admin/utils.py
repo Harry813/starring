@@ -21,9 +21,11 @@ def reorder(c, q=None, item=None, index=-1):
     if not hasattr(c, "order"):
         raise AttributeError(f"class {c} do not have attribute \"order\"")
 
-    items = c.objects.all().order_by('order')
     if q:
-        items = items.filter(q)
+        items = c.objects.filter(q).order_by('order')
+    else:
+        items = c.objects.all().order_by('order')
+
     items = list(items)
 
     if item:
