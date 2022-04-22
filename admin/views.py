@@ -865,6 +865,22 @@ def admin_index_item_delete(request, secid, itemid):
 
 
 @login_required(login_url="ADMLogin")
+def admin_index_sidebar_index_view(request):
+    param = {
+        "page_title": _("星环-首页清单管理"),
+        "languages": Languages,
+        "active_page": "ADMSidebarIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    sidebar_items = IndexSidebarItem.objects.all()
+    param["sidebar_items"] = sidebar_items
+    param["count"] = len(sidebar_items)
+    return render(request, "admin/admin_sidebar_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
 def admin_appointment_index_view(request, page):
     param = {
         "page_title": _("星环-预约管理"),

@@ -86,6 +86,13 @@
                         </a>
                     </li>
 
+                    <li class="sidebar-item {% if active_page == 'ADMSidebarIndex' %}active{% endif %}">
+                        <a class="sidebar-link" href="{% url 'ADMSidebarIndex' %}">
+                            {# Translators: 后台模板{侧边栏}-第5部分@侧边栏项 #}
+                            <i class="align-middle" data-feather="sidebar"></i> <span class="align-middle">{% translate '侧边栏项' %}</span>
+                        </a>
+                    </li>
+
                     <li class="sidebar-item {% if active_page == 'ADMIndListIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMIndListSectorIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第5部分@清单分区 #}
