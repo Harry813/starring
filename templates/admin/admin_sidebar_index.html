@@ -32,6 +32,106 @@
 
             <div class="mb-3">
                 <div class="card">
+                    <div class="card-header">
+                        <h1 class="h3 card-title">
+                            {% trans '创建侧边栏项目' %}
+                        </h1>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-1 col-sm-2 mb-3">
+                                    <label class="form-label" for="{{ form.order.id_for_label }}">
+                                        {{ form.order.label }}
+                                        {% if form.order.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.order class="form-control" %}
+                                    <div>
+                                        {% if form.order.errors %}
+                                            <p class="small" style="color: red;">{{ form.order.errors.0 }}</p>
+                                        {% elif form.order.help_text %}
+                                            <p class="small text-muted">{{ form.order.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-10 mb-3">
+                                    <label class="form-label" for="{{ form.display.id_for_label }}">
+                                        {{ form.display.label }}
+                                        {% if form.display.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.display class="form-control" %}
+                                    <div>
+                                        {% if form.display.errors %}
+                                            <p class="small" style="color: red;">{{ form.display.errors.0 }}</p>
+                                        {% elif form.display.help_text %}
+                                            <p class="small text-muted">{{ form.display.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-sm-6 mb-3">
+                                    <label class="form-label" for="{{ form.type.id_for_label }}">
+                                        {{ form.type.label }}
+                                        {% if form.type.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.type class="form-control" %}
+                                    <div>
+                                        {% if form.type.errors %}
+                                            <p class="small" style="color: red;">{{ form.type.errors.0 }}</p>
+                                        {% elif form.type.help_text %}
+                                            <p class="small text-muted">{{ form.type.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-sm-6 mb-3">
+                                    <label class="form-label" for="{{ form.article.id_for_label }}">
+                                        {{ form.article.label }}
+                                        {% if form.article.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.article class="form-control" %}
+                                    <div>
+                                        {% if form.article.errors %}
+                                            <p class="small" style="color: red;">{{ form.article.errors.0 }}</p>
+                                        {% elif form.article.help_text %}
+                                            <p class="small text-muted">{{ form.article.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 mb-3">
+                                    <label class="form-label" for="{{ form.url.id_for_label }}">
+                                        {{ form.url.label }}
+                                        {% if form.url.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.url class="form-control" %}
+                                    <div>
+                                        {% if form.url.errors %}
+                                            <p class="small" style="color: red;">{{ form.url.errors.0 }}</p>
+                                        {% elif form.url.help_text %}
+                                            <p class="small text-muted">{{ form.url.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <button class="w-100 btn btn-primary" type="submit">{% trans "提交" %}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="card">
                     <div class="card-body">
                         <table class="table table-striped table-padding">
                             <thead>
