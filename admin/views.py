@@ -874,6 +874,18 @@ def admin_index_sidebar_index_view(request):
         **get_admin_info()
     }
 
+    initial = {"order": len(IndexSidebarItem.objects.all())+1}
+    if request.method == "POST":
+        form = IndexSidebarForm(request.POST, initial=initial)
+        if form.is_valid():
+            item = form.save(commit=False)
+            reorder(IndexSidebarItem, item=item)
+        else:
+            form = IndexSidebarForm(request.POST, initial=initial)
+    else:
+        form = IndexSidebarForm(initial=initial)
+    param["form"] = form
+
     sidebar_items = IndexSidebarItem.objects.all()
     param["sidebar_items"] = sidebar_items
     param["count"] = len(sidebar_items)
