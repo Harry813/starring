@@ -284,24 +284,10 @@ class TimeSlotForm(forms.ModelForm):
 
 
 class NaviSectorForm(TranslationModelForm):
-    def save(self, commit=True):
-        sec = super(NaviSectorForm, self).save(commit=False)
-
-        sector_list = NavigatorSector.objects.all()
-        # Update all the sector orders
-        if self.instance and NavigatorSector.objects.filter(id=self.instance.id).exists():
-            for s in range(len(sector_list)):
-                sector = sector_list[s]
-                sector.order = s
-                sector.save()
-            sec.order = len(sector_list)
-        if commit:
-            sec.save()
-        return sec
-
     class Meta:
         model = NavigatorSector
-        fields = ["name"]
+        fields = ["name", "order"]
+        widgets = {'order': forms.HiddenInput()}
 
 
 class NavigatorItemForm(TranslationModelForm):
