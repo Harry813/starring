@@ -635,13 +635,14 @@ def admin_navi_sector_index_view(request):
         **get_basic_info(),
         **get_admin_info()
     }
+    initial = {"order": len(NavigatorSector.objects.all()) + 1}
 
     if request.method == "POST":
-        form = NaviSectorForm(request.POST)
+        form = NaviSectorForm(request.POST, initial=initial)
         if form.is_valid():
             form.save()
         else:
-            form = NaviSectorForm(request.POST)
+            form = NaviSectorForm(request.POST, initial=initial)
     else:
         form = NaviSectorForm()
 
