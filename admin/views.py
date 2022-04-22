@@ -675,7 +675,8 @@ def admin_navi_item_index_view(request, secid):
     if request.method == "POST":
         form = NaviSectorForm(request.POST, instance=sector)
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            reorder(NavigatorSector, item=item)
         else:
             form = NaviSectorForm(request.POST, instance=sector)
     else:
