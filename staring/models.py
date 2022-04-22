@@ -532,6 +532,44 @@ class IndexListItem(models.Model):
         ordering = ["sector", "order"]
 
 
+class IndexSidebarItem(models.Model):
+    order = models.PositiveSmallIntegerField(
+        # verbose_name=navi_item_order_text,
+    )
+
+    display = models.CharField(
+        # verbose_name=navi_item_name_text,
+        max_length=30,
+    )
+
+    type = models.CharField(
+        # verbose_name=navi_item_type_text,
+        choices=link_type,
+        max_length=10,
+    )
+
+    url = models.CharField(
+        verbose_name=navi_item_url_text,
+        max_length=150,
+        blank=True,
+        null=True,
+        # help_text=navi_item_url_help_text
+    )
+
+    article = models.ForeignKey(
+        # verbose_name=navi_item_article_text,
+        to=Article,
+        limit_choices_to={'status': 'PUBLISH'},
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        # help_text=navi_item_article_help_text
+    )
+
+    class Meta:
+        ordering = ["order"]
+
+
 class Transaction(models.Model):
     id = models.UUIDField(
         primary_key=True,

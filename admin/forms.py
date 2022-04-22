@@ -513,3 +513,10 @@ class AppointmentStatusForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = ["status"]
+
+
+class IndexSidebarForm(forms.ModelForm):
+    class Meta:
+        model = IndexSidebarItem
+        fields = "__all__"
+
