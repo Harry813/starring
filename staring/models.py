@@ -530,3 +530,39 @@ class IndexListItem(models.Model):
 
     class Meta:
         ordering = ["sector", "order"]
+
+
+class Transaction(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    customer = models.ForeignKey(
+        to="customer.Customer",
+        on_delete=models.CASCADE,
+    )
+    
+    payment_method = models.CharField(
+        max_length=10,
+        choices=payment_method
+    )
+
+    def __str__(self):
+        return str(self.id).replace("-", "")
+
+
+class TransactionItem(models.Model):
+    description = models.CharField(
+        max_length=150
+    )
+
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
