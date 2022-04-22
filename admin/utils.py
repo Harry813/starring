@@ -17,7 +17,7 @@ def get_admin_info():
     return param
 
 
-def reorder(c, q, item=None, index=-1):
+def reorder(c, q=None, item=None, index=-1):
     if not hasattr(c, "order"):
         raise AttributeError(f"class {c} do not have attribute \"order\"")
 
