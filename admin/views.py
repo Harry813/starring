@@ -705,7 +705,7 @@ def admin_navi_item_create_view(request, secid):
         form = NavigatorItemForm(request.POST, initial=initial)
         if form.is_valid():
             item = form.save(commit=False)
-            order = form.cleaned_data.get("reorder")
+            order = form.cleaned_data.get("reorder") - 1
             reorder(NavigatorItem, Q(sector_id=sector), item, order)
             return redirect("ADMNaviItemIndex", secid=secid)
         else:
@@ -733,7 +733,7 @@ def admin_navi_item_edit_view(request, secid, itemid):
         form = NavigatorItemForm(request.POST, instance=item, initial={"reorder": item.order+1})
         if form.is_valid():
             item = form.save(commit=False)
-            order = form.cleaned_data.get("reorder")
+            order = form.cleaned_data.get("reorder") - 1
             reorder(NavigatorItem, Q(sector_id=sector), item, order)
             return redirect("ADMNaviItemIndex", secid=secid)
         else:
@@ -818,7 +818,7 @@ def admin_index_item_create(request, secid):
         form = IndexListItemForm(request.POST, initial=initial)
         if form.is_valid():
             item = form.save(commit=False)
-            order = form.cleaned_data.get("reorder")
+            order = form.cleaned_data.get("reorder") - 1
             reorder(IndexListItem, Q(sector_id=sector), item, order)
             return redirect("ADMIndListSectorEdit", secid=secid)
         else:
@@ -846,7 +846,7 @@ def admin_index_item_edit(request, secid, itemid):
         form = IndexListItemForm(request.POST, instance=item, initial={"reorder": item.order+1})
         if form.is_valid():
             item = form.save(commit=False)
-            order = form.cleaned_data.get("reorder")
+            order = form.cleaned_data.get("reorder") - 1
             reorder(IndexListItem, Q(sector_id=sector), item, order)
             return redirect("ADMIndListSectorEdit", secid=secid)
         else:
