@@ -1,5 +1,6 @@
 from staring.customerSettings import navi_item_per_col
-from staring.models import NewsSector, News, NavigatorSector, NavigatorItem, IndexListSector, IndexListItem
+from staring.models import NewsSector, News, NavigatorSector, NavigatorItem, IndexListSector, IndexListItem, \
+    IndexSidebarItem
 
 
 def get_customer_info():
@@ -13,6 +14,8 @@ def get_customer_info():
             "sector": sec,
             "itemslist": [itemslist[i: i+navi_item_per_col] for i in range(0, len(itemslist), navi_item_per_col)]
         })
+
+    dic["questions"] = list(IndexSidebarItem.objects.all())
     return dic
 
 
