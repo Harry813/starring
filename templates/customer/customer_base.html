@@ -14,8 +14,9 @@
 
     {# CSS #}
     {# - bootstrap5 核心CSS #}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
     {# - bootstrap5 图标 #}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     {# - fontawsome 图标 #}
@@ -26,9 +27,9 @@
     {% block css %}{% endblock %}
     {% if request.user_agent.is_mobile %}
         <style>
-            body{
-                width:100%;
-                overflow-x:hidden;
+            body {
+                width: 100%;
+                overflow-x: hidden;
             }
         </style>
     {% endif %}
@@ -82,7 +83,8 @@
                     {{ navi.sector.name }}
                 </button>
                 <div class="dropdown-menu dropdown dropdown-menu-start w-100 py-0 border-0 px-sm-0 px-md-3 px-lg-5"
-                     aria-labelledby="dropdown_btn_{{ forloop.counter }}" style="z-index: 1021;background-color: transparent;">
+                     aria-labelledby="dropdown_btn_{{ forloop.counter }}"
+                     style="z-index: 1021;background-color: transparent;">
                     <div class="container navi-dropdown-container px-5 py-3" style="background-color: #2B3550;">
                         <div class="row navi-dropdown-sector">
                             {% for items in navi.itemslist %}
@@ -155,11 +157,13 @@
                     <img src="{% static 'IMG/banner3.png' %}" alt="Canadian flag3" class="d-block w-100">
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -167,95 +171,96 @@
     {% endblock %}
 {% else %}
     <nav class="navbar navbar-expand-md navbar-light bg-light border-bottom border-4"
-     style="border-color:#0A1A38 !important;">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'CUSTIndex' %}">
-            <img class="w-auto" src="{% static 'IMG/canada_immigration_logo.png' %}"
-                 alt="canada_immigration_logo"
-                 style="max-height: 10vh">
-        </a>
-        <div class="d-flex">
-            <div class="dropdown">
-                {% get_current_language as LANGUAGE_CODE %}
-                <button class="btn btn-link dropdown-toggle text-reset text-decoration-none" type="button"
-                        id="languageDropdown"
-                        data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 12px">
-                    {{ LANGUAGE_CODE|language_name_local }}
+         style="border-color:#0A1A38 !important;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'CUSTIndex' %}">
+                <img class="w-auto" src="{% static 'IMG/canada_immigration_logo.png' %}"
+                     alt="canada_immigration_logo"
+                     style="max-height: 10vh">
+            </a>
+            <div class="d-flex">
+                <div class="dropdown">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    <button class="btn btn-link dropdown-toggle text-reset text-decoration-none" type="button"
+                            id="languageDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 12px">
+                        {{ LANGUAGE_CODE|language_name_local }}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                        {% for lang in languages %}
+                            <li>
+                                <a class="dropdown-item" style="color: black" href="{% change_lang lang.CODE %}"
+                                   hreflang="{{ lang.CODE }}">
+                                    <span class="align-middle">{{ lang.NAME }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                        aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                    {% for lang in languages %}
-                        <li>
-                            <a class="dropdown-item" style="color: black" href="{% change_lang lang.CODE %}"
-                               hreflang="{{ lang.CODE }}">
-                                <span class="align-middle">{{ lang.NAME }}</span>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
             </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav me-auto my-2 my-lg-0">
-                {% for navi in navigator %}
-                    {% if navi.itemslist %}
-                        <li class="nav-item width-auto dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_{{ forloop.counter }}"
-                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ navi.sector.name }}
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown_{{ forloop.counter }}">
-                                {% for items in navi.itemslist %}
-                                    {% for item in items %}
-                                        {% if item.level == 0 and not forloop.first %}
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0">
+                    {% for navi in navigator %}
+                        {% if navi.itemslist %}
+                            <li class="nav-item width-auto dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_{{ forloop.counter }}"
+                                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ navi.sector.name }}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown_{{ forloop.counter }}">
+                                    {% for items in navi.itemslist %}
+                                        {% for item in items %}
+                                            {% if item.level == 0 and not forloop.first %}
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                            {% endif %}
                                             <li>
-                                                <hr class="dropdown-divider">
+                                                <a class="dropdown-item" href="
+
+                                                        {% if item.type == 'ARTICLE' %}{% url 'article' item.article.id %}{% else %}{{ item.url }}{% endif %}">
+                                                    {% if item.level == 0 %}
+                                                        <strong>{{ item.name }}</strong>
+                                                    {% elif item.level == 1 %}
+                                                        &emsp;&emsp;{{ item.name }}
+                                                    {% endif %}
+                                                </a>
                                             </li>
-                                        {% endif %}
-                                        <li>
-                                            <a class="dropdown-item" href="
-                                                    {% if item.type == 'ARTICLE' %}{% url 'article' item.article.id %}{% else %}{{ item.url }}{% endif %}">
-                                                {% if item.level == 0 %}
-                                                    <strong>{{ item.name }}</strong>
-                                                {% elif item.level == 1 %}
-                                                    &emsp;&emsp;{{ item.name }}
-                                                {% endif %}
-                                            </a>
-                                        </li>
+                                        {% endfor %}
                                     {% endfor %}
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    {% else %}
-                        <li class="nav-item width-auto">
-                            <a class="nav-link active" aria-current="page" href="#">{{ navi.sector.name }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url "CUSTCenter" %}">
-                        {% if request.user.is_authenticated %}
-                            {% trans '用户中心' %}
+                                </ul>
+                            </li>
                         {% else %}
-                            {% trans '用户登录' %}
+                            <li class="nav-item width-auto">
+                                <a class="nav-link active" aria-current="page" href="#">{{ navi.sector.name }}</a>
+                            </li>
                         {% endif %}
-                    </a>
-                </li>
-            </ul>
-            {% get_current_language as LANGUAGE_CODE %}
-            <form class="d-flex" method="get" action="https://star.hanxiaofei.tk/{{ LANGUAGE_CODE }}/search/1/">
-                <input class="form-control me-2" type="search" placeholder="{% translate '搜索内容' %}" required
-                       aria-label="index-search-input" aria-describedby="index-search">
-                <button class="btn btn-outline-star" type="submit" id="index-search">
-                    <i class="bi bi-search"></i>
-                </button>
-            </form>
+                    {% endfor %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url "CUSTCenter" %}">
+                            {% if request.user.is_authenticated %}
+                                {% trans '用户中心' %}
+                            {% else %}
+                                {% trans '用户登录' %}
+                            {% endif %}
+                        </a>
+                    </li>
+                </ul>
+                {% get_current_language as LANGUAGE_CODE %}
+                <form class="d-flex" method="get" action="https://star.hanxiaofei.tk/{{ LANGUAGE_CODE }}/search/1/">
+                    <input class="form-control me-2" type="search" placeholder="{% translate '搜索内容' %}" required
+                           aria-label="index-search-input" aria-describedby="index-search">
+                    <button class="btn btn-outline-star" type="submit" id="index-search">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 {% endif %}
 
 {# 内容 #}
@@ -528,8 +533,8 @@
 {% endfor %}
 
 {# script #}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
 
 <script>
