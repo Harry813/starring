@@ -120,11 +120,6 @@
             </div>
         {% endfor %}
         <div class="py-2 px-sm-0 px-md-3 px-lg-55" style="border-left: 3px solid #323D5B;">
-            <a class="nav-link text-white star-nav-link star-font" href="#">
-                {% trans '关于我们' %}
-            </a>
-        </div>
-        <div class="py-2 px-sm-0 px-md-3 px-lg-55" style="border-left: 3px solid #323D5B;">
             <a class="nav-link text-white star-nav-link star-font" href="{% url "CUSTCenter" %}">
                 {% if request.user.is_authenticated %}
                     {% trans '会员中心' %}
