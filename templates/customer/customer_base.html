@@ -59,9 +59,8 @@
                 {% endfor %}
             </div>
             <div class="mt-3">
-                <form method="get" action="/search/1">
-                    <div class="input-group mb-3 w-100"
-                         style="float:right">
+                <form method="get" action="{% url 'CUSTSearch' 1 %}">
+                    <div class="input-group mb-3 w-100" style="float:right">
                         <input type="text" class="form-control" placeholder="{% translate '搜索内容' %}"
                                aria-label="index-search-input" aria-describedby="index-search" name="search"
                                {% if search %}value="{{ search }}"{% endif %}>
@@ -220,9 +219,7 @@
                                                 </li>
                                             {% endif %}
                                             <li>
-                                                <a class="dropdown-item" href="
-
-                                                        {% if item.type == 'ARTICLE' %}{% url 'article' item.article.id %}{% else %}{{ item.url }}{% endif %}">
+                                                <a class="dropdown-item" href="{% if item.type == 'ARTICLE' %}{% url 'article' item.article.id %}{% else %}{{ item.url }}{% endif %}">
                                                     {% if item.level == 0 %}
                                                         <strong>{{ item.name }}</strong>
                                                     {% elif item.level == 1 %}
@@ -251,7 +248,7 @@
                     </li>
                 </ul>
                 {% get_current_language as LANGUAGE_CODE %}
-                <form class="d-flex" method="get" action="https://star.hanxiaofei.tk/{{ LANGUAGE_CODE }}/search/1/">
+                <form class="d-flex" action="{% url 'CUSTSearch' 1 %}">
                     <input class="form-control me-2" type="search" placeholder="{% translate '搜索内容' %}" required
                            aria-label="index-search-input" aria-describedby="index-search">
                     <button class="btn btn-outline-star" type="submit" id="index-search">
