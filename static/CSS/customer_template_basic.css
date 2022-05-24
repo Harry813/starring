@@ -968,3 +968,11 @@ html {
         padding-left: 6rem !important
     }
 }
+
+.questions{
+    color: #001F45 !important;
+}
+
+.questions:hover{
+    color: #0A58CA !important;
+}
