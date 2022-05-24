@@ -516,7 +516,17 @@ class AppointmentStatusForm(forms.ModelForm):
 
 
 class IndexSidebarForm(forms.ModelForm):
+    reorder = forms.IntegerField(
+        label=index_list_item_order_text,
+        min_value=1,
+        required=False
+    )
+
     class Meta:
         model = IndexSidebarItem
-        fields = "__all__"
+        exclude = ["order"]
+
+    def __init__(self, *args, **kwargs):
+        super(IndexSidebarForm, self).__init__(*args, **kwargs)
+        self.fields["url"].initial = "#"
 
