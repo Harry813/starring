@@ -865,16 +865,16 @@ def admin_index_item_delete(request, secid, itemid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_index_sidebar_index_view(request):
+def admin_sidebar_index_view(request):
     param = {
-        "page_title": _("星环-首页清单管理"),
+        "page_title": _("星环-侧栏管理"),
         "languages": Languages,
         "active_page": "ADMSidebarIndex",
         **get_basic_info(),
         **get_admin_info()
     }
 
-    initial = {"order": len(IndexSidebarItem.objects.all())+1}
+    initial = {"reorder": len(IndexSidebarItem.objects.all())+1}
     if request.method == "POST":
         form = IndexSidebarForm(request.POST, initial=initial)
         if form.is_valid():
@@ -890,6 +890,40 @@ def admin_index_sidebar_index_view(request):
     param["sidebar_items"] = sidebar_items
     param["count"] = len(sidebar_items)
     return render(request, "admin/admin_sidebar_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_sidebar_edit_view(request, sdb_id):
+    param = {
+        "page_title": _("星环-侧栏管理"),
+        "languages": Languages,
+        "active_page": "ADMSidebarIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    item = IndexSidebarItem.objects.get(id=sdb_id)
+    initial = {"reorder": item.order+1}
+    if request.method == "POST":
+        form = IndexSidebarForm(request.POST, instance=item, initial=initial)
+        if form.is_valid():
+            item = form.save(commit=False)
+            order = form.cleaned_data.get("reorder") - 1
+            reorder(IndexSidebarItem, item=item, index=order)
+            return redirect("ADMSidebarIndex")
+        else:
+            form = IndexSidebarForm(request.POST, instance=item, initial=initial)
+    else:
+        form = IndexSidebarForm(instance=item, initial=initial)
+    param["form"] = form
+    return render(request, "admin/admin_sidebar_edit.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_sidebar_delete_view(request, id):
+    IndexSidebarItem.objects.get(id=id).delete()
+    reorder(IndexSidebarItem)
+    return redirect("ADMSidebarIndex")
 
 
 @login_required(login_url="ADMLogin")
