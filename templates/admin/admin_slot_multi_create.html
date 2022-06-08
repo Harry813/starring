@@ -1,0 +1,126 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{% translate '预约槽批量生成' %}</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h1 class="h5 card-title">{% trans "基础信息" %}</h1>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" for="{{ form.start_date.id_for_label }}">
+                                        {{ form.start_date.label }}
+                                        {% if form.start_date.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.start_date class="form-control" type="date" %}
+                                    <div>
+                                        {% if form.start_date.errors %}
+                                            <p class="small" style="color: red;">{{ form.start_date.errors.0 }}</p>
+                                        {% elif form.start_date.help_text %}
+                                            <p class="small text-muted">{{ form.start_date.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" for="{{ form.end_date.id_for_label }}">
+                                        {{ form.end_date.label }}
+                                        {% if form.end_date.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.end_date class="form-control" type="date" %}
+                                    <div>
+                                        {% if form.end_date.errors %}
+                                            <p class="small" style="color: red;">{{ form.end_date.errors.0 }}</p>
+                                        {% elif form.end_date.help_text %}
+                                            <p class="small text-muted">{{ form.end_date.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" for="{{ form.start_time.id_for_label }}">
+                                        {{ form.start_time.label }}
+                                        {% if form.start_time.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.start_time class="form-control" type="time" %}
+                                    <div>
+                                        {% if form.start_time.errors %}
+                                            <p class="small"
+                                               style="color: red;">{{ form.start_time.errors.0 }}</p>
+                                        {% elif form.start_time.help_text %}
+                                            <p class="small text-muted">{{ form.start_time.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" for="{{ form.end_time.id_for_label }}">
+                                        {{ form.end_time.label }}
+                                        {% if form.end_time.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.end_time class="form-control" type="time" %}
+                                    <div>
+                                        {% if form.end_time.errors %}
+                                            <p class="small" style="color: red;">{{ form.end_time.errors.0 }}</p>
+                                        {% elif form.end_time.help_text %}
+                                            <p class="small text-muted">{{ form.end_time.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        {% render_field form.weekends class="form-check-input" type="checkbox" %}
+                                        <label class="form-label" for="{{ form.weekends.id_for_label }}">
+                                            {{ form.weekends.label }}
+                                            {% if form.weekends.field.required %}
+                                                <span style="color: red">*</span>
+                                            {% endif %}
+                                            <div>
+                                                {% if form.weekends.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ form.weekends.errors.0 }}</p>
+                                                {% elif form.weekends.help_text %}
+                                                    <p class="small text-muted">{{ form.weekends.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div>
+                                    <button class="btn btn-primary w-100" type="submit">{% trans "创建" %}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

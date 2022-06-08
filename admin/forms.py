@@ -379,134 +379,62 @@ class IndexListItemForm(TranslationModelForm):
 
 
 class SlotGeneratorForm(forms.Form):
-    day = forms.DateField(
-        label=date_text,
-        initial=date.today,
-        widget=forms.SelectDateWidget()
+    start_date = forms.DateField(
+        label=start_date_text,
     )
 
-    start_time_delta = forms.IntegerField(
+    end_date = forms.DateField(
+        label=end_date_text,
+    )
+
+    start_time = forms.TimeField(
         label=slot_start_time_text,
-        widget=forms.Select(choices=default_timeslot_offset_options)
     )
 
-    end_time_delta = forms.IntegerField(
+    end_time = forms.TimeField(
         label=slot_end_time_text,
-        widget=forms.Select(choices=default_timeslot_offset_options)
     )
 
-    availability = forms.IntegerField(
-        label=slot_availability_text,
-        initial=3,
-        min_value=1,
-    )
-
-    repeats_style = forms.ChoiceField(
-        choices=REPEAT_CHOICES,
-        initial='COUNT',
-        label=slot_repeat_style_text,
-        widget=forms.RadioSelect(attrs={"class": "form-check-input"}),
-    )
-
-    repeat_count = forms.IntegerField(
-        initial=1,
+    weekends = forms.BooleanField(
+        label=slot_weekends_text,
+        initial=False,
         required=False,
-        min_value=0,
-        max_value=99,
-        label=slot_repeat_count_text
     )
 
-    repeat_until = forms.DateField(
-        label=slot_repeat_until_text,
-        required=False,
-        initial=date.today,
-        widget=forms.SelectDateWidget()
-    )
-
-    frequent = forms.IntegerField(
-        label=slot_frequent_text,
-        initial=rrule.DAILY,
-        widget=forms.RadioSelect(choices=FREQUENCY_CHOICES),
-    )
-
-    interval = forms.IntegerField(
-        label=slot_daily_interval_text,
-        initial=1,
-        required=False
-    )
-
-    # Week
-    week_days = MultipleIntegerField(
-        choices=WEEKDAY_SHORT,
-        label=slot_week_days_text,
-        widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check-input"})
-    )
-
-    # Month
-    month_days = MultipleIntegerField(
-        label=slot_month_days_text,
-        choices=[(i, i) for i in range(1, 32)],
-        widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check-input"})
-    )
-
-    def __init__(self, *args, **kws):
-        super().__init__(*args, **kws)
-        dtstart = self.initial.get('dtstart', None)
-        if dtstart:
-            dtstart = dtstart.replace(
-                minute=((dtstart.minute // MINUTES_INTERVAL) * MINUTES_INTERVAL),
-                second=0,
-                microsecond=0
-            )
-
-            weekday = dtstart.isoweekday()
-            ordinal = dtstart.day // 7
-            ordinal = '%d' % (-1 if ordinal > 3 else ordinal + 1,)
-            midnight = datetime.combine(dtstart.date(), time(0, tzinfo=dtstart.tzinfo))
-            offset = (dtstart - midnight).seconds
-
-            self.initial.setdefault('day', dtstart)
-            self.initial.setdefault('week_days', '%d' % weekday)
-            self.initial.setdefault('month_days', ['%d' % dtstart.day])
-            self.initial.setdefault('start_time_delta', '%d' % offset)
-            self.initial.setdefault('end_time_delta', '%d' % (offset + SECONDS_INTERVAL,))
-
-    def clean(self):
-        if 'day' in self.cleaned_data:
-            day = datetime.combine(self.cleaned_data['day'], time(0))
-            self.cleaned_data['start_time'] = day + timedelta(
-                seconds=self.cleaned_data['start_time_delta']
-            )
-
-            self.cleaned_data['end_time'] = day + timedelta(
-                seconds=self.cleaned_data['end_time_delta']
-            )
-
-        return self.cleaned_data
-
-    def _build_rrule_params(self):
-        iso = ISO_WEEKDAYS_MAP
-        data = self.cleaned_data
-        params = dict(
-            freq=data['frequent'],
-            interval=data['interval'] or 1
-        )
-
-        if data['repeats_style'] == 'until':
-            params['until'] = data['repeat_until']
+    def clean_start_date(self):
+        start_date = self.cleaned_data["start_date"]
+        if start_date < date.today():
+            raise ValidationError(_("Invalid Date"))
         else:
-            params['count'] = data.get('repeat_count', 1)
+            return start_date
 
-        if params['freq'] == rrule.WEEKLY:
-            params['byweekday'] = [iso[n] for n in data['week_days']]
+    def clean_end_date(self):
+        end_date = self.cleaned_data["end_date"]
+        start_date = self.cleaned_data["start_date"]
+        if end_date < start_date:
+            raise ValidationError(_("Invalid Date"))
+        else:
+            return end_date
 
-        elif params['freq'] == rrule.MONTHLY:
-            params['bymonthday'] = data['month_days']
+    def clean_end_time_delta(self):
+        end_time_delta = self.cleaned_data["end_time"]
+        start_time_delta = self.cleaned_data["start_time"]
+        if end_time_delta < start_time_delta:
+            raise ValidationError(_("Invalid Time"))
 
-        elif params['freq'] != rrule.DAILY:
-            raise NotImplementedError(_('Unknown interval rule ' + params['freq']))
+    def save(self):
+        start_date = self.cleaned_data.get("start_date")
+        start_time = self.cleaned_data.get("start_time")
+        end_date = self.cleaned_data.get("end_date")
+        end_time = self.cleaned_data.get("end_time")
+        weekends = self.cleaned_data.get("weekends")
 
-        return params
+        day_range = [date.fromordinal(i) for i in range(start_date.toordinal(), end_date.toordinal())]
+
+        if not weekends:
+            day_range = [d for d in day_range if d.weekday() <= 4]
+            for d in day_range:
+                MeetingSlot.objects.create(date=d, start_time=start_time, end_time=end_time)
 
 
 class AppointmentStatusForm(forms.ModelForm):

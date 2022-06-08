@@ -615,7 +615,8 @@ def admin_slot_multi_create_view(request):
     if request.method == "POST":
         form = SlotGeneratorForm(request.POST)
         if form.is_valid():
-            pass
+            form.save()
+            return redirect("ADMSlotIndex", page=1)
         else:
             form = SlotGeneratorForm(request.POST)
     else:
