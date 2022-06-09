@@ -290,22 +290,50 @@ class News(models.Model):
 
 
 class MeetingSlot(models.Model):
-    date = models.DateField(
-        verbose_name=meetingSlot_date_text
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
     )
 
-    start_time = models.TimeField(
-        verbose_name=meetingSlot_start_time_text
+    start_datetime = models.DateTimeField(
+        verbose_name=meetingSlot_start_time_text,
+        default=datetime.datetime.now(),
     )
 
-    end_time = models.TimeField(
-        verbose_name=meetingSlot_end_time_text
+    end_datetime = models.DateTimeField(
+        verbose_name=meetingSlot_end_time_text,
+        default=datetime.datetime.now() + datetime.timedelta(minutes=45),
     )
 
     availability = models.PositiveIntegerField(
         verbose_name=meetingSlot_availability_text,
         default=1
     )
+
+    @property
+    def date(self):
+        return self.start_datetime.date()
+
+    @property
+    def start_time(self):
+        return self.start_datetime.time()
+
+    @property
+    def end_time(self):
+        return self.end_datetime.time()
+
+    @property
+    def duration(self):
+        delta = (self.end_datetime - self.start_datetime).total_seconds()
+        m, s = divmod(delta, 60)
+        msg = f"{m}m"
+        if s != 0:
+            msg += f"{s}s"
+        return msg
+
+    def __str__(self):
+        return f"{self.date} {self.start_time}-{self.end_time}"
 
     @property
     def is_available(self):
@@ -316,7 +344,7 @@ class MeetingSlot(models.Model):
         return Appointment.objects.filter(slot=self)
 
     class Meta:
-        unique_together = ["date", "start_time", "end_time"]
+        unique_together = ["start_datetime", "end_datetime"]
 
 
 class Appointment(models.Model):
