@@ -34,8 +34,8 @@
                     <thead>
                     <tr>
                         <th style="width:30%;">{% translate '日期' %}</th>
-                        <th style="width:30%">{% translate '时间' %}</th>
-                        <th style="width:30%">{% translate '剩余 / 最大' %}</th>
+                        <th style="width:30%">{% translate '时间' %}(24h)</th>
+                        <th style="width:30%">{% translate '状态' %}</th>
                         <th>{% translate '操作' %}</th>
                     </tr>
                     </thead>
@@ -43,10 +43,14 @@
                     {% for slot in timeslots %}
                         <tr>
                             <td>{{ slot.date }}</td>
-                            <td>{{ slot.time }}</td>
-                            <td>{{ slot.get_remain_availability }} / {{ slot.availability }}</td>
+                            <td>{{ slot.start_time }}-{{ slot.end_time }}</td>
+                            <td>{% if slot.appointment %}
+                                <span class="text-success"><i data-feather="check"></i></span>
+                            {% else %}
+                                <span class="text-danger"><i data-feather="x"></i></span>
+                            {% endif %}</td>
                             <td class="table-action">
-                                <a class="action-button edit-button" href="#">
+                                <a class="action-button edit-button" href="{% url 'ADMSlotEdit' slot.id %}">
                                     <i class="align-middle" data-feather="edit-2"></i>
                                 </a>
 
