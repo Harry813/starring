@@ -85,12 +85,10 @@
                                     <i class="align-middle" data-feather="chevrons-left"></i>
                                 </a>
 
-                                <a href="
-                                            {% if timeslots.has_next %}{% url 'ADMSlotIndex' timeslots.previous_page_number %}{% endif %}"
+                                <a href="{% if timeslots.has_next %}{% url 'ADMSlotIndex' timeslots.previous_page_number %}{% endif %}"
                                    class="btn btn-outline-primary {% if not timeslots.has_previous %}disabled{% endif %}">
                                     <i class="align-middle" data-feather="chevron-left"></i>
                                 </a>
-
                                 {% for p in page_list %}
                                     <a href="#"
                                        class="btn btn-outline-primary {% if p == current_page %}active{% elif p == "..." %}disabled{% endif %}">
@@ -98,13 +96,11 @@
                                     </a>
                                 {% endfor %}
 
-                                <a href="
-                                            {% if timeslots.has_next %}{% url 'ADMSlotIndex' timeslots.next_page_number %}{% endif %}"
+                                <a href="{% if timeslots.has_next %}{% url 'ADMSlotIndex' timeslots.next_page_number %}{% endif %}"
                                    class="btn btn-outline-primary {% if not timeslots.has_next %}disabled{% endif %}">
                                     <i class="align-middle" data-feather="chevron-right"></i>
                                 </a>
-                                <a href="
-                                            {% if current_page != paginator.num_pages %}{% url 'ADMSlotIndex' paginator.num_pages %}{% endif %}"
+                                <a href="{% if current_page != paginator.num_pages %}{% url 'ADMSlotIndex' paginator.num_pages %}{% endif %}"
                                    class="btn btn-outline-primary {% if current_page == paginator.num_pages %}disabled{% endif %}">
                                     <i class="align-middle" data-feather="chevrons-right"></i>
                                 </a>
