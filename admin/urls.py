@@ -29,6 +29,7 @@ urlpatterns = [
     path('newssector/<int:sid>/edit/<int:nid>/', views.admin_news_edit_view, name="ADMNewsEdit"),
     path('slots/page/<int:page>/', views.admin_slot_index_view, name="ADMSlotIndex"),
     path('slots/create/', views.admin_slot_create_view, name="ADMSlotCreate"),
+    path('slots/edit/<str:sid>/', views.admin_slot_edit_view, name="ADMSlotEdit"),
     path('navigator/', views.admin_navi_sector_index_view, name="ADMNaviSectorIndex"),
     path('navigator/delete/<int:secid>/', views.admin_navi_sector_delete, name="ADMNaviSectorDelete"),
     path('navigator/item/<int:secid>/', views.admin_navi_item_index_view, name="ADMNaviItemIndex"),

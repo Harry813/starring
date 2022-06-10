@@ -1,0 +1,110 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+    {#<h1 class="h3 mb-3">{% translate '预约槽修改' %}</h1>#}
+    <h1 class="h3">{% translate '预约槽修改' %}</h1>
+    <div class="mb-3">
+        <span class="small text-grey">测试中，暂未实装</span>
+    </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-header">{% trans '详情' %}</div>
+                    <div class="card-body">
+                        <table class="table table-sm mb-3">
+                            <tbody>
+                            <tr>
+                                <th>{% trans "日期" %}</th>
+                                <td>{{ slot.date }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans "开始" %}</th>
+                                <td>{{ slot.start_time }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans "结束" %}</th>
+                                <td>{{ slot.end_time }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans "持续" %}</th>
+                                <td>{{ slot.duration  }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm col-md-4 mb-3">
+                                    <label class="form-label" for="{{ form.date.id_for_label }}">
+                                        {{ form.date.label }}
+                                        {% if form.date.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.date class="form-control" type="date" %}
+                                    <div>
+                                        {% if form.date.errors %}
+                                            <p class="small" style="color: red;">{{ form.date.errors.0 }}</p>
+                                        {% elif form.date.help_text %}
+                                            <p class="small text-muted">{{ form.date.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm col-md-4 mb-3">
+                                    <label class="form-label" for="{{ form.start_time.id_for_label }}">
+                                        {{ form.start_time.label }}
+                                        {% if form.start_time.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.start_time class="form-control" type="time" %}
+                                    <div>
+                                        {% if form.start_time.errors %}
+                                            <p class="small" style="color: red;">{{ form.start_time.errors.0 }}</p>
+                                        {% elif form.start_time.help_text %}
+                                            <p class="small text-muted">{{ form.start_time.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm col-md-4 mb-3">
+                                    <label class="form-label" for="{{ form.end_time.id_for_label }}">
+                                        {{ form.end_time.label }}
+                                        {% if form.end_time.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.end_time class="form-control" type="time" %}
+                                    <div>
+                                        {% if form.end_time.errors %}
+                                            <p class="small" style="color: red;">{{ form.end_time.errors.0 }}</p>
+                                        {% elif form.end_time.help_text %}
+                                            <p class="small text-muted">{{ form.end_time.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <button class="w-100 btn btn-primary" type="submit">{% trans "提交" %}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

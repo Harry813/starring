@@ -439,6 +439,41 @@ class SlotGeneratorForm(forms.Form):
                 MeetingSlot.objects.create(start_datetime=start_datetime, end_datetime=end_datetime)
 
 
+class SlotEditForm(forms.Form):
+    date = forms.DateField(
+        label=_("日期"),
+    )
+
+    start_time = forms.TimeField(
+        label=_("开始时间"),
+    )
+
+    end_time = forms.TimeField(
+        label=_("结束时间"),
+    )
+
+    # availability = forms.IntegerField(
+    #     label=_("剩余"),
+    #     min_value=0,
+    # )
+
+    def clean_start_time(self):
+        start_time = self.cleaned_data.get("start_time")
+        end_time = self.cleaned_data.get("end_time")
+        if start_time > end_time:
+            raise forms.ValidationError(_("Illegal Start Time"))
+        else:
+            return start_time
+
+    def clean_end_date(self):
+        start_time = self.cleaned_data.get("start_time")
+        end_time = self.cleaned_data.get("end_time")
+        if end_time < start_time:
+            raise forms.ValidationError(_("Illegal End Time"))
+        else:
+            return end_time
+
+
 class AppointmentStatusForm(forms.ModelForm):
     class Meta:
         model = Appointment
