@@ -298,12 +298,10 @@ class MeetingSlot(models.Model):
 
     start_datetime = models.DateTimeField(
         verbose_name=meetingSlot_start_time_text,
-        default=datetime.datetime.now(),
     )
 
     end_datetime = models.DateTimeField(
         verbose_name=meetingSlot_end_time_text,
-        default=datetime.datetime.now() + datetime.timedelta(minutes=45),
     )
 
     availability = models.PositiveIntegerField(
