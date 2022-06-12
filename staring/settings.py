@@ -55,12 +55,11 @@ INSTALLED_APPS = [
     'guardian',
     'modeltranslation',
     'django_user_agents',
-    # 'tinymce',
 
     # customer apps
     'staring',
     'customer',
-    'admin'
+    'admin',
 ]
 
 MIDDLEWARE = [
