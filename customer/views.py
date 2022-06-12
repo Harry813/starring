@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta, date
+
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
@@ -14,9 +17,9 @@ from django.views.decorators.clickjacking import xframe_options_exempt, xframe_o
 from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm
 from customer.models import Customer
 from customer.utils import get_customer_info, get_news, get_index_list
-from staring.customerSettings import Languages, IndexCarousel
-from staring.models import Article, User, NewsSector, NavigatorSector
-from staring.text import UserNoPermit_text, UserNotExist_text
+from staring.customerSettings import Languages
+from staring.models import Article, User, MeetingSlot
+from staring.text import UserNotExist_text
 
 
 # Create your views here.
@@ -109,9 +112,9 @@ def customer_register(request):
 
             c = Customer(user=u)
             c.save()
-            
+
             login(request, user=u, backend='django.contrib.auth.backends.ModelBackend')
-            
+
             messages.add_message(request, messages.SUCCESS, _("恭喜你注册成功"))
             return redirect("CUSTIndex")
         else:
@@ -181,7 +184,7 @@ def customer_search_view(request, page):
 
     param["search"] = q
 
-    articles = Article.objects.filter(status="PUBLISH").filter(Q(title__icontains=q) | Q(content__icontains=q))\
+    articles = Article.objects.filter(status="PUBLISH").filter(Q(title__icontains=q) | Q(content__icontains=q)) \
         .order_by("-last_update", "-view_count")
 
     p = Paginator(articles, 10)
@@ -190,6 +193,71 @@ def customer_search_view(request, page):
     param["current_page"] = page
     param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
     return render(request, 'customer/customer_search.html', param)
+
+
+@login_required(login_url="CUSTLogin")
+def customer_appointment_view (request):
+    param = {
+        "page_title": _("星环-我的主页"),
+        "languages": Languages,
+        "user": request.user,
+        **get_customer_info(),
+    }
+
+    initial = {
+        "start_date": date.today,
+        "end_date": (datetime.today() + timedelta(days=14)).date().isoformat(),
+    }
+
+    start_q = Q(start_datetime__gte=datetime.today().date())
+    end_q = Q(end_datetime__lte=datetime.today().date() + timedelta(days=14))
+
+    slots = MeetingSlot.objects.filter(start_datetime__gte=datetime.today().date(), availability__gt=0)
+
+    if request.method == "POST":
+        form = MeetingSlotFilter(request.POST, initial=initial)
+        if form.is_valid():
+            start_date = form.cleaned_data.get("start_date")
+            end_date = form.cleaned_data.get("end_date")
+            if start_date:
+                start_q = Q(start_datetime__gte=start_date)
+                if not end_date:
+                    end_q = Q(end_datetime__lte=start_date + timedelta(days=14))
+            slots = slots.filter(start_q)
+
+            if end_date:
+                end_q = Q(end_datetime__lte=end_q)
+            slots = slots.filter(end_q)
+
+        else:
+            form = MeetingSlotFilter(request.POST, initial=initial)
+    else:
+        form = MeetingSlotFilter(request.GET, initial=initial)
+
+    slots = slots.order_by("start_datetime")
+    param["slots"] = slots
+    param["form"] = form
+    return render(request, "customer/customer_meeting.html", param)
+
+
+@login_required(login_url="CUSTLogin")
+def customer_appointment_2_view(request, slot_id):
+    param = {
+        "page_title": _("星环-我的主页"),
+        "languages": Languages,
+        "user": request.user,
+        **get_customer_info(),
+    }
+
+    slot = MeetingSlot.objects.get(id=slot_id)
+    param["slot"] = slot
+
+    if request.method == "POST":
+        pass
+    else:
+        pass
+
+    return render(request, "customer/customer_appointment_2.html", param)
 
 
 @xframe_options_sameorigin
