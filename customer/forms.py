@@ -6,6 +6,8 @@ from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 
+from datetime import datetime, timedelta
+
 from staring.models import User
 from .models import Consult
 from staring.text import *
@@ -99,3 +101,16 @@ class CustomerRegisterForm(forms.ModelForm):
         self.fields["name"].required = True
         self.fields["email"].required = True
 
+
+class MeetingSlotFilter(forms.Form):
+    start_date = forms.DateField(
+        label=_("开始日期"),
+        required=False,
+        widget=forms.DateInput(format="%Y-%m-%d", attrs={"type": "date", "format": '%Y-%m-%d'}),
+    )
+
+    end_date = forms.DateField(
+        label=_("截止日期"),
+        required=False,
+        widget=forms.DateInput(format="%Y-%m-%d", attrs={"type": "date", "format": '%Y-%m-%d'}),
+    )
