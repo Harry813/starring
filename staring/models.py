@@ -324,10 +324,8 @@ class MeetingSlot(models.Model):
     @property
     def duration(self):
         delta = (self.end_datetime - self.start_datetime).total_seconds()
-        m, s = divmod(delta, 60)
+        m = delta//60
         msg = f"{m}m"
-        if s != 0:
-            msg += f"{s}s"
         return msg
 
     def __str__(self):
@@ -341,8 +339,20 @@ class MeetingSlot(models.Model):
     def appointment(self):
         return Appointment.objects.filter(slot=self)
 
+    @property
+    def as_property(self):
+        s = {
+            "id": self.id,
+            "date": self.date,
+            "start_time": self.start_time,
+            "end_time": self.end_time,
+            "availability": self.availability,
+        }
+        return s
+
     class Meta:
         unique_together = ["start_datetime", "end_datetime"]
+        ordering = ["start_datetime"]
 
 
 class Appointment(models.Model):
