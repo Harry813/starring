@@ -248,13 +248,46 @@ def customer_appointment_2_view(request, slot_id):
 
     slot = MeetingSlot.objects.get(id=slot_id)
     param["slot"] = slot
+    u = User.objects.get(username=request.user)
+    initial = {}
+    if u.email:
+        initial["email"] = u.email
+
+    if u.name:
+        initial["name"] = u.name
 
     if request.method == "POST":
-        pass
+        form = AppointmentForm(request.POST, initial=initial)
+        if form.is_valid():
+            appointment = form.save(commit=False)
+            appointment.slot = slot
+            appointment.customer = Customer.objects.get(user=u)
+            appointment.save()
+            return redirect("CUSTAppointPay", appointment_id=appointment.id)
+        else:
+            form = AppointmentForm(request.POST, initial=initial)
     else:
-        pass
+        form = AppointmentForm(initial=initial)
 
+    param["form"] = form
     return render(request, "customer/customer_appointment_2.html", param)
+
+
+@login_required(login_url="CUSTLogin")
+def customer_appointment_payment_view(request, appointment_id):
+    param = {
+        "page_title": _("星环-我的主页"),
+        "languages": Languages,
+        "user": request.user,
+        "title_img": True,
+        **get_customer_info(),
+    }
+    appointment = Appointment.objects.get(id=appointment_id)
+    param["appointment"] = appointment
+
+    slot = appointment.slot
+    param["slot"] = slot
+    return render(request, "customer/customer_appointment_payment.html", param)
 
 
 @xframe_options_sameorigin
