@@ -356,16 +356,38 @@ class MeetingSlot(models.Model):
 
 
 class Appointment(models.Model):
+    id = models.UUIDField(
+        default=uuid.uuid4,
+        primary_key=True,
+    )
+
     customer = models.ForeignKey(
         to="customer.Customer",
         on_delete=models.CASCADE,
         verbose_name=appointments_customer_text
     )
 
+    title_prefix = models.CharField(
+        max_length=5,
+        choices=title_prefix
+    )
+
+    name = models.CharField(
+        max_length=255,
+        verbose_name=appointment_name_text,
+        help_text=appointment_name_help_text,
+    )
+
+    email = models.EmailField(
+        verbose_name=user_email_text,
+    )
+
     staff = models.ForeignKey(
         verbose_name=appointment_staff_text,
         to="admin.Staff",
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
 
     slot = models.ForeignKey(
