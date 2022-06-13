@@ -1,0 +1,53 @@
+{% extends 'customer/customer_template.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% load static %}
+
+{% block main_content %}
+    <h1 class="mb-5">{% trans "预约中心" %}</h1>
+
+    <div class="row p-0">
+        <div class="col-sm col-md-6" style="margin-bottom: 3rem">
+            <p class="mb-4 fs-5">
+                <strong>{% blocktranslate %}1. 选择预约的时间{% endblocktranslate %}</strong>
+            </p>
+            <div class="card w-100">
+                <div class="card-body">
+                    <p class="card-title mb-0 fw-bolder">{% trans "预约详情" %}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong class="me-3">{% trans "日期" %}</strong>{{ slot.date }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="me-3">{% trans "时间" %}</strong>{{ slot.start_time }} - {{ slot.end_time }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col" style="margin-bottom: 3rem">
+            <p class="mb-4 fs-5">
+                <strong>{% blocktranslate %}2. 填写您的信息{% endblocktranslate %}</strong>
+            </p>
+            <div class="card w-100">
+                <div class="card-body">
+                    <p class="card-title mb-0 fw-bolder">{% trans "您的信息" %}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong class="me-3">{% trans "称谓" %}</strong>{{ appointment.get_title_prefix_display }} {{ appointment.name }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="me-3">{% trans "邮箱" %}</strong>{{ appointment.email }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row p-0">
+        <p class="mb-3 fs-5">
+            <strong>{% blocktranslate %}3. 选择您的支付方式{% endblocktranslate %}</strong>
+        </p>
+    </div>
+{% endblock %}
