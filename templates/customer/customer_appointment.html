@@ -11,6 +11,16 @@
             <strong>{% blocktranslate %}1. 选择预约的时间{% endblocktranslate %}</strong>
         </p>
 
+        <div class="ms-4 text-muted">
+            {% blocktranslate %}
+                <p>搜索注意事项</p>
+                <ol class="mt-0">
+                    <li>无法预约当日时间段</li>
+                    <li>搜索间隔不得超过14天</li>
+                </ol>
+            {% endblocktranslate %}
+        </div>
+
         <form method="POST" class="mb-5 px-3">
             {% csrf_token %}
             <div class="row">
@@ -68,9 +78,14 @@
                     <td>{{ slot.date }}</td>
                     <td>{{ slot.start_time }}-{{ slot.end_time }}</td>
                     <td>
-                        <a href="{% url "CUSTAppoint2" slot.id %}" class="btn btn-star btn-sm float-end">{% trans "选择" %}<i
+                        <a href="{% url "CUSTAppoint2" slot.id %}"
+                           class="btn btn-star btn-sm float-end">{% trans "选择" %}<i
                                 class="bi bi-caret-right-fill"></i></a>
                     </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>{% trans "暂无可用的预约时间槽" %}</td>
                 </tr>
             {% endfor %}
             </tbody>
