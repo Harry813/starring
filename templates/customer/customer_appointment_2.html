@@ -6,30 +6,26 @@
 {% block main_content %}
     <h1 class="mb-5">{% trans "预约中心" %}</h1>
 
-    <div style="margin-bottom: 3rem">
-        <p class="mb-4 fs-5">
-            <strong>{% blocktranslate %}1. 选择预约的时间{% endblocktranslate %}</strong>
-        </p>
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <p class="card-title mb-0 fw-bolder">{% trans "预约详情" %}</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <strong class="me-3">{% trans "日期" %}</strong>{{ slot.date }}
-                </li>
-                <li class="list-group-item">
-                    <strong class="me-3">{% trans "开始" %}</strong>{{ slot.start_time }}
-                </li>
-                <li class="list-group-item">
-                    <strong class="me-3">{% trans "结束" %}</strong>{{ slot.end_time }}
-                </li>
-                <li class="list-group-item">
-                    <strong class="me-3">{% trans "持续" %}</strong>{{ slot.duration }}
-                </li>
-            </ul>
-            <div class="card-footer">
-                <a href="{% url 'CUSTAppoint' %}" class="btn btn-star w-100">{% trans "重新选择" %}</a>
+    <div class="row p-0">
+        <div class="col-6" style="margin-bottom: 3rem">
+            <p class="mb-4 fs-5">
+                <strong>{% blocktranslate %}1. 选择预约的时间{% endblocktranslate %}</strong>
+            </p>
+            <div class="card w-100">
+                <div class="card-body">
+                    <p class="card-title mb-0 fw-bolder">{% trans "预约详情" %}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong class="me-3">{% trans "日期" %}</strong>{{ slot.date }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="me-3">{% trans "时间" %}</strong>{{ slot.start_time }} - {{ slot.end_time }}
+                    </li>
+                </ul>
+                <div class="card-footer">
+                    <a href="{% url 'CUSTAppoint' %}" class="btn btn-star w-100">{% trans "重新选择" %}</a>
+                </div>
             </div>
         </div>
     </div>
