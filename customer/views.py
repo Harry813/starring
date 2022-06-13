@@ -206,40 +206,34 @@ def customer_appointment_view (request):
         **get_customer_info(),
     }
 
+    start = datetime.today().date() + timedelta(days=1)
+    end = datetime.today().date() + timedelta(days=14)
     initial = {
-        "start_date": date.today,
-        "end_date": (datetime.today() + timedelta(days=14)).date().isoformat(),
+        "start_date": start.isoformat(),
+        "end_date": end.isoformat(),
     }
-
-    start_q = Q(start_datetime__gte=datetime.today().date())
-    end_q = Q(end_datetime__lte=datetime.today().date() + timedelta(days=14))
-
-    slots = MeetingSlot.objects.filter(start_datetime__gte=datetime.today().date(), availability__gt=0)
 
     if request.method == "POST":
         form = MeetingSlotFilter(request.POST, initial=initial)
         if form.is_valid():
             start_date = form.cleaned_data.get("start_date")
             end_date = form.cleaned_data.get("end_date")
-            if start_date:
-                start_q = Q(start_datetime__gte=start_date)
-                if not end_date:
-                    end_q = Q(end_datetime__lte=start_date + timedelta(days=14))
-            slots = slots.filter(start_q)
+            if start_date > datetime.today().date():
+                start = start_date
 
             if end_date:
-                end_q = Q(end_datetime__lte=end_q)
-            slots = slots.filter(end_q)
+                end = end_date
 
         else:
             form = MeetingSlotFilter(request.POST, initial=initial)
     else:
-        form = MeetingSlotFilter(request.GET, initial=initial)
+        form = MeetingSlotFilter(initial=initial)
 
-    slots = slots.order_by("start_datetime")
+    slots = MeetingSlot.objects.filter(start_datetime__gte=start, end_datetime__lte=end, availability__gt=0)\
+        .order_by("start_datetime")
     param["slots"] = slots
     param["form"] = form
-    return render(request, "customer/customer_meeting.html", param)
+    return render(request, "customer/customer_appointment.html", param)
 
 
 @login_required(login_url="CUSTLogin")
