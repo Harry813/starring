@@ -8,7 +8,7 @@ from django.utils.translation import ngettext as _n
 
 from datetime import datetime, timedelta
 
-from staring.models import User
+from staring.models import User, Appointment
 from .models import Consult
 from staring.text import *
 
@@ -114,3 +114,45 @@ class MeetingSlotFilter(forms.Form):
         required=False,
         widget=forms.DateInput(format="%Y-%m-%d", attrs={"type": "date", "format": '%Y-%m-%d'}),
     )
+
+    def clean_start_date(self):
+        start = self.cleaned_data.get("start_date")
+        if start < datetime.today().date():
+            raise forms.ValidationError(_("Invalid Start date."))
+        else:
+            return start
+
+    def clean_end_date(self):
+        start = self.cleaned_data.get("start_date")
+        end = self.cleaned_data.get("end_date")
+        if end < datetime.today().date():
+            raise forms.ValidationError(_("Invalid End date."))
+        elif end - start > timedelta(days=14):
+            raise forms.ValidationError(_("搜索间隔不得超过14天"))
+        else:
+            return end
+
+    def clean(self):
+        start = self.cleaned_data.get("start_date")
+        end = self.cleaned_data.get("end_date")
+        if end < start:
+            raise forms.ValidationError(_("End date must be before start date."))
+
+
+class AppointmentForm(forms.ModelForm):
+    query = forms.CharField(
+        label=appointment_consults_text,
+        widget=forms.Textarea(
+            attrs={"placeholder": appointment_consults_help_text}
+        ),
+    )
+
+    class Meta:
+        model = Appointment
+        fields = ["title_prefix", "name", "email"]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={"placeholder": appointment_name_placeholder_text}
+            )
+        }
+
