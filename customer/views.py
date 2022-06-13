@@ -6,19 +6,16 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
 from django.utils.translation import gettext as _
-from django.utils.translation import pgettext as _p
-from django.utils.translation import ngettext as _n
-from django.views.decorators.clickjacking import xframe_options_exempt, xframe_options_sameorigin
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 
-from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm
+from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm, MeetingSlotFilter, AppointmentForm
 from customer.models import Customer
 from customer.utils import get_customer_info, get_news, get_index_list
 from staring.customerSettings import Languages
-from staring.models import Article, User, MeetingSlot
+from staring.models import Article, User, MeetingSlot, Appointment
 from staring.text import UserNotExist_text
 
 
@@ -43,6 +40,7 @@ def customer_login_view(request):
     param = {
         "page_title": _("星环-登录"),
         "languages": Languages,
+        "title_img": False,
         **get_customer_info(),
     }
 
@@ -94,6 +92,7 @@ def customer_register(request):
     param = {
         "page_title": _("星环-注册中心"),
         "languages": Languages,
+        "title_img": True,
         **get_customer_info(),
     }
 
@@ -131,6 +130,7 @@ def customer_center_view(request):
         "page_title": _("星环-我的主页"),
         "languages": Languages,
         "user": User.objects.get(uid=request.user.uid),
+        "title_img": True,
         # "profile": Customer.objects.get(user=request.user),
         **get_customer_info(),
     }
@@ -142,6 +142,7 @@ def customer_articles(request, article_id):
     param = {
         "page_title": _("星环"),
         "languages": Languages,
+        "title_img": True,
         **get_customer_info(),
     }
 
@@ -201,6 +202,7 @@ def customer_appointment_view (request):
         "page_title": _("星环-我的主页"),
         "languages": Languages,
         "user": request.user,
+        "title_img": True,
         **get_customer_info(),
     }
 
@@ -246,6 +248,7 @@ def customer_appointment_2_view(request, slot_id):
         "page_title": _("星环-我的主页"),
         "languages": Languages,
         "user": request.user,
+        "title_img": True,
         **get_customer_info(),
     }
 

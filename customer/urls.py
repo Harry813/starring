@@ -11,6 +11,7 @@ urlpatterns = [
     path('profile/', views.customer_center_view, name="CUSTCenter"),
     path('appointment/', views.customer_appointment_view, name="CUSTAppoint"),
     path('appointment/<str:slot_id>/', views.customer_appointment_2_view, name="CUSTAppoint2"),
+    path('appointment/payment/<str:appointment_id>/', views.customer_appointment_payment_view, name="CUSTAppointPay"),
     path('search/<int:page>/', views.customer_search_view, name="CUSTSearch"),
     path('contact_form/', views.customer_contact_form_frame, name="CUSTContact")
 ]
