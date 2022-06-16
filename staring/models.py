@@ -335,7 +335,7 @@ class MeetingSlot(models.Model):
 
     @property
     def is_available(self):
-        return self.availability > 0
+        return self.status == "AVAILABLE"
 
     @property
     def appointment(self):
@@ -348,7 +348,7 @@ class MeetingSlot(models.Model):
             "date": self.date,
             "start_time": self.start_time,
             "end_time": self.end_time,
-            "availability": self.availability,
+            "status": self.status,
         }
         return s
 
