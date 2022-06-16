@@ -304,9 +304,11 @@ class MeetingSlot(models.Model):
         verbose_name=meetingSlot_end_time_text,
     )
 
-    availability = models.PositiveIntegerField(
-        verbose_name=meetingSlot_availability_text,
-        default=1
+    status = models.CharField(
+        verbose_name=meetingSlot_status_text,
+        max_length=10,
+        choices=slot_status,
+        default="AVAILABLE",
     )
 
     @property
