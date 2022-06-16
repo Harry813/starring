@@ -54,15 +54,21 @@
                             </tr>
                             <tr>
                                 <th>{% trans "负责人" %}</th>
-                                <td>
-                                    {{ appointment.staff }}
-                                    <div class="float-end">
-                                        <a href="{% url 'ADMStaffEdit' appointment.staff.user.uid %}"
-                                           class="action-button edit-button">
-                                            <i class="align-middle" data-feather="user"></i>
-                                        </a>
-                                    </div>
-                                </td>
+                                {% if appointment.staff %}
+                                    <td>
+                                        {{ appointment.staff }}
+                                        <div class="float-end">
+                                            <a href="{% url 'ADMStaffEdit' appointment.staff.user.uid %}"
+                                               class="action-button edit-button">
+                                                <i class="align-middle" data-feather="user"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        {% trans "暂未分配咨询师" %}
+                                    </td>
+                                {% endif %}
                             </tr>
                             </tbody>
                         </table>
