@@ -147,9 +147,13 @@
                                 <li class="timeline-item">
                                     <strong>{{ update.title }}</strong>
                                     <span class="float-end text-muted text-sm">
-                                        {{ update.time_diff }}{% trans "前" %}
+                                        {{ update.time_diff }}
                                     </span>
                                     <p>{{ update.message }}</p>
+                                </li>
+                            {% empty %}
+                                <li>
+                                    {% trans "暂无动态" %}
                                 </li>
                             {% endfor %}
                         </ul>
