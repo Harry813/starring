@@ -448,12 +448,14 @@ class MeetingUpdate(models.Model):
     def time_diff(self):
         diff = datetime.datetime.now().replace(tzinfo=None) - self.created_at.replace(tzinfo=None)
         diff = diff.total_seconds()
-        if diff < 3600:
-            return f"{int(divmod(diff, 60)[0])} " + _("分钟")
+        if diff < 30:
+            return _("刚刚")
+        elif 30 <= diff < 3600:
+            return f"{int(diff // 60)} " + _("分钟前")
         elif 3600 <= diff < 86400:
-            return f"{int(divmod(diff, 3600)[0])} " + _("小时")
+            return f"{int(diff // 3600)} " + _("小时前")
         else:
-            return f"{int(divmod(diff, 86400)[0])} " + _("天")
+            return f"{int(diff // 86400)} " + _("天前")
 
     class Meta:
         ordering = ["last_update"]
