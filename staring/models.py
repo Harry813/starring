@@ -448,9 +448,9 @@ class MeetingUpdate(models.Model):
     def time_diff(self):
         diff = datetime.datetime.now().replace(tzinfo=None) - self.created_at.replace(tzinfo=None)
         diff = diff.total_seconds()
-        if diff < 30:
+        if diff < 60:
             return _("刚刚")
-        elif 30 <= diff < 3600:
+        elif 60 <= diff < 3600:
             return f"{int(diff // 60)} " + _("分钟前")
         elif 3600 <= diff < 86400:
             return f"{int(diff // 3600)} " + _("小时前")
