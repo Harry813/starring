@@ -495,3 +495,27 @@ class IndexSidebarForm(forms.ModelForm):
         super(IndexSidebarForm, self).__init__(*args, **kwargs)
         self.fields["url"].initial = "#"
 
+
+class AppointmentFilterForm(forms.Form):
+    start_datetime = forms.DateTimeField(
+        label=_("起始时间"),
+        required=False,
+    )
+
+    end_datetime = forms.DateTimeField(
+        label=_("结束时间"),
+        required=False,
+    )
+
+    status = forms.MultipleChoiceField(
+        label=_("状态"),
+        choices=meeting_status,
+        required=False,
+        help_text=_("按住ctrl键可多选"),
+    )
+
+    keyword = forms.CharField(
+        label=_("关键字"),
+        required=False,
+        help_text=_("可搜索ID/预留名称/E-mail"),
+    )
