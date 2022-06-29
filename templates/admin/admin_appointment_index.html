@@ -9,14 +9,95 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-12">
+        <div class="mb-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="row">
-                        <div class="col mt-0">
-                            <h5 class="card-title">{% translate '预约时间' %}</h5>
+                    <h5 class="card-title">{% translate '预约搜索' %}</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" class="row">
+                        {% csrf_token %}
+                        <div class="col-md h-100">
+                            <div class="row p-0">
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.start_datetime.id_for_label }}">
+                                        {{ form.start_datetime.label }}
+                                        {% if form.start_datetime.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.start_datetime class="form-control" type="datetime-local" %}
+                                    <div>
+                                        {% if form.start_datetime.errors %}
+                                            <p class="small" style="color: red;">{{ form.start_datetime.errors.0 }}</p>
+                                        {% elif form.start_datetime.help_text %}
+                                            <p class="small text-muted">{{ form.start_datetime.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.end_datetime.id_for_label }}">
+                                        {{ form.end_datetime.label }}
+                                        {% if form.end_datetime.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.end_datetime class="form-control" type="datetime-local" %}
+                                    <div>
+                                        {% if form.end_datetime.errors %}
+                                            <p class="small" style="color: red;">{{ form.end_datetime.errors.0 }}</p>
+                                        {% elif form.end_datetime.help_text %}
+                                            <p class="small text-muted">{{ form.end_datetime.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.keyword.id_for_label }}">
+                                        {{ form.keyword.label }}
+                                        {% if form.keyword.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.keyword class="form-control" %}
+                                    <div>
+                                        {% if form.keyword.errors %}
+                                            <p class="small" style="color: red;">{{ form.keyword.errors.0 }}</p>
+                                        {% elif form.keyword.help_text %}
+                                            <p class="small text-muted">{{ form.keyword.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-md h-100">
+                            <div class="col-sm-12 col-md-12 mb-3">
+                                <label class="form-label" for="{{ form.status.id_for_label }}">
+                                    {{ form.status.label }}
+                                    {% if form.status.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.status class="form-select" size="9" %}
+                                <div>
+                                    {% if form.status.errors %}
+                                        <p class="small" style="color: red;">{{ form.status.errors.0 }}</p>
+                                    {% elif form.status.help_text %}
+                                        <p class="small text-muted">{{ form.status.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <button class="w-100 btn btn-primary" type="submit">{% trans "搜索" %}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">{% translate '预约时间' %}</h5>
                 </div>
 
                 <table class="table table-striped table-padding">
