@@ -627,6 +627,41 @@ def admin_slot_multi_create_view(request):
 
 
 @login_required(login_url="ADMLogin")
+def admin_slot_edit_view (request, sid):
+    param = {
+        "page_title": _("星环-日程管理"),
+        "languages": Languages,
+        "active_page": "ADMSlotIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    slot = get_object_or_404(MeetingSlot, id=sid)
+    param["slot"] = slot
+
+    if request.method == "POST":
+        form = SlotEditForm(request.POST, initial=slot.as_property)
+        if form.is_valid():
+            d = form.cleaned_data.get("date")
+            start_time = form.cleaned_data.get("start_time")
+            end_time = form.cleaned_data.get("end_time")
+            start_datetime = datetime.datetime.combine(d, start_time)
+            end_datetime = datetime.datetime.combine(d, end_time)
+
+            slot.start_datetime = start_datetime
+            slot.end_datetime = end_datetime
+            slot.save()
+            return redirect("ADMSlotIndex", page=1)
+        else:
+            form = SlotEditForm(request.POST, initial=slot.as_property)
+    else:
+        form = SlotEditForm(initial=slot.as_property)
+
+    param["form"] = form
+    return render(request, "admin/admin_slot_edit.html", param)
+
+
+@login_required(login_url="ADMLogin")
 def admin_navi_sector_index_view(request):
     param = {
         "page_title": _("星环-导航栏管理"),
