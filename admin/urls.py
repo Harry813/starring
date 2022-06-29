@@ -45,8 +45,9 @@ urlpatterns = [
     path('upload/image/article/', views.admin_article_image_upload, name="ADMImageUpload"),
 
     # Appointment Related Convenient Methods
-    path('appointment/accept/<int:page>/<int:aptid>', views.admin_appointment_accept, name="ADMAppointmentAccept"),
-    path('appointment/reject/<int:page>/<int:aptid>', views.admin_appointment_reject, name="ADMAppointmentReject"),
-    path('appointment/success/<int:page>/<int:aptid>', views.admin_appointment_success, name="ADMAppointmentSuccess"),
-    path('appointment/timeout/<int:page>/<int:aptid>', views.admin_appointment_timeout, name="ADMAppointmentTimeout"),
+    path('appointment/accept/<int:page>/<str:aptid>', views.admin_appointment_accept, name="ADMAppointmentAccept"),
+    path('appointment/reject/<int:page>/<str:aptid>', views.admin_appointment_reject, name="ADMAppointmentReject"),
+    path('appointment/success/<int:page>/<str:aptid>', views.admin_appointment_success, name="ADMAppointmentSuccess"),
+    path('appointment/timeout/<int:page>/<str:aptid>', views.admin_appointment_timeout, name="ADMAppointmentTimeout"),
+    path('appointment/paid/<int:page>/<str:aptid>', views.admin_appointment_paid, name="ADMAppointmentPaid")
 ]
