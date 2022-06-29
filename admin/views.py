@@ -937,9 +937,37 @@ def admin_appointment_index_view(request, page):
         **get_admin_info(),
     }
 
-    cond = Q(status__in=["APPLY", "ACCEPT"])
+    status_q = Q(status__in=["APPLY", "ACCEPT", "CASH", "PAID"])
+    start_q = Q()
+    end_q = Q()
+    keyword_q = Q()
 
-    appointments = Appointment.objects.filter(cond)
+    if request.method == "POST":
+        form = AppointmentFilterForm(request.POST)
+        if form.is_valid():
+            start_datetime = form.cleaned_data["start_datetime"]
+            if start_datetime:
+                start_q = Q(slot__start_datetime__gte=start_datetime)
+
+            end_datetime = form.cleaned_data["end_datetime"]
+            if end_datetime:
+                end_q = Q(slot__end_datetime__lte=end_datetime)
+
+            status = form.cleaned_data["status"]
+            if len(status) > 0:
+                status_q = Q(status__in=status)
+
+            keyword = form.cleaned_data["keyword"]
+            if keyword:
+                keyword_q = Q(id__icontains=keyword) | Q(name__icontains=keyword) | Q(email__icontains=keyword)
+
+        else:
+            form = AppointmentFilterForm(request.POST)
+    else:
+        form = AppointmentFilterForm()
+    param["form"] = form
+
+    appointments = Appointment.objects.filter(start_q & end_q & status_q & keyword_q)
 
     p = Paginator(appointments, 10)
     appointments = p.get_page(page)
