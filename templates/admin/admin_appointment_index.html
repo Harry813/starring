@@ -119,20 +119,29 @@
                             <td>{{ appointment.get_status_display }}</td>
                             <td>{{ appointment.customer }}</td>
                             <td class="table-action">
-                                {% if appointment.status == "APPLY" %}
-                                    <a class="action-button check-button" href="{% url 'ADMAppointmentAccept' current_page appointment.id %}">
+                                {% if appointment.status == "CASH" %}
+                                    <a class="action-button check-button"
+                                       href="{% url 'ADMAppointmentPaid' current_page appointment.id %}">
+                                        <i class="fa-regular fa-dollar-sign fa-lg"></i>
+                                    </a>
+                                {% elif appointment.status == "PAID" %}
+                                    <a class="action-button check-button"
+                                       href="{% url 'ADMAppointmentAccept' current_page appointment.id %}">
                                         <i class="align-middle" data-feather="check"></i>
                                     </a>
 
-                                    <a class="action-button trash-button" href="{% url 'ADMAppointmentReject' current_page appointment.id %}">
+                                    <a class="action-button trash-button"
+                                       href="{% url 'ADMAppointmentReject' current_page appointment.id %}">
                                         <i class="align-middle" data-feather="x"></i>
                                     </a>
                                 {% elif appointment.status == "ACCEPT" %}
-                                    <a class="action-button check-button" href="{% url 'ADMAppointmentSuccess' current_page appointment.id %}">
+                                    <a class="action-button check-button"
+                                       href="{% url 'ADMAppointmentSuccess' current_page appointment.id %}">
                                         <i class="fa-regular fa-calendar-check fa-lg"></i>
                                     </a>
 
-                                    <a class="action-button trash-button" href="{% url 'ADMAppointmentTimeout' current_page appointment.id %}">
+                                    <a class="action-button trash-button"
+                                       href="{% url 'ADMAppointmentTimeout' current_page appointment.id %}">
                                         <i class="fa-regular fa-calendar-xmark fa-lg"></i>
                                     </a>
                                 {% else %}
@@ -140,7 +149,8 @@
                                 {% endif %}
                             </td>
                             <td class="table-action">
-                                <a class="action-button edit-button" href="{% url 'ADMAppointmentEdit' appointment.id %}">
+                                <a class="action-button edit-button"
+                                   href="{% url 'ADMAppointmentEdit' appointment.id %}">
                                     <i class="align-middle" data-feather="edit-2"></i>
                                 </a>
 
