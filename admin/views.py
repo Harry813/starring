@@ -1055,6 +1055,17 @@ def admin_appointment_timeout(request, page, aptid):
     return redirect("ADMAppointmentIndex", page)
 
 
+@login_required(login_url="ADMLogin")
+def admin_appointment_paid (request, page, aptid):
+    """Admin Convenience Function Paid"""
+    appointment = Appointment.objects.get(id=aptid)
+    appointment.status = "PAID"
+    appointment.save()
+    MeetingUpdate.objects.create(appointment=appointment, title=_("收费成功"),
+                                 message=_("预约状态改变，收费成功"))
+    return redirect("ADMAppointmentIndex", page)
+
+
 @csrf_exempt
 def admin_article_image_upload(request):
     if request.method == "POST":
