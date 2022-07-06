@@ -17,6 +17,7 @@
                 <ol class="mt-0">
                     <li>无法预约当日时间段</li>
                     <li>搜索间隔不得超过14天</li>
+                    <li>以加拿大温哥华时间为准</li>
                 </ol>
             {% endblocktranslate %}
         </div>
@@ -85,7 +86,7 @@
                 </tr>
             {% empty %}
                 <tr>
-                    <td>{% trans "暂无可用的预约时间槽" %}</td>
+                    <td class="text-center" colspan="3">{% trans "暂无可用的预约时间槽" %}</td>
                 </tr>
             {% endfor %}
             </tbody>
