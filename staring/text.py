@@ -198,6 +198,9 @@ staff_role_text = _("职位")
 # Translators: 员工模组{标签}
 staff_tag_text = _("标签")
 
+# Translators: 员工模组{咨询师资格}
+staff_is_consultant_text = _("咨询师资格")
+
 ###################################################################################################
 # customer.models.Customer  用户信息翻译
 ###################################################################################################
@@ -321,14 +324,19 @@ carouselArticle_intro_text = _("简介")
 # Translators: 预约时间表{日期}
 meetingSlot_date_text = _("日期")
 
-# Translators: 预约时间表{时间}
-meetingSlot_time_text = _("时间")
+# Translators: 预约时间表{开始时间}
+meetingSlot_start_time_text = _("开始时间")
+
+# Translators: 预约时间表{结束时间}
+meetingSlot_end_time_text = _("结束时间")
 
 # Translators: 预约时间表{剩余}
 meetingSlot_availability_text = _("剩余")
 
 # Translators: 预约时间表{上限}
-meetingSlot_maximum_text = _("上限")
+meetingSlot_maximum_text = _("上限"),
+
+meetingSlot_status_text = _("状态")
 
 
 ###################################################################################################
