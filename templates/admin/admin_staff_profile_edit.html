@@ -34,18 +34,18 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label" for="{{ staff_form.tag.id_for_label }}">
-                            {{ staff_form.tag.label }}
-                            {% if staff_form.tag.field.required %}
+                        <label class="form-label" for="{{ form.tag.id_for_label }}">
+                            {{ form.tag.label }}
+                            {% if form.tag.field.required %}
                                 <span style="color: red">*</span>
                             {% endif %}
                         </label>
-                        {% render_field staff_form.tag class="form-control" %}
+                        {% render_field form.tag class="form-control" %}
                         <div>
-                            {% if staff_form.tag.errors %}
-                                <p class="small" style="color: red;">{{ staff_form.tag.errors.0 }}</p>
-                            {% elif staff_form.tag.help_text %}
-                                <p class="small text-muted">{{ staff_form.tag.help_text }}</p>
+                            {% if form.tag.errors %}
+                                <p class="small" style="color: red;">{{ form.tag.errors.0 }}</p>
+                            {% elif form.tag.help_text %}
+                                <p class="small text-muted">{{ form.tag.help_text }}</p>
                             {% endif %}
                         </div>
                     </div>
@@ -62,35 +62,54 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label" for="{{ staff_form.department.id_for_label }}">
-                            {{ staff_form.department.label }}
-                            {% if staff_form.department.field.required %}
+                        <label class="form-label" for="{{ form.department.id_for_label }}">
+                            {{ form.department.label }}
+                            {% if form.department.field.required %}
                                 <span style="color: red">*</span>
                             {% endif %}
                         </label>
-                        {% render_field staff_form.department class="form-control" %}
+                        {% render_field form.department class="form-control" %}
                         <div>
-                            {% if staff_form.department.errors %}
-                                <p class="small" style="color: red;">{{ staff_form.department.errors.0 }}</p>
-                            {% elif staff_form.department.help_text %}
-                                <p class="small text-muted">{{ staff_form.department.help_text }}</p>
+                            {% if form.department.errors %}
+                                <p class="small" style="color: red;">{{ form.department.errors.0 }}</p>
+                            {% elif form.department.help_text %}
+                                <p class="small text-muted">{{ form.department.help_text }}</p>
                             {% endif %}
                         </div>
                     </div>
 
                     <div class="col-md-6 mb-3">
-                        <label class="form-label" for="{{ staff_form.role.id_for_label }}">
-                            {{ staff_form.role.label }}
-                            {% if staff_form.role.field.required %}
+                        <label class="form-label" for="{{ form.role.id_for_label }}">
+                            {{ form.role.label }}
+                            {% if form.role.field.required %}
                                 <span style="color: red">*</span>
                             {% endif %}
                         </label>
-                        {% render_field staff_form.role class="form-control" %}
+                        {% render_field form.role class="form-control" %}
                         <div>
-                            {% if staff_form.role.errors %}
-                                <p class="small" style="color: red;">{{ staff_form.role.errors.0 }}</p>
-                            {% elif staff_form.role.help_text %}
-                                <p class="small text-muted">{{ staff_form.role.help_text }}</p>
+                            {% if form.role.errors %}
+                                <p class="small" style="color: red;">{{ form.role.errors.0 }}</p>
+                            {% elif form.role.help_text %}
+                                <p class="small text-muted">{{ form.role.help_text }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <div class="form-check form-check-inline">
+                            {% render_field form.is_consultant class="form-check-input" type="checkbox" %}
+                            <span class="form-check-label">
+                                {{ form.is_consultant.label }}
+                                {% if form.is_consultant.field.required %}
+                                    <span style="color: red">*</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div>
+                            {% if form.is_consultant.errors %}
+                                <p class="small" style="color: red;">{{ form.is_consultant.errors.0 }}</p>
+                            {% elif form.is_consultant.help_text %}
+                                <p class="small text-muted">{{ form.is_consultant.help_text }}</p>
                             {% endif %}
                         </div>
                     </div>
@@ -99,12 +118,11 @@
                 <div class="row">
                     <div class="mb-3">
                         <small style="color: red">
-                            {{ staff_form.non_field_errors|striptags }}
+                            {{ form.non_field_errors|striptags }}
                         </small>
                     </div>
                 </div>
             </div>
-            <hr class="my-0">
             <div class="card-body">
                 <button type="submit" class="btn btn-primary w-100">
                     {% trans "提交" %}
