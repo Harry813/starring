@@ -50,5 +50,11 @@ class Staff(models.Model):
         blank=True
     )
 
+    is_consultant = models.BooleanField(
+        verbose_name=staff_is_consultant_text,
+        default=False,
+        blank=True,
+    )
+
     def __str__(self):
         return self.user.get_display_name()
