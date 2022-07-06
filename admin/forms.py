@@ -480,6 +480,12 @@ class AppointmentStatusForm(forms.ModelForm):
         fields = ["status"]
 
 
+class AppointmentAllocateForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ["staff"]
+
+
 class IndexSidebarForm(forms.ModelForm):
     reorder = forms.IntegerField(
         label=index_list_item_order_text,
