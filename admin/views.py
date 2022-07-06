@@ -1047,6 +1047,68 @@ def admin_appointment_edit_view(request, aptid):
 
 
 @login_required(login_url="ADMLogin")
+def admin_appointment_allocate_view(request, aptid=None):
+    param = {
+        "page_title": _("星环-预约管理"),
+        "languages": Languages,
+        "active_page": "ADMAppointmentIndex",
+        **get_basic_info(),
+        **get_admin_info(),
+    }
+    appointment = get_object_or_404(Appointment, id=aptid)
+    param["appointment"] = appointment
+
+    if request.method == "POST":
+        form = AppointmentAllocateForm(request.POST, instance=appointment)
+        staff_origin = appointment.staff
+
+        if form.is_valid():
+            form.save()
+            staff_after = form.cleaned_data["staff"]
+
+            if form.has_changed():
+                if staff_origin is None:
+                    MeetingUpdate.objects.create(appointment=appointment, title=_("咨询师添加"),
+                                                 message=_("咨询师 %(staff_after)s 为您服务") % {
+                                                     "staff_after": str(staff_after)
+                                                 })
+                elif staff_after is None:
+                    MeetingUpdate.objects.create(appointment=appointment, title=_("咨询师取消"),
+                                                 message=_("咨询师已被取消，请等待后续安排") % {
+                                                     "staff_after": str(staff_after)
+                                                 })
+                else:
+                    MeetingUpdate.objects.create(appointment=appointment, title=_("咨询师改变"),
+                                                 message=_("咨询师由 %(staff_origin)s 改变为 %(staff_after)s") % {
+                                                     "staff_after": str(staff_after), "staff_origin": str(staff_origin)
+                                                 })
+
+            return redirect("ADMAppointmentEdit", aptid=aptid)
+        else:
+            form = AppointmentAllocateForm(request.POST, instance=appointment)
+    else:
+        form = AppointmentAllocateForm(instance=appointment)
+
+    param["form"] = form
+    return render(request, "admin/admin_appointment_allocate.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_appointment_updates_view(request, aptid):
+    param = {
+        "page_title": _("星环-预约管理"),
+        "languages": Languages,
+        "active_page": "ADMAppointmentIndex",
+        **get_basic_info(),
+        **get_admin_info(),
+    }
+    appointment = get_object_or_404(Appointment, id=aptid)
+    param["appointment"] = appointment
+    param["updates"] = MeetingUpdate.objects.filter(appointment=appointment).order_by('-last_update')
+    return render(request, "admin/admin_appointment_updates.html", param)
+
+
+@login_required(login_url="ADMLogin")
 def admin_appointment_accept(request, page, aptid):
     """Admin Convenience Function Accept"""
     appointment = Appointment.objects.get(id=aptid)
