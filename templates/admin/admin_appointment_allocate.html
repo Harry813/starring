@@ -1,0 +1,51 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">
+            <a class="btn btn-link text-secondary" href="{% url 'ADMAppointmentEdit' appointment.id %}">
+                <i class="bi bi-arrow-left"></i>
+            </a> {% translate '分配咨询师' %}
+        </h1>
+        <div class="row mb-3">
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">{% translate "咨询师" %}</h5>
+                    </div>
+                    <div class="card-body">
+                        <form class="row" method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.staff.id_for_label }}">
+                                    {{ form.staff.label }}
+                                    {% if form.staff.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.staff class="form-control" %}
+                                <div>
+                                    {% if form.staff.errors %}
+                                        <p class="small" style="color: red;">{{ form.staff.errors.0 }}</p>
+                                    {% elif form.staff.help_text %}
+                                        <p class="small text-muted">{{ form.staff.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <button class="w-100 btn btn-primary" type="submit">提交</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
