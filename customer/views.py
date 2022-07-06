@@ -15,7 +15,7 @@ from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm,
 from customer.models import Customer
 from customer.utils import get_customer_info, get_news, get_index_list
 from staring.customerSettings import Languages
-from staring.models import Article, User, MeetingSlot, Appointment
+from staring.models import Article, User, MeetingSlot, Appointment, MeetingUpdate
 from staring.text import UserNotExist_text
 
 
