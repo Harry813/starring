@@ -11,7 +11,7 @@
     <div class="container-fluid p-0">
         <h1 class="h3 mb-3">{% translate '基础信息' %}</h1>
         <div class="row mb-3">
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title mb-0">{% translate "时间" %}</h5>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title mb-0">{% translate "相关人员" %}</h5>
@@ -58,6 +58,10 @@
                                     <td>
                                         {{ appointment.staff }}
                                         <div class="float-end">
+                                            <a href="{% url 'ADMAppointmentAllocate' appointment.id %}"
+                                               class="action-button edit-button">
+                                                <i class="align-middle" data-feather="edit-3"></i>
+                                            </a>
                                             <a href="{% url 'ADMStaffEdit' appointment.staff.user.uid %}"
                                                class="action-button edit-button">
                                                 <i class="align-middle" data-feather="user"></i>
@@ -67,6 +71,12 @@
                                 {% else %}
                                     <td>
                                         {% trans "暂未分配咨询师" %}
+                                        <div class="float-end">
+                                            <a href="{% url 'ADMAppointmentAllocate' appointment.id %}"
+                                               class="action-button edit-button">
+                                                <i class="align-middle" data-feather="user-plus"></i>
+                                            </a>
+                                        </div>
                                     </td>
                                 {% endif %}
                             </tr>
@@ -75,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title mb-0">{% translate "时间戳" %}</h5>
@@ -143,7 +153,7 @@
                     </div>
                     <div class="card-body">
                         <ul class="timeline mt-2 mb-0">
-                            {% for update in updates %}
+                            {% for update in updates|slice:":5" %}
                                 <li class="timeline-item">
                                     <strong>{{ update.title }}</strong>
                                     <span class="float-end text-muted text-sm">
@@ -158,6 +168,13 @@
                             {% endfor %}
                         </ul>
                     </div>
+                    {% if updates|length > 5 %}
+                        <div class="card-footer">
+                            <div class="text-center">
+                                <a href="{% url 'ADMAppointmentUpdates' appointment.id %}" class="text-reset">{% trans "查看更多" %}</a>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
