@@ -388,6 +388,7 @@ class Appointment(models.Model):
         verbose_name=appointment_staff_text,
         to="admin.Staff",
         on_delete=models.CASCADE,
+        limit_choices_to={'is_consultant': True},
         blank=True,
         null=True,
     )
