@@ -343,6 +343,9 @@ meetingSlot_status_text = _("状态")
 # staring.models.Appointment  预约模组
 ###################################################################################################
 
+# Translators: 预约{预约ID}
+appointments_id_text = _("预约ID")
+
 # Translators: 预约{客户}
 appointments_customer_text = _("客户")
 
@@ -366,6 +369,12 @@ appointment_create_text = _("创建时间")
 
 # Translators: 预约{最后更新}
 appointment_update_text = _("最后更新")
+
+# Translators: 预约{称谓}
+appointment_name_text = _("称谓")
+
+appointment_name_help_text = _("我们将如何称呼您")
+appointment_name_placeholder_text = _("姓名")
 
 
 ###################################################################################################
