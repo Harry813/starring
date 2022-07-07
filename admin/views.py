@@ -1107,6 +1107,34 @@ def admin_appointment_updates_view(request, aptid):
 
 
 @login_required(login_url="ADMLogin")
+def admin_appointment_update_create_view(request, aptid):
+    param = {
+        "page_title": _("星环-预约管理"),
+        "languages": Languages,
+        "active_page": "ADMAppointmentIndex",
+        **get_basic_info(),
+        **get_admin_info(),
+    }
+
+    appointment = get_object_or_404(Appointment, id=aptid)
+    param["appointment"] = appointment
+    initial = {"appointment": appointment}
+
+    if request.method == "POST":
+        form = MeetingUpdateForm(request.POST, initial=initial)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMAppointmentEdit", aptid)
+        else:
+            form = MeetingUpdateForm(request.POST, initial=initial)
+    else:
+        form = MeetingUpdateForm(initial=initial)
+
+    param["form"] = form
+    return render(request, "admin/admin_meeting_update_create.html", param)
+
+
+@login_required(login_url="ADMLogin")
 def admin_appointment_accept(request, page, aptid):
     """Admin Convenience Function Accept"""
     appointment = Appointment.objects.get(id=aptid)
