@@ -424,7 +424,7 @@ def admin_staff_profile_edit_view(request, staff_id):
         **get_admin_info()
     }
 
-    staff_profile = Staff.objects.get_or_create(user_id=staff_id, defaults={'user': User.objects.get(uid=staff_id)})
+    staff_profile = Staff.objects.get_or_create(user_id=staff_id, defaults={'user': User.objects.get(uid=staff_id)})[0]
     if request.method == "POST":
         form = StaffForm(request.POST, instance=staff_profile)
         if form.is_valid():
