@@ -159,7 +159,9 @@
                                     <span class="float-end text-muted text-sm">
                                         {{ update.time_diff }}
                                     </span>
-                                    <p>{{ update.message }}</p>
+                                    {% if update.message %}
+                                        <p>{{ update.message }}</p>
+                                    {% endif %}
                                 </li>
                             {% empty %}
                                 <li>
