@@ -525,3 +525,9 @@ class AppointmentFilterForm(forms.Form):
         required=False,
         help_text=_("可搜索ID/预留名称/E-mail"),
     )
+
+
+class MeetingUpdateForm(forms.ModelForm):
+    class Meta:
+        model = MeetingUpdate
+        fields = ["title", "attachment", "message", "appointment"]
