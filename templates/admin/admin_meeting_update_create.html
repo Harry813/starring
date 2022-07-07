@@ -1,0 +1,116 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+    <style>
+        .django-ckeditor-widget {
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block headJs %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{% translate '添加更新' %}</h1>
+        <form method="POST" class="row">
+            <div class="col-md-4">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">{% translate "基础" %}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.appointment.id_for_label }}">
+                                {{ form.appointment.label }}
+                                {% if form.appointment.field.required %}
+                                    <span style="color: red">*</span>
+                                {% endif %}
+                            </label>
+                            {% render_field form.appointment class="form-control" %}
+                            <div>
+                                {% if form.appointment.errors %}
+                                    <p class="small" style="color: red;">{{ form.appointment.errors.0 }}</p>
+                                {% elif form.appointment.help_text %}
+                                    <p class="small text-muted">{{ form.appointment.help_text }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.title.id_for_label }}">
+                                {{ form.title.label }}
+                                {% if form.title.field.required %}
+                                    <span style="color: red">*</span>
+                                {% endif %}
+                            </label>
+                            {% render_field form.title class="form-control" %}
+                            <div>
+                                {% if form.title.errors %}
+                                    <p class="small" style="color: red;">{{ form.title.errors.0 }}</p>
+                                {% elif form.title.help_text %}
+                                    <p class="small text-muted">{{ form.title.help_text }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">{% translate "附件" %}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            {% render_field form.attachment class="form-control" %}
+                            <div>
+                                {% if form.attachment.errors %}
+                                    <p class="small" style="color: red;">{{ form.attachment.errors.0 }}</p>
+                                {% elif form.attachment.help_text %}
+                                    <p class="small text-muted">{{ form.attachment.help_text }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <button class="w-100 btn btn-primary" type="submit">
+                                {% trans "提交" %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            {% trans "详细" %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            {{ form.message|safe }}
+                        </div>
+                        {% if form.message.errors %}
+                            <div class="mb-3">
+                                <p class="small" style="color: red;">{{ form.message.errors.0 }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
