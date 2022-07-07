@@ -587,7 +587,7 @@ def admin_slot_index_view(request, page):
         **get_admin_info()
     }
 
-    timeslots = MeetingSlot.objects.filter(date__gte=datetime.datetime.today())
+    timeslots = MeetingSlot.objects.filter(start_datetime__gte=datetime.datetime.today()).order_by("start_datetime")
 
     p = Paginator(timeslots, 10)
     timeslots = p.get_page(page)
@@ -599,7 +599,7 @@ def admin_slot_index_view(request, page):
 
 
 @login_required(login_url="ADMLogin")
-def admin_slot_multi_create_view(request):
+def admin_slot_create_view(request):
     param = {
         "page_title": _("星环-日程管理"),
         "languages": Languages,
@@ -619,7 +619,7 @@ def admin_slot_multi_create_view(request):
         form = SlotGeneratorForm()
 
     param["form"] = form
-    return render(request, "admin/admin_slot_multi_create.html", param)
+    return render(request, "admin/admin_slot_create.html", param)
 
 
 @login_required(login_url="ADMLogin")
