@@ -416,6 +416,13 @@ class Appointment(models.Model):
         auto_now=True,
     )
 
+    def __str__(self):
+        return _("预约: %(id)s-[%(name)s]-{%(time)s}") % {
+            "id": str(self.id)[-8:].capitalize(),
+            "name": str(self.name).strip(" "),
+            "time": f"{self.slot.date} {self.slot.start_time}-{self.slot.end_time}"
+        }
+
 
 class MeetingUpdate(models.Model):
     appointment = models.ForeignKey(
