@@ -31,7 +31,8 @@ def index(request):
         **get_customer_info()
     }
     if request.user_agent.is_mobile:
-        return render(request, "customer/tele/tele_index1.html", param)
+        # return render(request, "customer/tele/tele_index1.html", param)
+        return render(request, "customer/tele/tele_index.html", param)
     else:
         return render(request, "customer/index.html", param)
 
