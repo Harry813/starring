@@ -14,6 +14,8 @@ urlpatterns = [
     path('appointment/edit/<str:aptid>/', views.admin_appointment_edit_view, name="ADMAppointmentEdit"),
     path('appointment/allocate/<str:aptid>/', views.admin_appointment_allocate_view, name="ADMAppointmentAllocate"),
     path('appointment/updates/<str:aptid>/', views.admin_appointment_updates_view, name="ADMAppointmentUpdates"),
+    path('appointment/updates/create/<str:aptid>/', views.admin_appointment_update_create_view,
+         name="ADMAppointmentUpdateCreate"),
     path('customer/page/<int:page>/', views.admin_customer_index_view, name="ADMCustomerIndex"),
     path('customer/profile-<str:customer_id>/', views.admin_customer_edit_view, name="ADMCustomerEdit"),
     path('customer/profile-<str:customer_id>/basic/', views.admin_customer_basic_edit_view,
