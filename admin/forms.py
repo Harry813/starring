@@ -130,7 +130,7 @@ class StaffCreateForm(forms.Form):
     )
 
     email = forms.EmailField(
-        label=user_email_text,
+        label=email_text,
     )
 
     code = forms.ChoiceField(
