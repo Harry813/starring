@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block main_content %}
-    <form method="post">
+    <form id="CRS" method="post">
         {% csrf_token %}
         <div class="row mb-5" id="CRS_A">
             <div class="mb-3">
@@ -27,7 +27,7 @@
                 </h2>
             </div>
 
-            <div class="mb-3" id="CRS_A0">
+            <div class="mb-3 formfield" id="CRS_A0">
                 <label class="form-label" for="{{ form.marriage_status.id_for_label }}">
                     {{ form.marriage_status.label }}
                     {% if form.marriage_status.field.required %}
@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <div class="mb-3" id="CRS_A1">
+            <div class="mb-3 formfield" id="CRS_A1">
                 <label class="form-label" for="{{ form.age_group.id_for_label }}">
                     {{ form.age_group.label }}
                     {% if form.age_group.field.required %}
@@ -61,7 +61,7 @@
                 </div>
             </div>
 
-            <div class="mb-3" id="CRS_A2">
+            <div class="mb-3 formfield" id="CRS_A2">
                 <label class="form-label" for="{{ form.education_lv.id_for_label }}">
                     {{ form.education_lv.label }}
                     {% if form.education_lv.field.required %}
@@ -78,7 +78,7 @@
                 </div>
             </div>
 
-            <div class="mb-3" id="CRS_A2_1" style="padding-left: 2rem">
+            <div class="mb-3 formfield" id="CRS_A2_1" style="padding-left: 2rem">
                 <label class="form-label" for="{{ form.education_canadian.id_for_label }}">
                     {{ form.education_canadian.label }}
                     {% if form.education_canadian.field.required %}
@@ -96,7 +96,7 @@
             </div>
 
             {% comment %}
-            <div class="mb-3" id="CRS_A2_2">
+            <div class="mb-3 formfield" id="CRS_A2_2">
                 <label class="form-label" for="{{ form.education_canadian_lv.id_for_label }}">
                     {{ form.education_canadian_lv.label }}
                     {% if form.education_canadian_lv.field.required %}
@@ -114,7 +114,7 @@
             </div>
             {% endcomment %}
 
-            <div class="mb-3" id="CRS_A3">
+            <div class="mb-3 formfield" id="CRS_A3">
                 <label class="form-label" for="{{ form.valid_first_language.id_for_label }}">
                     {{ form.valid_first_language.label }}
                     {% if form.valid_first_language.field.required %}
@@ -131,7 +131,7 @@
                 </div>
             </div>
 
-            <div class="mb-3" id="CRS_A3_1" style="padding-left: 2rem">
+            <div class="mb-3 formfield" id="CRS_A3_1" style="padding-left: 2rem">
                 <label class="form-label" for="{{ form.first_language_test.id_for_label }}">
                     {{ form.first_language_test.label }}
                     {% if form.first_language_test.field.required %}
@@ -148,8 +148,8 @@
                 </div>
             </div>
 
-            <div class="mb-3 pe-0 row" id="CRS_A3_2" style="padding-left: 2rem">
-                <div class="col-md-6 col-lg-3 mb-3 language1">
+            <div class="mb-3 formfield pe-0 row" id="CRS_A3_2" style="padding-left: 2rem">
+                <div class="col-md-6 col-lg-3 mb-3 language1" id="CRS_A3_2_L">
                     <label class="form-label" for="{{ form.first_language_listening.id_for_label }}">
                         {{ form.first_language_listening.label }}
                         {% if form.first_language_listening.field.required %}
@@ -165,7 +165,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 mb-3 language1">
+                <div class="col-md-6 col-lg-3 mb-3 language1" id="CRS_A3_2_S">
                     <label class="form-label" for="{{ form.first_language_speaking.id_for_label }}">
                         {{ form.first_language_speaking.label }}
                         {% if form.first_language_speaking.field.required %}
@@ -181,7 +181,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 mb-3 language1">
+                <div class="col-md-6 col-lg-3 mb-3 language1" id="CRS_A3_2_R">
                     <label class="form-label" for="{{ form.first_language_reading.id_for_label }}">
                         {{ form.first_language_reading.label }}
                         {% if form.first_language_reading.field.required %}
@@ -197,7 +197,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 mb-3 language1">
+                <div class="col-md-6 col-lg-3 mb-3 language1" id="CRS_A3_2_W">
                     <label class="form-label" for="{{ form.first_language_writing.id_for_label }}">
                         {{ form.first_language_writing.label }}
                         {% if form.first_language_writing.field.required %}
@@ -215,7 +215,7 @@
                 </div>
             </div>
 
-            <div class="mb-3" id="CRS_A4">
+            <div class="mb-3 formfield" id="CRS_A4">
                 <label class="form-label" for="{{ form.valid_second_language.id_for_label }}">
                     {{ form.valid_second_language.label }}
                     {% if form.valid_second_language.field.required %}
@@ -232,7 +232,7 @@
                 </div>
             </div>
 
-            <div class="mb-3" id="CRS_A4_1" style="padding-left: 2rem">
+            <div class="mb-3 formfield" id="CRS_A4_1" style="padding-left: 2rem">
                 <label class="form-label" for="{{ form.second_language_test.id_for_label }}">
                     {{ form.second_language_test.label }}
                     {% if form.second_language_test.field.required %}
@@ -249,8 +249,8 @@
                 </div>
             </div>
 
-            <div class="mb-3 pe-0 row" id="CRS_A4_2" style="padding-left: 2rem">
-                <div class="col-md-6 col-lg-3 mb-3 language2">
+            <div class="mb-3 formfield pe-0 row" id="CRS_A4_2" style="padding-left: 2rem">
+                <div class="col-md-6 col-lg-3 mb-3 language2" id="CRS_A4_2_L">
                     <label class="form-label" for="{{ form.second_language_listening.id_for_label }}">
                         {{ form.second_language_listening.label }}
                         {% if form.second_language_listening.field.required %}
@@ -266,7 +266,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 mb-3 language2">
+                <div class="col-md-6 col-lg-3 mb-3 language2" id="CRS_A4_2_S">
                     <label class="form-label" for="{{ form.second_language_speaking.id_for_label }}">
                         {{ form.second_language_speaking.label }}
                         {% if form.second_language_speaking.field.required %}
@@ -282,7 +282,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 mb-3 language2">
+                <div class="col-md-6 col-lg-3 mb-3 language2" id="CRS_A4_2_R">
                     <label class="form-label" for="{{ form.second_language_reading.id_for_label }}">
                         {{ form.second_language_reading.label }}
                         {% if form.second_language_reading.field.required %}
@@ -298,7 +298,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 mb-3 language2">
+                <div class="col-md-6 col-lg-3 mb-3 language2" id="CRS_A4_2_W">
                     <label class="form-label" for="{{ form.second_language_writing.id_for_label }}">
                         {{ form.second_language_writing.label }}
                         {% if form.second_language_writing.field.required %}
@@ -316,7 +316,7 @@
                 </div>
             </div>
 
-            <div class="mb-3" id="CRS_A5">
+            <div class="mb-3 formfield" id="CRS_A5">
                 <label class="form-label" for="{{ form.work_experience.id_for_label }}">
                     {{ form.work_experience.label }}
                     {% if form.work_experience.field.required %}
@@ -332,6 +332,43 @@
                     {% endif %}
                 </div>
             </div>
+
+            <div class="mb-3 formfield" id="CRS_A5_1">
+                <label class="form-label" for="{{ form.NOC.id_for_label }}">
+                    {{ form.NOC.label }}
+                    {% if form.NOC.field.required %}
+                        <span style="color: red">*</span>
+                    {% endif %}
+                </label>
+                <div class="input-group">
+                    <span class="input-group-text">NOC</span>
+                    {% render_field form.NOC class="form-control select2-search" width="100%" %}
+                </div>
+                <div>
+                    {% if form.NOC.errors %}
+                        <p class="small" style="color: red;">{{ form.NOC.errors.0 }}</p>
+                    {% elif form.NOC.help_text %}
+                        <p class="small text-muted">{{ form.NOC.help_text }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="mb-3 formfield" id="CRS_A6">
+                <label class="form-label" for="{{ form.foreign_work_experience.id_for_label }}">
+                    {{ form.foreign_work_experience.label }}
+                    {% if form.foreign_work_experience.field.required %}
+                        <span style="color: red">*</span>
+                    {% endif %}
+                </label>
+                {% render_field form.foreign_work_experience class="form-control select2" style="width: 100%" %}
+                <div>
+                    {% if form.foreign_work_experience.errors %}
+                        <p class="small" style="color: red;">{{ form.foreign_work_experience.errors.0 }}</p>
+                    {% elif form.foreign_work_experience.help_text %}
+                        <p class="small text-muted">{{ form.foreign_work_experience.help_text }}</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
 
         <div class="row mb-5 marriage_base" id="CRS_B">
@@ -341,7 +378,7 @@
                 </h2>
             </div>
 
-            <div class="mb-3" id="CRS_B1">
+            <div class="mb-3 formfield" id="CRS_B1">
                 <label class="form-label" for="{{ form.partner_education_lv.id_for_label }}">
                     {{ form.partner_education_lv.label }}
                     {% if form.partner_education_lv.field.required %}
@@ -358,7 +395,7 @@
                 </div>
             </div>
 
-            <div class="mb-3" id="CRS_B2">
+            <div class="mb-3 formfield" id="CRS_B2">
                 <label class="form-label" for="{{ form.valid_partner_language.id_for_label }}">
                     {{ form.valid_partner_language.label }}
                     {% if form.valid_partner_language.field.required %}
@@ -375,7 +412,7 @@
                 </div>
             </div>
 
-            <div class="mb-3" id="CRS_B2_1" style="padding-left: 2rem">
+            <div class="mb-3 formfield" id="CRS_B2_1" style="padding-left: 2rem">
                 <label class="form-label" for="{{ form.partner_language_test.id_for_label }}">
                     {{ form.partner_language_test.label }}
                     {% if form.partner_language_test.field.required %}
@@ -392,8 +429,8 @@
                 </div>
             </div>
 
-            <div class="mb-3 pe-0 row" id="CRS_B2_2" style="padding-left: 2rem">
-                <div class="col-md-6 col-lg-3 mb-3 language3">
+            <div class="mb-3 formfield pe-0 row" id="CRS_B2_2" style="padding-left: 2rem">
+                <div class="col-md-6 col-lg-3 mb-3 language3" id="CRS_B2_2_L">
                     <label class="form-label" for="{{ form.partner_language_listening.id_for_label }}">
                         {{ form.partner_language_listening.label }}
                         {% if form.partner_language_listening.field.required %}
@@ -409,7 +446,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 mb-3 language3">
+                <div class="col-md-6 col-lg-3 mb-3 language3" id="CRS_B2_2_S">
                     <label class="form-label" for="{{ form.partner_language_speaking.id_for_label }}">
                         {{ form.partner_language_speaking.label }}
                         {% if form.partner_language_speaking.field.required %}
@@ -425,7 +462,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 mb-3 language3">
+                <div class="col-md-6 col-lg-3 mb-3 language3" id="CRS_B2_2_R">
                     <label class="form-label" for="{{ form.partner_language_reading.id_for_label }}">
                         {{ form.partner_language_reading.label }}
                         {% if form.partner_language_reading.field.required %}
@@ -441,7 +478,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 mb-3 language3">
+                <div class="col-md-6 col-lg-3 mb-3 language3" id="CRS_B2_2_W">
                     <label class="form-label" for="{{ form.partner_language_writing.id_for_label }}">
                         {{ form.partner_language_writing.label }}
                         {% if form.partner_language_writing.field.required %}
@@ -459,7 +496,7 @@
                 </div>
             </div>
 
-            <div class="mb-3" id="CRS_B3">
+            <div class="mb-3 formfield" id="CRS_B3">
                 <label class="form-label" for="{{ form.partner_work_experience.id_for_label }}">
                     {{ form.partner_work_experience.label }}
                     {% if form.partner_work_experience.field.required %}
@@ -484,7 +521,7 @@
                 </h2>
             </div>
 
-            <div class="mb-3" id="CRS_C1">
+            <div class="mb-3 formfield" id="CRS_C1">
                 <label class="form-label" for="{{ form.valid_certificate.id_for_label }}">
                     {{ form.valid_certificate.label }}
                     {% if form.valid_certificate.field.required %}
@@ -501,7 +538,7 @@
                 </div>
             </div>
 
-            <div class="mb-3" id="CRS_C2">
+            <div class="mb-3 formfield" id="CRS_C2">
                 <label class="form-label" for="{{ form.valid_job_offer.id_for_label }}">
                     {{ form.valid_job_offer.label }}
                     {% if form.valid_job_offer.field.required %}
@@ -518,7 +555,7 @@
                 </div>
             </div>
 
-            <div class="mb-3" id="CRS_C3">
+            <div class="mb-3 formfield" id="CRS_C3">
                 <label class="form-label" for="{{ form.valid_nomination.id_for_label }}">
                     {{ form.valid_nomination.label }}
                     {% if form.valid_nomination.field.required %}
@@ -535,7 +572,7 @@
                 </div>
             </div>
 
-            <div class="mb-3 marriage_base" id="CRS_C4">
+            <div class="mb-3 formfield marriage_base" id="CRS_C4CRS_C4">
                 <label class="form-label" for="{{ form.valid_partner_citizen.id_for_label }}">
                     {{ form.valid_partner_citizen.label }}
                     {% if form.valid_partner_citizen.field.required %}
@@ -564,473 +601,50 @@
 {% block js %}
     <script>
         const hidden_sections = [
-            "#CRS_A1", "#CRS_A2", "#CRS_A2_1", "#CRS_A3", "#CRS_A3_1", "#CRS_A3_2", "#CRS_A4", "#CRS_A4_1", "#CRS_A4_2",
-            "#CRS_A5", "#CRS_B", "#CRS_B1", "#CRS_B2", "#CRS_B2_1", "#CRS_B2_2", "#CRS_B3", "#CRS_C", "#CRS_C1",
-            "#CRS_C2", "#CRS_C3", "#CRS_C4", "#CRS_Submit"
+            "#CRS_A0", "#CRS_A1", "#CRS_A2", "#CRS_A2_1", "#CRS_A3", "#CRS_A3_1", "#CRS_A3_2", "#CRS_A4", "#CRS_A4_1",
+            "#CRS_A4_2", "#CRS_A5", "#CRS_A5_1", "#CRS_A6", "#CRS_B", "#CRS_B1", "#CRS_B2", "#CRS_B2_1", "#CRS_B2_2", "#CRS_B3",
+            "#CRS_C", "#CRS_C1", "#CRS_C2", "#CRS_C3", "#CRS_C4", "#CRS_Submit"
         ]
 
         function hide_after(t) {
-            if (typeof t === "string") {
-                t = hidden_sections.indexOf(t) + 1
-            }
+            t = hidden_sections.indexOf(t) + 1;
             for (let i = t; i < hidden_sections.length; i++) {
                 $(hidden_sections[i]).hide();
-                let select = $(hidden_sections[i] + " .select2")
-                if (select.val() !== "") {
-                    select.val('').trigger('change');
-                }
-                let input = $(hidden_sections[i] + " input")
+                let input = $(hidden_sections[i] + " .form-control");
                 if (input.val() !== "") {
                     input.val('').trigger('change');
                 }
             }
+
+            let submit_button = $("#CRS_Submit button")
+            if (!submit_button.is(":disabled")) {
+                submit_button.prop("disabled", true);
+            }
         }
 
         function end() {
+            $("#CRS_Submit button").prop("disabled", false);
             $("#CRS_Submit").show()
-            setTimeout(function () {
-                $("#CRS_Submit button").trigger('focus')
-            }, 50)
         }
 
         $(document).ready(function () {
+            $("#CRS").trigger("reset");
             $(".select2").select2({
                 minimumResultsForSearch: Infinity,
                 width: 'resolve',
                 theme: "bootstrap-5",
             });
-            hide_after(0);
+
+            $(".select2-search").select2({
+                width: 'resolve',
+                theme: "bootstrap-5",
+            });
+            hide_after("#CRS_A0");
         })
 
-
-        $(':input').focus(function () {
-            let center = $(window).height() / 2;
-            let top = $(this).offset().top;
-            if (top > center) {
-                $(window).scrollTop(top - center);
-            }
+        $(document).on("keydown", "form", function (event) {
+            return event.key !== "Enter";
         });
-
     </script>
-    <script>
-        $("#{{ form.marriage_status.id_for_label }}").change(() => {
-            let marriage_status = $("#{{ form.marriage_status.id_for_label }}").val();
-            if (marriage_status) {
-                $("#CRS_A1").show();
-                setTimeout(function () {
-                    $("#CRS_A1 .form-control").trigger('focus')
-                }, 50)
-                if (marriage_status === "0") {
-                    $(".marriage_base").hide();
-                } else if (marriage_status === "1") {
-                    let work_experience = $("#{{ form.work_experience.id_for_label }}").val()
-                    let valid_partner_citizen = $("#{{ form.valid_partner_citizen.id_for_label }}").val()
-                    if (work_experience) {
-                        $("#CRS_B").show();
-                        $("#CRS_B1").show();
-                    } else if (work_experience && valid_partner_citizen) {
-                        $("#CRS_B").show();
-                        $("#CRS_B1").show();
-                        $("#CRS_C4").show();
-                    }
-                }
-                $(".marriage_base input").val('').trigger('change');
-            } else {
-                hide_after(0);
-            }
-        })
-
-        $("#{{ form.age_group.id_for_label }}").change(() => {
-            let age_group = $("#{{ form.age_group.id_for_label }}").val();
-            if (age_group < 0) {
-                hide_after(1);
-                end();
-            } else if (age_group >= 0) {
-                $("#CRS_A2").show();
-                setTimeout(function () {
-                    $("#CRS_A2 .form-control").trigger('focus')
-                }, 50)
-            } else {
-                hide_after(1);
-            }
-        })
-
-        $("#{{ form.education_lv.id_for_label }}").change(() => {
-            let education_lv = $("#{{ form.education_lv.id_for_label }}").val();
-            if (education_lv === "") {
-                hide_after(2);
-            } else {
-                $("#CRS_A2_1").show();
-                setTimeout(function () {
-                    $("#CRS_A2_1 .form-control").trigger('focus')
-                }, 50)
-            }
-        })
-
-        $("#{{ form.education_canadian.id_for_label }}").change(() => {
-            let education_canadian = $("#{{ form.education_canadian.id_for_label }}").val();
-
-            if (education_canadian) {
-                $("#CRS_A3").show();
-                setTimeout(function () {
-                    $("#CRS_A3 .form-control").trigger('focus')
-                }, 50)
-            } else {
-                hide_after(3)
-            }
-        })
-
-        $("#{{ form.valid_first_language.id_for_label }}").change(() => {
-            let valid_first_language = $("#{{ form.valid_first_language.id_for_label}}").val()
-            if (valid_first_language === "False") {
-                hide_after(4);
-                end();
-            } else {
-                $("#CRS_A3_1").show()
-                setTimeout(function () {
-                    $("#CRS_A3_1 .form-control").trigger('focus')
-                }, 50)
-            }
-        })
-
-        $("#{{ form.first_language_test.id_for_label }}").change(() => {
-            let first_language_test = $("#{{ form.first_language_test.id_for_label}}").val()
-            setTimeout(function () {
-                $("#{{ form.first_language_listening.id_for_label }}").trigger('focus')
-            }, 50)
-            if (first_language_test) {
-                $("#{{ form.first_language_listening.id_for_label }}").val("").trigger("change")
-                $("#{{ form.first_language_speaking.id_for_label }}").val("").trigger("change")
-                $("#{{ form.first_language_reading.id_for_label }}").val("").trigger("change")
-                $("#{{ form.first_language_writing.id_for_label }}").val("").trigger("change")
-
-                if (first_language_test === "0") {
-                    $("#{{ form.first_language_listening.id_for_label }}").attr("max", 12).attr("step", 1)
-                    $("#{{ form.first_language_speaking.id_for_label }}").attr("max", 12).attr("step", 1)
-                    $("#{{ form.first_language_reading.id_for_label }}").attr("max", 12).attr("step", 1)
-                    $("#{{ form.first_language_writing.id_for_label }}").attr("max", 12).attr("step", 1)
-                } else if (first_language_test === "1") {
-                    $("#{{ form.first_language_listening.id_for_label }}").attr("max", 9).attr("step", 0.5)
-                    $("#{{ form.first_language_speaking.id_for_label }}").attr("max", 9).attr("step", 0.5)
-                    $("#{{ form.first_language_reading.id_for_label }}").attr("max", 9).attr("step", 0.5)
-                    $("#{{ form.first_language_writing.id_for_label }}").attr("max", 9).attr("step", 0.5)
-                } else if (first_language_test === "2") {
-                    $("#{{ form.first_language_listening.id_for_label }}").attr("max", 300).attr("step", 1)
-                    $("#{{ form.first_language_speaking.id_for_label }}").attr("max", 450).attr("step", 1)
-                    $("#{{ form.first_language_reading.id_for_label }}").attr("max", 360).attr("step", 1)
-                    $("#{{ form.first_language_writing.id_for_label }}").attr("max", 450).attr("step", 1)
-                } else if (first_language_test === "3") {
-                    $("#{{ form.first_language_listening.id_for_label }}").attr("max", 699).attr("step", 1)
-                    $("#{{ form.first_language_speaking.id_for_label }}").attr("max", 20).attr("step", 1)
-                    $("#{{ form.first_language_reading.id_for_label }}").attr("max", 699).attr("step", 1)
-                    $("#{{ form.first_language_writing.id_for_label }}").attr("max", 20).attr("step", 1)
-                }
-
-                $("#CRS_A3_2").show()
-            } else {
-                hide_after(5)
-            }
-        })
-
-        $(".language1 input").change(() => {
-            let first_language_listening = $("#{{ form.first_language_listening.id_for_label }}").val()
-            let first_language_speaking = $("#{{ form.first_language_speaking.id_for_label }}").val()
-            let first_language_reading = $("#{{ form.first_language_reading.id_for_label }}").val()
-            let first_language_writing = $("#{{ form.first_language_writing.id_for_label }}").val()
-
-            if (first_language_listening &&
-                first_language_speaking &&
-                first_language_reading &&
-                first_language_writing
-            ) {
-                $("#CRS_A4").show()
-                setTimeout(function () {
-                    $("#CRS_A4 .form-control").trigger('focus')
-                }, 50)
-            } else if (
-                first_language_listening === "" ||
-                first_language_speaking === "" ||
-                first_language_reading === "" ||
-                first_language_writing === ""
-            ) {
-                hide_after(6)
-            }
-        })
-
-        $("#{{ form.valid_second_language.id_for_label }}").change(() => {
-            let valid_second_language = $("#{{ form.valid_second_language.id_for_label}}").val()
-            if (valid_second_language === "False") {
-                hide_after(7);
-                $("#CRS_A5").show()
-                setTimeout(function () {
-                    $("#CRS_A5 .form-control").trigger('focus')
-                }, 50)
-            } else if (valid_second_language === "True") {
-                hide_after(7);
-                let first_language = $("#{{ form.first_language_test.id_for_label }}")
-                let second_language = $("#{{ form.second_language_test.id_for_label }}")
-                let options = $("#{{ form.first_language_test.id_for_label }} option")
-                let values = $.map(options, function (option) {
-                    return option.value;
-                });
-                second_language.empty();
-
-                if (first_language.val() in ["0", "1"]) {
-                    second_language.append(new Option("---------", ""));
-                    second_language.append(new Option($("#{{ form.first_language_test.id_for_label }} option[value=2]").text(), values[3]));
-                    second_language.append(new Option($("#{{ form.first_language_test.id_for_label }} option[value=3]").text(), values[4]));
-                } else {
-                    second_language.append(new Option("---------", ""));
-                    second_language.append(new Option($("#{{ form.first_language_test.id_for_label }} option[value=0]").text(), values[1]));
-                    second_language.append(new Option($("#{{ form.first_language_test.id_for_label }} option[value=1]").text(), values[2]));
-                }
-                $("#CRS_A4_1").show()
-                setTimeout(function () {
-                    $("#CRS_A4_1 .form-control").trigger('focus')
-                }, 50)
-            } else {
-                hide_after(7);
-            }
-        })
-
-        $("#{{ form.second_language_test.id_for_label }}").change(() => {
-            let second_language_test = $("#{{ form.second_language_test.id_for_label}}").val()
-            if (second_language_test) {
-                $("#{{ form.second_language_listening.id_for_label }}").val("").trigger("change")
-                $("#{{ form.second_language_speaking.id_for_label }}").val("").trigger("change")
-                $("#{{ form.second_language_reading.id_for_label }}").val("").trigger("change")
-                $("#{{ form.second_language_writing.id_for_label }}").val("").trigger("change")
-
-                if (second_language_test === "0") {
-                    $("#{{ form.second_language_listening.id_for_label }}").attr("max", 12).attr("step", 1)
-                    $("#{{ form.second_language_speaking.id_for_label }}").attr("max", 12).attr("step", 1)
-                    $("#{{ form.second_language_reading.id_for_label }}").attr("max", 12).attr("step", 1)
-                    $("#{{ form.second_language_writing.id_for_label }}").attr("max", 12).attr("step", 1)
-                } else if (second_language_test === "1") {
-                    $("#{{ form.second_language_listening.id_for_label }}").attr("max", 9).attr("step", 0.5)
-                    $("#{{ form.second_language_speaking.id_for_label }}").attr("max", 9).attr("step", 0.5)
-                    $("#{{ form.second_language_reading.id_for_label }}").attr("max", 9).attr("step", 0.5)
-                    $("#{{ form.second_language_writing.id_for_label }}").attr("max", 9).attr("step", 0.5)
-                } else if (second_language_test === "2") {
-                    $("#{{ form.second_language_listening.id_for_label }}").attr("max", 300).attr("step", 1)
-                    $("#{{ form.second_language_speaking.id_for_label }}").attr("max", 450).attr("step", 1)
-                    $("#{{ form.second_language_reading.id_for_label }}").attr("max", 360).attr("step", 1)
-                    $("#{{ form.second_language_writing.id_for_label }}").attr("max", 450).attr("step", 1)
-                } else if (second_language_test === "3") {
-                    $("#{{ form.second_language_listening.id_for_label }}").attr("max", 699).attr("step", 1)
-                    $("#{{ form.second_language_speaking.id_for_label }}").attr("max", 20).attr("step", 1)
-                    $("#{{ form.second_language_reading.id_for_label }}").attr("max", 699).attr("step", 1)
-                    $("#{{ form.second_language_writing.id_for_label }}").attr("max", 20).attr("step", 1)
-                }
-
-                $("#CRS_A4_2").show()
-                setTimeout(function () {
-                    $("#CRS_A4_2 .form-control").trigger('focus')
-                }, 50)
-            } else {
-                hide_after(8)
-            }
-        })
-
-        $(".language2 input").change(() => {
-            let second_language_listening = $("#{{ form.second_language_listening.id_for_label }}").val()
-            let second_language_speaking = $("#{{ form.second_language_speaking.id_for_label }}").val()
-            let second_language_reading = $("#{{ form.second_language_reading.id_for_label }}").val()
-            let second_language_writing = $("#{{ form.second_language_writing.id_for_label }}").val()
-
-            if (second_language_listening &&
-                second_language_speaking &&
-                second_language_reading &&
-                second_language_writing
-            ) {
-                $("#CRS_A5").show()
-                setTimeout(function () {
-                    $("#CRS_A5 .form-control").trigger('focus')
-                }, 50)
-            } else if (
-                second_language_listening === "" ||
-                second_language_speaking === "" ||
-                second_language_reading === "" ||
-                second_language_writing === ""
-            ) {
-                hide_after(9)
-            }
-        })
-
-        $("#{{ form.work_experience.id_for_label }}").change(() => {
-            let work_experience = $("#{{ form.work_experience.id_for_label }}").val();
-            let marriage_status = $("#{{ form.marriage_status.id_for_label }}").val();
-            console.log(work_experience === "5")
-
-            if (work_experience === "0") {
-                end();
-                hide_after(10);
-            } else if (work_experience in ["1", "2", "3", "4", "5", "*"]) {
-                if (marriage_status === "1") {
-                    $("#CRS_B").show()
-                    $("#CRS_B1").show()
-                    setTimeout(function () {
-                        $("#CRS_B1 .form-control").trigger('focus')
-                    }, 50)
-                } else if (marriage_status === "0") {
-                    $("#CRS_C").show()
-                    $("#CRS_C1").show()
-                    setTimeout(function () {
-                        $("#CRS_C1 .form-control").trigger('focus')
-                    }, 50)
-                }
-            } else {
-                hide_after(10);
-            }
-        })
-
-        $("#{{ form.partner_education_lv.id_for_label }}").change(() => {
-            let partner_education_lv = $("#{{ form.partner_education_lv.id_for_label }}").val()
-            if (partner_education_lv) {
-                $("#CRS_B2").show()
-                setTimeout(function () {
-                    $("#CRS_B2 .form-control").trigger('focus')
-                }, 50)
-            } else {
-                hide_after("#CRS_B2")
-            }
-        })
-
-        $("#{{ form.valid_partner_language.id_for_label }}").change(() => {
-            let valid_partner_language = $("#{{ form.valid_partner_language.id_for_label }}").val()
-            console.log(valid_partner_language)
-            if (valid_partner_language === "True") {
-                $("#CRS_B2_1").show()
-                setTimeout(function () {
-                    $("#CRS_B2_1 .form-control").trigger('focus')
-                }, 50)
-            } else if (valid_partner_language === "False") {
-                hide_after("#CRS_B2")
-                $("#CRS_B3").show()
-                setTimeout(function () {
-                    $("#CRS_B3 .form-control").trigger('focus')
-                }, 50)
-            } else {
-                hide_after("#CRS_B2_1")
-            }
-        })
-
-        $("#{{ form.partner_language_test.id_for_label }}").change(() => {
-            let partner_language_test = $("#{{ form.partner_language_test.id_for_label}}").val()
-            if (partner_language_test) {
-                $("#{{ form.partner_language_listening.id_for_label }}").val("").trigger("change")
-                $("#{{ form.partner_language_speaking.id_for_label }}").val("").trigger("change")
-                $("#{{ form.partner_language_reading.id_for_label }}").val("").trigger("change")
-                $("#{{ form.partner_language_writing.id_for_label }}").val("").trigger("change")
-
-                if (partner_language_test === "0") {
-                    $("#{{ form.partner_language_listening.id_for_label }}").attr("max", 12).attr("step", 1)
-                    $("#{{ form.partner_language_speaking.id_for_label }}").attr("max", 12).attr("step", 1)
-                    $("#{{ form.partner_language_reading.id_for_label }}").attr("max", 12).attr("step", 1)
-                    $("#{{ form.partner_language_writing.id_for_label }}").attr("max", 12).attr("step", 1)
-                } else if (partner_language_test === "1") {
-                    $("#{{ form.partner_language_listening.id_for_label }}").attr("max", 9).attr("step", 0.5)
-                    $("#{{ form.partner_language_speaking.id_for_label }}").attr("max", 9).attr("step", 0.5)
-                    $("#{{ form.partner_language_reading.id_for_label }}").attr("max", 9).attr("step", 0.5)
-                    $("#{{ form.partner_language_writing.id_for_label }}").attr("max", 9).attr("step", 0.5)
-                } else if (partner_language_test === "2") {
-                    $("#{{ form.partner_language_listening.id_for_label }}").attr("max", 300).attr("step", 1)
-                    $("#{{ form.partner_language_speaking.id_for_label }}").attr("max", 450).attr("step", 1)
-                    $("#{{ form.partner_language_reading.id_for_label }}").attr("max", 360).attr("step", 1)
-                    $("#{{ form.partner_language_writing.id_for_label }}").attr("max", 450).attr("step", 1)
-                } else if (partner_language_test === "3") {
-                    $("#{{ form.partner_language_listening.id_for_label }}").attr("max", 699).attr("step", 1)
-                    $("#{{ form.partner_language_speaking.id_for_label }}").attr("max", 20).attr("step", 1)
-                    $("#{{ form.partner_language_reading.id_for_label }}").attr("max", 699).attr("step", 1)
-                    $("#{{ form.partner_language_writing.id_for_label }}").attr("max", 20).attr("step", 1)
-                }
-
-                $("#CRS_B2_2").show()
-                setTimeout(function () {
-                    $("#CRS_B2_2 .form-control").trigger('focus')
-                }, 50)
-            } else {
-                hide_after("#CRS_B2_2")
-            }
-        })
-
-        $(".language3 input").change(() => {
-            let partner_language_listening = $("#{{ form.partner_language_listening.id_for_label }}").val()
-            let partner_language_speaking = $("#{{ form.partner_language_speaking.id_for_label }}").val()
-            let partner_language_reading = $("#{{ form.partner_language_reading.id_for_label }}").val()
-            let partner_language_writing = $("#{{ form.partner_language_writing.id_for_label }}").val()
-
-            if (partner_language_listening &&
-                partner_language_speaking &&
-                partner_language_reading &&
-                partner_language_writing
-            ) {
-                $("#CRS_B3").show()
-                setTimeout(function () {
-                    $("#CRS_B3 .form-control").trigger('focus')
-                }, 50)
-            } else if (
-                partner_language_listening === "" ||
-                partner_language_speaking === "" ||
-                partner_language_reading === "" ||
-                partner_language_writing === ""
-            ) {
-                hide_after("#CRS_B2_2")
-            }
-        })
-
-        $("#{{ form.partner_work_experience.id_for_label }}").change(() => {
-            let partner_work_experience = $("#{{ form.partner_work_experience.id_for_label }}").val()
-            if (partner_work_experience) {
-                $("#CRS_C").show()
-                $("#CRS_C1").show()
-                setTimeout(function () {
-                    $("#CRS_C1 .form-control").trigger('focus')
-                }, 50)
-            } else {
-                hide_after("#CRS_C")
-            }
-        })
-
-        $("#{{ form.valid_certificate.id_for_label }}").change(() => {
-            let valid_certificate = $("#{{ form.valid_certificate.id_for_label }}").val()
-            if (valid_certificate) {
-                $("#CRS_C2").show()
-                setTimeout(function () {
-                    $("#CRS_C2 .form-control").trigger('focus')
-                }, 50)
-            } else {
-                hide_after("#CRS_C1")
-            }
-        })
-
-        $("#{{ form.valid_job_offer.id_for_label }}").change(() => {
-            let valid_job_offer = $("#{{ form.valid_job_offer.id_for_label }}").val()
-            if (valid_job_offer) {
-                $("#CRS_C3").show()
-                setTimeout(function () {
-                    $("#CRS_C3 .form-control").trigger('focus')
-                }, 50)
-            } else {
-                hide_after("#CRS_C3")
-            }
-        })
-
-        $("#{{ form.valid_nomination.id_for_label }}").change(() => {
-            let valid_nomination = $("#{{ form.valid_nomination.id_for_label }}").val()
-            let marriage_status = $("#{{ form.marriage_status.id_for_label }}").val()
-            if (valid_nomination) {
-                if (marriage_status === "1") {
-                    $("#CRS_C4").show()
-                    setTimeout(function () {
-                        $("#CRS_C4 .form-control").trigger('focus')
-                    }, 50)
-                } else {
-                    end()
-                }
-            } else {
-                hide_after("#CRS_C3")
-            }
-        })
-    </script>
+    <script src="{% static 'JS/crs.js' %}"></script>
 {% endblock %}

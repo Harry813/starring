@@ -1,15 +1,17 @@
 from django.utils.translation import gettext as _
 
+from staring import NOC
+
 marriage_status_label = _("1. What is your marriage status?")
 marriage_status_text = _("婚姻状况")
 marriage_status = [
     (0, _("Never Married / Single")),
     (1, _("Annulled Marriage")),
-    (1, _("Common-Law, Married")),
-    (1, _("Married")),
-    (0, _("Widowed")),
-    (0, _("Divorced / Separate")),
-    (0, _("Legally Separated")),
+    (2, _("Common-Law, Married")),
+    (3, _("Married")),
+    (4, _("Widowed")),
+    (5, _("Divorced / Separate")),
+    (6, _("Legally Separated")),
 ]
 
 age_group_label = _("2. Age")
@@ -120,6 +122,14 @@ second_writing_text = _("第二-写作")
 
 work_experience_label = _("6. In the last ten years, how many years of skilled work experience in Canada do you have?")
 work_experience_text = _("工作经历")
+
+NOC_text = _("NOC编号")
+NOC_label = _("7. What is your NOC number?")
+
+foreign_work_experience_label = _("8. In the last ten years, how many years of skilled work experience in other "
+                                  "countries do you have?")
+foreign_work_experience_text = _("国外工作经历")
+
 work_experience = [
     (0, _("No experience or less than a year of experience")),
     (1, _("1 year of experience")),
@@ -134,6 +144,13 @@ work_experience_score = {
     # With Partner
     1: {0: 0, 1: 35, 2: 46, 3: 56, 4: 63, 5: 70},
 }
+
+foreign_work_experience = [
+    (0, _("No experience or less than a year of experience")),
+    (1, _("1 year of experience")),
+    (2, _("2 year of experience")),
+    (3, _("3 year of experience or more")),
+]
 
 partner_education_lv_label = _("1. What is the highest level of education for which your spouse or common-law "
                                "partner's has？")
@@ -176,13 +193,20 @@ boolean_general = [
 ]
 
 language_test = [
-    (0, _("CELPIP-G")),
-    (1, _("IELTS")),
-    (2, _("TEF Canada")),
-    (3, _("TCF Canada"))
+    (_("English"), (
+        (0, _("CELPIP-G")),
+        (1, _("IELTS")),
+    )),
+    (_("French"), (
+        (2, _("TEF Canada")),
+        (3, _("TCF Canada")),
+    )),
 ]
 
 listening_label = _("听力")
 speaking_label = _("口语")
 reading_label = _("阅读")
 writing_label = _("写作")
+eligible_text = _("合格")
+
+noc = [(k, v) for k, v in NOC.noc.items()]
