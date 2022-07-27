@@ -1,7 +1,5 @@
 from django.utils.translation import gettext as _
 
-from staring import NOC
-
 marriage_status_label = _("1. What is your marriage status?")
 marriage_status_text = _("婚姻状况")
 marriage_status = [
@@ -123,8 +121,8 @@ second_writing_text = _("第二-写作")
 work_experience_label = _("6. In the last ten years, how many years of skilled work experience in Canada do you have?")
 work_experience_text = _("工作经历")
 
-NOC_text = _("NOC编号")
-NOC_label = _("7. What is your NOC number?")
+NOC_text = _("NOC等级")
+NOC_label = _("7. What is your NOC skil level?")
 
 foreign_work_experience_label = _("8. In the last ten years, how many years of skilled work experience in other "
                                   "countries do you have?")
@@ -138,6 +136,7 @@ work_experience = [
     (4, _("4 year of experience")),
     (5, _("5 year of experience or more")),
 ]
+
 work_experience_score = {
     # Without Partner
     0: {0: 0, 1: 40, 2: 53, 3: 64, 4: 72, 5: 80},
@@ -209,4 +208,11 @@ reading_label = _("阅读")
 writing_label = _("写作")
 eligible_text = _("合格")
 
-noc = [(k, v) for k, v in NOC.noc.items()]
+noc = [
+    ("00", _("00 - Senior management occupations")),
+    ("0", _("0 - Management occupations")),
+    ("A", _("A - Occupations usually require university education")),
+    ("B", _("B - Occupations usually require college education, specialized training or apprenticeship training")),
+    ("C", _("C - Occupations usually require secondary school and/or occupation-specific training")),
+    ("D", _("D - On-the-job training is usually provided for occupations")),
+]
