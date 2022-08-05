@@ -54,10 +54,7 @@ class AdminLoginForm(forms.Form):
 class ArticleForm(TranslationModelForm):
     class Meta:
         model = Article
-        exclude = ["last_update", "create_date"]
-        # widgets = {
-        #     'content': CKEditorUploadingWidget(),
-        # }
+        exclude = ["last_update", "create_date", "view_count"]
 
 
 class UserForm(forms.ModelForm):
