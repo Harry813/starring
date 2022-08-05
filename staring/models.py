@@ -30,7 +30,7 @@ class User(AbstractUser):
         editable=False,
     )
 
-    def get_uid_as_string(self):
+    def get_uid_as_string (self):
         return str(self.uid).replace('-', '')
 
     username_validator = UnicodeUsernameValidator()
@@ -67,7 +67,7 @@ class User(AbstractUser):
         blank=True
     )
 
-    def get_display_name(self):
+    def get_display_name (self):
         if self.name:
             return self.name
         elif self.username:
@@ -77,15 +77,14 @@ class User(AbstractUser):
         verbose_name=user_dob_text,
         blank=True,
         null=True,
-        default=datetime.date(1900, 1, 1)
     )
 
-    def get_age(self):
+    def get_age (self):
         age = datetime.date.today().year - self.dob.year
         return age
 
     email = models.EmailField(
-        verbose_name=user_email_text,
+        verbose_name=email_text,
         blank=True
     )
 
@@ -108,15 +107,15 @@ class User(AbstractUser):
     avatar = models.ImageField(
         verbose_name=user_avatar_text,
         default="",
-        upload_to="avatar",
+        upload_to="avatar/",
         blank=True
     )
 
-    def get_phone(self):
+    def get_phone (self):
         phone = "+{}-{}".format(self.countryCode, self.tele)
         return phone
 
-    # hidden, can only accessed by admins
+    # hidden, can only access by admins
     is_active = models.BooleanField(
         verbose_name=user_active_text,
         default=True,
@@ -132,7 +131,7 @@ class User(AbstractUser):
         auto_now=True
     )
 
-    def __str__(self):
+    def __str__ (self):
         return self.get_display_name()
 
 
