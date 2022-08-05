@@ -17,11 +17,23 @@
 {% block main_content %}
     <form id="CRS" method="post">
         {% csrf_token %}
-        <div class="row mb-5" id="CRS_A">
+        <div class="row">
+            <h1 class="h2">
+                {% trans "CRS 评估表" %}
+            </h1>
+        </div>
+
+        {% if not request.user.is_authenticated %}
+            <div class="row mt-3">
+                <div class="text-muted">
+                    {% trans "由于您目前尚未登陆，您的评估结果将不会被保存！" %}
+                    <a href="{% url 'CUSTLogin' %}?next=/crs/">{% trans "登录" %}</a>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row my-5" id="CRS_A">
             <div class="mb-3">
-                <h1 class="h2 mb-3">
-                    {% trans "CRS 评估表" %}
-                </h1>
                 <h2 class="h3">
                     {% trans "A. Human Capital Factors" %}
                 </h2>
@@ -572,19 +584,19 @@
                 </div>
             </div>
 
-            <div class="mb-3 formfield marriage_base" id="CRS_C4CRS_C4">
-                <label class="form-label" for="{{ form.valid_partner_citizen.id_for_label }}">
-                    {{ form.valid_partner_citizen.label }}
-                    {% if form.valid_partner_citizen.field.required %}
+            <div class="mb-3 formfield marriage_base" id="CRS_C4">
+                <label class="form-label" for="{{ form.valid_relatives_citizen.id_for_label }}">
+                    {{ form.valid_relatives_citizen.label }}
+                    {% if form.valid_relatives_citizen.field.required %}
                         <span style="color: red">*</span>
                     {% endif %}
                 </label>
-                {% render_field form.valid_partner_citizen class="form-control select2" style="width: 100%" %}
+                {% render_field form.valid_relatives_citizen class="form-control select2" style="width: 100%" %}
                 <div>
-                    {% if form.valid_partner_citizen.errors %}
-                        <p class="small" style="color: red;">{{ form.valid_partner_citizen.errors.0 }}</p>
-                    {% elif form.valid_partner_citizen.help_text %}
-                        <p class="small text-muted">{{ form.valid_partner_citizen.help_text }}</p>
+                    {% if form.valid_relatives_citizen.errors %}
+                        <p class="small" style="color: red;">{{ form.valid_relatives_citizen.errors.0 }}</p>
+                    {% elif form.valid_relatives_citizen.help_text %}
+                        <p class="small text-muted">{{ form.valid_relatives_citizen.help_text }}</p>
                     {% endif %}
                 </div>
             </div>
@@ -631,11 +643,6 @@
             $("#CRS").trigger("reset");
             $(".select2").select2({
                 minimumResultsForSearch: Infinity,
-                width: 'resolve',
-                theme: "bootstrap-5",
-            });
-
-            $(".select2-search").select2({
                 width: 'resolve',
                 theme: "bootstrap-5",
             });
