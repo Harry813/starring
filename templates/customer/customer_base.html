@@ -55,11 +55,20 @@
         <div class="p-2" style="width: 30rem">
             <div class="mt-1">
                 {% for lang in languages %}
-                    <a class="me-2 text-decoration-none star-font language-choice " style="color: black"
+                    <a class="me-2 text-decoration-none star-font language-choice" style="color: black"
                        href="{% change_lang lang.CODE %}" hreflang="{{ lang.CODE }}">
                         <span class="align-middle">{{ lang.NAME }}</span>
                     </a>
                 {% endfor %}
+                <div class="float-end pe-4">
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'CUSTLogout' %}" class="me-2 text-decoration-none star-font">
+                        <span class="align-middle">
+                            {% trans "登出" %}
+                        </span>
+                    </a>
+                {% endif %}
+                </div>
             </div>
             <div class="mt-3">
                 <form method="get" action="{% url 'CUSTSearch' 1 %}">
@@ -78,8 +87,8 @@
 
     <nav class="nav navbar-expand-lg star-nav justify-content-center w-100 py-0">
         {% for navi in navigator %}
-            <div class="py-2 px-sm-0 px-md-3 px-lg-45" style="border-left: 3px solid #323D5B !important;">
-                <button class="btn btn-link w-100 nav-link text-white star-nav-link star-font dropdown-toggle shadow-none"
+            <div class="py-2 navbar-item">
+                <button class="btn btn-link w-100 nav-link text-white star-nav-link star-font shadow-none"
                         id="dropdown_btn_{{ forloop.counter }}" data-bs-toggle="dropdown" aria-expanded="false"
                         data-bs-auto-close="outside" data-bs-reference="parent" data-bs-offset="0,-1">
                     {{ navi.sector.name }}
@@ -123,8 +132,8 @@
                 </div>
             </div>
         {% endfor %}
-        <div class="py-2 px-sm-0 px-md-3 px-lg-55" style="border-left: 3px solid #323D5B;">
-            <a class="nav-link text-white star-nav-link star-font" href="{% url "CUSTCenter" %}">
+        <div class="py-2 navbar-item">
+            <a class="btn btn-link w-100 nav-link text-white star-nav-link star-font" href="{% url "CUSTCenter" %}">
                 {% if request.user.is_authenticated %}
                     {% trans '会员中心' %}
                 {% else %}
@@ -132,10 +141,9 @@
                 {% endif %}
             </a>
         </div>
-        <div class="py-2 px-sm-0 px-md-3 px-lg-45" style="background-color: #EDF0F3; border-left: 4px solid #FF0404">
+        <div class="py-2 navbar-item" style="background-color: #EDF0F3; border-left: 4px solid #FF0404">
             <a class="nav-link star-nav-link star-font" style="color:#000;" href="#">
-                <img src="{% static 'IMG/Maple_Leaf.png' %}" alt="Maple Leaf" height="19px" width="19px"
-                     style="position: relative; top: -3px">
+                <img src="{% static 'IMG/Maple_Leaf.png' %}" alt="Maple Leaf" style="position: relative;">
                 免费评估
             </a>
         </div>
