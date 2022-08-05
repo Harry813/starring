@@ -8,7 +8,8 @@ from django.utils.translation import ngettext as _n
 
 from datetime import datetime, timedelta
 
-from staring.models import User, Appointment
+from staring.models import User, Appointment, CRS
+import staring.crs_setting as crs
 from .models import Consult
 from staring.text import *
 
@@ -156,3 +157,71 @@ class AppointmentForm(forms.ModelForm):
             )
         }
 
+
+class CRSForm(forms.ModelForm):
+    def clean_education_canadian_lv(self):
+        education_lv = self.cleaned_data.get("education_lv")
+        education_canadian_lv = self.cleaned_data.get("education_canadian_lv")
+        if (education_lv == 0 and education_canadian_lv in [0, 1])\
+                or (education_lv == 1 and education_canadian_lv in [2, 3]) \
+                or (education_lv == 2 and education_canadian_lv in [4, 5, 6, 7]):
+            raise forms.ValidationError("Your choices do not match before or after.")
+        else:
+            return education_canadian_lv
+
+    class Meta:
+        model = CRS
+        exclude = ('id', 'customer', 'eligible')
+        labels = {
+            "marriage_status": crs.marriage_status_label,
+            "age_group": crs.age_group_label,
+            "education_lv": crs.education_lv_label,
+            "education_canadian": crs.education_canadian_label,
+            "education_canadian_lv": crs.education_canadian_lv_label,
+            "valid_first_language": crs.valid_first_language_test_label,
+            "first_language_test": crs.first_language_test_label,
+            "first_language_listening": crs.listening_label,
+            "first_language_speaking": crs.speaking_label,
+            "first_language_reading": crs.reading_label,
+            "first_language_writing": crs.writing_label,
+            "valid_second_language": crs.valid_second_language_test_label,
+            "second_language_test": crs.second_language_test_label,
+            "second_language_listening": crs.listening_label,
+            "second_language_speaking": crs.speaking_label,
+            "second_language_reading": crs.reading_label,
+            "second_language_writing": crs.writing_label,
+            "work_experience": crs.work_experience_label,
+            "NOC": crs.NOC_label,
+            "foreign_work_experience": crs.foreign_work_experience_label,
+            "partner_education_lv": crs.partner_education_lv_label,
+            "valid_partner_language": crs.valid_partner_language_test_label,
+            "partner_language_test": crs.partner_language_test_label,
+            "partner_language_listening": crs.listening_label,
+            "partner_language_speaking": crs.speaking_label,
+            "partner_language_reading": crs.reading_label,
+            "partner_language_writing": crs.writing_label,
+            "partner_work_experience": crs.partner_work_experience_label,
+            "valid_certificate": crs.valid_certificate_label,
+            "valid_job_offer": crs.valid_job_offer_label,
+            "valid_nomination": crs.valid_nomination_label,
+            "valid_relatives_citizen": crs.valid_relatives_citizen_label,
+        }
+        widgets = {
+            "first_language_listening": forms.NumberInput(attrs={"step": "0.5"}),
+            "first_language_speaking": forms.NumberInput(attrs={"step": "0.5"}),
+            "first_language_reading": forms.NumberInput(attrs={"step": "0.5"}),
+            "first_language_writing": forms.NumberInput(attrs={"step": "0.5"}),
+
+            "second_language_listening": forms.NumberInput(attrs={"step": "0.5"}),
+            "second_language_speaking": forms.NumberInput(attrs={"step": "0.5"}),
+            "second_language_reading": forms.NumberInput(attrs={"step": "0.5"}),
+            "second_language_writing": forms.NumberInput(attrs={"step": "0.5"}),
+
+            "partner_language_listening": forms.NumberInput(attrs={"step": "0.5"}),
+            "partner_language_speaking": forms.NumberInput(attrs={"step": "0.5"}),
+            "partner_language_reading": forms.NumberInput(attrs={"step": "0.5"}),
+            "partner_language_writing": forms.NumberInput(attrs={"step": "0.5"}),
+        }
+        choices = {
+            "second_language_test": None,
+        }
