@@ -219,7 +219,7 @@
                     {% for navi in navigator %}
                         {% if navi.itemslist %}
                             <li class="nav-item width-auto dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_{{ forloop.counter }}"
+                                <a class="nav-link" href="#" id="navbarDropdown_{{ forloop.counter }}"
                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ navi.sector.name }}
                                 </a>
@@ -232,7 +232,8 @@
                                                 </li>
                                             {% endif %}
                                             <li>
-                                                <a class="dropdown-item" href="{% if item.type == 'ARTICLE' %}{% url 'article' item.article.id %}{% else %}{{ item.url }}{% endif %}">
+                                                <a class="dropdown-item" href="{% if item.type == 'ARTICLE' %}
+{% url 'article' item.article.id %}{% else %}{{ item.url }}{% endif %}">
                                                     {% if item.level == 0 %}
                                                         <strong>{{ item.name }}</strong>
                                                     {% elif item.level == 1 %}
