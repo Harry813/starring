@@ -99,10 +99,23 @@ staff_tags = [
 
 meeting_status = [
     ('APPLY', _("申请已提交")),
+    ('UNPAID', _("未付款")),
+    ('PAID', _("已付款")),
     ('ACCEPT', _("预约成功")),
     ('REJECT', _("预约失败")),
+    ('CASH', _("现金付款，待收取")),
     ('SUCCESS', _("此次会议已结束")),
     ('TIMEOUT', _("逾时未参与"))
+]
+
+payment_method = [
+    ('VISADEB', _("Visa 借记卡")),
+    ('VISACRE', _("Visa 信用卡")),
+    ('MASTER', _("Master 卡")),
+    ('ALIPAY', _("支付宝")),
+    ('WECHAT', _("微信")),
+    ('PAYPAL', _("Paypal")),
+    ('CASH', _("现金"))
 ]
 
 navi_item_per_col = 10
@@ -121,3 +134,18 @@ Slot_interval = +15  # Minute
 Slot_start = 9  # 24h Clock
 Slot_end = 18  # 24h Clock
 Slot_duration = +45  # Minute
+
+title_prefix = [
+    ("MR", _("Mr.")),
+    ("MRS", _("Mrs.")),
+    ("MISS", _("Miss.")),
+    ("MS", _("Ms.")),
+    ("DR", _("Dr.")),
+    ("PROF", _("Prof."))
+]
+
+slot_status = [
+    ("AVAILABLE", _("可用")),
+    ("LOCKED", _("锁定")),
+    ("OCCUPIED", _("占用"))
+]
