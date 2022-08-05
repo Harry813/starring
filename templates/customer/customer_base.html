@@ -22,7 +22,10 @@
     {# - fontawsome 图标 #}
     <script src="https://kit.fontawesome.com/9fee1945cc.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="{% static 'CSS/customer_template_basic.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/theme.css' %}">
+
+    {# jquery #}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     {% block css %}{% endblock %}
     {% if request.user_agent.is_mobile %}
