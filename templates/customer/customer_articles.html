@@ -17,7 +17,7 @@
 
 {% block main_content %}
     <div class="star-article">
-        <h1>{{ article.title }}</h1>
+        <h1 class="star-title">{{ article.title }}</h1>
         {% autoescape off %}
             {{ article.content }}
         {% endautoescape %}
