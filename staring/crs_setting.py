@@ -154,6 +154,7 @@ foreign_work_experience = [
 partner_education_lv_label = _("1. What is the highest level of education for which your spouse or common-law "
                                "partner's has？")
 partner_education_lv_text = _("伴侣教育水平")
+partner_education_lv_score = {0: 0, 1: 2, 2: 6, 3: 7, 4: 8, 5: 9, 6: 10, 7: 10}
 
 valid_partner_language_test_label = _("2. Did your spouse or common-law partner have a valid language test score?")
 valid_partner_language_test_text = _("伴侣语言测试?")
@@ -169,6 +170,8 @@ partner_work_experience_label = _("3. In the last ten years, how many years of s
                                   "your spouse/common-law partner have?")
 partner_work_experience_text = _("伴侣工作经历")
 
+partner_work_experience_score = {0: 0, 1: 5, 2: 7, 3: 8, 4: 9, 5: 10}
+
 valid_certificate_label = _("1. Do you have a certificate of qualification from a Canadian province, "
                             "territory or federal body?")
 valid_certificate_text = _("资格证书")
@@ -180,10 +183,10 @@ valid_job_offer_text = _("工作机会")
 valid_nomination_label = _("3. Do you have a nomination certificate from a province or territory?")
 valid_nomination_text = _("提名证书")
 
-valid_partner_citizen_label = _("4. Do you or your spouse or common law partner ( if they will come with you to "
-                                "Canada) have at least one brother or sister living in Canada who is a citizen or "
-                                "permanent resident?")
-valid_partner_citizen_text = _("伴侣亲属身份")
+valid_relatives_citizen_label = _("4. Do you or your spouse or common law partner ( if they will come with you to "
+                                  "Canada) have at least one brother or sister living in Canada who is a citizen or "
+                                  "permanent resident?")
+valid_relatives_citizen_text = _("亲属身份")
 
 # general
 boolean_general = [
