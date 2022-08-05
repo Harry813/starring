@@ -48,3 +48,271 @@ def get_absolute_media_path (file_name):
 
 def get_absolute_name (class_or_function):
     return "%s.%s" % (class_or_function.__module__, class_or_function.__name__)
+
+
+def get_subject_CLB (test, subject, score):
+    """
+    Get the CLB of a subject test.
+    :param test: the test code
+    :type test: int
+    :param subject: the subject code, "L" for listening, "S" for speaking, "R" for reading, "W" for writing
+    :type subject: str
+    :param score: the score
+    :type score: Decimal
+    :return: the CLB
+    :rtype: int
+    """
+    if test == 0:
+        if score >= 10:
+            return 10
+        elif 4 <= score <= 9:
+            return score
+        else:
+            return 3
+    elif test == 1:
+        if subject == "L":
+            if score >= 8.5:
+                return 10
+            elif score >= 8.0:
+                return 9
+            elif score >= 7.5:
+                return 8
+            elif score >= 6.0:
+                return 7
+            elif score >= 5.5:
+                return 6
+            elif score >= 5.0:
+                return 5
+            elif score >= 4.5:
+                return 4
+            else:
+                return 3
+        elif subject == "S":
+            if score >= 7.5:
+                return 10
+            elif score >= 7.0:
+                return 9
+            elif score >= 6.5:
+                return 8
+            elif score >= 6.0:
+                return 7
+            elif score >= 5.5:
+                return 6
+            elif score >= 5.0:
+                return 5
+            elif score >= 4.0:
+                return 4
+            else:
+                return 3
+        elif subject == "R":
+            if score >= 8:
+                return 10
+            elif score >= 7:
+                return 9
+            elif score >= 6.5:
+                return 8
+            elif score >= 6:
+                return 7
+            elif score >= 5:
+                return 6
+            elif score >= 4:
+                return 5
+            elif score >= 3.5:
+                return 4
+            else:
+                return 3
+        elif subject == "W":
+            if score >= 7.5:
+                return 10
+            elif score >= 7.0:
+                return 9
+            elif score >= 6.5:
+                return 8
+            elif score >= 6.0:
+                return 7
+            elif score >= 5.5:
+                return 6
+            elif score >= 5.0:
+                return 5
+            elif score >= 4.0:
+                return 4
+            else:
+                return 3
+    elif test == 2:
+        if subject == "L":
+            if score >= 316:
+                return 10
+            elif 298 <= score <= 315:
+                return 9
+            elif 280 <= score <= 297:
+                return 8
+            elif 249 <= score <= 279:
+                return 7
+            elif 217 <= score <= 248:
+                return 6
+            elif 181 <= score <= 216:
+                return 5
+            elif 149 <= score <= 180:
+                return 4
+            else:
+                return 3
+        elif subject == "S":
+            if score >= 393:
+                return 10
+            elif 371 <= score <= 392:
+                return 9
+            elif 349 <= score <= 370:
+                return 8
+            elif 310 <= score <= 348:
+                return 7
+            elif 271 <= score <= 309:
+                return 6
+            elif 226 <= score <= 270:
+                return 5
+            elif 181 <= score <= 225:
+                return 4
+            else:
+                return 3
+        elif subject == "R":
+            if score >= 263:
+                return 10
+            elif 248 <= score <= 262:
+                return 9
+            elif 233 <= score <= 247:
+                return 8
+            elif 207 <= score <= 232:
+                return 7
+            elif 181 <= score <= 206:
+                return 6
+            elif 151 <= score <= 180:
+                return 5
+            elif 121 <= score <= 150:
+                return 4
+            else:
+                return 3
+        elif subject == "W":
+            if score >= 393:
+                return 10
+            elif 371 <= score <= 392:
+                return 9
+            elif 349 <= score <= 370:
+                return 8
+            elif 310 <= score <= 348:
+                return 7
+            elif 271 <= score <= 309:
+                return 6
+            elif 226 <= score <= 270:
+                return 5
+            elif 181 <= score <= 225:
+                return 4
+            else:
+                return 3
+    elif test == 3:
+        if subject == "L":
+            if score >= 549:
+                return 10
+            elif score >= 523:
+                return 9
+            elif score >= 503:
+                return 8
+            elif score >= 458:
+                return 7
+            elif score >= 398:
+                return 6
+            elif score >= 369:
+                return 5
+            elif score >= 331:
+                return 4
+            else:
+                return 3
+        elif subject in ["S", "W"]:
+            if score >= 16:
+                return 10
+            elif score >= 14:
+                return 9
+            elif score >= 12:
+                return 8
+            elif score >= 10:
+                return 7
+            elif score >= 7:
+                return 6
+            elif score >= 6:
+                return 5
+            elif score >= 4:
+                return 4
+            else:
+                return 3
+        elif subject == "R":
+            if score >= 549:
+                return 10
+            elif score >= 524:
+                return 9
+            elif score >= 499:
+                return 8
+            elif score >= 453:
+                return 7
+            elif score >= 406:
+                return 6
+            elif score >= 375:
+                return 5
+            elif score >= 342:
+                return 4
+            else:
+                return 3
+
+
+def get_first_language_score (marriage_class, clb):
+    if marriage_class == 0:
+        if clb <= 3:
+            return 0
+        elif clb == 4 or clb == 5:
+            return 6
+        elif clb == 6:
+            return 9
+        elif clb == 7:
+            return 17
+        elif clb == 8:
+            return 23
+        elif clb == 9:
+            return 31
+        elif clb >= 10:
+            return 34
+    elif marriage_class == 1:
+        if clb <= 3:
+            return 0
+        elif clb == 4 or clb == 5:
+            return 6
+        elif clb == 6:
+            return 8
+        elif clb == 7:
+            return 16
+        elif clb == 8:
+            return 22
+        elif clb == 9:
+            return 29
+        elif clb >= 10:
+            return 32
+    else:
+        return 0
+
+
+def get_second_language_score (clb=0):
+    if clb == 5 or clb == 6:
+        return 1
+    elif clb == 7 or clb == 8:
+        return 3
+    elif clb >= 9:
+        return 6
+    else:
+        return 0
+
+
+def get_partner_language_score (clb=0):
+    if clb == 5 or clb == 6:
+        return 1
+    elif clb == 7 or clb == 8:
+        return 3
+    elif clb >= 9:
+        return 5
+    else:
+        return 0
