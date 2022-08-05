@@ -68,7 +68,7 @@
 
         .news-first-description {
             font-weight: 350;
-            font-size: 10px;
+            font-size: 12px;
 
             overflow: hidden;
             text-overflow: ellipsis;
@@ -121,7 +121,7 @@
         </dl>
     {% endfor %}
 
-    <div class="row g-3 my-5">
+    <div class="row g-3 my-5 w-100">
         {% for ns in newsSectors %}
             <div class="mb-3">
                 <div class="w-100 news-sector-header">
@@ -131,23 +131,23 @@
                 </div>
                 <div class="py-2">
                     {% with first_news=ns.news.0 %}
-                        <div class="d-flex px-0 news-first mt-1" style="height: 6.25rem">
+                        <div class="row align-items-top" style="height: 10%">
                             {% if first_news.img %}
-                                <div class="flex-shrink-0 me-3">
+                                <div class="col-md-4 pe-3">
                                     <a href="{% url 'article' first_news.article.id %}" class="text-reset">
-                                        <img src="{% get_media_prefix %}{{ first_news.img }}" alt="{{ first_news.alt }}"
-                                              class="rounded news-first-img img-fluid">
-                                    </a>
+                                        <img class="roundedimg-fluid img-thumbnail"
+                                             src="{% get_media_prefix %}{{ first_news.img }}"
+                                             alt="{{ first_news.alt }}"/></a>
                                 </div>
                             {% endif %}
 
-                            <div class="flex-grow-1 news-first-item">
-                                <div class="news-first-head">
-                                    <a href="{% url 'article' first_news.article.id %}" class="text-reset text-decoration-none">
-                                        {{ first_news.title }}
-                                    </a>
-                                </div>
-                                <div class="news-first-description">{{ first_news.introduction }}</div>
+                            <div class="col-md-8">
+                                <a href="{% url 'article' first_news.article.id %}" class="text-reset text-decoration-none">
+                                    <h3>{{ first_news.title }}</h3>
+                                    <div class="getting-started-info">
+                                        <p>{{ first_news.introduction }}</p>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     {% endwith %}
