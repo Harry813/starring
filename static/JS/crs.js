@@ -7,7 +7,6 @@
         };
     });
 })(jQuery);
-
 $(':input').focus(function () {
     let center = $(window).height() / 2;
     let top = $(this).offset().top;
@@ -15,7 +14,6 @@ $(':input').focus(function () {
         $(window).scrollTop(top - center);
     }
 })
-
 $(".formfield").on("show", function () {
     let div = $(this);
     setTimeout(function () {
@@ -23,31 +21,16 @@ $(".formfield").on("show", function () {
         input.trigger('focus');
     }, 50);
 })
-
 $("#CRS_A0 :input").change((e) => {
     let marriage_status = $(e.target).val();
+    console.log(marriage_status)
     if (marriage_status) {
+        hide_after("#CRS_A0");
         $("#CRS_A1").show();
-        if (marriage_status === "0") {
-            $(".marriage_base").hide();
-        } else if (marriage_status === "1") {
-            let work_experience = $("#CRS_A5 :input").val()
-            let valid_partner_citizen = $("#CRS_C4 :input").val()
-            if (work_experience) {
-                $("#CRS_B").show();
-                $("#CRS_B1").show();
-            } else if (work_experience && valid_partner_citizen) {
-                $("#CRS_B").show();
-                $("#CRS_B1").show();
-                $("#CRS_C4").show();
-            }
-        }
-        $(".marriage_base input").val('').trigger('change');
     } else {
         hide_after("#CRS_A0");
     }
 })
-
 $("#CRS_A1 :input").change((e) => {
     let age_group = $(e.target).val();
     if (age_group < 0) {
@@ -63,7 +46,6 @@ $("#CRS_A1 :input").change((e) => {
         hide_after("#CRS_A1");
     }
 })
-
 $("#CRS_A2 :input").change((e) => {
     let education_lv = $(e.target).val();
     if (education_lv === "") {
@@ -72,7 +54,6 @@ $("#CRS_A2 :input").change((e) => {
         $("#CRS_A2_1").show();
     }
 })
-
 $("#CRS_A2_1 :input").change((e) => {
     let education_canadian = $(e.target).val();
     if (education_canadian) {
@@ -81,7 +62,6 @@ $("#CRS_A2_1 :input").change((e) => {
         hide_after("#CRS_A2_1")
     }
 })
-
 $("#CRS_A3 :input").change((e) => {
     let valid_first_language = $(e.target).val()
     if (valid_first_language === "False") {
@@ -95,7 +75,6 @@ $("#CRS_A3 :input").change((e) => {
         }
     }
 })
-
 $("#CRS_A3_1 :input").change((e) => {
     $("#CRS_A3_1").find("optgroup")
     let first_language_test = $(e.target).val()
@@ -136,7 +115,6 @@ $("#CRS_A3_1 :input").change((e) => {
         hide_after("#CRS_A3_1");
     }
 })
-
 $(".language1 input").change(() => {
     let first_language_listening = $("#CRS_A3_2_L .form-control").val()
     let first_language_speaking = $("#CRS_A3_2_S .form-control").val()
@@ -158,7 +136,6 @@ $(".language1 input").change(() => {
         hide_after("#CRS_A3_2");
     }
 })
-
 $("#CRS_A4 :input").change((e) => {
     let valid_second_language = $(e.target).val()
     if (valid_second_language === "False") {
@@ -174,7 +151,7 @@ $("#CRS_A4 :input").change((e) => {
         });
         second_language.empty();
 
-        if (first_language.val() in ["0", "1"]) {
+        if (jQuery.inArray(first_language.val(), ["0", "1"]) !== -1) {
             second_language.append(new Option("---------", ""));
             second_language.append(new Option(first_language.find("option[value=2]").text(), values[3]));
             second_language.append(new Option(first_language.find("option[value=3]").text(), values[4]));
@@ -192,7 +169,6 @@ $("#CRS_A4 :input").change((e) => {
         hide_after("#CRS_A4");
     }
 })
-
 $("#CRS_A4_1 :input").change((e) => {
     let second_language_test = $(e.target).val()
     let second_language_listening = $("#CRS_A4_2_L .form-control")
@@ -232,7 +208,6 @@ $("#CRS_A4_1 :input").change((e) => {
         hide_after("#CRS_A4_1")
     }
 })
-
 $(".language2 input").change(() => {
     let second_language_listening = $("#CRS_A4_2_L .form-control").val()
     let second_language_speaking = $("#CRS_A4_2_S .form-control").val()
@@ -254,14 +229,13 @@ $(".language2 input").change(() => {
         hide_after("#CRS_A4_2");
     }
 })
-
 $("#CRS_A5 :input").change((e) => {
     let work_experience = $(e.target).val();
 
     if (work_experience === "0") {
         hide_after("#CRS_A5");
         end();
-    } else if (work_experience in ["1", "2", "3", "4", "5", "*"]) {
+    } else if (jQuery.inArray(work_experience, ["1", "2", "3", "4", "5"]) !== -1) {
         $("#CRS_A5_1").show()
         let crs_submit = $("#CRS_Submit");
         if (crs_submit.is(":visible")) {
@@ -271,7 +245,6 @@ $("#CRS_A5 :input").change((e) => {
         hide_after("#CRS_A5");
     }
 })
-
 $("#CRS_A5_1 :input").change((e) => {
     let noc = $(e.target).val();
     if (noc) {
@@ -280,19 +253,19 @@ $("#CRS_A5_1 :input").change((e) => {
         hide_after("#CRS_A5_1");
     }
 })
-
 $("#CRS_A6 :input").change((e) => {
     let work_experience = $(e.target).val();
     let marriage_status = $("#CRS_A0 :input").val();
+    console.log(jQuery.inArray(marriage_status, ["1", "2", "3"]) !== -1)
 
     if (work_experience === "0") {
         hide_after("#CRS_A6");
         end();
-    } else if (work_experience in ["1", "2", "3", "4", "5", "*"]) {
-        if (marriage_status === "1") {
+    } else if (jQuery.inArray(work_experience, ["1", "2", "3", "4", "5"]) !== -1) {
+        if (jQuery.inArray(marriage_status, ["1", "2", "3"]) !== -1) {
             $("#CRS_B").show()
             $("#CRS_B1").show()
-        } else if (marriage_status === "0") {
+        } else {
             $("#CRS_C").show()
             $("#CRS_C1").show()
         }
@@ -305,7 +278,6 @@ $("#CRS_A6 :input").change((e) => {
         hide_after("#CRS_A6");
     }
 })
-
 $("#CRS_B1 :input").change((e) => {
     let partner_education_lv = $(e.target).val()
     if (partner_education_lv) {
@@ -314,7 +286,6 @@ $("#CRS_B1 :input").change((e) => {
         hide_after("#CRS_B1");
     }
 })
-
 $("#CRS_B2 :input").change((e) => {
     let valid_partner_language = $(e.target).val()
     if (valid_partner_language === "True") {
@@ -326,7 +297,6 @@ $("#CRS_B2 :input").change((e) => {
         hide_after("#CRS_B2")
     }
 })
-
 $("#CRS_B2_1 :input").change((e) => {
     let partner_language_test = $(e.target).val()
     let partner_language_listening = $("#CRS_B2_2_L .form-control")
@@ -367,7 +337,6 @@ $("#CRS_B2_1 :input").change((e) => {
         hide_after("#CRS_B2_1")
     }
 })
-
 $(".language3 input").change(() => {
     let partner_language_listening = $("#CRS_B2_2_L .form-control").val()
     let partner_language_speaking = $("#CRS_B2_2_S .form-control").val()
@@ -389,7 +358,6 @@ $(".language3 input").change(() => {
         hide_after("#CRS_B2_2")
     }
 })
-
 $("#CRS_B3 :input").change((e) => {
     let partner_work_experience = $(e.target).val()
     if (partner_work_experience) {
@@ -399,7 +367,6 @@ $("#CRS_B3 :input").change((e) => {
         hide_after("#CRS_B3")
     }
 })
-
 $("#CRS_C1 :input").change((e) => {
     let valid_certificate = $(e.target).val()
     if (valid_certificate) {
@@ -408,7 +375,6 @@ $("#CRS_C1 :input").change((e) => {
         hide_after("#CRS_C1")
     }
 })
-
 $("#CRS_C2 :input").change((e) => {
     let valid_job_offer = $(e.target).val()
     if (valid_job_offer) {
@@ -417,21 +383,19 @@ $("#CRS_C2 :input").change((e) => {
         hide_after("#CRS_C2")
     }
 })
-
 $("#CRS_C3 :input").change((e) => {
     let valid_nomination = $(e.target).val()
-    let marriage_status = $("#CRS_A0 :input").val();
     if (valid_nomination) {
-        if (marriage_status === "1") {
-            $("#CRS_C4").show()
-            let crs_submit = $("#CRS_Submit");
-            if (crs_submit.is(":visible")) {
-                crs_submit.hide();
-            }
-        } else {
-            end()
-        }
+        $("#CRS_C4").show()
     } else {
         hide_after("#CRS_C3")
+    }
+})
+$("#CRS_C4 :input").change((e) => {
+    let valid_relatives_citizen = $(e.target).val()
+    if (valid_relatives_citizen) {
+        end()
+    } else {
+        hide_after("#CRS_C4")
     }
 })
