@@ -265,7 +265,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card-body">
                     <div class="row">
                         <div class="mb-3">
@@ -287,13 +286,4 @@
             </div>
         </form>
     </div>
-{% endblock %}
-
-{% block js %}
-    <script>
-        let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
-    </script>
 {% endblock %}
