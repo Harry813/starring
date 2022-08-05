@@ -352,10 +352,7 @@
                         <span style="color: red">*</span>
                     {% endif %}
                 </label>
-                <div class="input-group">
-                    <span class="input-group-text">NOC</span>
-                    {% render_field form.NOC class="form-control select2-search" width="100%" %}
-                </div>
+                {% render_field form.NOC class="form-control select2" width="100%" %}
                 <div>
                     {% if form.NOC.errors %}
                         <p class="small" style="color: red;">{{ form.NOC.errors.0 }}</p>
@@ -526,7 +523,7 @@
             </div>
         </div>
 
-        <div class="row mb-3" id="CRS_C">
+        <div class="row mb-5" id="CRS_C">
             <div class="mb-3">
                 <h2 class="h3">
                     {% trans "C. Skill Transferability factors" %}
