@@ -90,9 +90,6 @@ user_avatar_help_text = _('')
 # Translators: 用户模组{生日}
 user_dob_text = _('生日')
 
-# Translators: 用户模组{邮箱地址}
-user_email_text = _('邮箱地址')
-
 # Translators: 用户模组{冠码}
 user_countryCode_text = _("冠码")
 
