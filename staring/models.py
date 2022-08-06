@@ -129,9 +129,10 @@ class User(AbstractUser):
         default=True,
         help_text=user_active_help_text,
     )
+
     date_joined = models.DateTimeField(
         verbose_name=user_date_join_text,
-        default=timezone.now
+        auto_now_add=True,
     )
 
     last_change = models.DateTimeField(
