@@ -431,8 +431,8 @@ class SlotGeneratorForm(forms.Form):
         if not weekends:
             day_range = [d for d in day_range if d.weekday() <= 4]
             for d in day_range:
-                start_datetime = datetime.datetime.combine(d, start_time)
-                end_datetime = datetime.datetime.combine(d, end_time)
+                start_datetime = datetime.combine(d, start_time)
+                end_datetime = datetime.combine(d, end_time)
                 MeetingSlot.objects.create(start_datetime=start_datetime, end_datetime=end_datetime)
 
 
