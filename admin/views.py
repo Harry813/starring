@@ -14,6 +14,7 @@ from django.utils.translation import ngettext as _n
 from django.views.decorators.csrf import csrf_exempt
 
 from admin.forms import *
+from admin.forms import *
 from admin.models import Staff
 from admin.utils import get_admin_info, reorder
 from customer.models import Customer
@@ -23,7 +24,7 @@ from staring.text import *
 from staring.utils import get_basic_info
 
 
-def admin_login_view(request):
+def admin_login_view (request):
     param = {
         "page_title": _("星环-管理面板登录"),
         "languages": Languages,
@@ -71,13 +72,13 @@ def admin_login_view(request):
         return render(request, "admin/admin_login.html", param)
 
 
-def admin_logout_view(request):
+def admin_logout_view (request):
     logout(request)
     return redirect("ADMLogin")
 
 
 @login_required(login_url="ADMLogin")
-def admin_index_view(request):
+def admin_index_view (request):
     param = {
         "page_title": _("星环-后台"),
         "languages": Languages,
@@ -98,7 +99,7 @@ def admin_index_view(request):
 
 
 @login_required(login_url="ADMLogin")
-def admin_article_index_view(request, page):
+def admin_article_index_view (request, page):
     param = {
         "page_title": _("星环-文章管理"),
         "languages": Languages,
@@ -154,7 +155,7 @@ def admin_article_index_view(request, page):
 
 
 @login_required(login_url="ADMLogin")
-def admin_article_create_view(request):
+def admin_article_create_view (request):
     param = {
         "page_title": _("星环-文章创建"),
         "languages": Languages,
@@ -178,7 +179,7 @@ def admin_article_create_view(request):
 
 
 @login_required(login_url="ADMLogin")
-def admin_article_edit_view(request, article_id):
+def admin_article_edit_view (request, article_id):
     param = {
         "page_title": _("星环-文章编辑"),
         "languages": Languages,
@@ -206,7 +207,7 @@ def admin_article_edit_view(request, article_id):
 
 
 @login_required(login_url="ADMLogin")
-def admin_article_delete_view(request, article_id):
+def admin_article_delete_view (request, article_id):
     article = Article.objects.get(id=article_id)
     if article.status != "DELETE":
         article.status = "DELETE"
@@ -217,7 +218,7 @@ def admin_article_delete_view(request, article_id):
 
 
 @login_required(login_url="ADMLogin")
-def admin_customer_index_view(request, page=1):
+def admin_customer_index_view (request, page=1):
     param = {
         "page_title": _("星环-用户管理"),
         "languages": Languages,
@@ -265,7 +266,7 @@ def admin_customer_index_view(request, page=1):
 
 
 @login_required(login_url="ADMLogin")
-def admin_customer_edit_view(request, customer_id):
+def admin_customer_edit_view (request, customer_id):
     param = {
         "page_title": _("星环-用户管理"),
         "languages": Languages,
@@ -279,7 +280,7 @@ def admin_customer_edit_view(request, customer_id):
 
 
 @login_required(login_url="ADMLogin")
-def admin_customer_basic_edit_view(request, customer_id):
+def admin_customer_basic_edit_view (request, customer_id):
     param = {
         "page_title": _("星环-用户管理"),
         "languages": Languages,
@@ -307,7 +308,7 @@ def admin_customer_basic_edit_view(request, customer_id):
 
 
 @login_required(login_url="ADMLogin")
-def admin_customer_profile_edit_view(request, customer_id):
+def admin_customer_profile_edit_view (request, customer_id):
     param = {
         "page_title": _("星环-用户管理"),
         "languages": Languages,
@@ -332,7 +333,7 @@ def admin_customer_profile_edit_view(request, customer_id):
 
 
 @login_required(login_url="ADMLogin")
-def admin_staff_index_view(request, page=1):
+def admin_staff_index_view (request, page=1):
     param = {
         "page_title": _("星环-员工管理"),
         "languages": Languages,
@@ -377,7 +378,7 @@ def admin_staff_index_view(request, page=1):
 
 
 @login_required(login_url="ADMLogin")
-def admin_staff_edit_view(request, staff_id):
+def admin_staff_edit_view (request, staff_id):
     param = {
         "page_title": _("星环-员工管理"),
         "languages": Languages,
@@ -391,7 +392,7 @@ def admin_staff_edit_view(request, staff_id):
 
 
 @login_required(login_url="ADMLogin")
-def admin_staff_basic_edit_view(request, staff_id):
+def admin_staff_basic_edit_view (request, staff_id):
     param = {
         "page_title": _("星环-员工管理"),
         "languages": Languages,
@@ -417,7 +418,7 @@ def admin_staff_basic_edit_view(request, staff_id):
 
 
 @login_required(login_url="ADMLogin")
-def admin_staff_profile_edit_view(request, staff_id):
+def admin_staff_profile_edit_view (request, staff_id):
     param = {
         "page_title": _("星环-员工管理"),
         "languages": Languages,
@@ -440,7 +441,7 @@ def admin_staff_profile_edit_view(request, staff_id):
 
 
 @login_required(login_url="ADMLogin")
-def admin_staff_create_view(request):
+def admin_staff_create_view (request):
     param = {
         "page_title": _("星环-员工管理"),
         "languages": Languages,
@@ -475,7 +476,7 @@ def admin_staff_create_view(request):
 
 
 @login_required(login_url="ADMLogin")
-def admin_news_sector_index_view(request):
+def admin_news_sector_index_view (request):
     param = {
         "page_title": _("星环-新闻分区"),
         "languages": Languages,
@@ -501,7 +502,7 @@ def admin_news_sector_index_view(request):
 
 
 @login_required(login_url="ADMLogin")
-def admin_news_sector_edit_view(request, sid):
+def admin_news_sector_edit_view (request, sid):
     param = {
         "page_title": _("星环-新闻分区管理"),
         "languages": Languages,
@@ -529,7 +530,7 @@ def admin_news_sector_edit_view(request, sid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_news_create_view(request, sid):
+def admin_news_create_view (request, sid):
     param = {
         "page_title": _("星环-新闻创建"),
         "languages": Languages,
@@ -554,7 +555,7 @@ def admin_news_create_view(request, sid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_news_edit_view(request, sid, nid):
+def admin_news_edit_view (request, sid, nid):
     param = {
         "page_title": _("星环-新闻编辑"),
         "languages": Languages,
@@ -580,7 +581,7 @@ def admin_news_edit_view(request, sid, nid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_slot_index_view(request, page):
+def admin_slot_index_view (request, page):
     param = {
         "page_title": _("星环-日程管理"),
         "languages": Languages,
@@ -601,7 +602,7 @@ def admin_slot_index_view(request, page):
 
 
 @login_required(login_url="ADMLogin")
-def admin_slot_create_view(request):
+def admin_slot_create_view (request):
     param = {
         "page_title": _("星环-日程管理"),
         "languages": Languages,
@@ -660,7 +661,7 @@ def admin_slot_edit_view (request, sid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_navi_sector_index_view(request):
+def admin_navi_sector_index_view (request):
     param = {
         "page_title": _("星环-导航栏管理"),
         "languages": Languages,
@@ -686,7 +687,7 @@ def admin_navi_sector_index_view(request):
 
 
 @login_required(login_url="ADMLogin")
-def admin_navi_sector_delete(request, secid):
+def admin_navi_sector_delete (request, secid):
     try:
         NavigatorSector.objects.get(id=secid).delete()
     except ValidationError:
@@ -695,7 +696,7 @@ def admin_navi_sector_delete(request, secid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_navi_item_index_view(request, secid):
+def admin_navi_item_index_view (request, secid):
     param = {
         "page_title": _("星环-导航栏管理"),
         "languages": Languages,
@@ -724,7 +725,7 @@ def admin_navi_item_index_view(request, secid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_navi_item_create_view(request, secid):
+def admin_navi_item_create_view (request, secid):
     param = {
         "page_title": _("星环-导航栏管理"),
         "languages": Languages,
@@ -751,7 +752,7 @@ def admin_navi_item_create_view(request, secid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_navi_item_edit_view(request, secid, itemid):
+def admin_navi_item_edit_view (request, secid, itemid):
     sector = NavigatorSector.objects.get(id=secid)
     item = NavigatorItem.objects.get(id=itemid)
 
@@ -779,14 +780,14 @@ def admin_navi_item_edit_view(request, secid, itemid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_navi_item_delete(request, secid, itemid):
+def admin_navi_item_delete (request, secid, itemid):
     NavigatorItem.objects.get(id=itemid).delete()
     reorder(NavigatorItem, Q(sector_id=secid))
     return redirect("ADMNaviItemIndex", secid=secid)
 
 
 @login_required(login_url="ADMLogin")
-def admin_index_sector_index(request):
+def admin_index_sector_index (request):
     param = {
         "page_title": _("星环-首页清单管理"),
         "languages": Languages,
@@ -811,7 +812,7 @@ def admin_index_sector_index(request):
 
 
 @login_required(login_url="ADMLogin")
-def admin_index_sector_edit(request, secid):
+def admin_index_sector_edit (request, secid):
     param = {
         "page_title": _("星环-首页清单管理"),
         "languages": Languages,
@@ -837,7 +838,7 @@ def admin_index_sector_edit(request, secid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_index_item_create(request, secid):
+def admin_index_item_create (request, secid):
     param = {
         "page_title": _("星环-首页清单管理"),
         "languages": Languages,
@@ -865,7 +866,7 @@ def admin_index_item_create(request, secid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_index_item_edit(request, secid, itemid):
+def admin_index_item_edit (request, secid, itemid):
     param = {
         "page_title": _("星环-首页清单管理"),
         "languages": Languages,
@@ -892,14 +893,14 @@ def admin_index_item_edit(request, secid, itemid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_index_item_delete(request, secid, itemid):
+def admin_index_item_delete (request, secid, itemid):
     IndexListItem.objects.get(id=itemid).delete()
     reorder(IndexListItem, Q(sector_id=secid))
     return redirect("ADMIndListSectorEdit", secid=secid)
 
 
 @login_required(login_url="ADMLogin")
-def admin_sidebar_index_view(request):
+def admin_sidebar_index_view (request):
     param = {
         "page_title": _("星环-侧栏管理"),
         "languages": Languages,
@@ -927,7 +928,7 @@ def admin_sidebar_index_view(request):
 
 
 @login_required(login_url="ADMLogin")
-def admin_sidebar_edit_view(request, sdb_id):
+def admin_sidebar_edit_view (request, sdb_id):
     param = {
         "page_title": _("星环-侧栏管理"),
         "languages": Languages,
@@ -954,14 +955,14 @@ def admin_sidebar_edit_view(request, sdb_id):
 
 
 @login_required(login_url="ADMLogin")
-def admin_sidebar_delete_view(request, id):
+def admin_sidebar_delete_view (request, id):
     IndexSidebarItem.objects.get(id=id).delete()
     reorder(IndexSidebarItem)
     return redirect("ADMSidebarIndex")
 
 
 @login_required(login_url="ADMLogin")
-def admin_appointment_index_view(request, page):
+def admin_appointment_index_view (request, page):
     param = {
         "page_title": _("星环-预约管理"),
         "languages": Languages,
@@ -1013,7 +1014,7 @@ def admin_appointment_index_view(request, page):
 
 
 @login_required(login_url="ADMLogin")
-def admin_appointment_edit_view(request, aptid):
+def admin_appointment_edit_view (request, aptid):
     param = {
         "page_title": _("星环-预约管理"),
         "languages": Languages,
@@ -1047,7 +1048,7 @@ def admin_appointment_edit_view(request, aptid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_appointment_allocate_view(request, aptid=None):
+def admin_appointment_allocate_view (request, aptid=None):
     param = {
         "page_title": _("星环-预约管理"),
         "languages": Languages,
@@ -1094,7 +1095,7 @@ def admin_appointment_allocate_view(request, aptid=None):
 
 
 @login_required(login_url="ADMLogin")
-def admin_appointment_updates_view(request, aptid):
+def admin_appointment_updates_view (request, aptid):
     param = {
         "page_title": _("星环-预约管理"),
         "languages": Languages,
@@ -1109,7 +1110,7 @@ def admin_appointment_updates_view(request, aptid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_appointment_update_create_view(request, aptid):
+def admin_appointment_update_create_view (request, aptid):
     param = {
         "page_title": _("星环-预约管理"),
         "languages": Languages,
@@ -1137,7 +1138,7 @@ def admin_appointment_update_create_view(request, aptid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_appointment_accept(request, page, aptid):
+def admin_appointment_accept (request, page, aptid):
     """Admin Convenience Function Accept"""
     appointment = Appointment.objects.get(id=aptid)
     appointment.status = "ACCEPT"
@@ -1148,7 +1149,7 @@ def admin_appointment_accept(request, page, aptid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_appointment_reject(request, page, aptid):
+def admin_appointment_reject (request, page, aptid):
     """Admin Convenience Function Reject"""
     appointment = Appointment.objects.get(id=aptid)
     appointment.status = "REJECT"
@@ -1159,7 +1160,7 @@ def admin_appointment_reject(request, page, aptid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_appointment_success(request, page, aptid):
+def admin_appointment_success (request, page, aptid):
     """Admin Convenience Function Finish"""
     appointment = Appointment.objects.get(id=aptid)
     appointment.status = "SUCCESS"
@@ -1170,7 +1171,7 @@ def admin_appointment_success(request, page, aptid):
 
 
 @login_required(login_url="ADMLogin")
-def admin_appointment_timeout(request, page, aptid):
+def admin_appointment_timeout (request, page, aptid):
     """Admin Convenience Function Timeout"""
     appointment = Appointment.objects.get(id=aptid)
     appointment.status = "TIMEOUT"
@@ -1192,7 +1193,7 @@ def admin_appointment_paid (request, page, aptid):
 
 
 @csrf_exempt
-def admin_article_image_upload(request):
+def admin_article_image_upload (request):
     if request.method == "POST":
         upload_time = timezone.now()
         f = request.FILES["file"]
