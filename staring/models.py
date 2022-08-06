@@ -81,6 +81,12 @@ class User(AbstractUser):
         null=True,
     )
 
+    def format_dob (self):
+        if self.dob:
+            return self.dob.strftime("%Y-%m-%d")
+        else:
+            return None
+
     def get_age (self):
         age = datetime.date.today().year - self.dob.year
         return age
