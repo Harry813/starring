@@ -16,17 +16,36 @@
         <div class="row mb-3">
             <div class="col-md-4">
                 <div class="card">
+                    <div class="card-header">
+                        <div class="card-actions float-end">
+                            <div class="dropdown position-relative">
+                                <a href="{% url 'ADMAppointmentUpdateCreate' appointment.id %}" class="action-button">
+                                    <i class="align-middle" data-feather="plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <ul class="timeline mt-2 mb-0">
                             {% for update in updates %}
                                 <li class="timeline-item">
-                                    <strong>{{ update.title }}</strong>
+                                    <span>
+                                        <strong>{{ update.title }}</strong>
+                                        {% if update.is_pic %}
+                                            <i class="align-middle" data-feather="image"></i>
+                                        {% endif %}
+                                    </span>
                                     <span class="float-end text-muted text-sm">
                                         {{ update.time_diff }}
                                     </span>
-                                    {% if update.message %}
-                                        <p class="line-restriction-3">{{ update.message }}</p>
-                                    {% endif %}
+                                    <p class="line-restriction-3">
+                                        {% if update.attachment %}
+                                            {{ update.attachment.name }}
+                                        {% endif %}
+                                        {% if update.message %}
+                                            {{ update.message }}
+                                        {% endif %}
+                                    </p>
                                 </li>
                             {% empty %}
                                 <li>
