@@ -169,6 +169,8 @@ def admin_article_create_view(request):
             form.save()
             # Todo: add a permission check
             return redirect("ADMArticleIndex", 1)
+        else:
+            form = ArticleForm(request.POST)
     else:
         form = ArticleForm()
     param["form"] = form
@@ -1121,12 +1123,12 @@ def admin_appointment_update_create_view(request, aptid):
     initial = {"appointment": appointment}
 
     if request.method == "POST":
-        form = MeetingUpdateForm(request.POST, initial=initial)
+        form = MeetingUpdateForm(request.POST, request.FILES, initial=initial)
         if form.is_valid():
             form.save()
             return redirect("ADMAppointmentEdit", aptid)
         else:
-            form = MeetingUpdateForm(request.POST, initial=initial)
+            form = MeetingUpdateForm(request.POST, request.FILES, initial=initial)
     else:
         form = MeetingUpdateForm(initial=initial)
 
