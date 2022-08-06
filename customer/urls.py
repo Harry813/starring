@@ -13,5 +13,7 @@ urlpatterns = [
     path('appointment/<str:slot_id>/', views.customer_appointment_2_view, name="CUSTAppoint2"),
     path('appointment/payment/<str:appointment_id>/', views.customer_appointment_payment_view, name="CUSTAppointPay"),
     path('search/<int:page>/', views.customer_search_view, name="CUSTSearch"),
-    path('contact_form/', views.customer_contact_form_frame, name="CUSTContact")
+    path('contact_form/', views.customer_contact_form_frame, name="CUSTContact"),
+    path('crs/', views.customer_self_assessment_crs_view, name="CUSTCRS"),
+    path('crs/<str:crs_id>/', views.customer_crs_result_view, name="CUSTCRSResult"),
 ]

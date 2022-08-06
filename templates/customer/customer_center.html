@@ -19,7 +19,7 @@
             color: #fff;
         }
     </style>
-    <link rel="stylesheet" href="{% static 'CSS/customer_template_basic.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/theme.css' %}">
 {% endblock %}
 
 {% block basic_template_content %}
@@ -90,18 +90,72 @@
             </div>
         </div>
 
-        <div class="row">
-            <div>
-                <p class="mt-3">
-                    您暂无安排任何预约，前往预约
-                </p>
-                <p class="mt-3">
-                    您暂无任何咨询记录
-                </p>
-                <p class="mt-3">
-                    专案咨询费用: $100 /小时
-                </p>
-            </div>
+        <div class="row g-3 mt-3">
+            {% if appointments %}
+                {% for appointment in appointments %}
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{% trans "预约详情" %}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{ appointment.get_status_display }}</h6>
+                                <ul class="list-group list-group-flush mb-2">
+                                    <li class="list-group-item">
+                                        <strong>{% trans "日期" %}</strong><span
+                                            class="ms-3">{{ appointment.slot.date }}</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>{% trans "时间" %}</strong><span
+                                            class="ms-3">{{ appointment.slot.start_time }}-{{ appointment.slot.end_time }}</span>
+                                    </li>
+                                </ul>
+                                {# todo: 添加不同状态的处理 #}
+                                {% if appointment.status == "UNPAID" %}
+                                    <a href="{% url 'CUSTAppointPay' appointment.id %}"
+                                       class="btn btn-star w-100">{% trans "前往付款" %}</a>
+                                {% elif appointment.status == "CASH" %}
+                                    <button type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#company_address_collapse"
+                                            aria-expanded="false" aria-controls="company_address_collapse"
+                                            class="btn btn-star w-100">{% trans "查看信息" %}</button>
+                                    <div class="collapse" id="company_address_collapse">
+                                        <div class="card-body">
+                                            {% blocktranslate %}
+                                                公司地址信息以及更多信息
+                                            {% endblocktranslate %}
+                                            {# todo: 添加公司地址信息以及CASH详情 #}
+                                        </div>
+                                    </div>
+                                {% elif appointment.status == "REJECT" %}
+                                    <button type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#reject_collapse"
+                                            aria-expanded="false" aria-controls="reject_collapse"
+                                            class="btn btn-star w-100">{% trans "查看原因" %}</button>
+                                    <div class="collapse" id="reject_collapse">
+                                        <div class="card-body">
+                                            {% blocktranslate %}
+                                                拒绝原因
+                                            {% endblocktranslate %}
+                                            {# todo: 添加公司地址信息以及CASH详情 #}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div>
+                    <p class="mt-3">
+                        您暂无安排任何预约，前往预约
+                    </p>
+                    <p class="mt-3">
+                        您暂无任何咨询记录
+                    </p>
+                    <p class="mt-3">
+                        专案咨询费用: $100 /小时
+                    </p>
+                </div>
+            {% endif %}
         </div>
 
         <div class="row mt-7">
