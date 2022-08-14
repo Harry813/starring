@@ -300,11 +300,19 @@ def customer_appointment_payment_view (request, appointment_id):
         **get_customer_info(),
     }
     appointment = Appointment.objects.get(id=appointment_id)
-    param["appointment"] = appointment
 
-    slot = appointment.slot
-    param["slot"] = slot
-    return render(request, "customer/customer_appointment_payment.html", param)
+    if appointment.status not in ["APPLY", "UNPAID"]:
+        return redirect("APPTPaymentSuccess", appointment_id=appointment_id)
+    else:
+        param["appointment"] = appointment
+        slot = appointment.slot
+        param["slot"] = slot
+        param["subtotal"] = "{:.2f}".format(appointment.price)
+        total = "{:.2f}".format(get_appt_price_total(appointment))
+        param["total"] = total
+        request.session["price"] = total
+
+        return render(request, "customer/customer_appointment_payment.html", param)
 
 
 @xframe_options_sameorigin
