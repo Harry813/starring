@@ -83,16 +83,12 @@ def customer_login_view (request):
                 return redirect("CUSTIndex")
             else:
                 form.add_error(None, ValidationError(UserNotExist_text, code="UserNotExist"))
-
-            param["form"] = form
-            return render(request, "customer/login.html", param)
-
         else:
-            param["form"] = form
-            return render(request, "customer/login.html", param)
+            form = CustomerLoginForm(request.POST)
     else:
-        param["form"] = CustomerLoginForm()
-        return render(request, "customer/login.html", param)
+        form = CustomerLoginForm()
+    param["form"] = form
+    return render(request, "customer/login.html", param)
 
 
 def customer_logout (request):
