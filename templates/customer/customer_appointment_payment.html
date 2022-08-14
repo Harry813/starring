@@ -1,53 +1,168 @@
-{% extends 'customer/customer_template.html' %}
+{% extends 'customer/customer_base.html' %}
 {% load widget_tweaks %}
 {% load i18n %}
 {% load static %}
 
+{% block headjs %}
+    <script src="https://www.paypal.com/sdk/js?client-id=AessEikTjsnPtmI0YNYAsNJ09BS20pu_VvU_LDwpyD7zgOuGEGZE5UVyeWik0x0xOBtBucicWmXabthi"></script>
+{% endblock %}
+
 {% block main_content %}
-    <h1 class="mb-5">{% trans "预约中心" %}</h1>
+    <div class="container">
+        <h1 class="my-5">{% trans "预约中心" %}</h1>
+        <div class="row mt-5 gx-5">
+            <div class="col-md-8 mb-3">
+                <p class="mb-3 fs-5">
+                    <strong>{% trans "支付" %}</strong>
+                </p>
+                <div id="paypal-button-container"></div>
+                <hr class="my-3">
+                <p class="mb-3 fs-5">
+                    <strong>{% trans "其他支付方式" %}</strong>
+                </p>
+                <div class="row p-0">
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-star w-100" data-bs-toggle="modal"
+                                data-bs-target="#cashConfirmModal">
+                            {% trans "现金支付" %}
+                        </button>
 
-    <div class="row p-0">
-        <div class="col-sm col-md-6" style="margin-bottom: 3rem">
-            <p class="mb-4 fs-5">
-                <strong>{% blocktranslate %}1. 选择预约的时间{% endblocktranslate %}</strong>
-            </p>
-            <div class="card w-100">
-                <div class="card-body">
-                    <p class="card-title mb-0 fw-bolder">{% trans "预约详情" %}</p>
+                        <!-- Modal -->
+                        <div class="modal fade" id="cashConfirmModal" tabindex="-1" aria-labelledby="cashConfirmModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="cashConfirmModalLabel">
+                                            {% trans "现金支付" %}
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {% blocktranslate %}
+                                            请于预约当日携带现金 CAD {{ total }}，提前至少20分钟前往本公司，寻找前台即可支付: <br>
+                                            #304-4940 No.3 Road Richmond, BC,<br>
+                                            Canada, V6X 3A5<br>
+                                            电话: 604-370-6618<br>
+                                        {% endblocktranslate %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            {% trans "取消" %}
+                                        </button>
+                                        <a class="btn btn-star" href="{% url 'APPTCashPayment' appointment_id=appointment.id %}">
+                                            {% trans "确认" %}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <strong class="me-3">{% trans "日期" %}</strong>{{ slot.date }}
-                    </li>
-                    <li class="list-group-item">
-                        <strong class="me-3">{% trans "时间" %}</strong>{{ slot.start_time }} - {{ slot.end_time }}
-                    </li>
-                </ul>
+
             </div>
-        </div>
-        <div class="col" style="margin-bottom: 3rem">
-            <p class="mb-4 fs-5">
-                <strong>{% blocktranslate %}2. 填写您的信息{% endblocktranslate %}</strong>
-            </p>
-            <div class="card w-100">
-                <div class="card-body">
-                    <p class="card-title mb-0 fw-bolder">{% trans "您的信息" %}</p>
+            <div class="col-md-4 mb-3">
+                <p class="mb-3 fs-5">
+                    <strong>{% trans "商品" %}</strong>
+                </p>
+                <span class="text-muted">
+                    {% trans "预约" %}
+                </span>
+                <div class="w-100 mt-3">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong class="me-3">{% trans "日期" %}</strong>{{ slot.date }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="me-3">{% trans "时间" %}</strong>{{ slot.start_time }}
+                            - {{ slot.end_time }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="me-3">{% trans "称谓" %}</strong>{{ appointment.get_title_prefix_display }} {{ appointment.name }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="me-3">{% trans "邮箱" %}</strong>{{ appointment.email }}
+                        </li>
+                    </ul>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <strong class="me-3">{% trans "称谓" %}</strong>{{ appointment.get_title_prefix_display }} {{ appointment.name }}
-                    </li>
-                    <li class="list-group-item">
-                        <strong class="me-3">{% trans "邮箱" %}</strong>{{ appointment.email }}
-                    </li>
-                </ul>
+                <hr class="my-3">
+                <div class="d-flex justify-content-between mb-1">
+                    <div>{% trans "小计" %}</div>
+                    <div>$ {{ subtotal }}</div>
+                </div>
+                <div class="d-flex justify-content-between mb-1">
+                    <div><strong style="font-size: 125%">{% trans "总计" %}</strong></div>
+                    <div><strong>$ {{ total }}</strong></div>
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
 
-    <div class="row p-0">
-        <p class="mb-3 fs-5">
-            <strong>{% blocktranslate %}3. 选择您的支付方式{% endblocktranslate %}</strong>
-        </p>
-    </div>
+{% block js %}
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=CAD"></script>
+
+    <script>
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+            style: {
+                size: 'responsive',
+                color: 'gold',
+                tagline: false
+            },
+            // Set up the transaction
+            createOrder: function (data, actions) {
+                return fetch('/order/create/{{ appointment.id }}/', {
+                    method: 'post',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest', //Necessary to work with request.is_ajax()
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    }
+                }).then(function (res) {
+                    return res.json();
+                }).then(function (orderData) {
+                    return orderData.id;
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function (data, actions) {
+                console.log('/order/capture/' + data.orderID + '/')
+                return actions.order.capture().then(function (orderData) {
+                    return fetch('/order/complete/' + data.orderID + '/', {
+                        method: 'post',
+                        credentials: 'same-origin',
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest', //Necessary to work with request.is_ajax()
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        }
+                    }).then(function (res) {
+                        return res.json();
+                    }).then(function (orderData) {
+                        let errorDetail = Array.isArray(orderData.details) && orderData.details[0];
+
+                        if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
+                            return actions.restart(); // Recoverable state, per:
+                            // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
+                        }
+
+                        if (errorDetail) {
+                            let msg = "{% trans "对不起，您的交易无法被处理" %}";
+                            if (errorDetail.description) msg += '\n\n' + errorDetail.description;
+                            if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
+                            return alert(msg); // Show a failure message (try to avoid alerts in production environments)
+                        }
+
+                        // Successful capture!
+                        actions.redirect({% url "APPTPaymentSuccess" order.id %});
+                    });
+                })
+            }
+        }).render('#paypal-button-container');
+    </script>
 {% endblock %}
