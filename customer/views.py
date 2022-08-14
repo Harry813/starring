@@ -241,7 +241,7 @@ def customer_appointment_view (request):
     else:
         form = MeetingSlotFilter(initial=initial)
 
-    slots = MeetingSlot.objects.filter(start_datetime__gte=start, end_datetime__lte=end, availability__gt=0)\
+    slots = MeetingSlot.objects.filter(start_datetime__gte=start, end_datetime__lte=end, status="AVAILABLE") \
         .order_by("start_datetime")
     param["slots"] = slots
     param["form"] = form
