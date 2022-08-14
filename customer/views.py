@@ -143,6 +143,10 @@ def customer_center_view (request):
         **get_customer_info(),
     }
 
+    customer_profile = Customer.objects.get(user=request.user)
+    appointments = Appointment.objects.filter(customer=customer_profile).order_by()
+    param["appointments"] = appointments
+
     return render(request, "customer/customer_center.html", param)
 
 
