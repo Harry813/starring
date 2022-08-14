@@ -1499,3 +1499,4 @@ class CRS(models.Model):
         else:
             self.eligible = False
         super().save(**kwargs)
+
