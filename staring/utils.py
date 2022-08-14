@@ -1,6 +1,8 @@
 import os
+import random
 import shutil
 from datetime import datetime
+from decimal import Decimal
 
 from . import settings
 from .customerSettings import Languages
@@ -316,3 +318,24 @@ def get_partner_language_score (clb=0):
         return 5
     else:
         return 0
+
+
+def generate_order_id ():
+    s = "APPT" + datetime.now().strftime('%Y%m%d%H%M%S') + str(random.randint(0, 9999)).zfill(4)
+    return s
+
+
+def get_appt_price_total (appt, discount=None, coupon=None):
+    """
+
+    :param appt:
+    :type appt: Appointment
+    :param discount:
+    :type discount:
+    :param coupon:
+    :type coupon:
+    :return:
+    :rtype:
+    """
+    price = appt.price
+    return price
