@@ -16,4 +16,9 @@ urlpatterns = [
     path('contact_form/', views.customer_contact_form_frame, name="CUSTContact"),
     path('crs/', views.customer_self_assessment_crs_view, name="CUSTCRS"),
     path('crs/<str:crs_id>/', views.customer_crs_result_view, name="CUSTCRSResult"),
+    # path('checkout/<str:appointment_id>/', views.checkout_test_view, name="checkout"),
+    path('order/create/<str:appointment_id>/', views.create_appt_order, name="APPTCreateOrder"),
+    path('order/cash/<str:appointment_id>/', views.cash_payment_appt, name="APPTCashPayment"),
+    path('order/complete/<str:order_id>/', views.complete_appt_order, name="APPTCompleteOrder"),
+    path('order/success/<str:appointment_id>/', views.payment_success_view, name="APPTPaymentSuccess"),
 ]
