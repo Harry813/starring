@@ -31,7 +31,7 @@ client = PayPalHttpClient(environment)
 
 
 # Create your views here.
-def index(request):
+def index (request):
     param = {
         "page_title": _("星环首页"),
         "languages": Languages,
@@ -48,7 +48,7 @@ def index(request):
         return render(request, "customer/index.html", param)
 
 
-def customer_login_view(request):
+def customer_login_view (request):
     param = {
         "page_title": _("星环-登录"),
         "languages": Languages,
@@ -95,12 +95,12 @@ def customer_login_view(request):
         return render(request, "customer/login.html", param)
 
 
-def customer_logout(request):
+def customer_logout (request):
     logout(request)
     return redirect('CUSTIndex')
 
 
-def customer_register(request):
+def customer_register (request):
     param = {
         "page_title": _("星环-注册中心"),
         "languages": Languages,
@@ -137,7 +137,7 @@ def customer_register(request):
 
 
 @login_required(login_url="CUSTLogin")
-def customer_center_view(request):
+def customer_center_view (request):
     param = {
         "page_title": _("星环-我的主页"),
         "languages": Languages,
@@ -150,7 +150,7 @@ def customer_center_view(request):
     return render(request, "customer/customer_center.html", param)
 
 
-def customer_articles(request, article_id):
+def customer_articles (request, article_id):
     param = {
         "page_title": _("星环"),
         "languages": Languages,
@@ -179,7 +179,7 @@ def customer_articles(request, article_id):
         return render(request, "customer/customer_articles.html", param)
 
 
-def customer_search_view(request, page):
+def customer_search_view (request, page):
     param = {
         "page_title": _("星环-我的主页"),
         "languages": Languages,
@@ -249,7 +249,7 @@ def customer_appointment_view (request):
 
 
 @login_required(login_url="CUSTLogin")
-def customer_appointment_2_view(request, slot_id):
+def customer_appointment_2_view (request, slot_id):
     param = {
         "page_title": _("星环-我的主页"),
         "languages": Languages,
@@ -286,7 +286,7 @@ def customer_appointment_2_view(request, slot_id):
 
 
 @login_required(login_url="CUSTLogin")
-def customer_appointment_payment_view(request, appointment_id):
+def customer_appointment_payment_view (request, appointment_id):
     param = {
         "page_title": _("星环-我的主页"),
         "languages": Languages,
