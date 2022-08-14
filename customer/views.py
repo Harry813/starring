@@ -315,8 +315,128 @@ def customer_appointment_payment_view (request, appointment_id):
         return render(request, "customer/customer_appointment_payment.html", param)
 
 
+def customer_self_assessment_crs_view (request):
+    param = {
+        "page_title": _("星环-CRS自我评估"),
+        "languages": Languages,
+        "user": request.user,
+        "title_img": True,
+        **get_customer_info(),
+    }
+
+    if request.method == "POST":
+        form = CRSForm(request.POST)
+        if form.is_valid():
+            inst = form.save(commit=False)
+            if request.user.is_authenticated:
+                inst.customer = Customer.objects.get(user_id=request.user.uid)
+            inst.save()
+            return redirect("CUSTCRSResult", crs_id=inst.pk)
+        else:
+            form = CRSForm(request.POST)
+    else:
+        form = CRSForm()
+
+    param["form"] = form
+
+    return render(request, "customer/customer_self_assessment_crs_view.html", param)
+
+
+def customer_crs_result_view (request, crs_id):
+    param = {
+        "page_title": _("星环-CRS评估报告"),
+        "languages": Languages,
+        "user": request.user,
+        **get_customer_info(),
+    }
+
+    crs = get_object_or_404(CRS, id=crs_id)
+    param["crs"] = crs
+    return render(request, "customer/customer_crs_report.html", param)
+
+
+@login_required(login_url="CUSTLogin")
+def create_appt_order (request, appointment_id):
+    vip_lv = Customer.objects.get(user=User.objects.get(uid=request.user.uid)).vip_lv
+    order_type = f"0{vip_lv}"
+
+    appointment = Appointment.objects.get(id=appointment_id)
+    price = request.session.pop("price")
+
+    order_id = generate_order_id()
+    order_request = OrdersCreateRequest()
+    order_request.prefer('return=representation')
+    order_request.request_body({
+        "intent": "CAPTURE",
+        "purchase_units": [{
+            "reference_id": order_id,
+            "amount": {
+                "currency_code": "CAD",
+                "value": str(price)
+            }
+        }]
+    })
+
+    response = client.execute(order_request)
+    result = response.result
+    staringOrder.objects.create(
+        id=order_id,
+        payment_id=result.id,
+        product_id=appointment_id,
+        order_type=order_type,
+        price=appointment.price,
+    )
+    return JsonResponse(data=result.dict(), safe=True)
+
+
+@login_required(login_url="CUSTLogin")
+def complete_appt_order (request, order_id):
+    getRequest = OrdersGetRequest(order_id)
+    response = client.execute(getRequest)
+    result = response.result
+
+    o = staringOrder.objects.get(payment_id=order_id)
+    o.raw_json = json.dumps(result.dict())
+    o.status = result.status
+    o.save()
+
+    appointment = Appointment.objects.get(id=o.product_id)
+    appointment.status = "ACCEPT"
+    appointment.save()
+
+    slot = appointment.slot
+    slot.status = "OCCUPIED"
+    slot.save()
+    return JsonResponse(data=result.dict(), safe=True)
+
+
+@login_required(login_url="CUSTLogin")
+def cash_payment_appt (request, appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    appointment.status = "CASH"
+    appointment.save()
+
+    slot = appointment.slot
+    slot.status = "OCCUPIED"
+    slot.save()
+    return redirect("APPTPaymentSuccess", appointment_id=appointment_id)
+
+
+@login_required(login_url="CUSTLogin")
+def payment_success_view (request, appointment_id):
+    param = {
+        "page_title": _("星环-支付成功"),
+        "languages": Languages,
+        "user": request.user,
+        "appointment": Appointment.objects.get(id=appointment_id),
+        "order": staringOrder.objects.get(product_id=appointment_id),
+        **get_customer_info(),
+    }
+    return render(request, "customer/payment_success.html", param)
+
+
 @xframe_options_sameorigin
-def customer_contact_form_frame(request):
+def customer_contact_form_frame (request):
     param = {
         "user": request.user,
         **get_customer_info(),
