@@ -229,3 +229,9 @@ CKEDITOR_CONFIGS = {
         ],
     },
 }
+
+# Paypal Setting
+PAYPAL_CLIENT_ID = "AessEikTjsnPtmI0YNYAsNJ09BS20pu_VvU_LDwpyD7zgOuGEGZE5UVyeWik0x0xOBtBucicWmXabthi"
+PAYPAL_SECRET = "EOsYGHER3f9jR-j8oRo3cQxMzG7iPCJMSmjaKLNI_oeEgLu9ielt9cIVCpehouN_lZDdBRKYxUjGduYe"
+PAYPAL_MODE = "sandbox"
+PAYPAL_ACCOUNT = "sb-fjmpd15302855@business.example.com"
