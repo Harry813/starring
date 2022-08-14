@@ -1500,3 +1500,90 @@ class CRS(models.Model):
             self.eligible = False
         super().save(**kwargs)
 
+
+class Order(models.Model):
+    id = models.CharField(
+        verbose_name=_("订单 ID"),
+        max_length=30,
+        default=generate_order_id,
+        primary_key=True,
+        editable=True,
+    )
+
+    order_type = models.CharField(
+        verbose_name=_("订单类型"),
+        max_length=2,
+        choices=[
+            (_("商品购买"), [
+                ["00", _("普通访客 咨询预约")],
+                ["01", _("IS访客 咨询预约")],
+                ["02", _("IS会员 咨询预约")],
+                ["03", _("IS-VIP 咨询预约")],
+            ]),
+            (_("订阅"), [
+                ["10", _("IS会员 订阅")],
+                ["11", _("IS-VIP 订阅")]
+            ]),
+        ],
+    )
+
+    status = models.CharField(
+        verbose_name=_("状态"),
+        max_length=10,
+        choices=[
+            ("CREATED", _("已创建")),
+            ("COMPLETED", _("已通过")),
+            ("PENDING", _("待处理")),
+            ("CANCELED", _("已取消")),
+            ("REFUNDED", _("已退款")),
+        ],
+        default="CREATED",
+    )
+
+    payment_id = models.CharField(
+        verbose_name=_("支付ID"),
+        max_length=20,
+        blank=True,
+        null=True,
+    )
+
+    product_id = models.CharField(
+        verbose_name=_("商品ID"),
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+
+    price = models.DecimalField(
+        verbose_name=_("价格"),
+        max_digits=7,
+        decimal_places=2,
+    )
+
+    currency = models.CharField(
+        verbose_name=_("货币"),
+        max_length=3,
+        choices=[
+            ("CAD", "CAD"),
+            ("USD", "USD"),
+            ("CNY", "CNY"),
+            ("EUR", "EUR"),
+        ],
+        default="CAD",
+    )
+
+    create_date = models.DateTimeField(
+        verbose_name=_("Create Date"),
+        auto_now_add=True,
+    )
+
+    update_date = models.DateTimeField(
+        verbose_name=_("Update Date"),
+        auto_now=True,
+    )
+
+    raw_json = models.JSONField(
+        verbose_name=_("CREATED_JSON"),
+        blank=True,
+        null=True,
+    )
