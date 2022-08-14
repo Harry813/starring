@@ -10,6 +10,13 @@ from django.utils.translation import ngettext as _n
 # Translators: 全局设定{品名}
 brand_name = _('星环')
 
+start_date_text = _("开始日期")
+end_date_text = _("结束日期")
+
+slot_weekends_text = _("包含周末")
+
+# Translators: 常用{邮箱地址}
+email_text = _('邮箱地址')
 
 ###################################################################################################
 # staring.models.User  用户模组
