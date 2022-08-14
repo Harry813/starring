@@ -1,4 +1,5 @@
 import os
+from datetime import datetime, date, time, timedelta
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -590,7 +591,7 @@ def admin_slot_index_view (request, page):
         **get_admin_info()
     }
 
-    timeslots = MeetingSlot.objects.filter(start_datetime__gte=datetime.datetime.today()).order_by("start_datetime")
+    timeslots = MeetingSlot.objects.filter(start_datetime__gte=datetime.today()).order_by("start_datetime")
 
     p = Paginator(timeslots, 10)
     timeslots = p.get_page(page)
@@ -644,8 +645,8 @@ def admin_slot_edit_view (request, sid):
             d = form.cleaned_data.get("date")
             start_time = form.cleaned_data.get("start_time")
             end_time = form.cleaned_data.get("end_time")
-            start_datetime = datetime.datetime.combine(d, start_time)
-            end_datetime = datetime.datetime.combine(d, end_time)
+            start_datetime = datetime.combine(d, start_time)
+            end_datetime = datetime.combine(d, end_time)
 
             slot.start_datetime = start_datetime
             slot.end_datetime = end_datetime
