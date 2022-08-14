@@ -389,6 +389,38 @@ def admin_staff_edit_view (request, staff_id):
         **get_admin_info()
     }
 
+    user_query = User.objects.filter(is_active=True).filter(Q(is_staff=True) | Q(is_superuser=True)) \
+        .exclude(username="AnonymousUser")
+    basic_profile = get_object_or_404(user_query, uid=staff_id)
+    basic_initial = {"dob": basic_profile.format_dob}
+    param["user_id"] = staff_id
+    staff_profile = Staff.objects.get_or_create(user_id=staff_id, defaults={'user': basic_profile})[0]
+
+    if request.method == "POST":
+        basic_form = UserForm(request.POST, instance=basic_profile, initial=basic_initial, prefix="basic")
+        staff_form = StaffForm(request.POST, instance=staff_profile, prefix="staff")
+
+        if basic_form.is_valid():
+            basic_form.save()
+        else:
+            basic_form = UserForm(request.POST, instance=basic_profile, initial=basic_initial, prefix="basic")
+
+        if staff_form.is_valid():
+            staff_form.save()
+        else:
+            staff_form = StaffForm(request.POST, instance=staff_profile, prefix="staff")
+
+        if basic_form.is_valid() and staff_form.is_valid():
+            pass
+        else:
+            pass
+
+    else:
+        basic_form = UserForm(instance=basic_profile, initial=basic_initial, prefix="basic")
+        staff_form = StaffForm(instance=staff_profile, prefix="staff")
+
+    param["basic_form"] = basic_form
+    param["staff_form"] = staff_form
     return render(request, "admin/admin_staff_edit.html", param)
 
 
