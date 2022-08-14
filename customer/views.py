@@ -1,21 +1,28 @@
-from datetime import datetime, timedelta, date
+import json
+from datetime import datetime, timedelta
+from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
+from paypalcheckoutsdk.orders import OrdersCreateRequest, OrdersCaptureRequest, OrdersGetRequest
+from paypalhttp import HttpError
 
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import gettext as _
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 
-from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm, MeetingSlotFilter, AppointmentForm
+from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm, MeetingSlotFilter, AppointmentForm, \
+    CRSForm
 from customer.models import Customer
 from customer.utils import get_customer_info, get_news, get_index_list
 from staring.customerSettings import Languages
-from staring.models import Article, User, MeetingSlot, Appointment, MeetingUpdate
+from staring.models import Article, User, MeetingSlot, Appointment, MeetingUpdate, CRS
+from staring.models import Order as staringOrder
+from staring.settings import PAYPAL_MODE, PAYPAL_CLIENT_ID, PAYPAL_SECRET
 from staring.text import UserNotExist_text
 
 
