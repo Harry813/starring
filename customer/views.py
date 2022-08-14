@@ -260,7 +260,7 @@ def customer_appointment_2_view (request, slot_id):
 
     slot = MeetingSlot.objects.get(id=slot_id)
     param["slot"] = slot
-    u = User.objects.get(username=request.user)
+    u = User.objects.get(uid=request.user.uid)
     initial = {}
     if u.email:
         initial["email"] = u.email
@@ -272,9 +272,14 @@ def customer_appointment_2_view (request, slot_id):
         form = AppointmentForm(request.POST, initial=initial)
         if form.is_valid():
             appointment = form.save(commit=False)
+            appointment.status = "UNPAID"
             appointment.slot = slot
             appointment.customer = Customer.objects.get(user=u)
             appointment.save()
+            slot.status = "LOCK"
+            slot.save()
+            MeetingUpdate.objects.create(appointment=appointment, title=_("预约已创建"),
+                                         message=_("预约创建成功，等待后续操作"))
             return redirect("CUSTAppointPay", appointment_id=appointment.id)
         else:
             form = AppointmentForm(request.POST, initial=initial)
