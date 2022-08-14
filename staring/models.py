@@ -420,6 +420,15 @@ class Appointment(models.Model):
         auto_now=True,
     )
 
+    @property
+    def price(self):
+        price = Decimal(0.00)
+        if self.customer.vip_lv in [2, 3]:
+            price += Decimal(100)
+        else:
+            price += Decimal(200)
+        return price
+
     def __str__ (self):
         return _("预约: %(id)s-[%(name)s]-{%(time)s}") % {
             "id": str(self.id)[-8:].capitalize(),
