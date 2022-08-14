@@ -27,6 +27,8 @@
     {# jquery #}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    {% block headjs %}{% endblock %}
+
     {% block css %}{% endblock %}
     {% if request.user_agent.is_mobile %}
         <style>
@@ -39,7 +41,6 @@
 
     <title>{{ page_title }}</title>
 </head>
-
 
 <body>
 {% if not request.user_agent.is_mobile %}
