@@ -528,3 +528,55 @@ class MeetingUpdateForm(forms.ModelForm):
     class Meta:
         model = MeetingUpdate
         fields = ["title", "attachment", "message", "appointment"]
+
+
+class OrderSearchForm(forms.Form):
+    start_date = forms.DateField(
+        label=_("起始日期"),
+        required=False,
+    )
+
+    end_date = forms.DateField(
+        label=_("结束日期"),
+        required=False,
+    )
+
+    status = forms.MultipleChoiceField(
+        label=_("状态"),
+        choices=[
+            ("CREATED", _("已创建")),
+            ("COMPLETED", _("已通过")),
+            ("PENDING", _("待处理")),
+            ("CANCELED", _("已取消")),
+            ("REFUNDED", _("已退款")),
+        ],
+        required=False,
+        help_text=_("按住ctrl键可多选"),
+    )
+
+    type = forms.ChoiceField(
+        label=_("类型"),
+        choices=[
+            ('', '--------'),
+            ("ID", _("ID")),
+            ("KEYWORD", _("关键字")),
+        ],
+        required=False,
+    )
+
+    detail = forms.CharField(
+        required=False,
+    )
+
+    def clean(self):
+        cleaned_data = super(OrderSearchForm, self).clean()
+        start_date = cleaned_data.get("start_date")
+        end_date = cleaned_data.get("end_date")
+        if start_date and end_date and start_date > end_date:
+            raise forms.ValidationError(_("Invalid Date"))
+
+        detail = cleaned_data.get("detail")
+        search_type = cleaned_data.get("type")
+        if detail and not search_type:
+            raise forms.ValidationError(_("Invalid Search Type"))
+        return cleaned_data
