@@ -1225,6 +1225,67 @@ def admin_appointment_paid (request, page, aptid):
     return redirect("ADMAppointmentIndex", page)
 
 
+@login_required(login_url="ADMLogin")
+def admin_order_index_view (request, page):
+    """Admin Convenience Function Order"""
+    param = {
+        "page_title": _("星环-订单管理"),
+        "languages": Languages,
+        "active_page": "ADMOrderIndex",
+        **get_basic_info(),
+        **get_admin_info(),
+    }
+    orders = Order.objects.order_by('-update_datetime')
+    start_date_query = Q()
+    end_date_query = Q()
+    status_query = Q(status__in=["COMPLETED"])
+    search_query = Q()
+    if request.method == "POST":
+        form = OrderSearchForm(request.POST)
+        if form.is_valid():
+            start_date_query = Q(create_datetime__gte=form.cleaned_data.get("start_date")) if form.cleaned_data.get(
+                "start_date") else Q()
+            end_date_query = Q(update_datetime__lte=form.cleaned_data.get("end_date")) if form.cleaned_data.get(
+                "end_date") else Q()
+
+            status_query = Q(status__in=form.cleaned_data.get("status")) if form.cleaned_data.get("status") else Q(status__in=["COMPLETED"])
+
+            if form.cleaned_data.get("detail"):
+                if form.cleaned_data.get("search_type") == "ID":
+                    search_query = Q(id__contains=form.cleaned_data.get("detail")) | Q(
+                        payment_id__contains=form.cleaned_data.get("detail"))
+                elif form.cleaned_data.get("search_type") == "NAME":
+                    search_query = Q(user__name__contains=form.cleaned_data.get("detail"))
+        else:
+            form = OrderSearchForm(request.POST)
+    else:
+        form = OrderSearchForm()
+
+    orders = orders.filter(start_date_query & end_date_query & status_query & search_query)
+    param["form"] = form
+    p = Paginator(orders, 10)
+    param["paginator"] = p
+    param["orders"] = p.get_page(page)
+    param["current_page"] = page
+    param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
+    return render(request, "admin/admin_order_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_order_detail_view (request, order_id):
+    """Admin Convenience Function Order Detail"""
+    param = {
+        "page_title": _("星环-订单管理"),
+        "languages": Languages,
+        "active_page": "ADMOrderIndex",
+        **get_basic_info(),
+        **get_admin_info(),
+    }
+    order = get_object_or_404(Order, id=order_id)
+    param["order"] = order
+    return render(request, "admin/admin_order_detail.html", param)
+
+
 @csrf_exempt
 def admin_article_image_upload (request):
     if request.method == "POST":
