@@ -1572,12 +1572,12 @@ class Order(models.Model):
         default="CAD",
     )
 
-    create_date = models.DateTimeField(
+    create_datetime = models.DateTimeField(
         verbose_name=_("Create Date"),
         auto_now_add=True,
     )
 
-    update_date = models.DateTimeField(
+    update_datetime = models.DateTimeField(
         verbose_name=_("Update Date"),
         auto_now=True,
     )
