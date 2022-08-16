@@ -49,6 +49,8 @@ urlpatterns = [
     path('indexList/sector/<int:secid>/delete/<int:itemid>/', views.admin_index_item_delete,
          name="ADMIndListItemDelete"),
     path('upload/image/article/', views.admin_article_image_upload, name="ADMImageUpload"),
+    path('order/page/<int:page>/', views.admin_order_index_view, name="ADMOrderIndex"),
+    path('order/<str:order_id>/', views.admin_order_detail_view, name="ADMOrderDetail"),
 
     # Appointment Related Convenient Methods
     path('appointment/accept/<int:page>/<str:aptid>', views.admin_appointment_accept, name="ADMAppointmentAccept"),
