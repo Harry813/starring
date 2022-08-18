@@ -252,7 +252,8 @@ class News(models.Model):
 
     order = models.PositiveSmallIntegerField(
         blank=True,
-        null=True
+        null=True,
+        verbose_name=news_order_text,
     )
 
     article = models.ForeignKey(
@@ -290,7 +291,7 @@ class News(models.Model):
     )
 
     class Meta:
-        unique_together = ("sector", "article")
+        ordering = ["sector", "order"]
 
 
 class MeetingSlot(models.Model):
