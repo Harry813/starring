@@ -37,9 +37,6 @@ CSRF_TRUSTED_ORIGINS = ["star.ourcv.net"]
 # Application definition
 
 INSTALLED_APPS = [
-    # 'grappelli',
-    # 'filebrowser',
-
     # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
