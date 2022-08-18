@@ -14,103 +14,103 @@
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
                         {# Translators: 后台模板{侧边栏}-第一部分@标题 #}
-                        {% translate '总览' %}
+                        {% trans '总览' %}
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第一部分@仪表面板 #}
-                            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">{% translate '仪表面板' %}</span>
+                            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">{% trans '仪表面板' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-header">
                         {# Translators: 后台模板{侧边栏}-第二部分@标题 #}
-                        {% translate '公司管理' %}
+                        {% trans '公司管理' %}
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMStaff' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMStaffIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第二部分@员工管理 #}
-                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">{% translate '员工管理' %}</span>
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">{% trans '员工管理' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-header">
                         {# Translators: 后台模板{侧边栏}-第三部分@标题 #}
-                        {% translate '服务管理' %}
+                        {% trans '服务管理' %}
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMCustomerIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMCustomerIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第三部分@用户管理 #}
-                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">{% translate '用户管理' %}</span>
+                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">{% trans '用户管理' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMArticleIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMArticleIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第三部分@文章管理 #}
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">{% translate '文章管理' %}</span>
+                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">{% trans '文章管理' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMOrderIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMOrderIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第三部分@账单管理 #}
-                            <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">{% translate '账单管理' %}</span>
+                            <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">{% trans '账单管理' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-header">
                         {# Translators: 后台模板{侧边栏}-第4部分@标题 #}
-                        {% translate '预约管理' %}
+                        {% trans '预约管理' %}
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMSlotIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMSlotIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第4部分@日程管理 #}
-                            <i class="align-middle" data-feather="clock"></i> <span class="align-middle">{% translate '日程管理' %}</span>
+                            <i class="align-middle" data-feather="clock"></i> <span class="align-middle">{% trans '日程管理' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMAppointmentIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMAppointmentIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第4部分@预约管理 #}
-                            <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">{% translate '预约管理' %}</span>
+                            <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">{% trans '预约管理' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-header">
                         {# Translators: 后台模板{侧边栏}-第5部分@标题 #}
-                        {% translate '首页管理' %}
+                        {% trans '首页管理' %}
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMNaviIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMNaviSectorIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第5部分@导航栏分区 #}
-                            <i class="align-middle" data-feather="compass"></i> <span class="align-middle">{% translate '首页导航' %}</span>
+                            <i class="align-middle" data-feather="compass"></i> <span class="align-middle">{% trans '首页导航' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMSidebarIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMSidebarIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第5部分@侧边栏项 #}
-                            <i class="align-middle" data-feather="sidebar"></i> <span class="align-middle">{% translate '侧边栏项' %}</span>
+                            <i class="align-middle" data-feather="sidebar"></i> <span class="align-middle">{% trans '侧边栏项' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMIndListIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMIndListSectorIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第5部分@清单分区 #}
-                            <i class="align-middle" data-feather="grid"></i> <span class="align-middle">{% translate '首页清单' %}</span>
+                            <i class="align-middle" data-feather="grid"></i> <span class="align-middle">{% trans '首页清单' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMNewsSectorIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMNewsSectorIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第5部分@新闻分区 #}
-                            <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">{% translate '新闻分区' %}</span>
+                            <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">{% trans '新闻分区' %}</span>
                         </a>
                     </li>
                 </ul>
@@ -137,7 +137,8 @@
                                         <div class="dropdown-header">{{ li.name }}</div>
                                         {% for item in li.items %}
                                             {% with url_name=li.linkName %}
-                                                <a class="dropdown-item" href="{% if url_name == "" or "#" %}#{% else %}{% url url_name %}{% endif %}">{{ item.name }}</a>
+                                                <a class="dropdown-item"
+                                                   href="{% if url_name == "" or "#" %}#{% else %}{% url url_name %}{% endif %}">{{ item.name }}</a>
                                             {% endwith %}
                                         {% endfor %}
                                     </div>
@@ -323,24 +324,23 @@
 
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                                data-bs-toggle="dropdown">
-                                <img src="
-                                        {% if user.avatar %}{{ user.avatar.image }}{% else %}{% static 'IMG/default_avatar.jpg' %}{% endif %}"
+                                <img src="{% if user.avatar %}{{ user.avatar.image }}{% else %}{% static 'IMG/default_avatar.jpg' %}{% endif %}"
                                      class="avatar img-fluid rounded me-1" alt="{{ user.get_display_name }}_avatar"/>
                                 <span class="text-dark">{{ user.get_display_name }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="#">
+                                <i class="align-middle me-1" data-feather="user"></i> Profile</a>
                                 <a class="dropdown-item" href="#"><i class="align-middle me-1"
-                                                                                      data-feather="user"></i> Profile</a>
-                                <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i>
+                                                                     data-feather="pie-chart"></i>
                                     Analytics</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="align-middle me-1"
-                                                                                       data-feather="settings"></i> Settings
-                                    & Privacy</a>
+                                <a class="dropdown-item" href="#">
+                                <i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
                                 <a class="dropdown-item" href="#"><i class="align-middle me-1"
                                                                      data-feather="help-circle"></i> Help Center</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{% url 'ADMLogout' %}">{% translate '登出' %}</a>
+                                <a class="dropdown-item" href="{% url 'ADMLogout' %}">{% trans '登出' %}</a>
                             </div>
                         </li>
                     </ul>
