@@ -36,7 +36,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label" for="{{ form.sector.id_for_label }}">
                                         {{ form.sector.label }}
                                         {% if form.sector.field.required %}
@@ -66,6 +66,23 @@
                                             <p class="small" style="color: red;">{{ form.article.errors.0 }}</p>
                                         {% elif form.article.help_text %}
                                             <p class="small text-muted">{{ form.article.help_text }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 mb-3">
+                                    <label class="form-label" for="{{ form.reorder.id_for_label }}">
+                                        {{ form.reorder.label }}
+                                        {% if form.reorder.field.required %}
+                                            <span style="color: red">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {% render_field form.reorder class="form-control" %}
+                                    <div>
+                                        {% if form.reorder.errors %}
+                                            <p class="small" style="color: red;">{{ form.reorder.errors.0 }}</p>
+                                        {% elif form.reorder.help_text %}
+                                            <p class="small text-muted">{{ form.reorder.help_text }}</p>
                                         {% endif %}
                                     </div>
                                 </div>
