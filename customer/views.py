@@ -1,8 +1,7 @@
 import json
 from datetime import datetime, timedelta
-from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
-from paypalcheckoutsdk.orders import OrdersCreateRequest, OrdersCaptureRequest, OrdersGetRequest
-from paypalhttp import HttpError
+from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment, LiveEnvironment
+from paypalcheckoutsdk.orders import OrdersCreateRequest, OrdersGetRequest
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user
@@ -26,7 +25,10 @@ from staring.settings import PAYPAL_MODE, PAYPAL_CLIENT_ID, PAYPAL_SECRET
 from staring.text import UserNotExist_text
 from staring.utils import generate_order_id, get_appt_price_total
 
-environment = SandboxEnvironment(client_id=PAYPAL_CLIENT_ID, client_secret=PAYPAL_SECRET)
+if PAYPAL_MODE == "live":
+    environment = LiveEnvironment(client_id=PAYPAL_CLIENT_ID, client_secret=PAYPAL_SECRET)
+else:
+    environment = SandboxEnvironment(client_id=PAYPAL_CLIENT_ID, client_secret=PAYPAL_SECRET)
 client = PayPalHttpClient(environment)
 
 
