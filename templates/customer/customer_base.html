@@ -531,6 +531,38 @@
     </footer>
 {% endif %}
 
+<!-- Messenger 聊天插件 Code -->
+<div id="fb-root"></div>
+
+<!-- Your 聊天插件 code -->
+<div id="fb-customer-chat" class="fb-customerchat">
+</div>
+
+<script>
+    let chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "110026251820508");
+    chatbox.setAttribute("attribution", "biz_inbox");
+</script>
+
+<!-- Your SDK code -->
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            xfbml: true,
+            version: 'v14.0'
+        });
+    };
+
+    (function (d, s, id) {
+        let js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://connect.facebook.net/zh_CN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
 {% for message in messages %}
     <div aria-live="polite" aria-atomic="true" class="position-relative">
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
