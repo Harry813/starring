@@ -63,12 +63,12 @@
                 {% endfor %}
                 <div class="float-end pe-4">
                     {% if request.user.is_authenticated %}
-                    <a href="{% url 'CUSTLogout' %}" class="me-2 text-decoration-none star-font">
+                        <a href="{% url 'CUSTLogout' %}" class="me-2 text-decoration-none star-font">
                         <span class="align-middle">
                             {% trans "登出" %}
                         </span>
-                    </a>
-                {% endif %}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="mt-3">
@@ -316,13 +316,17 @@
                        class="text-white text-decoration-none">加拿大移民局</a>
                 </div>
                 <div class="star-footer-item star-font">
-                    <a href="https://ca.china-embassy.org/chn/" class="text-white text-decoration-none">中国驻加拿大领事馆</a>
+                    <a href="https://ca.china-embassy.org/chn/" class="text-white text-decoration-none">
+                    中国驻加拿大领事馆
+                    </a>
                 </div>
                 <div class="star-footer-item star-font">
-                    <a href="https://iccrc-crcic.ca/" class="text-white text-decoration-none">加拿大移民行业监管协会 ICCRC</a>
+                    <a href="https://iccrc-crcic.ca/" class="text-white text-decoration-none">加拿大移民行业监管协会
+                        ICCRC</a>
                 </div>
                 <div class="star-footer-item star-font">
-                    <a href="https://canada.keepexploring.cn" class="text-white text-decoration-none">加拿大旅游局官网</a>
+                    <a href="https://canada.keepexploring.cn"
+                       class="text-white text-decoration-none">加拿大旅游局官网</a>
                 </div>
                 <div class="star-footer-item star-font">
                     <a href="#" class="text-white text-decoration-none">BC省学校排名</a>
@@ -399,11 +403,13 @@
                 </form>
                 <div class="justify-content-between mt-3 d-flex">
                     <div class="text-center">
-                        <img src="{% static 'IMG/Wechat_QR1.png' %}" alt="{% translate '看⻅加拿⼤公众号' %}" height="84px">
+                        <img src="{% static 'IMG/Wechat_QR1.png' %}" alt="{% translate '看⻅加拿⼤公众号' %}"
+                             height="84px">
                         <p class="qr-code-title star-font">{% translate '看⻅加拿⼤公众号' %}</p>
                     </div>
                     <div class="text-center">
-                        <img src="{% static 'IMG/Wechat_QR2.png' %}" alt="{% translate '星环移民公众号' %}" height="84px">
+                        <img src="{% static 'IMG/Wechat_QR2.png' %}" alt="{% translate '星环移民公众号' %}"
+                             height="84px">
                         <p class="qr-code-title star-font">{% translate '星环移民公众号' %}</p>
                     </div>
                     <div class="text-center">
