@@ -421,7 +421,7 @@ class Appointment(models.Model):
     )
 
     @property
-    def price(self):
+    def price (self):
         price = Decimal(0.00)
         if self.customer.vip_lv in [2, 3]:
             price += Decimal(100)
