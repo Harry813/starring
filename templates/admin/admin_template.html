@@ -55,6 +55,13 @@
                         </a>
                     </li>
 
+                    <li class="sidebar-item {% if active_page == 'ADMOrderIndex' %}active{% endif %}">
+                        <a class="sidebar-link" href="{% url 'ADMOrderIndex' 1 %}">
+                            {# Translators: 后台模板{侧边栏}-第三部分@账单管理 #}
+                            <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">{% translate '账单管理' %}</span>
+                        </a>
+                    </li>
+
                     <li class="sidebar-header">
                         {# Translators: 后台模板{侧边栏}-第4部分@标题 #}
                         {% translate '预约管理' %}
