@@ -112,6 +112,9 @@ class User(AbstractUser):
         null=True
     )
 
+    def get_full_tele (self):
+        return f"+{self.countryCode}-{self.tele}"
+
     avatar = models.ImageField(
         verbose_name=user_avatar_text,
         default="",
@@ -453,7 +456,6 @@ class MeetingUpdate(models.Model):
     attachment = models.FileField(
         upload_to="MeetingRecords/",
         blank=True,
-        null=True,
         verbose_name=update_attachment_text
     )
 
