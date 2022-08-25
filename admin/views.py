@@ -572,11 +572,14 @@ def admin_news_create_view (request, sid):
         **get_admin_info()
     }
     sector = NewsSector.objects.get(id=sid)
+    initial = {"sector": sector, "order": len(News.objects.filter(sector=sector)) + 1}
 
     if request.method == "POST":
-        form = NewsForm(request.POST, request.FILES, initial={"sector": sector})
+        form = NewsForm(request.POST, request.FILES, initial=initial)
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            order = form.cleaned_data.get("reorder")
+            reorder(News, Q(sector_id=sector), item, order)
             return redirect("ADMNewsSectorEdit", sid=sid)
         else:
             form = NewsForm(request.POST, request.FILES)
