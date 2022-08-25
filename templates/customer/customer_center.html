@@ -9,6 +9,12 @@
             border-left: 1px solid #000 !important;
         }
 
+        @media (min-width: 768px) {
+            .border-md-left {
+                border-left: 1px solid #000 !important;
+            }
+        }
+
         .section-title {
             margin-top: 5rem;
             border-bottom: 1px solid #000;
@@ -25,16 +31,16 @@
 {% block basic_template_content %}
     <div class="container-md px-7 py-5">
         <div class="row pb-3 mt-3 border-bottom">
-            <div class="mt-3 d-flex align-items-center">
-                <div class="px-3 float-start">
+            <div class="mt-3 align-items-center">
+                <div class="px-3 float-md-start">
                     <h1>我的账户</h1>
                 </div>
 
-                <div class="px-4 py-2 float-start align-bottom border-left">
+                <div class="px-4 py-2 float-md-start align-bottom border-md-left">
                     {{ user.customer.get_vip_lv_display }}
                 </div>
 
-                <div class="px-4 py-2 float-start align-bottom border-left">
+                <div class="px-4 py-2 float-start align-bottom border-md-left">
                     <strong><i class="bi bi-person"></i></strong> {{ user.get_display_name }}
                 </div>
 
@@ -42,7 +48,7 @@
                     <strong><i class="bi bi-hash"></i></strong> {{ user.get_uid_as_string|slice:"-8:" }}
                 </div>
 
-                <div class="ms-auto">
+                <div class="ms-auto float-end">
                     <a href="{% url 'CUSTLogout' %}" class="btn btn-outline-star px-3 py-2">登出</a>
                 </div>
             </div>
@@ -111,12 +117,16 @@
                                 {# todo: 添加不同状态的处理 #}
                                 {% if appointment.status == "UNPAID" %}
                                     <a href="{% url 'CUSTAppointPay' appointment.id %}"
-                                       class="btn btn-star w-100">{% trans "前往付款" %}</a>
+                                       class="btn btn-star w-100">
+                                        {% trans "前往付款" %}
+                                    </a>
                                 {% elif appointment.status == "CASH" %}
                                     <button type="button" data-bs-toggle="collapse"
                                             data-bs-target="#company_address_collapse"
                                             aria-expanded="false" aria-controls="company_address_collapse"
-                                            class="btn btn-star w-100">{% trans "查看信息" %}</button>
+                                            class="btn btn-star w-100">
+                                        {% trans "查看信息" %}
+                                    </button>
                                     <div class="collapse" id="company_address_collapse">
                                         <div class="card-body">
                                             {% blocktranslate %}
@@ -154,6 +164,9 @@
                     <p class="mt-3">
                         专案咨询费用: $100 /小时
                     </p>
+                    <a href="{% url 'CUSTAppoint' %}" class="btn btn-star">
+                        {% trans "前往预约" %}
+                    </a>
                 </div>
             {% endif %}
         </div>
