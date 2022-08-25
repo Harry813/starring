@@ -64,7 +64,8 @@ class ArticleForm(TranslationModelForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        exclude = ["uid", "password"]
+        exclude = ["uid", "password", "username", "is_active", "is_staff", "is_superuser", "last_login", "date_joined",
+                   "groups", "user_permissions"]
 
 
 class CustomerForm(forms.ModelForm):
@@ -427,7 +428,7 @@ class SlotGeneratorForm(forms.Form):
     def save(self):
         start_date = self.cleaned_data.get("start_date")
         start_time = self.cleaned_data.get("start_time")
-        end_date = self.cleaned_data.get("end_date")
+        end_date = self.cleaned_data.get("end_date") + timedelta(days=1)
         end_time = self.cleaned_data.get("end_time")
         weekends = self.cleaned_data.get("weekends")
 
