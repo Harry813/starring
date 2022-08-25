@@ -330,6 +330,7 @@ def customer_self_assessment_crs_view (request):
         form = CRSForm(request.POST)
         if form.is_valid():
             inst = form.save(commit=False)
+            inst.type = "CRS"
             if request.user.is_authenticated:
                 inst.customer = Customer.objects.get(user_id=request.user.uid)
             inst.save()

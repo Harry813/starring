@@ -172,7 +172,7 @@ class CRSForm(forms.ModelForm):
 
     class Meta:
         model = CRS
-        exclude = ('id', 'customer', 'eligible')
+        exclude = ('id', 'customer', 'eligible', 'created_at', 'type')
         labels = {
             "marriage_status": crs.marriage_status_label,
             "age_group": crs.age_group_label,

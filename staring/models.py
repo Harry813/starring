@@ -699,7 +699,7 @@ class TransactionItem(models.Model):
     )
 
 
-class CRS(models.Model):
+class Evaluation(models.Model):
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -713,6 +713,25 @@ class CRS(models.Model):
         null=True
     )
 
+    type = models.CharField(
+        max_length=10,
+        choices=[
+            ("CRS", _("CRS评估"))
+        ]
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__ (self):
+        return str(self.id).replace("-", "")
+
+    class Meta:
+        abstract = True
+
+
+class CRS(Evaluation):
     # Section A: Core / human capital factors
     marriage_status = models.IntegerField(
         verbose_name=crs.marriage_status_text,
@@ -1493,6 +1512,15 @@ class CRS(models.Model):
             return 100
         else:
             return score
+
+    @property
+    def final_score (self):
+        return sum([
+            self.section_A_total_score,
+            self.partner_total_final_score,
+            self.skill_transferability_final_score,
+            self.additional_final_score,
+        ])
 
     def save (self, **kwargs):
         if self.is_age_group_valid and self.is_work_experience_valid and self.is_foreign_work_experience_valid:
