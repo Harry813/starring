@@ -276,60 +276,31 @@ def admin_customer_edit_view (request, customer_id):
         **get_admin_info()
     }
 
-    return render(request, "admin/admin_customer_edit.html", param)
-
-
-@login_required(login_url="ADMLogin")
-def admin_customer_basic_edit_view (request, customer_id):
-    param = {
-        "page_title": _("星环-用户管理"),
-        "languages": Languages,
-        "active_page": "ADMCustomerIndex",
-        **get_basic_info(),
-        **get_admin_info()
-    }
-
-    user_query = User.objects.filter(is_active=True, is_staff=False, is_superuser=False) \
-        .exclude(username="AnonymousUser")
-    basic_profile = get_object_or_404(user_query, uid=customer_id)
-    param["customer_id"] = customer_id
+    user = get_object_or_404(User, uid=customer_id)
+    customer_profile = Customer.objects.get_or_create(user=user)[0]
+    basic_initial = {"dob": user.format_dob}
+    param["customer"] = customer_profile
 
     if request.method == "POST":
-        basic_form = UserForm(request.POST, instance=basic_profile)
-        if basic_form.is_valid():
-            basic_form.update()
-            return render(request, "admin/admin_user_basic_edit.html", param)
-        else:
-            param["basic_form"] = UserForm(instance=basic_profile)
-            return render(request, "admin/admin_user_basic_edit.html", param)
-    else:
-        param["basic_form"] = UserForm(instance=basic_profile)
-        return render(request, "admin/admin_user_basic_edit.html", param)
-
-
-@login_required(login_url="ADMLogin")
-def admin_customer_profile_edit_view (request, customer_id):
-    param = {
-        "page_title": _("星环-用户管理"),
-        "languages": Languages,
-        "active_page": "ADMCustomerIndex",
-        **get_basic_info(),
-        **get_admin_info()
-    }
-    customer_profile = Customer.objects.get(user_id=customer_id)
-
-    if request.method == "POST":
+        basic_form = UserForm(request.POST, instance=user, initial=basic_initial)
         customer_form = CustomerForm(request.POST, instance=customer_profile)
+
+        if basic_form.is_valid():
+            basic_form.save()
+        else:
+            basic_form = UserForm(request.POST, instance=user, initial=basic_initial)
+
         if customer_form.is_valid():
             customer_form.save()
-            param["customer_form"] = customer_form
-            return render(request, "admin/admin_customer_profile_edit.html", param)
         else:
-            param["customer_form"] = CustomerForm(instance=customer_profile)
-            return render(request, "admin/admin_customer_profile_edit.html", param)
+            customer_form = CustomerForm(request.POST, instance=customer_profile)
     else:
-        param["customer_form"] = CustomerForm(instance=customer_profile)
-        return render(request, "admin/admin_customer_profile_edit.html", param)
+        basic_form = UserForm(instance=user, initial=basic_initial)
+        customer_form = CustomerForm(instance=customer_profile)
+
+    param["basic_form"] = basic_form
+    param["customer_form"] = customer_form
+    return render(request, "admin/admin_customer_edit.html", param)
 
 
 @login_required(login_url="ADMLogin")
@@ -342,8 +313,7 @@ def admin_staff_index_view (request, page=1):
         **get_admin_info()
     }
 
-    user_query = User.objects.filter(is_active=True).filter(Q(is_staff=True) | Q(is_superuser=True)). \
-        exclude(username="AnonymousUser")
+    user_query = User.objects.filter(Q(is_staff=True) | Q(is_superuser=True)).exclude(username="AnonymousUser")
 
     if request.method == "POST":
         form = StaffSearch(request.POST)
@@ -388,8 +358,7 @@ def admin_staff_edit_view (request, staff_id):
         **get_admin_info()
     }
 
-    user_query = User.objects.filter(is_active=True).filter(Q(is_staff=True) | Q(is_superuser=True)) \
-        .exclude(username="AnonymousUser")
+    user_query = User.objects.filter(Q(is_staff=True) | Q(is_superuser=True)).exclude(username="AnonymousUser")
     basic_profile = get_object_or_404(user_query, uid=staff_id)
     basic_initial = {"dob": basic_profile.format_dob}
     param["user_id"] = staff_id
@@ -421,55 +390,6 @@ def admin_staff_edit_view (request, staff_id):
     param["basic_form"] = basic_form
     param["staff_form"] = staff_form
     return render(request, "admin/admin_staff_edit.html", param)
-
-
-@login_required(login_url="ADMLogin")
-def admin_staff_basic_edit_view (request, staff_id):
-    param = {
-        "page_title": _("星环-员工管理"),
-        "languages": Languages,
-        "active_page": "ADMStaff",
-        **get_basic_info(),
-        **get_admin_info()
-    }
-
-    user_query = User.objects.filter(is_active=True).filter(Q(is_staff=True) | Q(is_superuser=True)) \
-        .exclude(username="AnonymousUser")
-    basic_profile = get_object_or_404(user_query, uid=staff_id)
-    param["user_id"] = staff_id
-
-    if request.method == "POST":
-        basic_form = UserForm(request.POST, instance=basic_profile)
-        if basic_form.is_valid():
-            basic_form.update()
-        else:
-            param["basic_form"] = UserForm(instance=basic_profile)
-    else:
-        param["basic_form"] = UserForm(instance=basic_profile)
-    return render(request, "admin/admin_user_basic_edit.html", param)
-
-
-@login_required(login_url="ADMLogin")
-def admin_staff_profile_edit_view (request, staff_id):
-    param = {
-        "page_title": _("星环-员工管理"),
-        "languages": Languages,
-        "active_page": "ADMStaff",
-        **get_basic_info(),
-        **get_admin_info()
-    }
-
-    staff_profile = Staff.objects.get_or_create(user_id=staff_id, defaults={'user': User.objects.get(uid=staff_id)})[0]
-    if request.method == "POST":
-        form = StaffForm(request.POST, instance=staff_profile)
-        if form.is_valid():
-            form.save()
-        else:
-            form = StaffForm(request.POST, instance=staff_profile)
-    else:
-        form = StaffForm(instance=staff_profile)
-    param["form"] = form
-    return render(request, "admin/admin_staff_profile_edit.html", param)
 
 
 @login_required(login_url="ADMLogin")
@@ -784,7 +704,7 @@ def admin_navi_item_create_view (request, secid):
         form = NavigatorItemForm(request.POST, initial=initial)
         if form.is_valid():
             item = form.save(commit=False)
-            order = form.cleaned_data.get("reorder") - 1
+            order = form.cleaned_data.get("reorder")
             reorder(NavigatorItem, Q(sector_id=sector), item, order)
             return redirect("ADMNaviItemIndex", secid=secid)
         else:
@@ -812,7 +732,7 @@ def admin_navi_item_edit_view (request, secid, itemid):
         form = NavigatorItemForm(request.POST, instance=item, initial={"reorder": item.order + 1})
         if form.is_valid():
             item = form.save(commit=False)
-            order = form.cleaned_data.get("reorder") - 1
+            order = form.cleaned_data.get("reorder")
             reorder(NavigatorItem, Q(sector_id=sector), item, order)
             return redirect("ADMNaviItemIndex", secid=secid)
         else:
@@ -897,7 +817,7 @@ def admin_index_item_create (request, secid):
         form = IndexListItemForm(request.POST, initial=initial)
         if form.is_valid():
             item = form.save(commit=False)
-            order = form.cleaned_data.get("reorder") - 1
+            order = form.cleaned_data.get("reorder")
             reorder(IndexListItem, Q(sector_id=sector), item, order)
             return redirect("ADMIndListSectorEdit", secid=secid)
         else:
@@ -925,7 +845,7 @@ def admin_index_item_edit (request, secid, itemid):
         form = IndexListItemForm(request.POST, instance=item, initial={"reorder": item.order + 1})
         if form.is_valid():
             item = form.save(commit=False)
-            order = form.cleaned_data.get("reorder") - 1
+            order = form.cleaned_data.get("reorder")
             reorder(IndexListItem, Q(sector_id=sector), item, order)
             return redirect("ADMIndListSectorEdit", secid=secid)
         else:
@@ -987,8 +907,8 @@ def admin_sidebar_edit_view (request, sdb_id):
         form = IndexSidebarForm(request.POST, instance=item, initial=initial)
         if form.is_valid():
             item = form.save(commit=False)
-            order = form.cleaned_data.get("reorder") - 1
-            reorder(IndexSidebarItem, item=item, index=order)
+            order = form.cleaned_data.get("reorder")
+            reorder(IndexSidebarItem, q=Q(), item=item, index=order)
             return redirect("ADMSidebarIndex")
         else:
             form = IndexSidebarForm(request.POST, instance=item, initial=initial)
@@ -1259,7 +1179,8 @@ def admin_order_index_view (request, page):
             end_date_query = Q(update_datetime__lte=form.cleaned_data.get("end_date")) if form.cleaned_data.get(
                 "end_date") else Q()
 
-            status_query = Q(status__in=form.cleaned_data.get("status")) if form.cleaned_data.get("status") else Q(status__in=["COMPLETED"])
+            status_query = Q(status__in=form.cleaned_data.get("status")) if form.cleaned_data.get("status") else Q(
+                status__in=["COMPLETED"])
 
             if form.cleaned_data.get("detail"):
                 if form.cleaned_data.get("search_type") == "ID":
