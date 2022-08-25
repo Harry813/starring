@@ -134,15 +134,18 @@
                         <div class="row align-items-top" style="height: 10%">
                             {% if first_news.img %}
                                 <div class="col-md-4 pe-3">
-                                    <a href="{% url 'article' first_news.article.id %}" class="text-reset">
-                                        <img class="roundedimg-fluid img-thumbnail"
+                                    <a href="{% url 'article' first_news.article.id %}"
+                                       class="text-reset d-block w-100 h-100">
+                                        <img class="rounded img-fluid w-100 img-thumbnail"
                                              src="{% get_media_prefix %}{{ first_news.img }}"
-                                             alt="{{ first_news.alt }}"/></a>
+                                             alt="{{ first_news.alt }}">
+                                    </a>
                                 </div>
                             {% endif %}
 
                             <div class="col-md-8">
-                                <a href="{% url 'article' first_news.article.id %}" class="text-reset text-decoration-none">
+                                <a href="{% url 'article' first_news.article.id %}"
+                                   class="text-reset text-decoration-none">
                                     <h3>{{ first_news.title }}</h3>
                                     <div class="getting-started-info">
                                         <p>{{ first_news.introduction }}</p>
