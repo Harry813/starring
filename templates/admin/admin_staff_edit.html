@@ -49,24 +49,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6 col-sm-12 mb-3">
-                                            <label class="form-label" for="{{ basic_form.username.id_for_label }}">
-                                                {{ basic_form.username.label }}
-                                                {% if basic_form.username.field.required %}
-                                                    <span style="color: red">*</span>
-                                                {% endif %}
-                                            </label>
-                                            {% render_field basic_form.username class="form-control" %}
-                                            <div>
-                                                {% if basic_form.username.errors %}
-                                                    <p class="small"
-                                                       style="color: red;">{{ basic_form.username.errors.0 }}</p>
-                                                {% elif basic_form.username.help_text %}
-                                                    <p class="small text-muted">{{ basic_form.username.help_text }}</p>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12 mb-3">
+                                        <div class="mb-3">
                                             <label class="form-label" for="{{ basic_form.name.id_for_label }}">
                                                 {{ basic_form.name.label }}
                                                 {% if basic_form.name.field.required %}
