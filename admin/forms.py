@@ -236,9 +236,22 @@ class NewsSectorForm(forms.ModelForm):
 
 
 class NewsForm(forms.ModelForm):
+    reorder = forms.IntegerField(
+        label=index_list_item_order_text,
+        min_value=1,
+        required=False
+    )
+
+    def clean_reorder(self):
+        reorder = self.cleaned_data.get("reorder")
+        if reorder is None or reorder <= 0:
+            return -1
+        else:
+            return reorder - 1
+
     class Meta:
         model = News
-        fields = "__all__"
+        exclude = ["order"]
 
 
 class ArticleSearchForm(forms.Form):
@@ -270,12 +283,6 @@ class ArticleSearchForm(forms.Form):
             raise ValidationError(message=search_errmsg_InsuffCond, code="InsufficientCondition")
         else:
             return self.cleaned_data
-
-
-class TimeSlotForm(forms.ModelForm):
-    class Meta:
-        model = MeetingSlot
-        fields = ["date", "time", "availability"]
 
 
 class NaviSectorForm(TranslationModelForm):
