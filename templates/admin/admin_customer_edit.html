@@ -28,7 +28,14 @@
                            role="tab" aria-selected="false">
                             {% trans '客户信息' %}
                         </a>
-                        <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#" role="tab" aria-selected="false" style="color:red">
+                        {% if customer.evaluations %}
+                            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#evaluations"
+                               role="tab" aria-selected="false">
+                                {% trans '评估报告' %}
+                            </a>
+                        {% endif %}
+                        <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#" role="tab"
+                           aria-selected="false" style="color:red">
                             {% trans '删除账户' %}
                         </a>
                     </div>
@@ -37,14 +44,349 @@
 
             <div class="col-md-9 col-xl-10">
                 <div class="tab-content">
-                    <div class="tab-pane fade active show" id="basic" role="tabpanel" aria-labelledby="ADMCustomerBasicTab">
-                        <iframe src="{% url 'ADMCustomerBasicEdit' uid %}" scrolling="no" frameborder="0" class="w-100"
-                                onload="this.height=this.contentWindow.document.body.scrollHeight+150"  id="ADMCustomerBasicIframe"></iframe>
+                    <div class="tab-pane fade active show" id="basic" role="tabpanel"
+                         aria-labelledby="ADMCustomerBasicTab">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">
+                                        {% trans "基础信息" %}
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="{{ basic_form.name.id_for_label }}">
+                                                {{ basic_form.name.label }}
+                                                {% if basic_form.name.field.required %}
+                                                    <span style="color: red">*</span>
+                                                {% endif %}
+                                            </label>
+                                            {% render_field basic_form.name class="form-control" %}
+                                            <div>
+                                                {% if basic_form.name.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ basic_form.name.errors.0 }}</p>
+                                                {% elif basic_form.name.help_text %}
+                                                    <p class="small text-muted">{{ basic_form.name.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mb-3">
+                                            <label class="form-label" for="{{ basic_form.dob.id_for_label }}">
+                                                {{ basic_form.dob.label }}
+                                                {% if basic_form.dob.field.required %}
+                                                    <span style="color: red">*</span>
+                                                {% endif %}
+                                            </label>
+                                            {% render_field basic_form.dob class="form-control" type="date" %}
+                                            <div>
+                                                {% if basic_form.dob.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ basic_form.dob.errors.0 }}</p>
+                                                {% elif basic_form.dob.help_text %}
+                                                    <p class="small text-muted">{{ basic_form.dob.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mb-3">
+                                            <label class="form-label" for="{{ basic_form.email.id_for_label }}">
+                                                {{ basic_form.email.label }}
+                                                {% if basic_form.email.field.required %}
+                                                    <span style="color: red">*</span>
+                                                {% endif %}
+                                            </label>
+                                            <div class="input-group">
+                                                {% render_field basic_form.email class="form-control" %}
+                                                {% if basic_form.email.value %}
+                                                    <a href="mailto:{{ basic_form.email.value }}"
+                                                       class="btn btn-primary" type="button">
+                                                        <i class="align-middle" data-feather="mail"></i>
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                            <div>
+                                                {% if basic_form.email.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ basic_form.email.errors.0 }}</p>
+                                                {% elif basic_form.email.help_text %}
+                                                    <p class="small text-muted">{{ basic_form.email.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-4 mb-3">
+                                            <label class="form-label" for="{{ basic_form.countryCode.id_for_label }}">
+                                                {{ basic_form.countryCode.label }}
+                                                {% if basic_form.countryCode.field.required %}
+                                                    <span style="color: red">*</span>
+                                                {% endif %}
+                                            </label>
+                                            {% render_field basic_form.countryCode class="form-control" %}
+                                            <div>
+                                                {% if basic_form.countryCode.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ basic_form.countryCode.errors.0 }}</p>
+                                                {% elif basic_form.countryCode.help_text %}
+                                                    <p class="small text-muted">{{ basic_form.countryCode.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9 col-sm-8 mb-3">
+                                            <label class="form-label" for="{{ basic_form.tele.id_for_label }}">
+                                                {{ basic_form.tele.label }}
+                                                {% if basic_form.tele.field.required %}
+                                                    <span style="color: red">*</span>
+                                                {% endif %}
+                                            </label>
+                                            <div class="input-group">
+                                                {% render_field basic_form.tele class="form-control" %}
+                                                {% if basic_form.tele.value %}
+                                                    <a href="sms:{{ basic_form.tele.value }}" class="btn btn-primary"
+                                                       type="button">
+                                                        <i class="align-middle" data-feather="message-square"></i>
+                                                    </a>
+                                                    <a href="tel:{{ basic_form.tele.value }}" class="btn btn-primary"
+                                                       type="button">
+                                                        <i class="align-middle" data-feather="phone"></i>
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                            <div>
+                                                {% if basic_form.tele.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ basic_form.tele.errors.0 }}</p>
+                                                {% elif basic_form.tele.help_text %}
+                                                    <p class="small text-muted">{{ basic_form.tele.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <small style="color: red">{{ basic_form.non_field_errors }}</small>
+                                    </div>
+                                </div>
+
+                                <hr class="my-0">
+
+                                <div class="card-body">
+                                    <button class="w-100 btn btn-primary" type="submit">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                        {% if basic_form.errors %}
+                            <div class="mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        {{ basic_form.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="ADMCustomerProfileTab">
-                        <iframe src="" scrolling="no" frameborder="0" class="w-100"
-                                onload="this.height=this.contentWindow.document.body.scrollHeight" id="ADMCustomerProfileIframe"></iframe>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">
+                                        {% trans '客户标签' %}
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label" for="{{ customer_form.tag.id_for_label }}">
+                                                {{ customer_form.tag.label }}
+                                                {% if customer_form.tag.field.required %}
+                                                    <span style="color: red">*</span>
+                                                {% endif %}
+                                            </label>
+                                            {% render_field customer_form.tag class="form-control" %}
+                                            <div>
+                                                {% if customer_form.tag.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ customer_form.tag.errors.0 }}</p>
+                                                {% elif customer_form.tag.help_text %}
+                                                    <p class="small text-muted">{{ customer_form.tag.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">
+                                        {% trans '客户信息' %}
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3 mb-3">
+                                            <label class="form-label"
+                                                   for="{{ customer_form.contact_type.id_for_label }}">
+                                                {{ customer_form.contact_type.label }}
+                                                {% if customer_form.contact_type.field.required %}
+                                                    <span style="color: red">*</span>
+                                                {% endif %}
+                                            </label>
+                                            {% render_field customer_form.contact_type class="form-control" %}
+                                            <div>
+                                                {% if customer_form.contact_type.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ customer_form.contact_type.errors.0 }}</p>
+                                                {% elif customer_form.contact_type.help_text %}
+                                                    <p class="small text-muted">{{ customer_form.contact_type.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 mb-3">
+                                            <label class="form-label"
+                                                   for="{{ customer_form.contact_detail.id_for_label }}">
+                                                {{ customer_form.contact_detail.label }}
+                                                {% if customer_form.contact_detail.field.required %}
+                                                    <span style="color: red">*</span>
+                                                {% endif %}
+                                            </label>
+                                            {% render_field customer_form.contact_detail class="form-control" %}
+                                            <div>
+                                                {% if customer_form.contact_detail.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ customer_form.contact_detail.errors.0 }}</p>
+                                                {% elif customer_form.contact_detail.help_text %}
+                                                    <p class="small text-muted">{{ customer_form.contact_detail.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label class="form-label"
+                                                   for="{{ customer_form.nationality.id_for_label }}">
+                                                {{ customer_form.nationality.label }}
+                                                {% if customer_form.nationality.field.required %}
+                                                    <span style="color: red">*</span>
+                                                {% endif %}
+                                            </label>
+                                            {% render_field customer_form.nationality class="form-control" %}
+                                            <div>
+                                                {% if customer_form.nationality.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ customer_form.nationality.errors.0 }}</p>
+                                                {% elif customer_form.nationality.help_text %}
+                                                    <p class="small text-muted">{{ customer_form.nationality.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <label class="form-label" for="{{ customer_form.vip_lv.id_for_label }}">
+                                                {{ customer_form.vip_lv.label }}
+                                                {% if customer_form.vip_lv.field.required %}
+                                                    <span style="color: red">*</span>
+                                                {% endif %}
+                                            </label>
+                                            {% render_field customer_form.vip_lv class="form-control" %}
+                                            <div>
+                                                {% if customer_form.vip_lv.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ customer_form.vip_lv.errors.0 }}</p>
+                                                {% elif customer_form.vip_lv.help_text %}
+                                                    <p class="small text-muted">{{ customer_form.vip_lv.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10 mb-3">
+                                            <label class="form-label" for="{{ customer_form.intention.id_for_label }}">
+                                                {{ customer_form.intention.label }}
+                                                {% if customer_form.intention.field.required %}
+                                                    <span style="color: red">*</span>
+                                                {% endif %}
+                                            </label>
+                                            {% render_field customer_form.intention class="form-control" %}
+                                            <div>
+                                                {% if customer_form.intention.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ customer_form.intention.errors.0 }}</p>
+                                                {% elif customer_form.intention.help_text %}
+                                                    <p class="small text-muted">{{ customer_form.intention.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <label class="form-label" for="{{ customer_form.extra.id_for_label }}">
+                                                {{ customer_form.extra.label }}
+                                                {% if customer_form.extra.field.required %}
+                                                    <span style="color: red">*</span>
+                                                {% endif %}
+                                            </label>
+                                            {% render_field customer_form.extra class="form-control" %}
+                                            <div>
+                                                {% if customer_form.extra.errors %}
+                                                    <p class="small"
+                                                       style="color: red;">{{ customer_form.extra.errors.0 }}</p>
+                                                {% elif customer_form.extra.help_text %}
+                                                    <p class="small text-muted">{{ customer_form.extra.help_text }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="mt-3">
+                                            <small style="color: red">
+                                                {{ customer_form.non_field_errors|striptags }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-0">
+                                <div class="card-body">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        {% trans "提交" %}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        {% if staff_form.errors %}
+                            <div class="mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        {{ staff_form.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
+                    {% if customer.evaluations %}
+                        <div class="tab-pane fade" id="evaluations" role="tabpanel"
+                             aria-labelledby="ADMCustomerEvaluationsTab">
+                            <div class="row">
+                                {% for evaluation in customer.evaluations %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ evaluation.type }}</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">{{ evaluation.created_at }}</h6>
+                                                <div class="card-text mb-3">
+                                                    {% if evaluation.eligible %}
+                                                        <span class="fs-1 text-success">
+                                                        {{ evaluation.final_score }}
+                                                        </span>
+                                                    {% else %}
+                                                        <span style="color: red">
+                                                            <i class="bi bi-x-circle-fill"></i> {% trans "Invalid Evaluations" %}
+                                                        </span>
+                                                    {% endif %}
+                                                </div>
+                                                <a href="#" class="btn btn-primary ">{% trans "查看" %}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -59,18 +401,5 @@
         if (window!==window.top) {
             window.top.location.href = window.location.href;
         }
-    </script>
-    <script>
-        $(function () {
-            $('a[data-bs-toggle="list"][href="#basic"]').on('shown.bs.tab', function (e) {
-                $('iframe[id="ADMCustomerBasicIframe"]').attr("src", "{% url 'ADMCustomerBasicEdit' uid %}")
-                $('iframe[id="ADMCustomerProfileIframe"]').attr("src", "")
-            });
-
-            $('a[data-bs-toggle="list"][href="#profile"]').on('shown.bs.tab', function (e) {
-                $('iframe[id="ADMCustomerProfileIframe"]').attr("src", "{% url 'ADMCustomerProfileEdit' uid %}")
-                $('iframe[id="ADMCustomerBasicIframe"]').attr("src", "")
-            });
-        })
     </script>
 {% endblock %}
