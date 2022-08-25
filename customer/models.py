@@ -1,5 +1,6 @@
 from django.core.validators import MinLengthValidator
 from django.db import models
+from django.shortcuts import get_list_or_404
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
@@ -7,7 +8,7 @@ from django.utils.translation import ngettext as _n
 from django_countries.fields import CountryField
 
 from staring.customerSettings import *
-from staring.models import User
+from staring.models import User, CRS
 from staring.text import *
 
 
@@ -60,6 +61,10 @@ class Customer(models.Model):
         blank=True,
         choices=customer_tags
     )
+
+    @property
+    def evaluations(self):
+        return list(CRS.objects.filter(customer=self))
 
     def clean_extra(self):
         if self.intention == "OTHR":
