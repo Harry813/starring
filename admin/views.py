@@ -599,21 +599,30 @@ def admin_news_edit_view (request, sid, nid):
         **get_basic_info(),
         **get_admin_info()
     }
-
+    sector = NewsSector.objects.get(id=sid)
     news = News.objects.get(id=nid)
 
     if request.method == "POST":
-        form = NewsForm(request.POST, request.FILES, instance=news)
+        form = NewsForm(request.POST, request.FILES, instance=news, initial={"reorder": news.order + 1})
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            order = form.cleaned_data.get("reorder")
+            reorder(News, Q(sector_id=sector), item, order)
             return redirect("ADMNewsSectorEdit", sid=sid)
         else:
-            form = NewsForm(request.POST, request.FILES, instance=news)
+            form = NewsForm(request.POST, request.FILES, instance=news, initial={"reorder": news.order + 1})
     else:
-        form = NewsForm(instance=news)
+        form = NewsForm(instance=news, initial={"reorder": news.order + 1})
 
     param["form"] = form
     return render(request, "admin/admin_news_CE.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_news_delete (request, sid, nid):
+    News.objects.filter(sector_id=sid, id=nid).delete()
+    reorder(News, Q(sector_id=sid))
+    return redirect("ADMNewsSectorEdit", secid=sid)
 
 
 @login_required(login_url="ADMLogin")
