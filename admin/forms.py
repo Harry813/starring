@@ -66,12 +66,6 @@ class UserForm(forms.ModelForm):
         model = User
         exclude = ["uid", "password"]
 
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        if commit:
-            user.save()
-        return user
-
 
 class CustomerForm(forms.ModelForm):
     class Meta:
