@@ -62,3 +62,15 @@
         </form>
     </div>
 {% endblock %}
+
+{% block js %}
+    <script>
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    console.log("{{ error|escape }}")
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    </script>
+{% endblock %}
