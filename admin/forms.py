@@ -9,6 +9,10 @@ from django.utils.translation import pgettext as _p
 from django.utils.translation import ngettext as _n
 from modeltranslation.forms import TranslationModelForm
 
+from datetime import datetime, date, time, timedelta
+from dateutil import rrule
+from .utils import TIMESLOT_INTERVAL, default_timeslot_offset_options, time_delta_total_seconds, TIMESLOT_DURATION
+
 from admin.models import Staff
 from customer.models import Customer
 from staring.models import *
