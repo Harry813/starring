@@ -280,8 +280,6 @@ def customer_appointment_2_view (request, slot_id):
             appointment.save()
             slot.status = "LOCK"
             slot.save()
-            MeetingUpdate.objects.create(appointment=appointment, title=_("预约已创建"),
-                                         message=_("预约创建成功，等待后续操作"))
             return redirect("CUSTAppointPay", appointment_id=appointment.id)
         else:
             form = AppointmentForm(request.POST, initial=initial)
@@ -301,20 +299,17 @@ def customer_appointment_payment_view (request, appointment_id):
         "title_img": True,
         **get_customer_info(),
     }
-    appointment = Appointment.objects.get(id=appointment_id)
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+    param["appointment"] = appointment
 
-    if appointment.status not in ["APPLY", "UNPAID"]:
-        return redirect("APPTPaymentSuccess", appointment_id=appointment_id)
-    else:
-        param["appointment"] = appointment
-        slot = appointment.slot
-        param["slot"] = slot
-        param["subtotal"] = "{:.2f}".format(appointment.price)
-        total = "{:.2f}".format(get_appt_price_total(appointment))
-        param["total"] = total
-        request.session["price"] = total
+    slot = appointment.slot
+    param["slot"] = slot
+    param["subtotal"] = "{:.2f}".format(appointment.price)
+    total = "{:.2f}".format(get_appt_price_total(appointment))
+    param["total"] = total
+    request.session["price"] = total
 
-        return render(request, "customer/customer_appointment_payment.html", param)
+    return render(request, "customer/customer_appointment_payment.html", param)
 
 
 def customer_self_assessment_crs_view (request):
@@ -432,9 +427,10 @@ def payment_success_view (request, appointment_id):
         "languages": Languages,
         "user": request.user,
         "appointment": Appointment.objects.get(id=appointment_id),
-        "order": staringOrder.objects.get(product_id=appointment_id),
         **get_customer_info(),
     }
+    order = get_object_or_404(staringOrder, product_id=appointment_id)
+    param["order"] = order
     return render(request, "customer/payment_success.html", param)
 
 
