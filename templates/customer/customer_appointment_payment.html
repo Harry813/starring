@@ -131,7 +131,6 @@
 
             // Finalize the transaction
             onApprove: function (data, actions) {
-                console.log('/order/capture/' + data.orderID + '/')
                 return actions.order.capture().then(function (orderData) {
                     return fetch('/order/complete/' + data.orderID + '/', {
                         method: 'post',
@@ -159,7 +158,7 @@
                         }
 
                         // Successful capture!
-                        actions.redirect({% url "APPTPaymentSuccess" order.id %});
+                        actions.redirect('https://star.ourcv.net{% url "APPTPaymentSuccess" appointment.id %}');
                     });
                 })
             }
