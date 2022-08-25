@@ -20,7 +20,7 @@
 {% block content %}
     <div class="container-fluid p-0">
         <h1 class="h3 mb-3">{% translate '添加更新' %}</h1>
-        <form method="POST" class="row">
+        <form method="POST" class="row" enctype="multipart/form-data">
             <div class="col-md-4">
                 {% csrf_token %}
                 <div class="card">
@@ -69,6 +69,12 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
+                            <label class="form-label" for="{{ form.attachment.id_for_label }}">
+                                {{ form.attachment.label }}
+                                {% if form.attachment.field.required %}
+                                    <span style="color: red">*</span>
+                                {% endif %}
+                            </label>
                             {% render_field form.attachment class="form-control" %}
                             <div>
                                 {% if form.attachment.errors %}
