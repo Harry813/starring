@@ -227,8 +227,7 @@ def admin_customer_index_view (request, page=1):
         **get_basic_info(),
         **get_admin_info()
     }
-    user_query = User.objects.filter(is_active=True, is_staff=False, is_superuser=False)\
-        .exclude(username="AnonymousUser")
+    user_query = User.objects.filter(uid__in=Customer.objects.values_list("user_id", flat=True))
 
     if request.method == "POST":
         form = CustomerSearch(request.POST)
