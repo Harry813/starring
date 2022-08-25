@@ -184,10 +184,18 @@
 
                                 <div class="card-body">
                                     <button class="w-100 btn btn-primary" type="submit">提交</button>
-
                                 </div>
                             </div>
                         </form>
+                        {% if basic_form.errors %}
+                            <div class="mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        {{ basic_form.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
 
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="ADMStaffProfileTab">
@@ -302,15 +310,15 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            {{ basic_form.errors }}
-                            {{ staff_form.errors }}
-                        </div>
+                        {% if staff_form.errors %}
+                            <div class="mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        {{ staff_form.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -326,18 +334,5 @@
         if (window !== window.top) {
             window.top.location.href = window.location.href;
         }
-    </script>
-    <script>
-        $(function () {
-            $('a[data-bs-toggle="list"][href="#basic"]').on('shown.bs.tab', function (e) {
-                $('iframe[id="ADMStaffBasicIframe"]').attr("src", "{% url 'ADMStaffBasicEdit' uid %}")
-                $('iframe[id="ADMStaffProfileIframe"]').attr("src", "")
-            });
-
-            $('a[data-bs-toggle="list"][href="#profile"]').on('shown.bs.tab', function (e) {
-                $('iframe[id="ADMStaffProfileIframe"]').attr("src", "{% url 'ADMStaffProfileEdit' uid %}")
-                $('iframe[id="ADMStaffBasicIframe"]').attr("src", "")
-            });
-        })
     </script>
 {% endblock %}
