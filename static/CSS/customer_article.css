@@ -1,39 +1,212 @@
-.star-article .h1, h1 {
-    font-family: Noto Sans CJK SC, serif;
-    font-weight: 700;
-    margin-block-end: 2rem;
-    margin-block-start: 0.2rem;
-    margin-inline-end: 0;
-    margin-inline-start: 0;
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic&subset=latin,latin-ext);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin,latin-ext);
+
+.star-article {
+    font-family: "Noto Sans", sans-serif !important;
+    font-size: 20px;
+    line-height: 1.85em;
     color: #0A1A38;
 }
 
-.star-article .h2, h2 {
-    font-family: Noto Sans CJK SC, serif;
-    font-weight: 600;
-    margin-block-end: 0.75rem;
-    margin-block-start: 3rem;
-    margin-inline-end: 0;
-    margin-inline-start: 0;
+.star-article > .star-title {
+    border-bottom: 1px solid #af3c43;
+    margin-bottom: .2em;
+    margin-top: 1em;
+    padding-bottom: .2em;
+}
+
+.star-article .h1, .star-article .h2, .star-article .h3, .star-article .h4, .star-article .h5, .star-article .h6,
+.star-article h1, .star-article h2, .star-article h3, .star-article h4, .star-article h5, .star-article h6 {
+    font-family: Lato, sans-serif;
+    line-height: 1.1;
+    color: inherit;
+    -webkit-font-variant-ligatures: no-common-ligatures;
+    font-variant-ligatures: no-common-ligatures;
+    font-weight: 700;
+}
+
+
+.star-article .h1 .small, .star-article .h1 small, .star-article .h2 .small, .star-article .h2 small,
+.star-article .h3 .small, .star-article .h3 small, .star-article .h4 .small, .star-article .h4 small,
+.star-article .h5 .small, .star-article .h5 small, .star-article .h6 .small, .star-article .h6 small,
+.star-article h1 .small, .star-article h1 small, .star-article h2 .small, .star-article h2 small,
+.star-article h3 .small, .star-article h3 small, .star-article h4 .small, .star-article h4 small,
+.star-article h5 .small, .star-article h5 small, .star-article h6 .small, .star-article h6 small {
+    font-weight: 400;
+    line-height: 1;
+}
+
+
+.star-article .h1, .star-article .h2, .star-article .h3, .star-article h1, .star-article h2, .star-article h3 {
+    margin-top: 23px;
+    margin-bottom: 11.5px
+}
+
+.star-article .h1 .small, .star-article .h1 small,
+.star-article .h2 .small, .star-article .h2 small,
+.star-article .h3 .small, .star-article .h3 small,
+.star-article h1 .small, .star-article h1 small,
+.star-article h2 .small, .star-article h2 small,
+.star-article h3 .small, .star-article h3 small {
+    font-size: 65%
+}
+
+.star-article .h4, .star-article .h5, .star-article .h6, .star-article h4, .star-article h5, .star-article h6 {
+    margin-bottom: 11.5px
+}
+
+.star-article .h4 .small, .star-article .h4 small,
+.star-article .h5 .small, .star-article .h5 small,
+.star-article .h6 .small, .star-article .h6 small,
+.star-article h4 .small, .star-article h4 small,
+.star-article h5 .small, .star-article h5 small,
+.star-article h6 .small, .star-article h6 small {
+    font-size: 75%
+}
+
+.star-article .h1,
+.star-article h1,
+.star-article .h2,
+.star-article h2,
+.star-article .h3,
+.star-article h3,
+.star-article .h4,
+.star-article h4,
+.star-article .h5,
+.star-article h5,
+.star-article .h6,
+.star-article h6 {
+    font-weight: 700;
+}
+
+.star-article .h1,
+.star-article h1 {
+    font-size: 2.6rem;
     color: #0A1A38;
+    /*margin-bottom: 1.75rem;*/
+}
+
+.star-article .h2,
+.star-article h2 {
+    font-size: 2.2rem;
+    color: #0A1A38;
+    margin-bottom: 1rem;
+}
+
+.star-article .h3,
+.star-article h3 {
+    font-size: 2.0rem;
+    margin-top: 1rem;
+    margin-bottom: 1.75rem;
+}
+
+.star-article .h4,
+.star-article h4 {
+    font-size: 1.8rem;
+}
+
+.star-article .h5,
+.star-article h5 {
+    font-size: 1.6rem;
+}
+
+.star-article .h6,
+.star-article h6 {
+    font-size: 1.4rem;
 }
 
 .star-article p {
-    font-family: Noto Sans CJK SC, serif;
-    font-weight: 500;
-    margin-block-end: .5rem;
-    margin-block-start: 0;
-    margin-inline-end: 0;
+    line-height: 1.65em;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
     margin-inline-start: 0;
-    line-height: 130%;
+    margin-inline-end: 0;
+    margin: 0 0 11.5px
 }
 
-.star-article li {
-    font-family: Noto Sans CJK SC, serif;
-    font-weight: 500;
-    margin-block-end: 1.5rem;
-    margin-block-start: .75rem;
-    margin-inline-end: 0;
-    margin-inline-start: 0;
-    line-height: 130%;
+.star-article ol,
+.star-article ul,
+.star-article dl {
+    padding-left: 1.7rem;
 }
+
+.star-article .h1, .star-article h1 {
+    font-size: 1.9em
+}
+
+.star-article .h2, .star-article h2 {
+    font-size: 1.8em
+}
+
+.star-article .h3, .star-article h3 {
+    font-size: 1.2em
+}
+
+.star-article .h4, .star-article h4 {
+    font-size: 1.1em
+}
+
+.star-article .h5, .star-article h5 {
+    font-size: 1em
+}
+
+.star-article .h6, .star-article h6 {
+    font-size: .95em
+}
+
+.star-article p {
+    margin: 0 0 11.5px
+}
+
+.star-article ol,.star-article ul {
+    margin-top: 0;
+    margin-bottom: 11.5px
+}
+
+.star-article ol ol,.star-article ol ul,.star-article ul ol,.star-article ul ul {
+    margin-bottom: 0
+}
+
+.star-article b,.star-article strong {
+    font-weight: 700
+}
+
+.star-article .well {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05)
+}
+
+.star-article .well blockquote {
+    border-color: #ddd;
+    border-color: rgba(0,0,0,.15)
+}
+
+.star-article .well-lg {
+    padding: 24px;
+    border-radius: 6px
+}
+
+.star-article .well-sm {
+    padding: 9px;
+    border-radius: 3px
+}
+
+@media screen and (max-width: 991px) {
+    .star-article .h1, .star-article h1 {
+        font-size: 1.7em;
+        margin-top: .75em
+    }
+
+    .star-article .h2, .star-article h2 {
+        font-size: 1.6em
+    }
+}
+
+/* ver */
