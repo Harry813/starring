@@ -2,12 +2,12 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin,latin-ext);
 
 html {
-    font-family: sans-serif;
+    font-family: "Noto Sans", sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%
 }
 
-body {
+* {
     font-family: "Noto Sans", sans-serif;
     font-size: 16px;
     line-height: 1.4375;
