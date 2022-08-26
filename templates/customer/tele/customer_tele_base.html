@@ -37,29 +37,30 @@
                  alt="canada_immigration_logo"
                  style="max-height: 10vh">
         </a>
-        <div class="dropdown">
-            {% get_current_language as LANGUAGE_CODE %}
-            <button class="btn btn-link dropdown-toggle text-reset text-decoration-none" type="button"
-                    id="languageDropdown"
-                    data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 12px">
-                {{ LANGUAGE_CODE|language_name_local }}
+        <div class="d-flex">
+            <div class="dropdown">
+                {% get_current_language as LANGUAGE_CODE %}
+                <button class="btn btn-link dropdown-toggle text-reset text-decoration-none" type="button"
+                        id="languageDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 12px">
+                    {{ LANGUAGE_CODE|language_name_local }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                    {% for lang in languages %}
+                        <li>
+                            <a class="dropdown-item" style="color: black" href="{% change_lang lang.CODE %}"
+                               hreflang="{{ lang.CODE }}">
+                                <span class="align-middle">{{ lang.NAME }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                {% for lang in languages %}
-                    <li>
-                        <a class="dropdown-item" style="color: black" href="{% change_lang lang.CODE %}"
-                           hreflang="{{ lang.CODE }}">
-                            <span class="align-middle">{{ lang.NAME }}</span>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
         </div>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0">
                 {% for navi in navigator %}
