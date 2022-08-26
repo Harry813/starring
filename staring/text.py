@@ -546,6 +546,45 @@ articleSearch_type_text = _("搜索类型")
 articleSearch_detail_text = _("精确搜索")
 
 ###################################################################################################
+# staring.forms.SlotGeneratorForm  预约空位批量生成表单
+###################################################################################################
+
+slot_start_time_text = _('开始时间')
+
+slot_end_time_text = _('结束时间')
+
+slot_availability_text = _('空闲槽位')
+
+slot_repeat_style_count_text = _('根据次数')
+
+slot_repeat_style_until_text = _('直至日期')
+
+slot_repeat_style_text = _('重复方式')
+
+slot_repeat_count_text = _('重复次数')
+
+slot_repeat_until_text = _('截止日期')
+
+slot_frequent_text = _('周期')
+
+slot_daily_interval_text = _("频率")
+
+slot_week_days_text = _("天数")
+
+slot_month_days_text = _("日期")
+
+
+###################################################################################################
+# admin.model.MeetingUpdate  会议更新
+###################################################################################################
+
+update_appointment_text = _("预约")
+update_title_text = _("标题")
+update_attachment_text = _("附件")
+update_message_text = _("信息")
+
+
+###################################################################################################
 # Validation Errors  验证错误
 ###################################################################################################
 
