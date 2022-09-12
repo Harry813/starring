@@ -1,17 +1,10 @@
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
-from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.validators import ASCIIUsernameValidator
-from django.core.exceptions import PermissionDenied, ValidationError
 from django.utils.translation import gettext as _
-from django.utils.translation import pgettext as _p
-from django.utils.translation import ngettext as _n
 from modeltranslation.forms import TranslationModelForm
 
-from datetime import datetime, date, time, timedelta
-from dateutil import rrule
-from .utils import TIMESLOT_INTERVAL, default_timeslot_offset_options, time_delta_total_seconds, TIMESLOT_DURATION
+from datetime import date, timedelta
 
 from admin.models import Staff
 from customer.models import Customer
