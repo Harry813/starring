@@ -1,0 +1,769 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-o">
+        <h1 class="h3 mb-3 position-relative">
+            <a class="btn btn-link text-secondary" href="{% url 'ADMCustomerEdit' user_id %}">
+                <i class="bi bi-arrow-left"></i>
+            </a> {% translate 'CRS评估' %}
+        </h1>
+        <div class="row">
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="nav nav-pills me-3" role="tablist">
+                            <button class="nav-link active" id="#CRS_section_A_tab" data-bs-toggle="pill"
+                                    data-bs-target="#CRS_section_A_pane" type="button" role="tab"
+                                    aria-controls="CRS_section_A_pane"
+                                    aria-selected="true">
+                                {% trans "Section A" %}
+                            </button>
+                            <button class="nav-link" id="CRS_section_B_tab" data-bs-toggle="pill"
+                                    data-bs-target="#CRS_section_B_pane" type="button" role="tab"
+                                    aria-controls="CRS_section_B_pane"
+                                    aria-selected="false">
+                                {% trans "Section B" %}
+                            </button>
+                            <button class="nav-link" id="CRS_section_C_tab" data-bs-toggle="pill"
+                                    data-bs-target="#CRS_section_C_pane" type="button" role="tab"
+                                    aria-controls="CRS_section_C_pane"
+                                    aria-selected="false">
+                                {% trans "Section C" %}
+                            </button>
+                            <button class="nav-link" id="CRS_section_D_tab" data-bs-toggle="pill"
+                                    data-bs-target="#CRS_section_D_pane" type="button" role="tab"
+                                    aria-controls="CRS_section_D_pane"
+                                    aria-selected="false">
+                                {% trans "Section D" %}
+                            </button>
+                            <button class="nav-link" id="CRS_Report_tab" data-bs-toggle="pill"
+                                    data-bs-target="#CRS_Report_pane" type="button" role="tab"
+                                    aria-controls="CRS_Report_pane"
+                                    aria-selected="false">
+                                {% trans "总结" %}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="CRS_section_A_pane" role="tabpanel"
+                                 aria-labelledby="CRS_section_A_tab"
+                                 tabindex="0">
+                                <div class="card-body">
+                                    <div class="mb-3 d-flex justify-content-between" style="align-items: center;">
+                                        <div>
+                                            <h3>
+                                                {% trans "Section A. Core/human Capital Factors" %}
+                                            </h3>
+                                        </div>
+                                        <div>
+                                            <span class="fs-1 badge bg-success"
+                                                  style="text-align: center">{{ crs.section_A_total_score }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <!-- 年龄 -->
+                                        <table class="table table-hover align-middle">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 50%"></th>
+                                                <th style="width: 30%" class="text-center"></th>
+                                                <th style="width: 20%" class="text-center">{% trans "分数" %}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <th scope="row">{% trans "年龄" %}</th>
+                                                <td class="text-center">{{ crs.get_age_group_display }}</td>
+                                                <th class="text-center">{{ crs.age_group_score }}</th>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <!-- 学历 -->
+                                        <table class="table table-hover mt-3 align-middle">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 50%"></th>
+                                                <th style="width: 30%" class="text-center"></th>
+                                                <th style="width: 20%" class="text-center"></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" colspan="3">{% trans "学历" %}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="ps-4">
+                                                    {{ crs.get_education_lv_display }}
+                                                </td>
+                                                <td></td>
+                                                <td class="text-center">
+                                                    {{ crs.education_lv_score }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ps-4">
+                                                    {% trans "加拿大学历" %}
+                                                </td>
+                                                <td class="text-center">
+                                                    {% if crs.education_canadian %}
+                                                        <i class="bi bi-check-lg text-success bold"></i>
+                                                    {% else %}
+                                                        <i class="bi bi-x-lg text-danger bold"></i>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-center">
+                                                    + {{ crs.education_canadian_bonus_score }}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td class="ps-4" colspan="2">
+                                                    <span class="text-muted text-light">{% trans "( 最高140分 )" %}</span>
+                                                </td>
+                                                <th class="text-center"
+                                                    style="border-top: 2px solid #212529">{{ crs.education_final_score }}</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+
+                                        <!-- 语言 -->
+                                        <table class="table table-hover mt-3 align-middle">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 50%"></th>
+                                                <th style="width: 30%" class="text-center"></th>
+                                                <th style="width: 20%" class="text-center"></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" colspan="3">
+                                                    {% trans "语言" %}
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <th class="ps-4" scope="row" colspan="3">
+                                                    {% trans "第一语言" %}: <span
+                                                        class="ps-1">{{ crs.get_first_language_test_display }}</span>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td class="ps-5">
+                                                    <strong>{% trans "听力" %}</strong>:
+                                                    <span class="ps-1">{{ crs.first_language_listening }}</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    CLB {{ crs.first_language_listening_CLB }}</td>
+                                                <td class="text-center">{{ crs.first_language_listening_score }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ps-5">
+                                                    <strong>{% trans "口语" %}</strong>:
+                                                    <span class="ps-1">{{ crs.first_language_speaking }}</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    CLB {{ crs.first_language_speaking_CLB }}</td>
+                                                <td class="text-center">{{ crs.first_language_speaking_score }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ps-5">
+                                                    <strong>{% trans "阅读" %}</strong>:
+                                                    <span class="ps-1">{{ crs.first_language_reading }}</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    CLB {{ crs.first_language_reading_CLB }}</td>
+                                                <td class="text-center">{{ crs.first_language_reading_score }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ps-5">
+                                                    <strong>{% trans "写作" %}</strong>:
+                                                    <span class="ps-1">{{ crs.first_language_writing }}</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    CLB {{ crs.first_language_writing_CLB }}</td>
+                                                <td class="text-center">{{ crs.first_language_writing_score }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ps-5">
+                                                    <strong>{% trans "总分" %}</strong>
+                                                </td>
+                                                <td class="text-center">CLB {{ crs.first_language_CLB }}</td>
+                                                <td class="text-center"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ps-5" colspan="2">
+                        <span class="text-muted text-light">
+                            {% trans "( 最高136分 )" %}
+                        </span>
+                                                </td>
+                                                <th class="text-center" style="border-top: 2px solid #212529">
+                                                    {{ crs.first_language_final_score }}
+                                                </th>
+                                            </tr>
+                                            </tbody>
+                                            <tbody>
+                                            {% if crs.valid_second_language %}
+                                                <tr>
+                                                    <th class="ps-4" scope="row" colspan="3">
+                                                        {% trans "第二语言" %}: <span
+                                                            class="ps-1">{{ crs.get_second_language_test_display }}</span>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <td class="ps-5">
+                                                        <strong>{% trans "听力" %}</strong>:
+                                                        <span class="ps-1">{{ crs.second_language_listening }}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        CLB {{ crs.second_language_listening_CLB }}</td>
+                                                    <td class="text-center">{{ crs.second_language_listening_score }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="ps-5">
+                                                        <strong>{% trans "口语" %}</strong>:
+                                                        <span class="ps-1">{{ crs.second_language_speaking }}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        CLB {{ crs.second_language_speaking_CLB }}</td>
+                                                    <td class="text-center">{{ crs.second_language_speaking_score }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="ps-5">
+                                                        <strong>{% trans "阅读" %}</strong>:
+                                                        <span class="ps-1">{{ crs.second_language_reading }}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        CLB {{ crs.second_language_reading_CLB }}</td>
+                                                    <td class="text-center">{{ crs.second_language_reading_score }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="ps-5">
+                                                        <strong>{% trans "写作" %}</strong>:
+                                                        <span class="ps-1">{{ crs.second_language_writing }}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        CLB {{ crs.second_language_writing_CLB }}</td>
+                                                    <td class="text-center">{{ crs.second_language_writing_score }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="ps-5">
+                                                        <strong>{% trans "总分" %}</strong>
+                                                    </td>
+                                                    <td class="text-center">CLB {{ crs.second_language_CLB }}</td>
+                                                    <td class="text-center"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="ps-5" colspan="2">
+                        <span class="text-muted text-light">
+                            {% if crs.marriage_class == 0 %}
+                                {% trans "( 最高24分 )" %}
+                            {% elif crs.marriage_class == 1 %}
+                                {% trans "( 最高22分 )" %}
+                            {% endif %}
+                        </span>
+                                                    </td>
+                                                    <th class="text-center"
+                                                        style="border-top: 2px #212529 solid">{{ crs.second_language_final_score }}</th>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <th style="width: 50%"></th>
+                                                    <th style="width: 30%" class="text-center"></th>
+                                                    <th style="width: 20%" class="text-center"></th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        {% trans "第二语言" %}
+                                                    </th>
+                                                    <td class="text-center"><i
+                                                            class="bi bi-x-lg text-danger bold"></i>
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            {% endif %}
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td class="ps-4" colspan="2">
+                        <span class="text-muted text-light">
+                            {% if crs.marriage_class == 0 %}
+                                {% trans "( 最高160分 )" %}
+                            {% elif crs.marriage_class == 1 %}
+                                {% trans "( 最高150分 )" %}
+                            {% endif %}
+                        </span>
+                                                </td>
+                                                <th class="text-center" style="border-top: 3px solid #212529">
+                                                    {{ crs.language_final_score }}
+                                                </th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+
+                                        <!-- 工作经验 -->
+                                        <table class="table table-hover mt-3 align-middle">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 50%"></th>
+                                                <th style="width: 30%" class="text-center"></th>
+                                                <th style="width: 20%" class="text-center"></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" colspan="3">
+                                                    {% trans "工作经验" %}
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="ps-4">{% trans "加拿大工作经历" %}</td>
+                                                <td class="text-center">{{ crs.get_work_experience_display }}</td>
+                                                <td class="text-center">
+                                                    {{ crs.work_experience_final_score }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ps-4">{% trans "国际工作经验" %}</td>
+                                                <td class="text-center">{{ crs.get_foreign_work_experience_display }}</td>
+                                                <td class="text-center"></td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td class="ps-4" colspan="2">
+                                                    <span class="text-muted text-light"></span>
+                                                </td>
+                                                <th class="text-center" style="border-top: 2px solid #212529">
+                                                    {{ crs.work_experience_final_score }}
+                                                </th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="CRS_section_B_pane" role="tabpanel"
+                                 aria-labelledby="CRS_section_B_tab"
+                                 tabindex="0">
+                                <div class="card-body">
+                                    <div class="mb-3 d-flex justify-content-between" style="align-items: center;">
+                                        <div>
+                                            <h3>
+                                                {% trans "Section B. Spouse or common-law partner factors" %}
+                                            </h3>
+                                        </div>
+                                        <div>
+                                            {% if crs.marriage_status %}
+                                                <span class="fs-1 badge bg-success"
+                                                      style="text-align: center">{{ crs.partner_total_final_score }}</span>
+                                            {% else %}
+                                                <span class="fs-1 badge bg-danger"
+                                                      style="text-align: center"><i class="bi bi-lg-x"></i></span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    {% if crs.marriage_status %}
+                                        <div class="mb-3">
+                                            <table class="table table-hover mt-3 align-middle">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width: 50%"></th>
+                                                    <th style="width: 30%" class="text-center"></th>
+                                                    <th style="width: 20%"
+                                                        class="text-center">{% trans "分数" %}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" colspan="3">{% trans "学历" %}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="ps-4">
+                                                        {{ crs.get_partner_education_lv_display }}
+                                                    </td>
+                                                    <td></td>
+                                                    <td class="text-center">
+                                                        {{ crs.partner_education_lv_score }}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <td class="ps-4" colspan="2">
+                                                        <span class="text-muted text-light"></span>
+                                                    </td>
+                                                    <th class="text-center" style="border-top: 2px solid #212529">
+                                                        {{ crs.partner_education_lv_score }}
+                                                    </th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                            <table class="table table-hover mt-3 align-middle">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width: 50%"></th>
+                                                    <th style="width: 30%" class="text-center"></th>
+                                                    <th style="width: 20%" class="text-center"></th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" colspan="3">
+                                                        {% trans "语言" %}: <span
+                                                            class="ps-1">{{ crs.get_partner_language_test_display }}</span>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="ps-4">
+                                                        <strong>{% trans "听力" %}</strong>:
+                                                        <span class="ps-1">{{ crs.partner_language_listening }}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        CLB {{ crs.partner_language_listening_CLB }}</td>
+                                                    <td class="text-center">{{ crs.partner_language_listening_score }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="ps-4">
+                                                        <strong>{% trans "口语" %}</strong>:
+                                                        <span class="ps-1">{{ crs.partner_language_speaking }}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        CLB {{ crs.partner_language_speaking_CLB }}</td>
+                                                    <td class="text-center">{{ crs.partner_language_speaking_score }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="ps-4">
+                                                        <strong>{% trans "阅读" %}</strong>:
+                                                        <span class="ps-1">{{ crs.partner_language_reading }}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        CLB {{ crs.partner_language_reading_CLB }}</td>
+                                                    <td class="text-center">{{ crs.partner_language_reading_score }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="ps-4">
+                                                        <strong>{% trans "写作" %}</strong>:
+                                                        <span class="ps-1">{{ crs.partner_language_writing }}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        CLB {{ crs.partner_language_writing_CLB }}</td>
+                                                    <td class="text-center">{{ crs.partner_language_writing_score }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="ps-4">
+                                                        <strong>{% trans "总分" %}</strong>
+                                                    </td>
+                                                    <td class="text-center">CLB {{ crs.partner_language_CLB }}</td>
+                                                    <td class="text-center"></td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <td class="ps-4" colspan="2">
+                            <span class="text-muted text-light">
+                                {% trans "( 最高20分 )" %}
+                            </span>
+                                                    </td>
+                                                    <th class="text-center" style="border-top: 2px solid #212529">
+                                                        {{ crs.partner_language_final_score }}
+                                                    </th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                            <table class="table table-hover mt-3 align-middle">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width: 50%"></th>
+                                                    <th style="width: 30%" class="text-center"></th>
+                                                    <th style="width: 20%" class="text-center"></th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" colspan="3">
+                                                        {% trans "工作经验" %}
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="ps-4">{% trans "加拿大工作经历" %}</td>
+                                                    <td class="text-center">{{ crs.get_partner_work_experience_display }}</td>
+                                                    <td class="text-center">
+                                                        {{ crs.partner_work_experience_score }}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <td class="ps-4" colspan="2">
+                                                        <span class="text-muted text-light"></span>
+                                                    </td>
+                                                    <th class="text-center" style="border-top: 2px solid #212529">
+                                                        {{ crs.partner_work_experience_score }}
+                                                    </th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="CRS_section_C_pane" role="tabpanel"
+                                 aria-labelledby="CRS_section_C_tab"
+                                 tabindex="0">
+                                <div class="card-body">
+                                    <div class="mb-3 d-flex justify-content-between" style="align-items: center;">
+                                        <div>
+                                            <h3>
+                                                {% trans "Section C. Skill Transferability Factors" %}
+                                            </h3>
+                                        </div>
+                                        <div>
+                                            <span class="fs-1 badge bg-success"
+                                                  style="text-align: center">{{ crs.skill_transferability_final_score }}</span>
+                                        </div>
+                                    </div>
+
+                                    <table class="table table-hover mt-3 align-middle">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 50%">{% trans "Factors" %}</th>
+                                            <th style="width: 30%" class="text-center"></th>
+                                            <th style="width: 20%" class="text-center"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>{% trans "With good/strong official languages proficiency and a post-secondary degree" %}</td>
+                                            <td class="text-center">
+                                                {% if crs.language_proficiency_with_degree != 0 %}
+                                                    <i class="bi bi-check-lg text-success bold"></i>
+                                                {% else %}
+                                                    <i class="bi bi-x-lg text-danger bold"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">{{ crs.language_proficiency_with_degree }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{% trans "With Canadian work experience and a postsecondary degree" %}</td>
+                                            <td class="text-center">
+                                                {% if crs.canada_work_experience_with_degree != 0 %}
+                                                    <i class="bi bi-check-lg text-success bold"></i>
+                                                {% else %}
+                                                    <i class="bi bi-x-lg text-danger bold"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">{{ crs.canada_work_experience_with_degree }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{% trans "With good official language proficiency and foreign work experience" %}</td>
+                                            <td class="text-center">
+                                                {% if crs.foreign_work_experience_with_language_proficiency != 0 %}
+                                                    <i class="bi bi-check-lg text-success bold"></i>
+                                                {% else %}
+                                                    <i class="bi bi-x-lg text-danger bold"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">{{ crs.foreign_work_experience_with_language_proficiency }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{% trans "With Canadian work experience and foreign work experience" %}</td>
+                                            <td class="text-center">
+                                                {% if crs.foreign_work_experience_with_canada_work_experience != 0 %}
+                                                    <i class="bi bi-check-lg text-success bold"></i>
+                                                {% else %}
+                                                    <i class="bi bi-x-lg text-danger bold"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">{{ crs.foreign_work_experience_with_canada_work_experience }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{% trans "With good official language proficiency and certificate of qualification (trade occupations)" %}</td>
+                                            <td class="text-center">
+                                                {% if crs.certified_qualification_with_degree != 0 %}
+                                                    <i class="bi bi-check-lg text-success bold"></i>
+                                                {% else %}
+                                                    <i class="bi bi-x-lg text-danger bold"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">{{ crs.certified_qualification_with_degree }}</td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td class="ps-4" colspan="2">
+                                                <span class="text-muted text-light">{% trans "( 最高100分 )" %}</span>
+                                            </td>
+                                            <th class="text-center" style="border-top: 2px solid #212529">
+                                                {{ crs.skill_transferability_final_score }}
+                                            </th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="CRS_section_D_pane" role="tabpanel"
+                                 aria-labelledby="CRS_section_D_tab"
+                                 tabindex="0">
+                                <div class="card-body">
+                                    <div class="mb-3 d-flex justify-content-between" style="align-items: center;">
+                                        <div>
+                                            <h3>
+                                                {% trans "Section D. Additional points" %}
+                                            </h3>
+                                        </div>
+                                        <div>
+                                            <span class="fs-1 badge bg-success"
+                                                  style="text-align: center">{{ crs.additional_final_score }}</span>
+                                        </div>
+                                    </div>
+
+                                    <table class="table table-hover mt-3 align-middle">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 50%"></th>
+                                            <th style="width: 30%" class="text-center"></th>
+                                            <th style="width: 20%" class="text-center"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="ps-4">{% trans "Brother or sister living in Canada who is a citizen or permanent resident of Canada" %}</td>
+                                            <td class="text-center">
+                                                {% if crs.valid_relatives_citizen_score != 0 %}
+                                                    <i class="bi bi-check-lg text-success bold"></i>
+                                                {% else %}
+                                                    <i class="bi bi-x-lg text-danger bold"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">
+                                                {% if crs.valid_relatives_citizen_score != 0 %}
+                                                    {{ crs.valid_relatives_citizen_score }}{% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-4">{% trans "With good language proficiency in both French and English" %}</td>
+                                            <td class="text-center">
+                                                {% if crs.valid_French_with_English != 0 %}
+                                                    <i class="bi bi-check-lg text-success bold"></i>
+                                                {% else %}
+                                                    <i class="bi bi-x-lg text-danger bold"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">
+                                                {% if crs.valid_French_with_English != 0 %}
+                                                    {{ crs.valid_French_with_English }}{% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-4">{% trans "Arranged employment" %}</td>
+                                            <td class="text-center">
+                                                {% if crs.arranged_noc != 0 %}
+                                                    <i class="bi bi-check-lg text-success bold"></i>
+                                                {% else %}
+                                                    <i class="bi bi-x-lg text-danger bold"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">
+                                                {% if crs.arranged_noc != 0 %}{{ crs.arranged_noc }}{% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-4">{% trans "Provincial or territorial nomination" %}</td>
+                                            <td class="text-center">
+                                                {% if crs.valid_nomination_score != 0 %}
+                                                    <i class="bi bi-check-lg text-success bold"></i>
+                                                {% else %}
+                                                    <i class="bi bi-x-lg text-danger bold"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">
+                                                {% if crs.valid_nomination_score != 0 %}
+                                                    {{ crs.valid_nomination_score }}{% endif %}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td class="ps-4" colspan="2">
+                                                <span class="text-muted text-light">{% trans "( 最高600分 )" %}</span>
+                                            </td>
+                                            <th class="text-center" style="border-top: 2px solid #212529">
+                                                {{ crs.additional_final_score }}
+                                            </th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="CRS_Report_pane" role="tabpanel"
+                                 aria-labelledby="CRS_Report_tab"
+                                 tabindex="0">
+                                <div class="card-body">
+                                    <table class="table table-hover align-middle">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 50%">{% trans "分区" %}</th>
+                                            <th style="width: 30%" class="text-center">分数</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="ps-4">{% trans "Section A. Core/human Capital Factors" %}</td>
+                                            <td class="text-center">
+                                                {{ crs.section_A_total_score }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-4">{% trans "Section B. Spouse or common-law partner factors" %}</td>
+                                            <td class="text-center">
+                                                {% if crs.marriage_status %}
+                                                    {{ crs.partner_total_final_score }}
+                                                {% else %}
+                                                    <span class="text-danger"><i class="bi bi-lg-x"></i></span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-4">{% trans "Section C. Skill Transferability Factors" %}</td>
+                                            <td class="text-center">
+                                                {{ crs.skill_transferability_final_score }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-4">{% trans "Section D. Additional points" %}</td>
+                                            <td class="text-center">
+                                                {{ crs.additional_final_score }}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td class="ps-4">
+                                            </td>
+                                            <th class="text-center" style="border-top: 2px solid #212529">
+                                                {{ crs.final_score }}
+                                            </th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
