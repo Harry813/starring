@@ -734,6 +734,10 @@ class Evaluation(models.Model):
 
 
 class CRS(Evaluation):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.type = "CRS"
+
     # Section A: Core / human capital factors
     marriage_status = models.IntegerField(
         verbose_name=crs.marriage_status_text,
