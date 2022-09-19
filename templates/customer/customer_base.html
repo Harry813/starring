@@ -317,7 +317,7 @@
                 </div>
                 <div class="star-footer-item star-font">
                     <a href="https://ca.china-embassy.org/chn/" class="text-white text-decoration-none">
-                    中国驻加拿大领事馆
+                        中国驻加拿大领事馆
                     </a>
                 </div>
                 <div class="star-footer-item star-font">
@@ -531,38 +531,6 @@
     </footer>
 {% endif %}
 
-<!-- Messenger 聊天插件 Code -->
-<div id="fb-root"></div>
-
-<!-- Your 聊天插件 code -->
-<div id="fb-customer-chat" class="fb-customerchat">
-</div>
-
-<script>
-    let chatbox = document.getElementById('fb-customer-chat');
-    chatbox.setAttribute("page_id", "110026251820508");
-    chatbox.setAttribute("attribution", "biz_inbox");
-</script>
-
-<!-- Your SDK code -->
-<script>
-    window.fbAsyncInit = function () {
-        FB.init({
-            xfbml: true,
-            version: 'v14.0'
-        });
-    };
-
-    (function (d, s, id) {
-        let js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = 'https://connect.facebook.net/zh_CN/sdk/xfbml.customerchat.js';
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
-
 {% for message in messages %}
     <div aria-live="polite" aria-atomic="true" class="position-relative">
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -581,6 +549,63 @@
         </div>
     </div>
 {% endfor %}
+
+{% comment %}{% if user %}
+    <script>
+        document.tidioIdentify = {
+            distinct_id: "{{ user.uid }}",
+            {% if user.email %}email: "{{ user.email }}",{% endif %}
+            name: "{{ user.get_display_name }}",
+            {% if user.tele %}phone: "{{ user.get_full_tele }}",{% endif %}
+        };
+    </script>
+{% endif %}
+<script src="//code.tidio.co/v5hwthuahh4vtyj9rmb2up8zm800rr9q.js" async></script>
+{% if user %}
+    <script>
+        (function () {
+            function onTidioChatApiReady() {
+                tidioChatApi.setVisitorData({
+                    distinct_id: "{{ user.uid }}",
+                    {% if user.email %}email: "{{ user.email }}",{% endif %}
+                    name: "{{ user.get_display_name }}",
+                    {% if user.tele %}phone: "{{ user.get_full_tele }}",{% endif %}
+                });
+            }
+
+            if (window.tidioChatApi) {
+                window.tidioChatApi.on("ready", onTidioChatApiReady);
+            } else {
+                document.addEventListener("tidioChat-ready", onTidioChatApiReady);
+            }
+        })();
+
+    </script>
+{% endif %}{% endcomment %}
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {};
+    {% if user %}
+        Tawk_API.visitor = {
+            id: "{{ user.uid }}",
+            {% if user.email %}email: "{{ user.email }}",{% endif %}
+            name: "{{ user.get_display_name }}",
+            {% if user.tele %}phone: "{{ user.get_full_tele }}",{% endif %}
+            hash: '<?php echo hash_hmac(“sha256″,”{{ user.email }}”,”6588cfe62dc8bfd06001c2f796beec2d2801f2de”); ?>'
+        };
+    {% endif %}
+    var Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/631fc50137898912e968bfba/1gcq1j42b';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
 
 {# script #}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
