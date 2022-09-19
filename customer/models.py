@@ -111,12 +111,14 @@ class Consult(models.Model):
         }
     )
 
-    status = models.BooleanField(
+    status = models.CharField(
         verbose_name=consult_status_text,
-        default=True
+        max_length=1,
+        choices=[("O", _("开放")), ("T", _("追踪")), ("C", _("结束"))],
+        default="O"
     )
 
-    create_date = models.DateTimeField(
+    create_datetime = models.DateTimeField(
         verbose_name=consult_create_date_text,
         auto_now_add=True
     )
@@ -128,3 +130,6 @@ class Consult(models.Model):
     @property
     def is_close(self):
         return self.status is False
+
+    class Meta:
+        ordering = ["-create_datetime"]
