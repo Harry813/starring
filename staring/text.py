@@ -269,7 +269,7 @@ consult_email_err_max_length = _("至多254字符")
 consult_contact_text = _("联系方式 | Contact Details")
 
 # Translators: 咨询表单{联系方式}-占位符
-consult_contact_placeholder = _("您的联系方式")
+consult_contact_placeholder = _("您的联系方式,请包含区号")
 
 # Translators: 咨询表单{联系方式}-错误文本@required
 consult_contact_err_required = _("请填写您的联系方式")
