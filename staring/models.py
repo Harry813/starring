@@ -122,10 +122,6 @@ class User(AbstractUser):
         blank=True
     )
 
-    def get_phone (self):
-        phone = "+{}-{}".format(self.countryCode, self.tele)
-        return phone
-
     # hidden, can only access by admins
     is_active = models.BooleanField(
         verbose_name=user_active_text,
