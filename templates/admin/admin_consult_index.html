@@ -1,0 +1,126 @@
+{% extends 'admin/admin_template.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col mt-0">
+                                <h5 class="card-title">{% translate '咨询管理' %}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped table-padding">
+                        <thead>
+                        <tr>
+                            <th style="width:10%;">{% translate '姓名' %}</th>
+                            <th style="width:10%;">{% translate '联系方式' %}</th>
+                            <th style="width:15%;">{% translate 'Email' %}</th>
+                            <th style="width:25%;">{% translate '问题' %}</th>
+                            <th style="width:20%;">{% translate '创建时间' %}</th>
+                            <th class="text-center" style="width:10%;">{% translate '状态' %}</th>
+                            <th style="width:10%;">{% translate '操作' %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for consult in consults %}
+                            <tr>
+                                <td>{{ consult.name }}</td>
+                                <td>{{ consult.contact_detail }}</td>
+                                <td>{{ consult.email }}</td>
+                                <td>{{ consult.query }}</td>
+                                <td>{{ consult.create_datetime }}</td>
+                                <td class="text-center">
+                                    {% if consult.status == "O" %}
+                                        <span class="badge bg-warning">{{ consult.get_status_display }}</span>
+                                    {% elif consult.status == "T" %}
+                                        <span class="badge bg-success">{{ consult.get_status_display }}</span>
+                                    {% elif consult.status == "C" %}
+                                        <span class="badge bg-primary">{{ consult.get_status_display }}</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">{% trans "未知" %}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="table-action">
+                                    <a href="{% url 'ADMConsultDetail' consult.id %}" class="action-button edit-button">
+                                        <i class="align-middle" data-feather="edit-2"></i>
+                                    </a>
+                                    <a class="action-button trash-button">
+                                        <i class="align-middle" data-feather="trash-2"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td class="text-center" colspan="5">{% translate '暂无咨询' %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="dataTables_info">
+                                    {% blocktranslate with start=customer_list.start_index end=customer_list.end_index page_total=paginator.num_pages Customer_total=paginator.count %}
+                                        第 {{ current_page }} 页，共 {{ page_total }} 页
+                                        <p class="small">第 {{ start }} ~ {{ end }} 项，共 {{ Customer_total }} 项</p>
+                                    {% endblocktranslate %}
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="btn-group mb-3 float-end">
+
+                                    <a href="{% if current_page != 1 %}{% url 'ADMCustomerIndex' 1 %}{% endif %}"
+                                       class="btn btn-outline-primary {% if current_page == 1 %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevrons-left"></i>
+                                    </a>
+
+                                    <a href="
+
+
+                                            {% if customer_list.has_next %}{% url 'ADMCustomerIndex' customer_list.previous_page_number %}{% endif %}"
+                                       class="btn btn-outline-primary {% if not customer_list.has_previous %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevron-left"></i>
+                                    </a>
+
+                                    {% for p in page_list %}
+                                        <a href="#"
+                                           class="btn btn-outline-primary {% if p == current_page %}active{% elif p == "..." %}disabled{% endif %}">
+                                            {{ p }}
+                                        </a>
+                                    {% endfor %}
+
+                                    <a href="
+
+
+                                            {% if customer_list.has_next %}{% url 'ADMCustomerIndex' customer_list.next_page_number %}{% endif %}"
+                                       class="btn btn-outline-primary {% if not customer_list.has_next %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevron-right"></i>
+                                    </a>
+                                    <a href="
+
+
+                                            {% if current_page != paginator.num_pages %}{% url 'ADMCustomerIndex' paginator.num_pages %}{% endif %}"
+                                       class="btn btn-outline-primary {% if current_page == paginator.num_pages %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevrons-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

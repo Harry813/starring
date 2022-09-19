@@ -1,0 +1,95 @@
+{% extends 'admin/admin_template.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row-cols-1">
+                    <div class="mb-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col mt-0"><h5 class="card-title">{% trans "客户信息" %}</h5></div>
+                                    <div class="col-auto">
+                                        <div class="stat text-primary">
+                                            <i class="bi bi-person"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm mt-2 mb-4">
+                                    <tbody>
+                                    <tr>
+                                        <th>{% trans "名称" %}</th>
+                                        <td>{{ consult.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans "联系方式" %}</th>
+                                        <td>{{ consult.contact_detail }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans "Email" %}</th>
+                                        <td><a href="mailto:{{ consult.email }}">{{ consult.email }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans "状态" %}</th>
+                                        <td>
+                                            {% if consult.status == "O" %}
+                                                <span class="badge bg-warning">{{ consult.get_status_display }}</span>
+                                            {% elif consult.status == "T" %}
+                                                <span class="badge bg-success">{{ consult.get_status_display }}</span>
+                                            {% elif consult.status == "C" %}
+                                                <span class="badge bg-primary">{{ consult.get_status_display }}</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary">{% trans "未知" %}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="card-body">
+                                    <div class="row p-0">
+                                        {% if consult.status == "O" %}
+                                            <div class="col">
+                                                <a class="btn btn-success w-100 card-link">{% trans "追踪" %}</a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="btn btn-primary w-100 card-link">{% trans "关闭" %}</a>
+                                            </div>
+                                        {% elif consult.status == "T" %}
+                                            <div class="col">
+                                                <a href="#" class="btn btn-primary w-100 card-link">{% trans "关闭" %}</a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row-cols-1">
+                    <div class="mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{% trans "咨询详情" %}</h5>
+                            </div>
+                            <div class="card-body">
+                                {{ consult.query }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
