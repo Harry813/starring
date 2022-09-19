@@ -20,7 +20,8 @@
                     <li class="sidebar-item {% if active_page == 'ADMIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第一部分@仪表面板 #}
-                            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">{% trans '仪表面板' %}</span>
+                            <i class="align-middle" data-feather="sliders"></i> <span
+                                class="align-middle">{% trans '仪表面板' %}</span>
                         </a>
                     </li>
 
@@ -32,7 +33,8 @@
                     <li class="sidebar-item {% if active_page == 'ADMStaff' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMStaffIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第二部分@员工管理 #}
-                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">{% trans '员工管理' %}</span>
+                            <i class="align-middle" data-feather="user"></i> <span
+                                class="align-middle">{% trans '员工管理' %}</span>
                         </a>
                     </li>
 
@@ -44,21 +46,32 @@
                     <li class="sidebar-item {% if active_page == 'ADMCustomerIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMCustomerIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第三部分@用户管理 #}
-                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">{% trans '用户管理' %}</span>
+                            <i class="align-middle" data-feather="users"></i> <span
+                                class="align-middle">{% trans '用户管理' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMArticleIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMArticleIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第三部分@文章管理 #}
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">{% trans '文章管理' %}</span>
+                            <i class="align-middle" data-feather="book"></i> <span
+                                class="align-middle">{% trans '文章管理' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMOrderIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMOrderIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第三部分@账单管理 #}
-                            <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">{% trans '账单管理' %}</span>
+                            <i class="align-middle" data-feather="dollar-sign"></i> <span
+                                class="align-middle">{% trans '账单管理' %}</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item {% if active_page == 'ADMConsultIndex' %}active{% endif %}">
+                        <a class="sidebar-link" href="{% url 'ADMConsultIndex' 1 %}">
+                            {# Translators: 后台模板{侧边栏}-第三部分@咨询管理 #}
+                            <i class="bi bi-patch-question"></i>
+                            <span class="align-middle">{% trans '咨询管理' %}</span>
                         </a>
                     </li>
 
@@ -70,14 +83,16 @@
                     <li class="sidebar-item {% if active_page == 'ADMSlotIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMSlotIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第4部分@日程管理 #}
-                            <i class="align-middle" data-feather="clock"></i> <span class="align-middle">{% trans '日程管理' %}</span>
+                            <i class="align-middle" data-feather="clock"></i> <span
+                                class="align-middle">{% trans '日程管理' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMAppointmentIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMAppointmentIndex' 1 %}">
                             {# Translators: 后台模板{侧边栏}-第4部分@预约管理 #}
-                            <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">{% trans '预约管理' %}</span>
+                            <i class="align-middle" data-feather="calendar"></i> <span
+                                class="align-middle">{% trans '预约管理' %}</span>
                         </a>
                     </li>
 
@@ -89,28 +104,32 @@
                     <li class="sidebar-item {% if active_page == 'ADMNaviIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMNaviSectorIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第5部分@导航栏分区 #}
-                            <i class="align-middle" data-feather="compass"></i> <span class="align-middle">{% trans '首页导航' %}</span>
+                            <i class="align-middle" data-feather="compass"></i> <span
+                                class="align-middle">{% trans '首页导航' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMSidebarIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMSidebarIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第5部分@侧边栏项 #}
-                            <i class="align-middle" data-feather="sidebar"></i> <span class="align-middle">{% trans '侧边栏项' %}</span>
+                            <i class="align-middle" data-feather="sidebar"></i> <span
+                                class="align-middle">{% trans '侧边栏项' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMIndListIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMIndListSectorIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第5部分@清单分区 #}
-                            <i class="align-middle" data-feather="grid"></i> <span class="align-middle">{% trans '首页清单' %}</span>
+                            <i class="align-middle" data-feather="grid"></i> <span
+                                class="align-middle">{% trans '首页清单' %}</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {% if active_page == 'ADMNewsSectorIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMNewsSectorIndex' %}">
                             {# Translators: 后台模板{侧边栏}-第5部分@新闻分区 #}
-                            <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">{% trans '新闻分区' %}</span>
+                            <i class="align-middle" data-feather="file-text"></i> <span
+                                class="align-middle">{% trans '新闻分区' %}</span>
                         </a>
                     </li>
                 </ul>
@@ -209,7 +228,8 @@
                                             </div>
                                             <div class="col-10">
                                                 <div class="text-dark">New connection</div>
-                                                <div class="text-muted small mt-1">Christina accepted your request.</div>
+                                                <div class="text-muted small mt-1">Christina accepted your request.
+                                                </div>
                                                 <div class="text-muted small mt-1">14h ago</div>
                                             </div>
                                         </div>
@@ -221,7 +241,8 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">
+                            <a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown"
+                               data-bs-toggle="dropdown">
                                 <div class="position-relative">
                                     <i class="align-middle" data-feather="message-square"></i>
                                 </div>
@@ -237,7 +258,8 @@
                                     <a href="#" class="list-group-item">
                                         <div class="row g-0 align-items-center">
                                             <div class="col-2">
-                                                <img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle"
+                                                <img src="img/avatars/avatar-5.jpg"
+                                                     class="avatar img-fluid rounded-circle"
                                                      alt="Vanessa Tucker">
                                             </div>
                                             <div class="col-10 ps-2">
@@ -252,12 +274,14 @@
                                     <a href="#" class="list-group-item">
                                         <div class="row g-0 align-items-center">
                                             <div class="col-2">
-                                                <img src="img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle"
+                                                <img src="img/avatars/avatar-2.jpg"
+                                                     class="avatar img-fluid rounded-circle"
                                                      alt="William Harris">
                                             </div>
                                             <div class="col-10 ps-2">
                                                 <div class="text-dark">William Harris</div>
-                                                <div class="text-muted small mt-1">Curabitur ligula sapien euismod vitae.
+                                                <div class="text-muted small mt-1">Curabitur ligula sapien euismod
+                                                    vitae.
                                                 </div>
                                                 <div class="text-muted small mt-1">2h ago</div>
                                             </div>
@@ -266,12 +290,14 @@
                                     <a href="#" class="list-group-item">
                                         <div class="row g-0 align-items-center">
                                             <div class="col-2">
-                                                <img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle"
+                                                <img src="img/avatars/avatar-4.jpg"
+                                                     class="avatar img-fluid rounded-circle"
                                                      alt="Christina Mason">
                                             </div>
                                             <div class="col-10 ps-2">
                                                 <div class="text-dark">Christina Mason</div>
-                                                <div class="text-muted small mt-1">Pellentesque auctor neque nec urna.</div>
+                                                <div class="text-muted small mt-1">Pellentesque auctor neque nec urna.
+                                                </div>
                                                 <div class="text-muted small mt-1">4h ago</div>
                                             </div>
                                         </div>
@@ -279,7 +305,8 @@
                                     <a href="#" class="list-group-item">
                                         <div class="row g-0 align-items-center">
                                             <div class="col-2">
-                                                <img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle"
+                                                <img src="img/avatars/avatar-3.jpg"
+                                                     class="avatar img-fluid rounded-circle"
                                                      alt="Sharon Lessman">
                                             </div>
                                             <div class="col-10 ps-2">
@@ -318,25 +345,27 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
+                               data-bs-toggle="dropdown">
                                 <i class="align-middle" data-feather="settings"></i>
                             </a>
 
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                                data-bs-toggle="dropdown">
-                                <img src="{% if user.avatar %}{{ user.avatar.image }}{% else %}{% static 'IMG/default_avatar.jpg' %}{% endif %}"
+                                <img src="
+                                        {% if user.avatar %}{{ user.avatar.image }}{% else %}{% static 'IMG/default_avatar.jpg' %}{% endif %}"
                                      class="avatar img-fluid rounded me-1" alt="{{ user.get_display_name }}_avatar"/>
                                 <span class="text-dark">{{ user.get_display_name }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="#">
-                                <i class="align-middle me-1" data-feather="user"></i> Profile</a>
+                                    <i class="align-middle me-1" data-feather="user"></i> Profile</a>
                                 <a class="dropdown-item" href="#"><i class="align-middle me-1"
                                                                      data-feather="pie-chart"></i>
                                     Analytics</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">
-                                <i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
+                                    <i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
                                 <a class="dropdown-item" href="#"><i class="align-middle me-1"
                                                                      data-feather="help-circle"></i> Help Center</a>
                                 <div class="dropdown-divider"></div>
@@ -356,7 +385,8 @@
                     <div class="row text-muted">
                         <div class="col-6 text-start">
                             <p class="mb-0">
-                                <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>{{ info.brandname }}</strong></a> &copy;
+                                <a class="text-muted" href="https://adminkit.io/"
+                                   target="_blank"><strong>{{ info.brandname }}</strong></a> &copy;
                             </p>
                         </div>
                         <div class="col-6 text-end">
