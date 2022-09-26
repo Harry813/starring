@@ -18,13 +18,11 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
-from filebrowser.sites import site
 
 from django.conf import settings
 
 urlpatterns = i18n_patterns(
     path('grappelli/', include('grappelli.urls')),
-    path('filebrowser/', site.urls),
     path('sitemap.xml', sitemap, name='sitemap-xml'),
     # path('django-admin/', admin.site.urls),
     path('', include("customer.urls")),
