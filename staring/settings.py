@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+from datetime import time, datetime
 from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'guardian',
     'modeltranslation',
     'django_user_agents',
+    'django_crontab',
 
     # customer apps
     'staring',
@@ -81,8 +83,7 @@ AUTHENTICATION_BACKENDS = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -232,3 +233,14 @@ PAYPAL_CLIENT_ID = "AessEikTjsnPtmI0YNYAsNJ09BS20pu_VvU_LDwpyD7zgOuGEGZE5UVyeWik
 PAYPAL_SECRET = "EOsYGHER3f9jR-j8oRo3cQxMzG7iPCJMSmjaKLNI_oeEgLu9ielt9cIVCpehouN_lZDdBRKYxUjGduYe"
 PAYPAL_MODE = "sandbox"
 PAYPAL_ACCOUNT = "sb-fjmpd15302855@business.example.com"
+
+# Crontab Tasks
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CRONJOBS = [
+    # 每晚12点执行一次，删除超过7日的无顾客评估表单
+    ('0 0 * * *', 'staring.auto_job.clean_evaluations',
+     '>> {}'.format(BASE_DIR + f'/logs/log_{datetime.today().strftime("%Y-%m-%d")}.log')),
+    # 每5分钟执行一次，更新超过半个小时的预约记录，并释放预约时间槽
+    ('*/5 * * * *', 'staring.auto_job.release_meeting_slot',
+     '>> {}'.format(BASE_DIR + f'/logs/log_{datetime.today().strftime("%Y-%m-%d")}.log')),
+]
