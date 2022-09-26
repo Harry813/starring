@@ -18,7 +18,7 @@ from admin.forms import *
 from admin.forms import *
 from admin.models import Staff
 from admin.utils import get_admin_info, reorder
-from customer.models import Customer
+from customer.models import Customer, Consult
 from staring.customerSettings import Languages
 from staring.settings import MEDIA_ROOT, MEDIA_URL, DOMAIN_NAME
 from staring.text import *
@@ -301,6 +301,22 @@ def admin_customer_edit_view (request, customer_id):
     param["basic_form"] = basic_form
     param["customer_form"] = customer_form
     return render(request, "admin/admin_customer_edit.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_crs_view (request, crs_id):
+    param = {
+        "page_title": _("星环-用户管理"),
+        "languages": Languages,
+        "active_page": "ADMCustomerIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    evaluation = get_object_or_404(CRS, id=crs_id)
+    param["crs"] = evaluation
+    param["user_id"] = evaluation.customer.user.uid
+    return render(request, "admin/admin_customer_crs.html", param)
 
 
 @login_required(login_url="ADMLogin")
@@ -1216,6 +1232,38 @@ def admin_order_detail_view (request, order_id):
     order = get_object_or_404(Order, id=order_id)
     param["order"] = order
     return render(request, "admin/admin_order_detail.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_consult_index_view(request, page):
+    param = {
+        "page_title": _("星环-咨询管理"),
+        "languages": Languages,
+        "active_page": "ADMConsultIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    consults = Consult.objects.all().order_by('-create_datetime')
+    p = Paginator(consults, 10)
+    param["paginator"] = p
+    param["consults"] = p.get_page(page)
+    param["current_page"] = page
+    param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
+    return render(request, "admin/admin_consult_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_consult_detail_view(request, consult_id):
+    param = {
+        "page_title": _("星环-咨询管理"),
+        "languages": Languages,
+        "active_page": "ADMConsultIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    consult = get_object_or_404(Consult, id=consult_id)
+    param["consult"] = consult
+    return render(request, "admin/admin_consult_detail.html", param)
 
 
 @csrf_exempt
