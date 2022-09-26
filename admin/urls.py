@@ -18,6 +18,7 @@ urlpatterns = [
          name="ADMAppointmentUpdateCreate"),
     path('customer/page/<int:page>/', views.admin_customer_index_view, name="ADMCustomerIndex"),
     path('customer/profile/<str:customer_id>/', views.admin_customer_edit_view, name="ADMCustomerEdit"),
+    path('evaluation/crs/<str:crs_id>/', views.admin_crs_view, name="ADMCRSView"),
     path('staff/page/<int:page>/', views.admin_staff_index_view, name="ADMStaffIndex"),
     path('staff/profile/<str:staff_id>/', views.admin_staff_edit_view, name="ADMStaffEdit"),
     path('staff/create/', views.admin_staff_create_view, name="ADMStaffCreate"),
@@ -45,6 +46,8 @@ urlpatterns = [
     path('upload/image/article/', views.admin_article_image_upload, name="ADMImageUpload"),
     path('order/page/<int:page>/', views.admin_order_index_view, name="ADMOrderIndex"),
     path('order/<str:order_id>/', views.admin_order_detail_view, name="ADMOrderDetail"),
+    path('consult/page/<int:page>/', views.admin_consult_index_view, name="ADMConsultIndex"),
+    path('consult/<int:consult_id>/', views.admin_consult_detail_view, name="ADMConsultDetail"),
 
     # Appointment Related Convenient Methods
     path('appointment/accept/<int:page>/<str:aptid>', views.admin_appointment_accept, name="ADMAppointmentAccept"),
