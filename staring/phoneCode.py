@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext as _
 
 phone_codes = (
     ('297', '+297 {}'.format(_("Aruba"))),
