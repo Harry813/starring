@@ -1,11 +1,11 @@
 from staring.customerSettings import navi_item_per_col
 from staring.models import NewsSector, News, NavigatorSector, NavigatorItem, IndexListSector, IndexListItem, \
-    IndexSidebarItem
+    IndexSidebarItem, User
 
 
-def get_customer_info():
+def get_customer_info(request):
     dic = {
-        "navigator": []
+        "navigator": [],
     }
 
     for sec in NavigatorSector.objects.all():
@@ -14,8 +14,11 @@ def get_customer_info():
             "sector": sec,
             "itemslist": [itemslist[i: i+navi_item_per_col] for i in range(0, len(itemslist), navi_item_per_col)]
         })
-
     dic["questions"] = list(IndexSidebarItem.objects.all())
+
+    if request.user.is_anonymous is False:
+        dic["user"] = User.objects.get(uid=request.user.uid)
+
     return dic
 
 
