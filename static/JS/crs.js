@@ -1,71 +1,65 @@
-(function ($) {
-    $.each(['show', 'hide'], function (i, ev) {
-        let el = $.fn[ev];
-        $.fn[ev] = function () {
-            this.trigger(ev);
-            return el.apply(this, arguments);
-        };
-    });
-})(jQuery);
-$(':input').focus(function () {
-    let center = $(window).height() / 2;
-    let top = $(this).offset().top;
-    if (top > center) {
-        $(window).scrollTop(top - center);
-    }
-})
-$(".formfield").on("show", function () {
-    let div = $(this);
-    setTimeout(function () {
-        let input = div.find(":input").first();
-        input.trigger('focus');
-    }, 50);
-})
+let single = true
 $("#CRS_A0 :input").change((e) => {
-    let marriage_status = $(e.target).val();
-    console.log(marriage_status)
-    if (marriage_status) {
-        hide_after("#CRS_A0");
+    let marriage = $(e.target).val();
+    if (marriage) {
         $("#CRS_A1").show();
-    } else {
-        hide_after("#CRS_A0");
+        if (["0", "4", "5", "6"].includes(marriage)) {
+            single = true
+            hide_elements(["#CRS_B", "#CRS_B1", "#CRS_B2", "#CRS_B2_1", "#CRS_B2_2", "#CRS_B3"])
+            if ($("#CRS_A6 :input").val() !== "") {
+                $("#CRS_C").show();
+                $("#CRS_C1").show();
+            }
+        } else {
+            single = false
+            if ($("#CRS_A6 :input").val() !== "") {
+                $("#CRS_B").show();
+                $("#CRS_B1").show();
+                hide_elements(["#CRS_C", "#CRS_C1", "#CRS_C2", "#CRS_C3", "#CRS_C4"]);
+            }
+        }
     }
 })
+
 $("#CRS_A1 :input").change((e) => {
     let age_group = $(e.target).val();
     if (age_group < 0) {
-        hide_after("#CRS_A1");
+        hide_elements(["#CRS_A2", "#CRS_A2_1", "#CRS_A3", "#CRS_A3_1", "#CRS_A3_2", "#CRS_A4", "#CRS_A4_1",
+            "#CRS_A4_2", "#CRS_A5", "#CRS_A5_1", "#CRS_A6", "#CRS_B", "#CRS_B1", "#CRS_B2", "#CRS_B2_1", "#CRS_B2_2", "#CRS_B3",
+            "#CRS_C", "#CRS_C1", "#CRS_C2", "#CRS_C3", "#CRS_C4"]);
         end();
-    } else if (age_group >= 0) {
+    } else {
         $("#CRS_A2").show();
         let crs_submit = $("#CRS_Submit");
         if (crs_submit.is(":visible")) {
             crs_submit.hide();
         }
-    } else {
-        hide_after("#CRS_A1");
     }
 })
+
 $("#CRS_A2 :input").change((e) => {
     let education_lv = $(e.target).val();
     if (education_lv === "") {
-        hide_after("#CRS_A2");
+        hide_elements(["#CRS_A2_1"]);
     } else {
         $("#CRS_A2_1").show();
     }
 })
+
 $("#CRS_A2_1 :input").change((e) => {
     let education_canadian = $(e.target).val();
     if (education_canadian) {
         $("#CRS_A3").show();
     } else {
-        hide_after("#CRS_A2_1")
+        hide_elements(["#CRS_A2_1"])
     }
 })
+
 $("#CRS_A3 :input").change((e) => {
     let valid_first_language = $(e.target).val()
     if (valid_first_language === "False") {
-        hide_after("#CRS_A3");
+        hide_elements(["#CRS_A3_1", "#CRS_A3_2_L", "#CRS_A3_2_S", "#CRS_A3_2_R", "#CRS_A3_2_W",
+            "#CRS_A4", "#CRS_A4_1", "#CRS_A4_2", "#CRS_A4_2_L", "#CRS_A4_2_S", "#CRS_A4_2_R", "#CRS_A4_2_W"]);
         end();
     } else {
         $("#CRS_A3_1").show()
@@ -75,6 +69,7 @@ $("#CRS_A3 :input").change((e) => {
         }
     }
 })
+
 $("#CRS_A3_1 :input").change((e) => {
     $("#CRS_A3_1").find("optgroup")
     let first_language_test = $(e.target).val()
@@ -110,11 +105,17 @@ $("#CRS_A3_1 :input").change((e) => {
             first_language_writing.attr("max", 20).attr("step", 1)
         }
 
-        $("#CRS_A3_2").show()
+        $("#CRS_A3_2").show();
+        $("#CRS_A3_2_L").show();
+        $("#CRS_A3_2_S").show();
+        $("#CRS_A3_2_R").show();
+        $("#CRS_A3_2_W").show();
     } else {
-        hide_after("#CRS_A3_1");
+        hide_elements(["#CRS_A3_2_L", "#CRS_A3_2_S", "#CRS_A3_2_R", "#CRS_A3_2_W", "#CRS_A4", "#CRS_A4_1",
+            "#CRS_A4_2", "#CRS_A4_2_L", "#CRS_A4_2_S", "#CRS_A4_2_R", "#CRS_A4_2_W"]);
     }
 })
+
 $(".language1 input").change(() => {
     let first_language_listening = $("#CRS_A3_2_L .form-control").val()
     let first_language_speaking = $("#CRS_A3_2_S .form-control").val()
@@ -133,16 +134,16 @@ $(".language1 input").change(() => {
         first_language_reading === "" ||
         first_language_writing === ""
     ) {
-        hide_after("#CRS_A3_2");
+        hide_elements(["#CRS_A4", "#CRS_A4_1", "#CRS_A4_2", "#CRS_A4_2_L", "#CRS_A4_2_S", "#CRS_A4_2_R", "#CRS_A4_2_W"]);
     }
 })
+
 $("#CRS_A4 :input").change((e) => {
     let valid_second_language = $(e.target).val()
     if (valid_second_language === "False") {
-        hide_after("#CRS_A4");
+        hide_elements(["#CRS_A4_1", "#CRS_A4_2", "#CRS_A4_2_L", "#CRS_A4_2_S", "#CRS_A4_2_R", "#CRS_A4_2_W"]);
         $("#CRS_A5").show()
     } else if (valid_second_language === "True") {
-        hide_after("#CRS_A4_1");
         let first_language = $("#CRS_A3_1 .form-control")
         let second_language = $("#CRS_A4_1 .form-control")
         let options = first_language.find("option")
@@ -161,14 +162,11 @@ $("#CRS_A4 :input").change((e) => {
             second_language.append(new Option(first_language.find("option[value=1]").text(), values[2]));
         }
         $("#CRS_A4_1").show()
-        setTimeout(function () {
-            $("#CRS_A4_1 .form-control").trigger('focus')
-        }, 50)
-
     } else {
-        hide_after("#CRS_A4");
+        hide_elements(["#CRS_A4_1", "#CRS_A4_2", "#CRS_A4_2_L", "#CRS_A4_2_S", "#CRS_A4_2_R", "#CRS_A4_2_W"]);
     }
 })
+
 $("#CRS_A4_1 :input").change((e) => {
     let second_language_test = $(e.target).val()
     let second_language_listening = $("#CRS_A4_2_L .form-control")
@@ -204,10 +202,15 @@ $("#CRS_A4_1 :input").change((e) => {
         }
 
         $("#CRS_A4_2").show()
+        $("#CRS_A4_2_L").show()
+        $("#CRS_A4_2_S").show()
+        $("#CRS_A4_2_R").show()
+        $("#CRS_A4_2_W").show()
     } else {
-        hide_after("#CRS_A4_1")
+        hide_elements(["#CRS_A4_1", "#CRS_A4_2", "#CRS_A4_2_L", "#CRS_A4_2_S", "#CRS_A4_2_R", "#CRS_A4_2_W"]);
     }
 })
+
 $(".language2 input").change(() => {
     let second_language_listening = $("#CRS_A4_2_L .form-control").val()
     let second_language_speaking = $("#CRS_A4_2_S .form-control").val()
@@ -226,43 +229,44 @@ $(".language2 input").change(() => {
         second_language_reading === "" ||
         second_language_writing === ""
     ) {
-        hide_after("#CRS_A4_2");
+        hide_elements(["#CRS_A5"]);
     }
 })
+
 $("#CRS_A5 :input").change((e) => {
     let work_experience = $(e.target).val();
 
     if (work_experience === "0") {
-        hide_after("#CRS_A5");
+        hide_elements(["#CRS_A5_1", "#CRS_A6", "#CRS_B", "#CRS_B1", "#CRS_B2", "#CRS_B2_1", "#CRS_B2_2", "#CRS_B3",
+            "#CRS_C", "#CRS_C1", "#CRS_C2", "#CRS_C3", "#CRS_C4"]);
         end();
-    } else if (jQuery.inArray(work_experience, ["1", "2", "3", "4", "5"]) !== -1) {
+    } else if (["1", "2", "3", "4", "5"].includes(work_experience)) {
         $("#CRS_A5_1").show()
         let crs_submit = $("#CRS_Submit");
         if (crs_submit.is(":visible")) {
             crs_submit.hide();
         }
-    } else {
-        hide_after("#CRS_A5");
     }
 })
+
 $("#CRS_A5_1 :input").change((e) => {
     let noc = $(e.target).val();
     if (noc) {
         $("#CRS_A6").show()
     } else {
-        hide_after("#CRS_A5_1");
+        hide_elements(["#CRS_A5_1"]);
     }
 })
+
 $("#CRS_A6 :input").change((e) => {
     let work_experience = $(e.target).val();
-    let marriage_status = $("#CRS_A0 :input").val();
-    console.log(jQuery.inArray(marriage_status, ["1", "2", "3"]) !== -1)
 
     if (work_experience === "0") {
-        hide_after("#CRS_A6");
+        hide_elements(["#CRS_A6", "#CRS_B", "#CRS_B1", "#CRS_B2", "#CRS_B2_1", "#CRS_B2_2", "#CRS_B3",
+            "#CRS_C", "#CRS_C1", "#CRS_C2", "#CRS_C3", "#CRS_C4"]);
         end();
-    } else if (jQuery.inArray(work_experience, ["1", "2", "3", "4", "5"]) !== -1) {
-        if (jQuery.inArray(marriage_status, ["1", "2", "3"]) !== -1) {
+    } else if (["1", "2", "3", "4", "5"].includes(work_experience)) {
+        if (!single) {
             $("#CRS_B").show()
             $("#CRS_B1").show()
         } else {
@@ -275,28 +279,30 @@ $("#CRS_A6 :input").change((e) => {
             crs_submit.hide();
         }
     } else {
-        hide_after("#CRS_A6");
+        hide_elements(["#CRS_A6", "#CRS_B", "#CRS_B1", "#CRS_B2", "#CRS_B2_1", "#CRS_B2_2", "#CRS_B3",
+            "#CRS_C", "#CRS_C1", "#CRS_C2", "#CRS_C3", "#CRS_C4"]);
     }
 })
+
 $("#CRS_B1 :input").change((e) => {
     let partner_education_lv = $(e.target).val()
     if (partner_education_lv) {
         $("#CRS_B2").show()
-    } else {
-        hide_after("#CRS_B1");
     }
 })
+
 $("#CRS_B2 :input").change((e) => {
     let valid_partner_language = $(e.target).val()
     if (valid_partner_language === "True") {
         $("#CRS_B2_1").show()
     } else if (valid_partner_language === "False") {
-        hide_after("#CRS_B2")
+        hide_elements(["#CRS_B2_1", "#CRS_B2_2", "#CRS_B2_2_L", "#CRS_B2_2_S", "#CRS_B2_2_R", "#CRS_B2_2_W"]);
         $("#CRS_B3").show()
     } else {
-        hide_after("#CRS_B2")
+        hide_elements(["#CRS_B2_2", "#CRS_B2_2_L", "#CRS_B2_2_S", "#CRS_B2_2_R", "#CRS_B2_2_W"]);
     }
 })
+
 $("#CRS_B2_1 :input").change((e) => {
     let partner_language_test = $(e.target).val()
     let partner_language_listening = $("#CRS_B2_2_L .form-control")
@@ -333,10 +339,15 @@ $("#CRS_B2_1 :input").change((e) => {
         }
 
         $("#CRS_B2_2").show()
+        $("#CRS_B2_2_L").show()
+        $("#CRS_B2_2_S").show()
+        $("#CRS_B2_2_R").show()
+        $("#CRS_B2_2_W").show()
     } else {
-        hide_after("#CRS_B2_1")
+        hide_elements(["#CRS_B2_2", "#CRS_B2_2_L", "#CRS_B2_2_S", "#CRS_B2_2_R", "#CRS_B2_2_W"]);
     }
 })
+
 $(".language3 input").change(() => {
     let partner_language_listening = $("#CRS_B2_2_L .form-control").val()
     let partner_language_speaking = $("#CRS_B2_2_S .form-control").val()
@@ -349,53 +360,41 @@ $(".language3 input").change(() => {
         partner_language_writing
     ) {
         $("#CRS_B3").show()
-    } else if (
-        partner_language_listening === "" ||
-        partner_language_speaking === "" ||
-        partner_language_reading === "" ||
-        partner_language_writing === ""
-    ) {
-        hide_after("#CRS_B2_2")
     }
 })
+
 $("#CRS_B3 :input").change((e) => {
     let partner_work_experience = $(e.target).val()
     if (partner_work_experience) {
         $("#CRS_C").show()
         $("#CRS_C1").show()
-    } else {
-        hide_after("#CRS_B3")
     }
 })
+
 $("#CRS_C1 :input").change((e) => {
     let valid_certificate = $(e.target).val()
     if (valid_certificate) {
         $("#CRS_C2").show()
-    } else {
-        hide_after("#CRS_C1")
     }
 })
+
 $("#CRS_C2 :input").change((e) => {
     let valid_job_offer = $(e.target).val()
     if (valid_job_offer) {
         $("#CRS_C3").show()
-    } else {
-        hide_after("#CRS_C2")
     }
 })
+
 $("#CRS_C3 :input").change((e) => {
     let valid_nomination = $(e.target).val()
     if (valid_nomination) {
         $("#CRS_C4").show()
-    } else {
-        hide_after("#CRS_C3")
     }
 })
+
 $("#CRS_C4 :input").change((e) => {
     let valid_relatives_citizen = $(e.target).val()
     if (valid_relatives_citizen) {
         end()
-    } else {
-        hide_after("#CRS_C4")
     }
 })

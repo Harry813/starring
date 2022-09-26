@@ -610,24 +610,27 @@
 {% block js %}
     <script>
         const hidden_sections = [
-            "#CRS_A0", "#CRS_A1", "#CRS_A2", "#CRS_A2_1", "#CRS_A3", "#CRS_A3_1", "#CRS_A3_2", "#CRS_A4", "#CRS_A4_1",
+            "#CRS_A1", "#CRS_A2", "#CRS_A2_1", "#CRS_A3", "#CRS_A3_1", "#CRS_A3_2", "#CRS_A4", "#CRS_A4_1",
             "#CRS_A4_2", "#CRS_A5", "#CRS_A5_1", "#CRS_A6", "#CRS_B", "#CRS_B1", "#CRS_B2", "#CRS_B2_1", "#CRS_B2_2", "#CRS_B3",
             "#CRS_C", "#CRS_C1", "#CRS_C2", "#CRS_C3", "#CRS_C4", "#CRS_Submit"
         ]
 
-        function hide_after(t) {
-            t = hidden_sections.indexOf(t) + 1;
-            for (let i = t; i < hidden_sections.length; i++) {
-                $(hidden_sections[i]).hide();
-                let input = $(hidden_sections[i] + " .form-control");
-                if (input.val() !== "") {
-                    input.val('').trigger('change');
+        function hide_elements(elements) {
+            for (let i = 0, len = elements.length; i < len; i++) {
+                let element = elements[i]
+                if (element === "#CRS_Submit") {
+                    let submit_button = $("#CRS_Submit button")
+                    if (!submit_button.is(":disabled")) {
+                        submit_button.prop("disabled", true);
+                    }
+                } else {
+                    let input = $(element + " .form-control");
+                    if (input.val() !== "") {
+                        input.val('').trigger('change');
+                    }
                 }
-            }
-
-            let submit_button = $("#CRS_Submit button")
-            if (!submit_button.is(":disabled")) {
-                submit_button.prop("disabled", true);
+                $(element).hide();
+                console.log(element)
             }
         }
 
@@ -643,12 +646,40 @@
                 width: 'resolve',
                 theme: "bootstrap-5",
             });
-            hide_after("#CRS_A0");
+            hide_elements(hidden_sections);
         })
 
         $(document).on("keydown", "form", function (event) {
             return event.key !== "Enter";
         });
+
+        (function ($) {
+            $.each(['show', 'hide'], function (i, ev) {
+                let el = $.fn[ev];
+                $.fn[ev] = function () {
+                    this.trigger(ev);
+                    return el.apply(this, arguments);
+                };
+            });
+        })(jQuery);
+
+        $(':input').focus(function () {
+            // center the element in the viewport
+            let center = $(window).height() / 2;
+            let top = $(this).offset().top;
+            if (top > center) {
+                $(window).scrollTop(top - center);
+            }
+        })
+
+        $(".formfield").on("show", function () {
+            // autofocus when shown
+            let div = $(this);
+            setTimeout(function () {
+                let input = div.find(":input").first();
+                input.trigger('focus');
+            }, 50);
+        })
     </script>
     <script src="{% static 'JS/crs.js' %}"></script>
 {% endblock %}
