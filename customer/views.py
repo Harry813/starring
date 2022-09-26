@@ -41,7 +41,7 @@ def index (request):
         "ContactForm": True,
         "newsSectors": get_news(),
         "indexList": get_index_list(),
-        **get_customer_info()
+        **get_customer_info(request)
     }
     # if request.user_agent.is_mobile:
     #     # return render(request, "customer/tele/tele_index1.html", param)
@@ -55,7 +55,7 @@ def customer_login_view (request):
         "page_title": _("星环-登录"),
         "languages": Languages,
         "title_img": False,
-        **get_customer_info(),
+        **get_customer_info(request),
     }
 
     try:
@@ -103,7 +103,7 @@ def customer_register (request):
         "page_title": _("星环-注册中心"),
         "languages": Languages,
         "title_img": True,
-        **get_customer_info(),
+        **get_customer_info(request),
     }
 
     if request.method == "POST":
@@ -139,10 +139,9 @@ def customer_center_view (request):
     param = {
         "page_title": _("星环-我的主页"),
         "languages": Languages,
-        "user": User.objects.get(uid=request.user.uid),
         "title_img": True,
         # "profile": Customer.objects.get(user=request.user),
-        **get_customer_info(),
+        **get_customer_info(request),
     }
 
     customer_profile = Customer.objects.get(user=request.user)
@@ -157,7 +156,7 @@ def customer_articles (request, article_id):
         "page_title": _("星环"),
         "languages": Languages,
         "title_img": True,
-        **get_customer_info(),
+        **get_customer_info(request),
     }
 
     if request.method == "POST":
@@ -185,8 +184,7 @@ def customer_search_view (request, page):
     param = {
         "page_title": _("星环-我的主页"),
         "languages": Languages,
-        "user": request.user,
-        **get_customer_info(),
+        **get_customer_info(request),
     }
 
     if request.GET.get("search"):
@@ -215,10 +213,17 @@ def customer_appointment_view (request):
     param = {
         "page_title": _("星环-我的主页"),
         "languages": Languages,
-        "user": request.user,
         "title_img": True,
-        **get_customer_info(),
+        **get_customer_info(request),
     }
+
+    # user = User.objects.get(uid=request.user.uid)
+    customer_profile = Customer.objects.get(user=request.user)
+    q = Q(customer=customer_profile)
+
+    # todo: 添加跳转
+    if Appointment.objects.filter(q & Q(status__in=["APPLY", "UNPAID", "PAID", "ACCEPT", "CASH"])):
+        pass
 
     start = datetime.today().date() + timedelta(days=1)
     end = datetime.today().date() + timedelta(days=14)
@@ -255,9 +260,8 @@ def customer_appointment_2_view (request, slot_id):
     param = {
         "page_title": _("星环-我的主页"),
         "languages": Languages,
-        "user": request.user,
         "title_img": True,
-        **get_customer_info(),
+        **get_customer_info(request),
     }
 
     slot = MeetingSlot.objects.get(id=slot_id)
@@ -295,9 +299,8 @@ def customer_appointment_payment_view (request, appointment_id):
     param = {
         "page_title": _("星环-我的主页"),
         "languages": Languages,
-        "user": request.user,
         "title_img": True,
-        **get_customer_info(),
+        **get_customer_info(request),
     }
     appointment = get_object_or_404(Appointment, id=appointment_id)
     param["appointment"] = appointment
@@ -316,16 +319,14 @@ def customer_self_assessment_crs_view (request):
     param = {
         "page_title": _("星环-CRS自我评估"),
         "languages": Languages,
-        "user": request.user,
         "title_img": True,
-        **get_customer_info(),
+        **get_customer_info(request),
     }
 
     if request.method == "POST":
         form = CRSForm(request.POST)
         if form.is_valid():
             inst = form.save(commit=False)
-            inst.type = "CRS"
             if request.user.is_authenticated:
                 inst.customer = Customer.objects.get(user_id=request.user.uid)
             inst.save()
@@ -344,12 +345,14 @@ def customer_crs_result_view (request, crs_id):
     param = {
         "page_title": _("星环-CRS评估报告"),
         "languages": Languages,
-        "user": request.user,
-        **get_customer_info(),
+        **get_customer_info(request),
     }
 
     crs = get_object_or_404(CRS, id=crs_id)
     param["crs"] = crs
+    if crs.customer is None and request.user.is_authenticated:
+        crs.customer = Customer.objects.get(user_id=request.user.uid)
+        crs.save()
     return render(request, "customer/customer_crs_report.html", param)
 
 
@@ -425,9 +428,8 @@ def payment_success_view (request, appointment_id):
     param = {
         "page_title": _("星环-支付成功"),
         "languages": Languages,
-        "user": request.user,
         "appointment": Appointment.objects.get(id=appointment_id),
-        **get_customer_info(),
+        **get_customer_info(request),
     }
     order = get_object_or_404(staringOrder, product_id=appointment_id)
     param["order"] = order
@@ -437,8 +439,7 @@ def payment_success_view (request, appointment_id):
 @xframe_options_sameorigin
 def customer_contact_form_frame (request):
     param = {
-        "user": request.user,
-        **get_customer_info(),
+        **get_customer_info(request),
     }
 
     if request.method == "POST":
