@@ -1618,3 +1618,130 @@ class Order(models.Model):
         blank=True,
         null=True,
     )
+
+
+class Project(models.Model):
+    name = models.CharField(
+        verbose_name=_("项目名称"),
+        max_length=100,
+    )
+
+    description = models.TextField(
+        verbose_name=_("项目描述"),
+        blank=True,
+        null=True,
+    )
+
+    create_datetime = models.DateTimeField(
+        verbose_name=_("Create Date"),
+        auto_now_add=True,
+    )
+
+    update_datetime = models.DateTimeField(
+        verbose_name=_("Update Date"),
+        auto_now=True,
+    )
+
+    def __str__ (self):
+        return self.name
+
+
+class Case(models.Model):
+    id = models.UUIDField(
+        verbose_name=_("案例ID"),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+
+    project = models.ForeignKey(
+        verbose_name=_("项目"),
+        to=Project,
+        on_delete=models.CASCADE,
+    )
+
+    customer = models.ForeignKey(
+        verbose_name=_("客户"),
+        to="customer.Customer",
+        on_delete=models.CASCADE,
+    )
+
+    staff = models.ForeignKey(
+        verbose_name=_("员工"),
+        to="admin.Staff",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    create_datetime = models.DateTimeField(
+        verbose_name=_("创建时间"),
+        auto_now_add=True,
+    )
+
+    update_datetime = models.DateTimeField(
+        verbose_name=_("更新时间"),
+        auto_now=True,
+    )
+
+
+class CaseUpdate(models.Model):
+    case = models.ForeignKey(
+        verbose_name=_("案例"),
+        to="Case",
+        on_delete=models.CASCADE
+    )
+
+    title = models.CharField(
+        verbose_name=_("标题"),
+        max_length=100,
+    )
+
+    content = models.CharField(
+        verbose_name=_("内容"),
+        max_length=300,
+        blank=True,
+        null=True
+    )
+
+    create_datetime = models.DateTimeField(
+        verbose_name=_("创建时间"),
+        auto_now_add=True,
+    )
+
+    update_datetime = models.DateTimeField(
+        verbose_name=_("更新时间"),
+        auto_now=True,
+    )
+
+
+def case_file_path (instance, filename):
+    ext = filename.split('.')[-1]
+    return f"case/{instance.id}/{instance.name}.{ext}"
+
+
+class CaseFile (models.Model):
+    case = models.ForeignKey(
+        verbose_name=_("案例"),
+        to="Case",
+        on_delete=models.CASCADE
+    )
+
+    name = models.CharField(
+        verbose_name=_("名称"),
+        max_length=100,
+    )
+
+    file = models.FileField(
+        verbose_name=_("文件"),
+        upload_to=case_file_path,
+    )
+
+    create_datetime = models.DateTimeField(
+        verbose_name=_("创建时间"),
+        auto_now_add=True,
+    )
+
+    update_datetime = models.DateTimeField(
+        verbose_name=_("更新时间"),
+        auto_now=True,
+    )
