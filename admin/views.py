@@ -1294,17 +1294,41 @@ def admin_project_create_view(request):
         **get_admin_info()
     }
     if request.method == "POST":
-        form = ProjectCreateForm(request.POST)
+        form = ProjectCEForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect("ADMProjectIndex", 1)
         else:
-            form = ProjectCreateForm(request.POST)
+            form = ProjectCEForm(request.POST)
     else:
-        form = ProjectCreateForm()
+        form = ProjectCEForm()
 
     param["form"] = form
-    return render(request, "admin/admin_project_create.html", param)
+    return render(request, "admin/admin_project_ce.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_project_edit_view(request, project_id):
+    param = {
+        "page_title": _("星环-移民项目管理"),
+        "languages": Languages,
+        "active_page": "ADMProjectIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    project = get_object_or_404(Project, id=project_id)
+    if request.method == "POST":
+        form = ProjectCEForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMProjectIndex", 1)
+        else:
+            form = ProjectCEForm(request.POST, instance=project)
+    else:
+        form = ProjectCEForm(instance=project)
+
+    param["form"] = form
+    return render(request, "admin/admin_project_ce.html", param)
 
 
 @csrf_exempt

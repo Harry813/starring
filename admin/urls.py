@@ -50,6 +50,7 @@ urlpatterns = [
     path('consult/<int:consult_id>/', views.admin_consult_detail_view, name="ADMConsultDetail"),
     path('project/<int:page>/', views.admin_project_index_view, name="ADMProjectIndex"),
     path('project/create/', views.admin_project_create_view, name="ADMProjectCreate"),
+    path('project/edit/<int:project_id>/', views.admin_project_edit_view, name="ADMProjectEdit"),
 
     # Appointment Related Convenient Methods
     path('appointment/accept/<int:page>/<str:aptid>', views.admin_appointment_accept, name="ADMAppointmentAccept"),
