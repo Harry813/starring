@@ -1,0 +1,80 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="mb-3">
+                <a class="btn btn-link text-secondary" href="{% url 'ADMProjectIndex' 1 %}">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+            </div>
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" class="row">
+                            {% csrf_token %}
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label" for="{{ form.id.id_for_label }}">
+                                    {{ form.id.label }} 
+                                    {% if form.id.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.id class="form-control" %}
+                                <div>
+                                    {% if form.id.errors %}
+                                        <p class="small" style="color: red;">{{ form.id.errors.0 }}</p>
+                                    {% elif form.id.help_text %}
+                                        <p class="small text-muted">{{ form.id.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-8 mb-3">
+                                <label class="form-label" for="{{ form.name.id_for_label }}">
+                                    {{ form.name.label }} 
+                                    {% if form.name.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.name class="form-control" %}
+                                <div>
+                                    {% if form.name.errors %}
+                                        <p class="small" style="color: red;">{{ form.name.errors.0 }}</p>
+                                    {% elif form.name.help_text %}
+                                        <p class="small text-muted">{{ form.name.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.description.id_for_label }}">
+                                    {{ form.description.label }} 
+                                    {% if form.description.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.description class="form-control" %}
+                                <div>
+                                    {% if form.description.errors %}
+                                        <p class="small" style="color: red;">{{ form.description.errors.0 }}</p>
+                                    {% elif form.description.help_text %}
+                                        <p class="small text-muted">{{ form.description.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary w-100">{% trans "创建" %}</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
