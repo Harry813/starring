@@ -1621,6 +1621,11 @@ class Order(models.Model):
 
 
 class Project(models.Model):
+    id = models.CharField(
+        max_length=20,
+        primary_key=True,
+    )
+
     name = models.CharField(
         verbose_name=_("项目名称"),
         max_length=100,
@@ -1671,6 +1676,18 @@ class Case(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True
+    )
+
+    status = models.CharField(
+        verbose_name=_("状态"),
+        max_length=10,
+        choices=[
+            ("CREATED", _("已创建")),
+            ("COMPLETED", _("已通过")),
+            ("PENDING", _("待处理")),
+            ("CANCELED", _("已取消")),
+            ("FAILED", _("失败")),
+        ]
     )
 
     create_datetime = models.DateTimeField(
