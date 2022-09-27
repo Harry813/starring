@@ -581,7 +581,7 @@ class OrderSearchForm(forms.Form):
         return cleaned_data
 
 
-class ProjectCreateForm(forms.ModelForm):
+class ProjectCEForm(forms.ModelForm):
     class Meta:
         model = Project
         exclude = ["create_datetime", "update_datetime"]
