@@ -579,3 +579,9 @@ class OrderSearchForm(forms.Form):
         if detail and not search_type:
             raise forms.ValidationError(_("Invalid Search Type"))
         return cleaned_data
+
+
+class ProjectCreateForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        exclude = ["create_datetime", "update_datetime"]
