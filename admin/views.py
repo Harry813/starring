@@ -1266,6 +1266,47 @@ def admin_consult_detail_view(request, consult_id):
     return render(request, "admin/admin_consult_detail.html", param)
 
 
+@login_required(login_url="ADMLogin")
+def admin_project_index_view(request, page):
+    param = {
+        "page_title": _("星环-移民项目管理"),
+        "languages": Languages,
+        "active_page": "ADMProjectIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    projects = Project.objects.all()
+    p = Paginator(projects, 10)
+    param["paginator"] = p
+    param["projects"] = p.get_page(page)
+    param["current_page"] = page
+    param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
+    return render(request, "admin/admin_project_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_project_create_view(request):
+    param = {
+        "page_title": _("星环-移民项目管理"),
+        "languages": Languages,
+        "active_page": "ADMProjectIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    if request.method == "POST":
+        form = ProjectCreateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMProjectIndex", 1)
+        else:
+            form = ProjectCreateForm(request.POST)
+    else:
+        form = ProjectCreateForm()
+
+    param["form"] = form
+    return render(request, "admin/admin_project_create.html", param)
+
+
 @csrf_exempt
 def admin_article_image_upload (request):
     if request.method == "POST":

@@ -1,0 +1,121 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col mt-0">
+                                <h5 class="card-title">{% translate '项目总数' %}</h5>
+                            </div>
+
+                            <div class="col-auto">
+                                <div class="stat text-primary">
+                                    <i class="bi bi-cast"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <h1 class="mt-1 mb-3">{{ paginator.count }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-actions float-end">
+                            <div class="dropdown position-relative">
+                                <a href="{% url 'ADMProjectCreate' %}" class="action-button">
+                                    <i class="align-middle" data-feather="plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <h5 class="card-title mt-0">
+                            {% trans "项目" %}
+                        </h5>
+                    </div>
+                    <table class="table table-striped table-padding">
+                        <thead>
+                        <tr>
+                            <th>{% trans "项目名称" %}</th>
+                            <th style="width: 10%">{% trans "操作" %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for project in projects %}
+                            <td>{{ project.name }}</td>
+                            <td class="table-action">
+                                <a class="action-button edit-button"
+                                   href="#">
+                                    <i class="align-middle" data-feather="edit-2"></i>
+                                </a>
+
+                                <a class="action-button trash-button">
+                                    <i class="align-middle" data-feather="trash-2"></i>
+                                </a>
+                            </td>
+                        {% empty %}
+                            <tr>
+                                <td class="text-center" colspan="6">{% translate '暂无项目' %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="dataTables_info">
+                                    {% blocktranslate with start=projects.start_index end=projects.end_index page_total=paginator.num_pages article_total=paginator.count %}
+                                        第 {{ current_page }} 页，共 {{ page_total }} 页
+                                        <p class="small">第 {{ start }} ~ {{ end }} 项，共 {{ article_total }} 项</p>
+                                    {% endblocktranslate %}
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="btn-group mb-3 float-end">
+                                    <a href="{% if current_page != 1 %}{% url 'ADMProjectIndex' 1 %}{% endif %}"
+                                       class="btn btn-outline-primary {% if current_page == 1 %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevrons-left"></i>
+                                    </a>
+
+                                    <a href="{% if projects.has_previous %}{% url 'ADMProjectIndex' projects.previous_page_number %}{% endif %}"
+                                       class="btn btn-outline-primary {% if not projects.has_previous %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevron-left"></i>
+                                    </a>
+
+                                    {% for p in page_list %}
+                                        <a href="{% if p != "..." %}{% url 'ADMProjectIndex' p %}{% else %}#{% endif %}"
+                                           class="btn btn-outline-primary {% if p == current_page %}active{% elif p == "..." %}disabled{% endif %}">
+                                            {{ p }}
+                                        </a>
+                                    {% endfor %}
+
+                                    <a href="{% if projects.has_next %}{% url 'ADMProjectIndex' projects.next_page_number %}{% endif %}"
+                                       class="btn btn-outline-primary {% if not projects.has_next %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevron-right"></i>
+                                    </a>
+
+                                    <a href="{% if current_page != paginator.num_pages %}{% url 'ADMProjectIndex' paginator.num_pages %}{% endif %}"
+                                       class="btn btn-outline-primary {% if current_page == paginator.num_pages %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevrons-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

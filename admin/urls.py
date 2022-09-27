@@ -48,6 +48,8 @@ urlpatterns = [
     path('order/<str:order_id>/', views.admin_order_detail_view, name="ADMOrderDetail"),
     path('consult/page/<int:page>/', views.admin_consult_index_view, name="ADMConsultIndex"),
     path('consult/<int:consult_id>/', views.admin_consult_detail_view, name="ADMConsultDetail"),
+    path('project/<int:page>/', views.admin_project_index_view, name="ADMProjectIndex"),
+    path('project/create/', views.admin_project_create_view, name="ADMProjectCreate"),
 
     # Appointment Related Convenient Methods
     path('appointment/accept/<int:page>/<str:aptid>', views.admin_appointment_accept, name="ADMAppointmentAccept"),
