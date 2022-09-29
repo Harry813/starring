@@ -1,6 +1,7 @@
 import datetime
 import time
 import uuid
+from slugify import slugify
 
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, MinLengthValidator, MinValueValidator, MaxValueValidator
@@ -22,6 +23,15 @@ from staring.utils import *
 phone_regex = RegexValidator(regex=r'[0-9]{0,14}$',
                              message=user_tele_err_invalid,
                              code="InvalidPhone")
+
+
+def validate_file_size (value):
+    filesize = value.size
+
+    if filesize > 10485760:
+        raise ValidationError(_("文件最大10MB"))
+    else:
+        return value
 
 
 class User(AbstractUser):
@@ -1687,7 +1697,13 @@ class Case(models.Model):
             ("PENDING", _("待处理")),
             ("CANCELED", _("已取消")),
             ("FAILED", _("失败")),
-        ]
+        ],
+        default="CREATED",
+    )
+
+    information = RichTextUploadingField(
+        blank=True,
+        null=True
     )
 
     create_datetime = models.DateTimeField(
@@ -1730,6 +1746,18 @@ class CaseUpdate(models.Model):
         auto_now=True,
     )
 
+    def time_diff (self):
+        diff = datetime.now().replace(tzinfo=None) - self.create_datetime.replace(tzinfo=None)
+        diff = diff.total_seconds()
+        if diff < 60:
+            return _("刚刚")
+        elif 60 <= diff < 3600:
+            return f"{int(diff // 60)} " + _("分钟前")
+        elif 3600 <= diff < 86400:
+            return f"{int(diff // 3600)} " + _("小时前")
+        else:
+            return f"{int(diff // 86400)} " + _("天前")
+
 
 def case_file_path (instance, filename):
     ext = filename.split('.')[-1]
@@ -1743,7 +1771,7 @@ class CaseFile (models.Model):
         on_delete=models.CASCADE
     )
 
-    name = models.CharField(
+    fname = models.CharField(
         verbose_name=_("名称"),
         max_length=100,
     )
@@ -1751,6 +1779,44 @@ class CaseFile (models.Model):
     file = models.FileField(
         verbose_name=_("文件"),
         upload_to=case_file_path,
+        validators=[validate_file_size],
+        null=True,
+        blank=True
+    )
+
+    extensions = models.JSONField(
+        verbose_name=_("扩展限制"),
+    )
+
+    @property
+    def extensions_tags(self):
+        return [str(tag)[1:] for tag in self.extensions.split(",")]
+
+    status = models.CharField(
+        verbose_name=_("状态"),
+        max_length=10,
+        choices=[
+            ("PENDING", _("待上传")),
+            ("UPLOADED", _("已上传")),
+            ("RECEIVED", _("已接收")),
+            ("FAILED", _("失败")),
+            ("OVERDUE", _("超时")),
+            ("ERROR", _("错误")),
+        ],
+        default="PENDING"
+    )
+
+    instruction = models.CharField(
+        verbose_name=_("提示"),
+        max_length=200,
+        null=True,
+        blank=True
+    )
+
+    due_date = models.DateField(
+        verbose_name=_("截止日期"),
+        null=True,
+        blank=True
     )
 
     create_datetime = models.DateTimeField(
@@ -1762,3 +1828,9 @@ class CaseFile (models.Model):
         verbose_name=_("更新时间"),
         auto_now=True,
     )
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.file:
+            self.name = self.file.name
+        super().save(force_insert, force_update, using, update_fields)
