@@ -69,9 +69,17 @@
 
                     <li class="sidebar-item {% if active_page == 'ADMProjectIndex' %}active{% endif %}">
                         <a class="sidebar-link" href="{% url 'ADMProjectIndex' 1 %}">
-                            {# Translators: 后台模板{侧边栏}-第三部分@咨询管理 #}
+                            {# Translators: 后台模板{侧边栏}-第三部分@项目管理 #}
                             <i class="bi bi-cast"></i>
                             <span class="align-middle">{% trans '项目管理' %}</span>
+                        </a>
+                    </li>
+
+                <li class="sidebar-item {% if active_page == 'ADMCaseIndex' %}active{% endif %}">
+                        <a class="sidebar-link" href="{% url 'ADMCaseIndex' 1 %}">
+                            {# Translators: 后台模板{侧边栏}-第三部分@案件管理 #}
+                            <i class="bi bi-c-square"></i>
+                            <span class="align-middle">{% trans '案件管理' %}</span>
                         </a>
                     </li>
 
