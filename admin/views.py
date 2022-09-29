@@ -1285,7 +1285,7 @@ def admin_project_index_view(request, page):
 
 
 @login_required(login_url="ADMLogin")
-def admin_project_create_view(request):
+def admin_project_create_view (request):
     param = {
         "page_title": _("星环-移民项目管理"),
         "languages": Languages,
@@ -1294,21 +1294,21 @@ def admin_project_create_view(request):
         **get_admin_info()
     }
     if request.method == "POST":
-        form = ProjectCEForm(request.POST)
+        form = ProjectCreateForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect("ADMProjectIndex", 1)
         else:
-            form = ProjectCEForm(request.POST)
+            form = ProjectCreateForm(request.POST)
     else:
-        form = ProjectCEForm()
+        form = ProjectCreateForm()
 
     param["form"] = form
-    return render(request, "admin/admin_project_ce.html", param)
+    return render(request, "admin/admin_project_create.html", param)
 
 
 @login_required(login_url="ADMLogin")
-def admin_project_edit_view(request, project_id):
+def admin_project_edit_view (request, project_id):
     param = {
         "page_title": _("星环-移民项目管理"),
         "languages": Languages,
@@ -1318,17 +1318,164 @@ def admin_project_edit_view(request, project_id):
     }
     project = get_object_or_404(Project, id=project_id)
     if request.method == "POST":
-        form = ProjectCEForm(request.POST, instance=project)
+        form = ProjectEditForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
             return redirect("ADMProjectIndex", 1)
         else:
-            form = ProjectCEForm(request.POST, instance=project)
+            form = ProjectEditForm(request.POST, instance=project)
     else:
-        form = ProjectCEForm(instance=project)
+        form = ProjectEditForm(instance=project)
 
     param["form"] = form
-    return render(request, "admin/admin_project_ce.html", param)
+    return render(request, "admin/admin_project_edit.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_case_index_view (request, page):
+    param = {
+        "page_title": _("星环-案例管理"),
+        "languages": Languages,
+        "active_page": "ADMCaseIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    cases = Case.objects.all()
+
+    if request.method == "POST":
+        form = CaseSearchForm(request.POST)
+        if form.is_valid():
+            search_query = Q()
+            if form.cleaned_data["project"]:
+                search_query &= Q(id__icontains=form.cleaned_data["title"]) |\
+                                Q(name_icontains=form.cleaned_data["title"])
+            if form.cleaned_data["status"]:
+                search_query &= Q(status=form.cleaned_data["status"])
+            cases = cases.filter(search_query)
+        else:
+            form = CaseSearchForm(request.POST)
+    else:
+        form = CaseSearchForm()
+
+    param["form"] = form
+    p = Paginator(cases, 10)
+    param["paginator"] = p
+    param["cases"] = p.get_page(page)
+    param["current_page"] = page
+    param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
+    return render(request, "admin/admin_case_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_case_create_view (request):
+    param = {
+        "page_title": _("星环-案例管理"),
+        "languages": Languages,
+        "active_page": "ADMCaseIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    if request.method == "POST":
+        form = CaseCreateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMCaseIndex", 1)
+        else:
+            form = CaseCreateForm(request.POST)
+    else:
+        form = CaseCreateForm()
+
+    param["form"] = form
+    return render(request, "admin/admin_case_create.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_case_edit_view (request, case_id):
+    param = {
+        "page_title": _("星环-案例管理"),
+        "languages": Languages,
+        "active_page": "ADMCaseIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    case = get_object_or_404(Case, id=case_id)
+    if request.method == "POST":
+        form = CaseEditForm(request.POST, instance=case)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMCaseIndex", 1)
+        else:
+            form = CaseEditForm(request.POST, instance=case)
+    else:
+        form = CaseEditForm(instance=case)
+
+    param["form"] = form
+    param["case"] = case
+    param["updates"] = CaseUpdate.objects.filter(case=case)
+    param["files"] = CaseFile.objects.filter(case=case)
+    return render(request, "admin/admin_case_edit.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_case_create_update_view(request, case_id):
+    param = {
+        "page_title": _("星环-案例管理"),
+        "languages": Languages,
+        "active_page": "ADMCaseIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    case = get_object_or_404(Case, id=case_id)
+    initial = {"case": case}
+    if request.method == "POST":
+        form = CaseUpdateForm(request.POST, initial=initial)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMCaseEdit", case.id)
+        else:
+            form = CaseUpdateForm(request.POST, initial=initial)
+    else:
+        form = CaseUpdateForm(initial=initial)
+    param["form"] = form
+    param["case"] = case
+    return render(request, "admin/admin_case_update.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_case_file_view(request, case_id):
+    param = {
+        "page_title": _("星环-案例管理"),
+        "languages": Languages,
+        "active_page": "ADMCaseIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    case = get_object_or_404(Case, id=case_id)
+    initial = {"case": case}
+    if request.method == "POST":
+        form = CaseFileForm(request.POST, request.FILES, initial=initial)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.save()
+            form.save_m2m()
+            return redirect("ADMCaseEdit", case.id)
+        else:
+            form = CaseFileForm(request.POST, request.FILES, initial=initial)
+    else:
+        form = CaseFileForm(initial=initial)
+
+    param["form"] = form
+    param["case"] = case
+    param["files"] = CaseFile.objects.filter(case=case)
+    return render(request, "admin/admin_case_file.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_case_file_receive(request, file_id):
+    f = get_object_or_404(CaseFile, id=file_id)
+    f.status = "RECEIVED"
+    f.save()
+    return redirect(f.file.url)
 
 
 @csrf_exempt
