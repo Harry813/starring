@@ -1,0 +1,83 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="mb-3">
+                <a class="btn btn-link text-secondary" href="{% url 'ADMCaseEdit' case.id %}">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+            </div>
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{% trans "创建更新" %}</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="row" method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.case.id_for_label }}">
+                                    {{ form.case.label }}
+                                    {% if form.case.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.case class="form-control select2" %}
+                                <div>
+                                    {% if form.case.errors %}
+                                        <p class="small" style="color: red;">{{ form.case.errors.0 }}</p>
+                                    {% elif form.case.help_text %}
+                                        <p class="small text-muted">{{ form.case.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.title.id_for_label }}">
+                                    {{ form.title.label }}
+                                    {% if form.title.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.title class="form-control" %}
+                                <div>
+                                    {% if form.title.errors %}
+                                        <p class="small" style="color: red;">{{ form.title.errors.0 }}</p>
+                                    {% elif form.title.help_text %}
+                                        <p class="small text-muted">{{ form.title.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.content.id_for_label }}">
+                                    {{ form.content.label }}
+                                    {% if form.content.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.content class="form-control" %}
+                                <div>
+                                    {% if form.content.errors %}
+                                        <p class="small" style="color: red;">{{ form.content.errors.0 }}</p>
+                                    {% elif form.content.help_text %}
+                                        <p class="small text-muted">{{ form.content.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary w-100" type="submit">{% trans "创建" %}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

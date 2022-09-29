@@ -1,0 +1,147 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+    <style>
+        .select2-selection__rendered {
+            display: inline;
+        }
+
+        .select2-selection__choice {
+            display: inline-flex !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="mb-3">
+                <a class="btn btn-link text-secondary" href="{% url 'ADMCaseEdit' case.id %}">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+            </div>
+            <div class="mb-3">
+                <form method="post" class="card">
+                    {% csrf_token %}
+                    <div class="card-header">
+                        <h3 class="card-title">{% trans "添加文件" %}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.case.id_for_label }}">
+                                    {{ form.case.label }}
+                                    {% if form.case.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.case class="form-control select2" %}
+                                <div>
+                                    {% if form.case.errors %}
+                                        <p class="small" style="color: red;">{{ form.case.errors.0 }}</p>
+                                    {% elif form.case.help_text %}
+                                        <p class="small text-muted">{{ form.case.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.ext.id_for_label }}">
+                                    {{ form.ext.label }}
+                                    {% if form.ext.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.ext class="form-select select2" multiple="multiple" data-tags="true" data-data=ext_tags %}
+                                <div>
+                                    {% if form.ext.errors %}
+                                        <p class="small" style="color: red;">{{ form.ext.errors.0 }}</p>
+                                    {% elif form.ext.help_text %}
+                                        <p class="small text-muted">{{ form.ext.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-0">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="{{ form.fname.id_for_label }}">
+                                    {{ form.fname.label }}
+                                    {% if form.fname.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.fname class="form-control" %}
+                                <div>
+                                    {% if form.fname.errors %}
+                                        <p class="small" style="color: red;">{{ form.fname.errors.0 }}</p>
+                                    {% elif form.fname.help_text %}
+                                        <p class="small text-muted">{{ form.fname.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="{{ form.status.id_for_label }}">
+                                    {{ form.status.label }} 
+                                    {% if form.status.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.status class="form-control" %}
+                                <div>
+                                    {% if form.status.errors %}
+                                        <p class="small" style="color: red;">{{ form.status.errors.0 }}</p>
+                                    {% elif form.status.help_text %}
+                                        <p class="small text-muted">{{ form.status.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.instruction.id_for_label }}">
+                                    {{ form.instruction.label }}
+                                    {% if form.instruction.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.instruction class="form-control" %}
+                                <div>
+                                    {% if form.instruction.errors %}
+                                        <p class="small" style="color: red;">{{ form.instruction.errors.0 }}</p>
+                                    {% elif form.instruction.help_text %}
+                                        <p class="small text-muted">{{ form.instruction.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.due_date.id_for_label }}">
+                                    {{ form.due_date.label }}
+                                    {% if form.due_date.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.due_date class="form-control" type="date" %}
+                                <div>
+                                    {% if form.due_date.errors %}
+                                        <p class="small" style="color: red;">{{ form.due_date.errors.0 }}</p>
+                                    {% elif form.due_date.help_text %}
+                                        <p class="small text-muted">{{ form.due_date.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-0">
+                    <div class="card-body">
+                        <button class="btn btn-primary w-100" type="submit">{% trans "创建" %}</button>
+                        {{ form.errors }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
