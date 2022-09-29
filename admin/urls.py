@@ -50,7 +50,13 @@ urlpatterns = [
     path('consult/<int:consult_id>/', views.admin_consult_detail_view, name="ADMConsultDetail"),
     path('project/<int:page>/', views.admin_project_index_view, name="ADMProjectIndex"),
     path('project/create/', views.admin_project_create_view, name="ADMProjectCreate"),
-    path('project/edit/<int:project_id>/', views.admin_project_edit_view, name="ADMProjectEdit"),
+    path('project/edit/<str:project_id>/', views.admin_project_edit_view, name="ADMProjectEdit"),
+    path('case/<int:page>/', views.admin_case_index_view, name="ADMCaseIndex"),
+    path('case/create/', views.admin_case_create_view, name="ADMCaseCreate"),
+    path('case/<str:case_id>/', views.admin_case_edit_view, name="ADMCaseEdit"),
+    path('case/<str:case_id>/update/', views.admin_case_create_update_view, name="ADMCaseUpdateCreate"),
+    path('case/<str:case_id>/file/', views.admin_case_file_view, name="ADMCaseFile"),
+    path('case/file/receive/<int:file_id>/', views.admin_case_file_receive, name="ADMCaseFileReceive"),
 
     # Appointment Related Convenient Methods
     path('appointment/accept/<int:page>/<str:aptid>', views.admin_appointment_accept, name="ADMAppointmentAccept"),
