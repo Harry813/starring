@@ -6,6 +6,8 @@ from modeltranslation.forms import TranslationModelForm
 
 from datetime import date, timedelta
 
+from taggit.forms import TagField
+
 from admin.models import Staff
 from customer.models import Customer
 from staring.models import *
