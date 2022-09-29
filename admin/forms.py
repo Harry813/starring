@@ -6,8 +6,6 @@ from modeltranslation.forms import TranslationModelForm
 
 from datetime import date, timedelta
 
-from taggit.forms import TagField
-
 from admin.models import Staff
 from customer.models import Customer
 from staring.models import *
@@ -42,7 +40,7 @@ class AdminLoginForm(forms.Form):
         }
     )
 
-    def clean_username(self):
+    def clean_username (self):
         username = self.cleaned_data.get("username")
         if User.objects.filter(username=username):
             return username
@@ -141,7 +139,7 @@ class StaffCreateForm(forms.Form):
         help_text="YYYY/MM/DD"
     )
 
-    def clean_username(self):
+    def clean_username (self):
         username = self.cleaned_data.get("username")
         if User.objects.filter(username=username):
             raise ValidationError(
@@ -151,21 +149,18 @@ class StaffCreateForm(forms.Form):
         else:
             return username
 
-    def clean_password1(self):
+    def clean_password1 (self):
         password1 = self.cleaned_data.get('password1')
         if validate_password(password1) is None:
             return password1
 
-    def clean_password2(self):
+    def clean_password2 (self):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 == password2:
             return password2
         else:
             raise forms.ValidationError(paswd_errmsg_NOT_match, code="paswdNotMatch")
-
-    def save(self):
-        pass
 
 
 class CustomerSearch(forms.Form):
@@ -192,7 +187,7 @@ class CustomerSearch(forms.Form):
         required=False,
     )
 
-    def clean(self):
+    def clean (self):
         if (self.cleaned_data.get("type") == "") ^ (self.cleaned_data.get("detail") == ""):
             raise ValidationError(message=search_errmsg_InsuffCond, code="InsufficientCondition")
         else:
@@ -218,7 +213,7 @@ class StaffSearch(forms.Form):
         required=False,
     )
 
-    def clean(self):
+    def clean (self):
         if (self.cleaned_data.get("type") == "") ^ (self.cleaned_data.get("detail") == ""):
             raise ValidationError(message=search_errmsg_InsuffCond, code="InsufficientCondition")
         else:
@@ -238,7 +233,7 @@ class NewsForm(forms.ModelForm):
         required=False
     )
 
-    def clean_reorder(self):
+    def clean_reorder (self):
         reorder = self.cleaned_data.get("reorder")
         if reorder is None or reorder <= 0:
             return -1
@@ -274,7 +269,7 @@ class ArticleSearchForm(forms.Form):
         required=False,
     )
 
-    def clean(self):
+    def clean (self):
         if (self.cleaned_data.get("type") == "") ^ (self.cleaned_data.get("detail") == ""):
             raise ValidationError(message=search_errmsg_InsuffCond, code="InsufficientCondition")
         else:
@@ -295,14 +290,14 @@ class NavigatorItemForm(TranslationModelForm):
         label=navi_item_order_text
     )
 
-    def clean_reorder(self):
+    def clean_reorder (self):
         reorder = self.cleaned_data.get("reorder")
         if reorder is None or reorder <= 0:
             return -1
         else:
             return reorder - 1
 
-    def clean_url(self):
+    def clean_url (self):
         t = self.cleaned_data.get("type")
         url = self.cleaned_data.get("url")
         if t == "URL" and url == "":
@@ -310,7 +305,7 @@ class NavigatorItemForm(TranslationModelForm):
         else:
             return url
 
-    def clean_article(self):
+    def clean_article (self):
         t = self.cleaned_data.get("type")
         article = self.cleaned_data.get("article")
         if t == "ARTICLE" and article == "":
@@ -319,7 +314,7 @@ class NavigatorItemForm(TranslationModelForm):
             # a = Article.objects.get(id=article)
             return article
 
-    def __init__(self, *args, **kwargs):
+    def __init__ (self, *args, **kwargs):
         super(NavigatorItemForm, self).__init__(*args, **kwargs)
         self.fields["article"].required = False
         self.fields["url"].initial = "#"
@@ -342,14 +337,14 @@ class IndexListItemForm(TranslationModelForm):
         required=False
     )
 
-    def clean_reorder(self):
+    def clean_reorder (self):
         reorder = self.cleaned_data.get("reorder")
         if reorder is None or reorder <= 0:
             return -1
         else:
             return reorder - 1
 
-    def clean_url(self):
+    def clean_url (self):
         t = self.cleaned_data.get("type")
         url = self.cleaned_data.get("url")
         if t == "URL" and url == "":
@@ -357,7 +352,7 @@ class IndexListItemForm(TranslationModelForm):
         else:
             return url
 
-    def clean_article(self):
+    def clean_article (self):
         t = self.cleaned_data.get("type")
         article = self.cleaned_data.get("article")
         if t == "ARTICLE" and article == "":
@@ -366,7 +361,7 @@ class IndexListItemForm(TranslationModelForm):
             # a = Article.objects.get(id=article)
             return article
 
-    def __init__(self, *args, **kwargs):
+    def __init__ (self, *args, **kwargs):
         super(IndexListItemForm, self).__init__(*args, **kwargs)
         self.fields["article"].required = False
         self.fields["url"].initial = "#"
@@ -399,14 +394,14 @@ class SlotGeneratorForm(forms.Form):
         required=False,
     )
 
-    def clean_start_date(self):
+    def clean_start_date (self):
         start_date = self.cleaned_data["start_date"]
         if start_date < date.today():
             raise ValidationError(_("Invalid Date"))
         else:
             return start_date
 
-    def clean_end_date(self):
+    def clean_end_date (self):
         end_date = self.cleaned_data["end_date"]
         start_date = self.cleaned_data["start_date"]
         if end_date < start_date:
@@ -414,13 +409,13 @@ class SlotGeneratorForm(forms.Form):
         else:
             return end_date
 
-    def clean_end_time_delta(self):
+    def clean_end_time_delta (self):
         end_time_delta = self.cleaned_data["end_time"]
         start_time_delta = self.cleaned_data["start_time"]
         if end_time_delta < start_time_delta:
             raise ValidationError(_("Invalid Time"))
 
-    def save(self):
+    def save (self):
         start_date = self.cleaned_data.get("start_date")
         start_time = self.cleaned_data.get("start_time")
         end_date = self.cleaned_data.get("end_date") + timedelta(days=1)
@@ -455,7 +450,7 @@ class SlotEditForm(forms.Form):
     #     min_value=0,
     # )
 
-    def clean_start_time(self):
+    def clean_start_time (self):
         start_time = self.cleaned_data.get("start_time")
         end_time = self.cleaned_data.get("end_time")
         if start_time > end_time:
@@ -463,7 +458,7 @@ class SlotEditForm(forms.Form):
         else:
             return start_time
 
-    def clean_end_date(self):
+    def clean_end_date (self):
         start_time = self.cleaned_data.get("start_time")
         end_time = self.cleaned_data.get("end_time")
         if end_time < start_time:
@@ -495,7 +490,7 @@ class IndexSidebarForm(forms.ModelForm):
         model = IndexSidebarItem
         exclude = ["order"]
 
-    def __init__(self, *args, **kwargs):
+    def __init__ (self, *args, **kwargs):
         super(IndexSidebarForm, self).__init__(*args, **kwargs)
         self.fields["url"].initial = "#"
 
@@ -569,7 +564,7 @@ class OrderSearchForm(forms.Form):
         required=False,
     )
 
-    def clean(self):
+    def clean (self):
         cleaned_data = super(OrderSearchForm, self).clean()
         start_date = cleaned_data.get("start_date")
         end_date = cleaned_data.get("end_date")
@@ -583,7 +578,77 @@ class OrderSearchForm(forms.Form):
         return cleaned_data
 
 
-class ProjectCEForm(forms.ModelForm):
+class ProjectCreateForm(forms.ModelForm):
     class Meta:
         model = Project
         exclude = ["create_datetime", "update_datetime"]
+
+
+class ProjectEditForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        exclude = ["id", "create_datetime", "update_datetime"]
+
+
+class CaseSearchForm(forms.Form):
+    status = forms.ChoiceField(
+        label=_("状态"),
+        choices=[
+            ("CREATED", _("已创建")),
+            ("COMPLETED", _("已通过")),
+            ("PENDING", _("待处理")),
+            ("CANCELED", _("已取消")),
+            ("FAILED", _("失败")),
+        ]
+    )
+
+    project = forms.CharField(
+        label=_("项目")
+    )
+
+
+class CaseCreateForm(forms.ModelForm):
+    class Meta:
+        model = Case
+        exclude = ["id", "create_datetime", "update_datetime"]
+
+
+class CaseEditForm(forms.ModelForm):
+    class Meta:
+        model = Case
+        exclude = ["id", "create_datetime", "update_datetime"]
+
+
+class CaseUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CaseUpdate
+        exclude = ["id", "create_datetime", "update_datetime"]
+
+
+class CaseFileForm(forms.ModelForm):
+    ext = forms.MultipleChoiceField(
+        label=_("文件类型限制"),
+        choices=[
+            (_("图片"), (
+                (".jpg", "JPG"),
+                (".jpeg", "JPEG"),
+                (".png", "PNG"),
+            )),
+            (_("文件"), (
+                (".pdf", "PDF"),
+                (".doc", "DOC"),
+                (".docx", "DOCX"),
+            )),
+        ]
+    )
+
+    class Meta:
+        model = CaseFile
+        exclude = ["id", "extensions", "file", "create_datetime", "update_datetime"]
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.extensions = ",".join(self.cleaned_data["ext"])
+        if commit:
+            instance.save()
+        return instance
