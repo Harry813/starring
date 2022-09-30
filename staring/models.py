@@ -1835,3 +1835,15 @@ class CaseFile (models.Model):
         if self.file:
             self.name = self.file.name
         super().save(force_insert, force_update, using, update_fields)
+
+
+class Subscription(models.Model):
+    email = models.EmailField(
+        unique=True,
+    )
+
+    tags = models.JSONField(
+        verbose_name=_("标签"),
+        blank=True,
+        null=True
+    )
