@@ -123,6 +123,29 @@ def customer_register (request):
             c = Customer(user=u)
             c.save()
 
+            context = {
+                "title": _("注册成功"),
+                "content": _(
+                    "<p>您好，您已经成功注册星环账号，请妥善保管您的账号和密码。</p>"
+                    "<p style='text-align: center'>账号：<strong>{}</strong></p>"
+                    "<p style='text-align: center'>密码：<strong>{}</strong></p>"
+                ).format(
+                    form.cleaned_data['username'],
+                    form.cleaned_data["password1"]
+                )
+            }
+
+            if form.cleaned_data["subscribe"]:
+                context["content"] += _("<p>您已经成功订阅了星环的最新资讯，我们会定期向您发送最新的资讯。</p>")
+                Subscription.objects.create(
+                    email=u.email,
+                )
+            send_email_with_template(
+                subject=_("星环-注册成功"),
+                context=context,
+                recipient_list=[u.email]
+            )
+
             login(request, user=u, backend='django.contrib.auth.backends.ModelBackend')
 
             messages.add_message(request, messages.SUCCESS, _("恭喜你注册成功"))
