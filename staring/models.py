@@ -42,6 +42,7 @@ class User(AbstractUser):
         editable=False,
     )
 
+    @property
     def get_uid_as_string (self):
         return str(self.uid).replace('-', '')
 
@@ -150,7 +151,7 @@ class User(AbstractUser):
     )
 
     def __str__ (self):
-        return self.get_display_name()
+        return f"{self.get_display_name()}#{self.get_uid_as_string[-8:]}"
 
 
 class customer_articles(models.Manager):

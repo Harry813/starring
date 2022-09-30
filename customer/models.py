@@ -71,7 +71,7 @@ class Customer(models.Model):
             self.extra.required = True
 
     def __str__(self):
-        return self.user.get_display_name()
+        return self.user
 
 
 class Consult(models.Model):
