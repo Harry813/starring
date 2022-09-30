@@ -1,4 +1,5 @@
 import json
+import urllib.parse
 from datetime import datetime, timedelta
 from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment, LiveEnvironment
 from paypalcheckoutsdk.orders import OrdersCreateRequest, OrdersGetRequest
@@ -10,7 +11,7 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.utils.translation import gettext as _
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 
@@ -19,11 +20,11 @@ from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm,
 from customer.models import Customer
 from customer.utils import get_customer_info, get_news, get_index_list
 from staring.customerSettings import Languages
-from staring.models import Article, User, MeetingSlot, Appointment, MeetingUpdate, CRS
+from staring.models import Article, User, MeetingSlot, Appointment, MeetingUpdate, CRS, Case, Subscription
 from staring.models import Order as staringOrder
 from staring.settings import PAYPAL_MODE, PAYPAL_CLIENT_ID, PAYPAL_SECRET
 from staring.text import UserNotExist_text
-from staring.utils import generate_order_id, get_appt_price_total
+from staring.utils import generate_order_id, get_appt_price_total, send_email_with_template
 
 if PAYPAL_MODE == "live":
     environment = LiveEnvironment(client_id=PAYPAL_CLIENT_ID, client_secret=PAYPAL_SECRET)
