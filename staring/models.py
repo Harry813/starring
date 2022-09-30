@@ -16,6 +16,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 from staring.customerSettings import *
 from staring.phoneCode import *
+from staring.templatetags.language_flag import get_flag_by_code
 from staring.text import *
 import staring.crs_setting as crs
 from staring.utils import *
@@ -1849,6 +1850,11 @@ class Subscription(models.Model):
         default=list
     )
 
+    @property
+    def display_tags (self):
+        tags = self.tags[1:]
+        return "".join([f" #{tag}" for tag in tags])
+
     language = models.CharField(
         verbose_name=_("语言"),
         max_length=15,
@@ -1856,7 +1862,9 @@ class Subscription(models.Model):
         choices=get_language_codes()
     )
 
+    @property
+    def flag (self):
+        return get_flag_by_code(self.language)
+
     def __str__(self):
-        tags = self.tags
-        tags.remove("*")
-        return f"{self.email}" + "".join([f" #{tag}" for tag in tags])
+        return f"{self.email}{self.display_tags}"
