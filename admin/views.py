@@ -1281,6 +1281,22 @@ def admin_consult_detail_view(request, consult_id):
 
 
 @login_required(login_url="ADMLogin")
+def admin_consult_close_util(request, consult_id):
+    consult = get_object_or_404(Consult, id=consult_id)
+    consult.status = "C"
+    consult.save()
+    return redirect("ADMConsultDetail", consult_id)
+
+
+@login_required(login_url="ADMLogin")
+def admin_consult_trace_util(request, consult_id):
+    consult = get_object_or_404(Consult, id=consult_id)
+    consult.status = "T"
+    consult.save()
+    return redirect("ADMConsultDetail", consult_id)
+
+
+@login_required(login_url="ADMLogin")
 def admin_project_index_view(request, page):
     param = {
         "page_title": _("星环-移民项目管理"),
