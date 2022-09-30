@@ -346,7 +346,8 @@ def get_appt_price_total (appt, discount=None, coupon=None):
     return price
 
 
-def send_email_with_template (subject, context, recipient_list, template="email_template/email_template.html"):
+def send_email_with_template (subject, context, recipient_list, template="email_template/email_template.html",
+                              fail_silently=False, auth_user=None, auth_password=None, connection=None):
     param = {
         "url_root": "star.ourcv.net",
         **context
@@ -358,5 +359,9 @@ def send_email_with_template (subject, context, recipient_list, template="email_
         message=plain_text,
         html_message=html_email,
         from_email="noreply@ourcv.net",
-        recipient_list=recipient_list
+        recipient_list=recipient_list,
+        fail_silently=fail_silently,
+        auth_user=auth_user,
+        auth_password=auth_password,
+        connection=connection
     )
