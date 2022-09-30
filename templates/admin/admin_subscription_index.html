@@ -1,0 +1,133 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load language_flag %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col mt-0">
+                                <h5 class="card-title">{% translate '订阅总数' %}</h5>
+                            </div>
+
+                            <div class="col-auto">
+                                <div class="stat text-primary">
+                                    <i class="bi bi-rss"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <h1 class="mt-1 mb-3">{{ paginator.count }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-actions float-end">
+                            <div class="dropdown position-relative">
+                                <a href="{% url 'ADMSubscriptionSend' %}" class="action-button">
+                                    <i class="bi bi-envelope-paper"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <h5 class="card-title mb-0">{% trans "订阅" %}</h5>
+                    </div>
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th style="width: 40%">{% trans "邮箱" %}</th>
+                            <th style="width: 40%">{% trans "标签" %}</th>
+                            <th class="text-center" style="width: 10%">{% trans "语言" %}</th>
+                            <th style="width: 10%">{% trans "操作" %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for subscription in subscriptions %}
+                            <td>{{ subscription.email }}</td>
+                            <td>{% if subscription.display_tags %}{{ subscription.display_tags }}{% else %}
+                                None{% endif %}</td>
+                            <td class="text-center">
+                                <img style="border-radius: 50%; object-fit: cover;" src="{% static subscription.flag %}"
+                                     alt="flag" width="20" height="20">
+                            </td>
+                            <td class="table-action">
+                                <a class="action-button edit-button"
+                                   href="{% url 'ADMSubscriptionEdit' subscription.id %}">
+                                    <i class="align-middle" data-feather="edit-2"></i>
+                                </a>
+
+                                <a class="action-button trash-button">
+                                    <i class="align-middle" data-feather="trash-2"></i>
+                                </a>
+                            </td>
+                        {% empty %}
+                            <tr>
+                                <td class="text-center" colspan="6">{% translate '暂无订阅' %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="dataTables_info">
+                                    {% blocktranslate with start=subscriptions.start_index end=subscriptions.end_index page_total=paginator.num_pages instance_total=paginator.count %}
+                                        第 {{ current_page }} 页，共 {{ page_total }} 页
+                                        <p class="small">第 {{ start }} ~ {{ end }} 项，共 {{ instance_total }} 项</p>
+                                    {% endblocktranslate %}
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="btn-group mb-3 float-end">
+
+                                    <a href="{% if current_page != 1 %}{% url 'ADMSubscriptionIndex' 1 %}{% endif %}"
+                                       class="btn btn-outline-primary {% if current_page == 1 %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevrons-left"></i>
+                                    </a>
+
+                                    <a href="
+
+                                            {% if subscriptions.has_next %}{% url 'ADMSubscriptionIndex' subscriptions.previous_page_number %}{% endif %}"
+                                       class="btn btn-outline-primary {% if not subscriptions.has_previous %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevron-left"></i>
+                                    </a>
+
+                                    {% for p in page_list %}
+                                        <a href="#"
+                                           class="btn btn-outline-primary {% if p == current_page %}active{% elif p == "..." %}disabled{% endif %}">
+                                            {{ p }}
+                                        </a>
+                                    {% endfor %}
+
+                                    <a href="
+
+                                            {% if subscriptions.has_next %}{% url 'ADMSubscriptionIndex' subscriptions.next_page_number %}{% endif %}"
+                                       class="btn btn-outline-primary {% if not subscriptions.has_next %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevron-right"></i>
+                                    </a>
+                                    <a href="
+
+                                            {% if current_page != paginator.num_pages %}{% url 'ADMSubscriptionIndex' paginator.num_pages %}{% endif %}"
+                                       class="btn btn-outline-primary {% if current_page == paginator.num_pages %}disabled{% endif %}">
+                                        <i class="align-middle" data-feather="chevrons-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

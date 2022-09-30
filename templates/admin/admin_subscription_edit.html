@@ -1,0 +1,92 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load language_flag %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+    <style>
+        .select2-selection__rendered {
+            display: inline;
+        }
+
+        .select2-selection__choice {
+            display: inline-flex !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="mb-3">
+                <a class="btn btn-link text-secondary" href="{% url 'ADMSubscriptionIndex' 1 %}">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+            </div>
+            <div class="mb-3">
+                <div class="card">
+                    <form method="post" class="card-body">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="{{ form.email.id_for_label }}">
+                                    {{ form.email.label }}
+                                    {% if form.email.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.email class="form-control" %}
+                                <div>
+                                    {% if form.email.errors %}
+                                        <p class="small" style="color: red;">{{ form.email.errors.0 }}</p>
+                                    {% elif form.email.help_text %}
+                                        <p class="small text-muted">{{ form.email.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="{{ form.language.id_for_label }}">
+                                    {{ form.language.label }}
+                                    {% if form.language.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.language class="form-control" %}
+                                <div>
+                                    {% if form.language.errors %}
+                                        <p class="small" style="color: red;">{{ form.language.errors.0 }}</p>
+                                    {% elif form.language.help_text %}
+                                        <p class="small text-muted">{{ form.language.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.tag.id_for_label }}">
+                                    {{ form.tag.label }}
+                                    {% if form.tag.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.tag class="form-control select2" multiple="multiple" data-tags="true" %}
+                                <div>
+                                    {% if form.tag.errors %}
+                                        <p class="small" style="color: red;">{{ form.tag.errors.0 }}</p>
+                                    {% elif form.tag.help_text %}
+                                        <p class="small text-muted">{{ form.tag.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    {% trans "提交" %}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
