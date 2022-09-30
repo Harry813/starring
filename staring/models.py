@@ -1845,5 +1845,6 @@ class Subscription(models.Model):
     tags = models.JSONField(
         verbose_name=_("标签"),
         blank=True,
-        null=True
+        null=True,
+        default=["*"]
     )
