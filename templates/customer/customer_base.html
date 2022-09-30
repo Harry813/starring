@@ -410,7 +410,11 @@
                             data: $('#email_subscribe_form').serialize(),
                             success: function (response) {
                                 let subid = JSON.parse(response["subscription"]);
-                                // alert(subid);
+                                console.log(subid);
+                                alert("{% trans '订阅成功！' %}");
+                            },
+                            error: function () {
+                                alert("{% trans '订阅失败！' %}");
                             }
                         });
                     })
