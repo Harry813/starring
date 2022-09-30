@@ -7,7 +7,7 @@ from paypalcheckoutsdk.orders import OrdersCreateRequest, OrdersGetRequest
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
@@ -139,6 +139,7 @@ def customer_register (request):
                 context["content"] += _("<p>您已经成功订阅了星环的最新资讯，我们会定期向您发送最新的资讯。</p>")
                 Subscription.objects.create(
                     email=u.email,
+                    tags = ["*"]
                 )
             send_email_with_template(
                 subject=_("星环-注册成功"),
@@ -466,7 +467,7 @@ def subscribe_email (request):
     if Subscription.objects.filter(email=email):
         return JsonResponse({"err": "Instance Already Exist"}, status=500)
     try:
-        sub = Subscription.objects.create(email=email)
+        sub = Subscription.objects.create(email=email, tags=["*"])
         send_email_with_template(
             subject=_("星环-订阅成功"),
             context={
@@ -478,6 +479,25 @@ def subscribe_email (request):
         return JsonResponse({"subscription": sub.id}, status=200)
     except Exception:
         return JsonResponse({"err": "Unknown error"}, status=500)
+
+
+def unsubscribe_email_view (request):
+    param = {
+        "page_title": _("星环-退订"),
+        "languages": Languages,
+        "email": request.user.email,
+        **get_customer_info(request),
+    }
+    return render(request, "customer/unsubscribe.html", param)
+
+
+def unsubscribe_email (request):
+    email = request.GET["email"]
+    try:
+        Subscription.objects.get(email=email).delete()
+        return JsonResponse({"email": email}, status=200)
+    except Exception as e:
+        return JsonResponse({"err": str(e)}, status=500)
 
 
 @xframe_options_sameorigin
