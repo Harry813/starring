@@ -64,14 +64,17 @@
                                     <div class="row p-0">
                                         {% if consult.status == "O" %}
                                             <div class="col">
-                                                <a class="btn btn-success w-100 card-link">{% trans "追踪" %}</a>
+                                                <a href="{% url 'ADMConsultTrace' consult.id %}"
+                                                   class="btn btn-success w-100 card-link">{% trans "追踪" %}</a>
                                             </div>
                                             <div class="col">
-                                                <a class="btn btn-primary w-100 card-link">{% trans "关闭" %}</a>
+                                                <a href="{% url 'ADMConsultClose' consult.id %}"
+                                                   class="btn btn-primary w-100 card-link">{% trans "关闭" %}</a>
                                             </div>
                                         {% elif consult.status == "T" %}
                                             <div class="col">
-                                                <a href="#" class="btn btn-primary w-100 card-link">{% trans "关闭" %}</a>
+                                                <a href="{% url 'ADMConsultClose' consult.id %}"
+                                                   class="btn btn-primary w-100 card-link">{% trans "关闭" %}</a>
                                             </div>
                                         {% endif %}
                                     </div>
