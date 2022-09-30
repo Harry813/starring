@@ -88,7 +88,7 @@
                             <span style="color: red">*</span>
                         {% endif %}
                     </label>
-                    {% render_field form.dob class="form-control" %}
+                    {% render_field form.dob class="form-control" type="date" %}
                     <div>
                         {% if form.dob.errors %}
                             <p class="small" style="color: red;">{{ form.dob.errors.0 }}</p>
@@ -116,9 +116,8 @@
                         {% endif %}
                     </div>
                 </div>
-
-                <div class="offset-md-4"></div>
-
+            </div>
+            <div class="row">
                 <div class="col-md-4 col-sm-12 mt-3">
                     <label class="form-label" for="{{ form.password1.id_for_label }}">
                         {{ form.password1.label }} 
@@ -135,7 +134,6 @@
                         {% endif %}
                     </div>
                 </div>
-
                 <div class="col-md-4 col-sm-12 mt-3">
                     <label class="form-label" for="{{ form.password2.id_for_label }}">
                         {{ form.password2.label }} 
@@ -155,12 +153,55 @@
             </div>
 
             <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check">
+                        {% render_field form.agreement class="form-check-input" %}
+                        <label class="form-label text-muted" for="{{ form.agreement.id_for_label }}">
+                            <small>
+                                {{ form.agreement.label }}
+                                {% if form.agreement.field.required %}
+                                    <span style="color: red">*</span>
+                                {% endif %}
+                            </small>
+                        </label>
+                    </div>
+                    <div>
+                        {% if form.agreement.errors %}
+                            <p class="small" style="color: red;">{{ form.agreement.errors.0 }}</p>
+                        {% elif form.agreement.help_text %}
+                            <p class="small text-muted">{{ form.agreement.help_text }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        {% render_field form.subscribe class="form-check-input" %}
+                        <label class="form-label text-muted" for="{{ form.subscribe.id_for_label }}">
+                            <small>
+                                {{ form.subscribe.label }}
+                                {% if form.subscribe.field.required %}
+                                    <span style="color: red">*</span>
+                                {% endif %}
+                            </small>
+                        </label>
+                    </div>
+                    <div>
+                        {% if form.subscribe.errors %}
+                            <p class="small" style="color: red;">{{ form.subscribe.errors.0 }}</p>
+                        {% elif form.subscribe.help_text %}
+                            <p class="small text-muted">{{ form.subscribe.help_text }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% comment %}<div class="row">
                 {% for e in form.errors %}
                     <p class="small text-danger">{{ e }}</p>
                 {% endfor %}
-            </div>
+            </div>{% endcomment %}
 
-            <div class="row mt-5">
+            <div class="row mt-4">
                 <div class="col-md-8 mt-3">
                     <button class="btn btn-star w-100" type="submit">注册</button>
                 </div>
