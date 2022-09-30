@@ -1,0 +1,179 @@
+{% extends 'admin/admin_template.html' %}
+{% load i18n %}
+{% load language_flag %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'CSS/admin_template_basic.css' %}" rel="stylesheet">
+    <style>
+        .select2-selection__rendered {
+            display: inline;
+        }
+
+        .select2-selection__choice {
+            display: inline-flex !important;
+        }
+
+        .django-ckeditor-widget {
+            width: 100%;
+        }
+
+        .tooltip {
+            display: inline-block;
+            background: #333;
+            color: white;
+            font-weight: bold;
+            padding: 5px 10px;
+            font-size: 13px;
+            border-radius: 4px;
+        }
+
+        .tooltip-arrow,
+        .tooltip-arrow::before {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: inherit;
+        }
+
+        .tooltip-arrow {
+            visibility: hidden;
+            bottom: -4px;
+        }
+
+        .tooltip-arrow::before {
+            visibility: visible;
+            content: '';
+            transform: rotate(45deg);
+        }
+    </style>
+{% endblock %}
+
+{% block headJs %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="mb-3">
+                <a class="btn btn-link text-secondary" href="{% url 'ADMSubscriptionIndex' 1 %}">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+        <form class="row" method="post">
+            {% csrf_token %}
+            <div class="col-md-7 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">{% trans "发送邮件" %}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.subject.id_for_label }}">
+                                    {{ form.subject.label }}
+                                    {% if form.subject.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.subject class="form-control" %}
+                                <div>
+                                    {% if form.subject.errors %}
+                                        <p class="small" style="color: red;">{{ form.subject.errors.0 }}</p>
+                                    {% elif form.subject.help_text %}
+                                        <p class="small text-muted">{{ form.subject.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.title.id_for_label }}">
+                                    {{ form.title.label }}
+                                    {% if form.title.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.title class="form-control" %}
+                                <div>
+                                    {% if form.title.errors %}
+                                        <p class="small" style="color: red;">{{ form.title.errors.0 }}</p>
+                                    {% elif form.title.help_text %}
+                                        <p class="small text-muted">{{ form.title.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                {{ form.content|safe }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{% trans "收件人" %}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.tag.id_for_label }}">
+                                    {{ form.tag.label }}
+                                    {% if form.tag.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.tag class="form-control select2" multiple="multiple" data-tag="true" %}
+                                <div>
+                                    {% if form.tag.errors %}
+                                        <p class="small" style="color: red;">{{ form.tag.errors.0 }}</p>
+                                    {% elif form.tag.help_text %}
+                                        <p class="small text-muted">{{ form.tag.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.language.id_for_label }}">
+                                    {{ form.language.label }} 
+                                    {% if form.language.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.language class="form-control select2" multiple="multiple" data-tag="true" %}
+                                <div>
+                                    {% if form.language.errors %}
+                                        <p class="small" style="color: red;">{{ form.language.errors.0 }}</p>
+                                    {% elif form.language.help_text %}
+                                        <p class="small text-muted">{{ form.language.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.emails.id_for_label }}">
+                                    {{ form.emails.label }}
+                                    {% if form.emails.field.required %}
+                                        <span style="color: red">*</span>
+                                    {% endif %}
+                                </label>
+                                {% render_field form.emails class="form-control" %}
+                                <div>
+                                    {% if form.emails.errors %}
+                                        <p class="small" style="color: red;">{{ form.emails.errors.0 }}</p>
+                                    {% elif form.emails.help_text %}
+                                        <p class="small text-muted">{{ form.emails.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary w-100">{% trans "发送" %}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -2,6 +2,7 @@ from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.validators import ASCIIUsernameValidator
+from django.db.models import Q
 from django.utils.translation import gettext as _
 from modeltranslation.forms import TranslationModelForm
 
@@ -695,3 +696,114 @@ class ConsultReplyForm(forms.Form):
             recipient_list=email
         )
 
+
+class SubscriptionEditForm(forms.ModelForm):
+    tag = forms.MultipleChoiceField(
+        label=_("标签"),
+        choices=[
+            ("IMMI", "IMMI"),
+            ("WORK", "WORK"),
+            ("STUD", "STUD"),
+            ("TRAV", "TRAV"),
+        ]
+    )
+
+    class Meta:
+        model = Subscription
+        exclude = ["id"]
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.tags = ["*", *self.cleaned_data["tag"]]
+        if commit:
+            instance.save()
+        return instance
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["tag"].initial = self.instance.tags[1:]
+
+
+class SubscriptionSendForm(forms.Form):
+    subject = forms.CharField(
+        label=_("主题"),
+        max_length=50,
+    )
+
+    title = forms.CharField(
+        label=_("标题"),
+        help_text=_("默认与主题相同"),
+        max_length=50,
+        required=False
+    )
+
+    content = forms.CharField(widget=CKEditorWidget())
+
+    tag = forms.MultipleChoiceField(
+        label=_("标签"),
+        choices=[
+            ("*", "*ALL"),
+            ("IMMI", "IMMI"),
+            ("WORK", "WORK"),
+            ("STUD", "STUD"),
+            ("TRAV", "TRAV"),
+        ],
+        required=False,
+    )
+
+    language = forms.MultipleChoiceField(
+        label=_("语言"),
+        choices=get_language_codes(),
+        required=False,
+        help_text=_("不选择则发送所有语言")
+    )
+
+    emails = forms.CharField(
+        label=_("指定邮箱"),
+        widget=forms.Textarea(attrs={"placeholder": "aaa@aaa.com, bbb@bbb.com,..."}),
+        required=False,
+        help_text=_("请使用逗号分隔")
+    )
+
+    def clean_emails(self):
+        if self.cleaned_data["tag"] is None and self.cleaned_data["emails"] is None:
+            raise ValidationError(_("不能为空"))
+
+    def clean_title(self):
+        if not self.cleaned_data["title"]:
+            return self.cleaned_data["subject"]
+        return self.cleaned_data["title"]
+
+    def send(self):
+        """
+        :param email: Email address or Email List
+        :type email: list | str
+        :return:
+        :rtype:
+        """
+        email_list = set()
+        search_query = None
+        if self.cleaned_data["tag"]:
+            for t in self.cleaned_data["tag"]:
+                if not search_query:
+                    search_query = Q(tags__contains=t)
+                else:
+                    search_query |= Q(tags__contains=t)
+
+        if self.cleaned_data["language"]:
+            search_query &= Q(language__in=self.cleaned_data["language"])
+
+        if search_query:
+            email_list.update(Subscription.objects.filter(search_query).values_list("email", flat=True))
+
+        if self.cleaned_data["emails"]:
+            email_list.update(self.cleaned_data["emails"].split(","))
+
+        send_email_with_template(
+            subject=self.cleaned_data["subject"],
+            context={
+                "title": self.cleaned_data["title"],
+                "content": self.cleaned_data["content"]
+            },
+            recipient_list=email_list
+        )

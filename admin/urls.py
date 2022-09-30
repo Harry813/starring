@@ -57,6 +57,9 @@ urlpatterns = [
     path('case/<str:case_id>/update/', views.admin_case_create_update_view, name="ADMCaseUpdateCreate"),
     path('case/<str:case_id>/file/', views.admin_case_file_view, name="ADMCaseFile"),
     path('case/file/receive/<int:file_id>/', views.admin_case_file_receive, name="ADMCaseFileReceive"),
+    path('subscription/page/<int:page>/', views.admin_subscription_index_view, name="ADMSubscriptionIndex"),
+    path('subscription/<int:subscription_id>/', views.admin_subscription_edit_view, name="ADMSubscriptionEdit"),
+    path('subscription/send/', views.admin_subscription_send_view, name="ADMSubscriptionSend"),
 
     # Appointment Related Utils
     path('appointment/accept/<int:page>/<str:aptid>', views.admin_appointment_accept, name="ADMAppointmentAccept"),
