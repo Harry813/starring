@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index, name='CUSTIndex'),
     path('article/<int:article_id>/', views.customer_articles, name="article"),
     re_path(r'^login/$', views.customer_login_view, name="CUSTLogin"),
+    re_path(r'^subscribe/$', views.subscribe_email, name="CUSTSubscribe"),
     path('logout/', views.customer_logout, name="CUSTLogout"),
     path('register/', views.customer_register, name="CUSTRegister"),
     path('profile/', views.customer_center_view, name="CUSTCenter"),

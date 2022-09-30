@@ -392,15 +392,33 @@
                 <div class="star-footer-title star-font text-decoration-underline">
                     订阅《看见加拿大》
                 </div>
-                <form action="#" class="input-group mt-3">
-                    <input type="email" class="form-control" id="footer-subscription"
-                           placeholder="{% translate '您的电子邮箱' %}" aria-label="footer-subscription-input"
-                           aria-describedby="footer-subscriptio">
-                    <button class="btn btn-star" type="submit" name="footer-subscription"
+                <form class="input-group mt-3" id="email_subscribe_form">
+                    <input type="email" class="form-control" id="subscribe_email" name="subscribe_email"
+                           placeholder="{% translate '您的电子邮箱' %}" aria-label="subscribe_email-input"
+                           aria-describedby="subscribe_email">
+                    <button class="btn btn-star" type="submit"
                             id="index-subscription" style="border: 2px solid #fff">
                         {% translate '订阅' %}
                     </button>
                 </form>
+                <script>
+                    $('#email_subscribe_form').submit(function(e){
+                        e.preventDefault();
+                        $.ajax({
+                            url: '{% url 'CUSTSubscribe' %}',
+                            type: 'get',
+                            data: $('#email_subscribe_form').serialize(),
+                            success: function (response) {
+                                let subid = JSON.parse(response["subscription"]);
+                                console.log(subid);
+                                alert("{% trans '订阅成功！' %}");
+                            },
+                            error: function () {
+                                alert("{% trans '订阅失败！' %}");
+                            }
+                        });
+                    })
+                </script>
                 <div class="justify-content-between mt-3 d-flex">
                     <div class="text-center">
                         <img src="{% static 'IMG/Wechat_QR1.png' %}" alt="{% translate '看⻅加拿⼤公众号' %}"

@@ -78,6 +78,18 @@ class CustomerRegisterForm(forms.ModelForm):
         widget=forms.PasswordInput
     )
 
+    agreement = forms.BooleanField(
+        label=_("我已阅读并同意xxx"),
+        required=True,
+        widget=forms.CheckboxInput,
+    )
+
+    subscribe = forms.BooleanField(
+        label=_("订阅以获得更多咨询"),
+        required=False,
+        widget=forms.CheckboxInput
+    )
+
     def clean_password1(self):
         paswd1 = self.cleaned_data.get("password1")
         if validate_password(paswd1) is None:
@@ -101,6 +113,7 @@ class CustomerRegisterForm(forms.ModelForm):
         self.fields["dob"].widget = forms.DateInput(format="%Y-%m-%d")
         self.fields["name"].required = True
         self.fields["email"].required = True
+        self.fields["tele"].required = True
 
 
 class MeetingSlotFilter(forms.Form):

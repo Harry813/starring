@@ -42,6 +42,7 @@ class User(AbstractUser):
         editable=False,
     )
 
+    @property
     def get_uid_as_string (self):
         return str(self.uid).replace('-', '')
 
@@ -150,7 +151,7 @@ class User(AbstractUser):
     )
 
     def __str__ (self):
-        return self.get_display_name()
+        return f"{self.get_display_name()}#{self.get_uid_as_string[-8:]}"
 
 
 class customer_articles(models.Manager):
@@ -1834,3 +1835,15 @@ class CaseFile (models.Model):
         if self.file:
             self.name = self.file.name
         super().save(force_insert, force_update, using, update_fields)
+
+
+class Subscription(models.Model):
+    email = models.EmailField(
+        unique=True,
+    )
+
+    tags = models.JSONField(
+        verbose_name=_("标签"),
+        blank=True,
+        null=True
+    )

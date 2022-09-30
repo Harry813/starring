@@ -1,4 +1,5 @@
 import json
+import urllib.parse
 from datetime import datetime, timedelta
 from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment, LiveEnvironment
 from paypalcheckoutsdk.orders import OrdersCreateRequest, OrdersGetRequest
@@ -10,7 +11,7 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.utils.translation import gettext as _
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 
@@ -19,11 +20,11 @@ from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm,
 from customer.models import Customer
 from customer.utils import get_customer_info, get_news, get_index_list
 from staring.customerSettings import Languages
-from staring.models import Article, User, MeetingSlot, Appointment, MeetingUpdate, CRS
+from staring.models import Article, User, MeetingSlot, Appointment, MeetingUpdate, CRS, Case, Subscription
 from staring.models import Order as staringOrder
 from staring.settings import PAYPAL_MODE, PAYPAL_CLIENT_ID, PAYPAL_SECRET
 from staring.text import UserNotExist_text
-from staring.utils import generate_order_id, get_appt_price_total
+from staring.utils import generate_order_id, get_appt_price_total, send_email_with_template
 
 if PAYPAL_MODE == "live":
     environment = LiveEnvironment(client_id=PAYPAL_CLIENT_ID, client_secret=PAYPAL_SECRET)
@@ -121,6 +122,29 @@ def customer_register (request):
 
             c = Customer(user=u)
             c.save()
+
+            context = {
+                "title": _("注册成功"),
+                "content": _(
+                    "<p>您好，您已经成功注册星环账号，请妥善保管您的账号和密码。</p>"
+                    "<p style='text-align: center'>账号：<strong>{}</strong></p>"
+                    "<p style='text-align: center'>密码：<strong>{}</strong></p>"
+                ).format(
+                    form.cleaned_data['username'],
+                    form.cleaned_data["password1"]
+                )
+            }
+
+            if form.cleaned_data["subscribe"]:
+                context["content"] += _("<p>您已经成功订阅了星环的最新资讯，我们会定期向您发送最新的资讯。</p>")
+                Subscription.objects.create(
+                    email=u.email,
+                )
+            send_email_with_template(
+                subject=_("星环-注册成功"),
+                context=context,
+                recipient_list=[u.email]
+            )
 
             login(request, user=u, backend='django.contrib.auth.backends.ModelBackend')
 
@@ -434,6 +458,26 @@ def payment_success_view (request, appointment_id):
     order = get_object_or_404(staringOrder, product_id=appointment_id)
     param["order"] = order
     return render(request, "customer/payment_success.html", param)
+
+
+@login_required(login_url="CUSTLogin")
+def subscribe_email (request):
+    email = request.GET["subscribe_email"]
+    if Subscription.objects.filter(email=email):
+        return JsonResponse({"err": "Instance Already Exist"}, status=500)
+    try:
+        sub = Subscription.objects.create(email=email)
+        send_email_with_template(
+            subject=_("星环-订阅成功"),
+            context={
+                "title": _("订阅成功"),
+                "content": _("<p>您已经成功订阅了星环的最新资讯，我们会定期向您发送最新的资讯。</p>")
+            },
+            recipient_list=[email]
+        )
+        return JsonResponse({"subscription": sub.id}, status=200)
+    except Exception:
+        return JsonResponse({"err": "Unknown error"}, status=500)
 
 
 @xframe_options_sameorigin
