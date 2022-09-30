@@ -57,4 +57,4 @@ class Staff(models.Model):
     )
 
     def __str__(self):
-        return self.user.get_display_name()
+        return str(self.user)
