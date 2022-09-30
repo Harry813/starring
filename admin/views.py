@@ -1508,6 +1508,74 @@ def admin_case_file_receive(request, file_id):
     return redirect(f.file.url)
 
 
+@login_required(login_url="ADMLogin")
+def admin_subscription_index_view(request, page):
+    param = {
+        "page_title": _("星环-订阅管理"),
+        "languages": Languages,
+        "active_page": "ADMSubscriptionIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    subscriptions = Subscription.objects.all()
+    p = Paginator(subscriptions, 10)
+    param["paginator"] = p
+    param["subscriptions"] = p.get_page(page)
+    param["current_page"] = page
+    param["page_list"] = p.get_elided_page_range(on_each_side=2, on_ends=2)
+    return render(request, "admin/admin_subscription_index.html", param)
+
+
+@login_required(login_url="ADMLogin")
+def admin_subscription_edit_view(request, subscription_id):
+    param = {
+        "page_title": _("星环-订阅管理"),
+        "languages": Languages,
+        "active_page": "ADMSubscriptionIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+
+    subscription = get_object_or_404(Subscription, id=subscription_id)
+    if request.method == "POST":
+        form = SubscriptionEditForm(request.POST, instance=subscription)
+        if form.is_valid():
+            form.save()
+            return redirect("ADMSubscriptionIndex", 1)
+        else:
+            form = SubscriptionEditForm(request.POST, instance=subscription)
+    else:
+        form = SubscriptionEditForm(instance=subscription)
+
+    param["form"] = form
+    param["subscription"] = subscription
+    return render(request, "admin/admin_subscription_edit.html", param)
+
+
+
+@login_required(login_url="ADMLogin")
+def admin_subscription_send_view (request):
+    param = {
+        "page_title": _("星环-订阅管理"),
+        "languages": Languages,
+        "active_page": "ADMSubscriptionIndex",
+        **get_basic_info(),
+        **get_admin_info()
+    }
+    if request.method == "POST":
+        form = SubscriptionSendForm(request.POST)
+        if form.is_valid():
+            form.send()
+            return redirect("ADMSubscriptionIndex", 1)
+        else:
+            form = SubscriptionSendForm(request.POST)
+    else:
+        form = SubscriptionSendForm()
+    param["form"] = form
+    return render(request, "admin/admin_subscription_send.html", param)
+
+
+
 @csrf_exempt
 def admin_article_image_upload (request):
     if request.method == "POST":
