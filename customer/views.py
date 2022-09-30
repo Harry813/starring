@@ -460,6 +460,26 @@ def payment_success_view (request, appointment_id):
     return render(request, "customer/payment_success.html", param)
 
 
+@login_required(login_url="CUSTLogin")
+def subscribe_email (request):
+    email = request.GET["subscribe_email"]
+    if Subscription.objects.filter(email=email):
+        return JsonResponse({"err": "Instance Already Exist"}, status=500)
+    try:
+        sub = Subscription.objects.create(email=email)
+        send_email_with_template(
+            subject=_("星环-订阅成功"),
+            context={
+                "title": _("订阅成功"),
+                "content": _("<p>您已经成功订阅了星环的最新资讯，我们会定期向您发送最新的资讯。</p>")
+            },
+            recipient_list=[email]
+        )
+        return JsonResponse({"subscription": sub.id}, status=200)
+    except Exception:
+        return JsonResponse({"err": "Unknown error"}, status=500)
+
+
 @xframe_options_sameorigin
 def customer_contact_form_frame (request):
     param = {
