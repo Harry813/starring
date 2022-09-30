@@ -4,6 +4,11 @@ import shutil
 from datetime import datetime
 from decimal import Decimal
 
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.utils.translation import gettext as _
+
 from . import settings
 from .customerSettings import Languages
 from .text import *
@@ -339,3 +344,19 @@ def get_appt_price_total (appt, discount=None, coupon=None):
     """
     price = appt.price
     return price
+
+
+def send_email_with_template (subject, context, recipient_list, template="email_template/email_template.html"):
+    param = {
+        "url_root": "star.ourcv.net",
+        **context
+    }
+    html_email = render_to_string(template, param)
+    plain_text = strip_tags(html_email)
+    send_mail(
+        subject=subject,
+        message=plain_text,
+        html_message=html_email,
+        from_email="noreply@ourcv.net",
+        recipient_list=recipient_list
+    )
