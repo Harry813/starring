@@ -1,3 +1,4 @@
+from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.validators import ASCIIUsernameValidator
@@ -652,3 +653,45 @@ class CaseFileForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+
+class ConsultReplyForm(forms.Form):
+    subject = forms.CharField(
+        label=_("主题"),
+        max_length=50,
+    )
+
+    title = forms.CharField(
+        label=_("标题"),
+        help_text=_("默认与主题相同"),
+        max_length=50,
+        required=False
+    )
+
+    content = forms.CharField(widget=CKEditorWidget())
+
+    def clean_title(self):
+        if not self.cleaned_data["title"]:
+            return self.cleaned_data["subject"]
+        return self.cleaned_data["title"]
+
+    def send(self, email):
+        """
+        :param email: Email address or Email List
+        :type email: list | str
+        :return:
+        :rtype:
+        """
+        if isinstance(email, str):
+            email = [email]
+        elif isinstance(email, list):
+            email = [*email]
+        send_email_with_template(
+            subject=self.cleaned_data["subject"],
+            context={
+                "title": self.cleaned_data["title"],
+                "content": self.cleaned_data["content"]
+            },
+            recipient_list=email
+        )
+

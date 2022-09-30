@@ -1263,6 +1263,20 @@ def admin_consult_detail_view(request, consult_id):
     }
     consult = get_object_or_404(Consult, id=consult_id)
     param["consult"] = consult
+
+    if request.method == "POST":
+        form = ConsultReplyForm(request.POST)
+        if form.is_valid():
+            form.send(consult.email)
+            if consult.status == "O":
+                consult.status = "T"
+                consult.save()
+            return redirect("ADMConsultDetail", consult_id)
+        else:
+            form = ConsultReplyForm(request.POST)
+    else:
+        form = ConsultReplyForm()
+    param["form"] = form
     return render(request, "admin/admin_consult_detail.html", param)
 
 
