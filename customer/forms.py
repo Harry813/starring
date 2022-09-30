@@ -113,6 +113,7 @@ class CustomerRegisterForm(forms.ModelForm):
         self.fields["dob"].widget = forms.DateInput(format="%Y-%m-%d")
         self.fields["name"].required = True
         self.fields["email"].required = True
+        self.fields["tele"].required = True
 
 
 class MeetingSlotFilter(forms.Form):
