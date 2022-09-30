@@ -58,10 +58,14 @@ urlpatterns = [
     path('case/<str:case_id>/file/', views.admin_case_file_view, name="ADMCaseFile"),
     path('case/file/receive/<int:file_id>/', views.admin_case_file_receive, name="ADMCaseFileReceive"),
 
-    # Appointment Related Convenient Methods
+    # Appointment Related Utils
     path('appointment/accept/<int:page>/<str:aptid>', views.admin_appointment_accept, name="ADMAppointmentAccept"),
     path('appointment/reject/<int:page>/<str:aptid>', views.admin_appointment_reject, name="ADMAppointmentReject"),
     path('appointment/success/<int:page>/<str:aptid>', views.admin_appointment_success, name="ADMAppointmentSuccess"),
     path('appointment/timeout/<int:page>/<str:aptid>', views.admin_appointment_timeout, name="ADMAppointmentTimeout"),
-    path('appointment/paid/<int:page>/<str:aptid>', views.admin_appointment_paid, name="ADMAppointmentPaid")
+    path('appointment/paid/<int:page>/<str:aptid>', views.admin_appointment_paid, name="ADMAppointmentPaid"),
+
+    # Consult Related Utils
+    path('consult/trace/<int:consult_id>/', views.admin_consult_trace_util, name="ADMConsultTrace"),
+    path('consult/close/<int:consult_id>/', views.admin_consult_close_util, name="ADMConsultClose")
 ]

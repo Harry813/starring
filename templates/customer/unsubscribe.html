@@ -1,0 +1,41 @@
+{% extends 'customer/customer_template.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% load static %}
+
+{% block main_content %}
+    <div class="container">
+        <h1>{% trans "退订" %}</h1>
+        <div class="row">
+            <div class="col-md-8">
+                <form class="input-group mt-3" id="email_form">
+                    <input type="email" class="form-control" id="email" name="email"
+                           placeholder="{% translate '您的电子邮箱' %}" aria-label="email-input"
+                           aria-describedby="email" {% if email %}value="{{ email }}"{% endif %}>
+                    <button class="btn btn-star" type="submit"
+                            id="index-subscription" style="border: 2px solid #fff">
+                        {% translate '退订' %}
+                    </button>
+                </form>
+                <script>
+                    $('#email_form').submit(function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: '{% url 'CUSTUnsubscribe' %}',
+                            type: 'get',
+                            data: $('#email_form').serialize(),
+                            success: function () {
+                                alert("{% trans '退订成功！' %}");
+                                window.location.href = "{% url 'CUSTIndex' %}"
+                            },
+                            error: function (r) {
+                                console.log(r.err)
+                                alert("{% trans '退订失败！' %}");
+                            }
+                        });
+                    })
+                </script>
+            </div>
+        </div>
+    </div>
+{% endblock %}

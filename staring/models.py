@@ -1845,5 +1845,18 @@ class Subscription(models.Model):
     tags = models.JSONField(
         verbose_name=_("标签"),
         blank=True,
-        null=True
+        null=True,
+        default=list
     )
+
+    language = models.CharField(
+        verbose_name=_("语言"),
+        max_length=15,
+        default="zh-hans",
+        choices=get_language_codes()
+    )
+
+    def __str__(self):
+        tags = self.tags
+        tags.remove("*")
+        return f"{self.email}" + "".join([f" #{tag}" for tag in tags])
