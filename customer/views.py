@@ -16,11 +16,12 @@ from django.utils.translation import gettext as _
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 
 from customer.forms import ContactForm, CustomerLoginForm, CustomerRegisterForm, MeetingSlotFilter, AppointmentForm, \
-    CRSForm
+    CRSForm, FileUploadForm
 from customer.models import Customer
 from customer.utils import get_customer_info, get_news, get_index_list
 from staring.customerSettings import Languages
-from staring.models import Article, User, MeetingSlot, Appointment, MeetingUpdate, CRS, Case, Subscription
+from staring.models import Article, User, MeetingSlot, Appointment, MeetingUpdate, CRS, Case, Subscription,\
+    CaseUpdate, CaseFile
 from staring.models import Order as staringOrder
 from staring.settings import PAYPAL_MODE, PAYPAL_CLIENT_ID, PAYPAL_SECRET
 from staring.text import UserNotExist_text
@@ -165,14 +166,13 @@ def customer_center_view (request):
         "page_title": _("星环-我的主页"),
         "languages": Languages,
         "title_img": True,
-        # "profile": Customer.objects.get(user=request.user),
         **get_customer_info(request),
     }
 
-    customer_profile = Customer.objects.get(user=request.user)
+    customer_profile = Customer.objects.get(user=request.user.pk)
     appointments = Appointment.objects.filter(customer=customer_profile).order_by()
     param["appointments"] = appointments
-
+    param["cases"] = Case.objects.filter(customer=customer_profile)
     return render(request, "customer/customer_center.html", param)
 
 
@@ -379,6 +379,50 @@ def customer_crs_result_view (request, crs_id):
         crs.customer = Customer.objects.get(user_id=request.user.uid)
         crs.save()
     return render(request, "customer/customer_crs_report.html", param)
+
+
+@login_required(login_url="CUSTLogin")
+def customer_case_view (request, case_id):
+    param = {
+        "page_title": _("星环-我的主页"),
+        "languages": Languages,
+        "title_img": True,
+        **get_customer_info(request),
+    }
+
+    customer_profile = Customer.objects.get(user=request.user)
+    param["customer"] = customer_profile
+    case = get_object_or_404(Case, id=case_id, customer=customer_profile)
+    param["case"] = case
+
+    return render(request, "customer/customer_case.html", param)
+
+
+def customer_case_file_upload (request, case_id, file_id):
+    param = {
+        "page_title": _("星环-我的主页"),
+        "languages": Languages,
+        "title_img": True,
+        **get_customer_info(request),
+    }
+    customer_profile = Customer.objects.get(user=request.user)
+    param["customer"] = customer_profile
+    case = get_object_or_404(Case, id=case_id, customer=customer_profile)
+    param["case"] = case
+    file = get_object_or_404(CaseFile, id=file_id, case=case)
+    param["file"] = file
+
+    if request.method == "POST":
+        form = FileUploadForm(request.POST, request.FILES, instance=file)
+        if form.is_valid():
+            form.save()
+        else:
+            form = FileUploadForm(request.POST, request.FILES, instance=file)
+    else:
+        form = FileUploadForm(instance=file)
+
+    param["form"] = form
+    return render(request, "customer/customer_case_file_upload.html", param)
 
 
 @login_required(login_url="CUSTLogin")

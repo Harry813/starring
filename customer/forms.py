@@ -8,7 +8,7 @@ from django.utils.translation import ngettext as _n
 
 from datetime import datetime, timedelta
 
-from staring.models import User, Appointment, CRS
+from staring.models import User, Appointment, CRS, CaseFile
 import staring.crs_setting as crs
 from .models import Consult
 from staring.text import *
@@ -239,3 +239,27 @@ class CRSForm(forms.ModelForm):
         choices = {
             "second_language_test": None,
         }
+
+
+class FileUploadForm(forms.ModelForm):
+    class Meta:
+        model = CaseFile
+        fields = ["file"]
+
+    def clean_file(self):
+        file = self.cleaned_data.get("file")
+        if file:
+            if file.size > 10 * 1024 * 1024:
+                raise forms.ValidationError(_("文件不得超过10MB"))
+            if self.instance:
+                if file.content_type not in self.instance.extensions:
+                    raise forms.ValidationError(_("文件类型错误"))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        help_text = _("文件不得超过10MB")
+        if self.instance.instruction:
+            help_text += f", {self.instance.instruction}"
+        if self.instance.extensions:
+            help_text += f"<br>可接受的文件类型：{','.join(self.instance.extensions_tags)}"
+        self.fields["file"].help_text = help_text
